@@ -1,8 +1,26 @@
 ﻿@section SPAViews {
-    @Html.Partial("_Home")
-
-    <div>TEST</div>
+    <div ng-app="agm" ng-controller="main">
+        <div class="navbar navbar-fixed-top">
+            <div class="container container-header">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <div class="logo"><img src="~/images/logo.png" alt="" /></div>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>
+                        <li>@Html.ActionLink("API", "Index", "Help", new { area = "HelpPage" }, null)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 }
 @section Scripts{
     @Scripts.Render("~/bundles/app")
+    @Scripts.Render("~/bundles/angularjs")
 }

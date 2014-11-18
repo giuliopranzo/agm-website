@@ -28,6 +28,23 @@ textarea {
     padding-top: 20px;
 }
 
+.logo {
+    margin: 10px 15px;
+}
+
+.logo img{
+    width: 86px;
+}
+
+.container-header {
+    border-bottom: 1px solid #C4C4C4;
+}
+
+.body-content {
+    margin: 35px auto;
+    padding: 0 15px;
+}
+
 @media only screen and (max-width: 767px) {
     .nofloat {
         float: none;

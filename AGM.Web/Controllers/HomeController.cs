@@ -9,6 +9,7 @@ namespace AGM.Web.Controllers
     {
         public ActionResult Index()
         {
+            ViewBag.Title = "Area Riservata";
             return View();
         }
     }

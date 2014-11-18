@@ -11,8 +11,13 @@ namespace AGM.Web
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/app").Include(
-                "~/Scripts/app/common.js",
-                "~/Scripts/app/_run.js"));
+                "~/App/app.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/applibs").Include(
+                "~/Scripts/satellizer.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/angularjs").Include(
+                "~/Scripts/angular.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                  "~/Content/bootstrap.css",
