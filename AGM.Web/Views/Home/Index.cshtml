@@ -18,9 +18,12 @@
                 </div>
             </div>
         </div>
+        <a ui-sref="Login">Login</a>
+        <div ui-view="content"></div>
+        <div ui-view="modal"></div>
     </div>
 }
 @section Scripts{
-    @Scripts.Render("~/bundles/app")
     @Scripts.Render("~/bundles/angularjs")
+    @Scripts.Render("~/bundles/app")
 }
