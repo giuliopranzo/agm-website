@@ -12,12 +12,19 @@ namespace AGM.Web
         {
             bundles.Add(new ScriptBundle("~/bundles/app").Include(
                 "~/App/app.js",
-                "~/App/route.config.js"));
+                "~/App/http.config.js",
+                "~/App/route.config.js",
+                "~/App/app.service.js"
+                
+            ));
 
-            bundles.Add(new ScriptBundle("~/bundles/angularjs").Include(
+            bundles.Add(new ScriptBundle("~/bundles/applibs").Include(
                 "~/Scripts/angular.js",
                 "~/Scripts/angular-ui-router.js",
-                "~/Scripts/satellizer.js"));
+                "~/Scripts/satellizer.js",
+                "~/Scripts/jquery-1.10.2.js",
+                "~/Scripts/jquery.cookie.js"
+            ));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                  "~/Content/bootstrap.css",

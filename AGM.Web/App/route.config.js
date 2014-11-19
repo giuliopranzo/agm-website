@@ -2,10 +2,7 @@
     $locationProvider.html5Mode(true);
 });
 
-app.config(function ($stateProvider, $httpProvider) {
-    $httpProvider.defaults.withCredentials = true;
-    $httpProvider.defaults.xsrfHeaderName = 'SOMHTOKEN';
-    $httpProvider.defaults.xsrfCookieName = 'SOMSESSID';
+app.config(function ($stateProvider) {
     $stateProvider
     .state('Login', {
         url: "/Login",

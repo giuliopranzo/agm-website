@@ -185,6 +185,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App\app.js" />
+    <Content Include="App\app.service.js" />
+    <Content Include="App\http.config.js" />
     <Content Include="App\Login\Login.html" />
     <Content Include="App\route.config.js" />
     <Content Include="Content\bootstrap.css" />
@@ -209,6 +211,7 @@
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\jquery.cookie.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\satellizer.js" />
     <Content Include="Scripts\satellizer.min.js" />
