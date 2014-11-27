@@ -2,7 +2,7 @@
 var controllerBasePath = '/App/';
 var factoryBasePath = '/App/';
 
-var app = angular.module('agm', ['ui.router', 'satellizer']);
+var app = angular.module('agm', ['ui.router', 'LocalStorageModule', 'mgcrea.ngStrap']);
 
 function resolveViewPath(viewName) {
     return viewBasePath + viewName;
@@ -16,8 +16,9 @@ function resolveFactoryPath(factoryName) {
     return factoryBasePath + factoryName;
 }
 
-app.controller("main", function ($scope, AppHelper) {
-    $scope.greetMe = 'World';
-    AppHelper.setCookie("test", "ok", 7, "/");
+app.controller("main", function ($scope, $location, authenticationHelper, authenticationContainer) {
+    authenticationHelper.getCurrentUser().catch(
+        function() { $location.path('/Login'); }
+    );
 });
 

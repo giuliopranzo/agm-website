@@ -1,0 +1,195 @@
+a {
+	color: #337d49;
+}
+
+#spinner:before {
+	border-top-color: #337d49;
+	border-left-color: #337d49;
+	border-right-color: #337d49;
+}
+
+.nav-btn:hover {
+	color: #337d49;
+}
+
+.share-options a:hover {
+	color: #337d49;
+}
+
+ul#mainnav > li.current > a span {
+	color: #337d49;
+	border-bottom: 1px solid #337d49;
+}
+
+.skillbar-bar {
+	background: #337d49;
+}
+
+.wrapper-service i {
+	color: #337d49;	
+}
+
+.tweet_time a:hover, a.tweet_action:hover {
+    color: #337d49;
+}
+
+.team-text h3 span {
+	border-bottom: 1px solid #337d49;
+}
+
+.testimonial-name {
+	color: #337d49;
+}
+
+.dt-service-item:hover {
+	background: #337d49;
+	border: 1px solid #337d49;
+}
+
+h1.section-title:after {
+	background: #337d49;
+}
+
+.team-social a:hover {
+	color:#337d49;
+}
+
+.service-item i {
+	color:#337d49;
+}
+
+h1.masonry-title a:hover,  .post-content h1 a:hover {
+	color:#337d49;
+}
+
+ul#social li a:hover {
+	border-color: #337d49;
+}
+
+ul#mainnav li ul li a:hover, ul#mainnav li ul li ul li a:hover {
+    color: #337d49;
+}
+
+.tags ul li a:hover {
+	background:#337d49;
+}
+
+.sidebar-post span a {
+	color:#337d49;
+}
+
+ul#filters li a.selected {
+	border: 1px solid #337d49;
+	color: #323232;
+}
+
+h1.masonry-title a:hover,  .post-content h1 a:hover {
+	color:#337d49;
+}
+
+a.c_reply:hover {
+	background:#337d49;
+	color:#fff !important;
+}
+
+ul.tabs li.active {
+    border-top: 2px solid #337d49;
+    top: 1px;
+    
+}
+
+.featured-column .column-shadow {
+	background:#337d49;
+}
+
+.featured-column .package-title {
+	border-bottom: 3px solid #337d49;
+	background: #337d49;	
+	border-right: 0;
+}
+
+ul.customlist li i {
+	color:#337d49;
+	font-size: 14px;
+}
+
+.widget a:hover {
+	color:#337d49;
+}
+
+ul.tags a:hover {
+	color:#337d49;
+}
+
+.authorp h2 a:hover {
+	color:#337d49;
+}
+
+.comment a:hover {
+	color:#337d49;
+}
+
+#toggle-view li.activated h3 {
+	color:#337d49;
+}
+
+
+ul#filters li a:hover {
+	border: 1px solid #337d49;
+	color: #323232;
+}
+
+ul#filters li.selected a {
+	color:#fff;
+	background:#337d49;	
+}
+
+.portfolio h3 a:hover {
+	color:#337d49;
+}
+
+.pagenav a:hover {
+    background:#337d49;
+    color:#fff;
+	border: 1px solid #337d49;
+}
+
+span.current {
+    background: #337d49; 
+    border: 1px solid #337d49;
+}
+
+#footer a:hover {
+	color:#337d49;
+}
+
+.toggle-plus {
+	width: 28px;
+	height: 28px;
+	font-family: fontawesome;
+	color: #323232;
+	cursor: pointer;
+	text-align: right;
+}
+
+.toggle-plus:before {
+	content: "\f0dd";	
+}
+
+.toggle-minus {
+	width: 28px;
+	height: 28px;
+	color: #337d49;
+	top: 14px !important;
+}
+
+.toggle-minus:before {
+	content:"\f0de";
+}
+
+div.jp-play-bar {
+	background: #337d49;
+}
+div.jp-volume-bar-value {
+	background: #337d49;
+}

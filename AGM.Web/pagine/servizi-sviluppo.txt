@@ -1,0 +1,32 @@
+<h1>Servizi di sviluppo</h1>
+<p>I prodotti che AGM Solutions realizza nascono in base alle esigenze dei propri clienti che operano nei più diversi settori di mercato.</p>
+<p>AGM Solutions si impegna nella produzione di software dedicati, quali: la comunicazione telematica in tempo reale, l'archiviazione di documenti e gestionali web on line.<br />
+In particolar modo, AGM Solutions è in grado di predisporre ogni tipologia di gestionale dedicato, ottimizzando i tempi di esecuzione delle attività quotidiane, altresì di regolare al meglio le operazioni di ogni singolo collaboratore della società, offrendo pertanto funzionalità disegnate ad hoc.</>
+<p>Al fine di supportare le richieste di ogni tipologia di cliente, le cui esigenze e necessità sono altamente variabili ed in continua evoluzione, AGM Solutions è specializzata nel campo della programmazione (progettazione e sviluppo applicazioni Object Oriented).<br />
+Grazie al know-how acquisito e ad un solido background tecnologico, AGM è in grado di studiare e ridisegnare i processi aziendali mirando ai nuovi meccanismi di interazione business-to-business e business-to-customer.</p>
+
+<img src="/immagini/sviluppo1.jpg" style="padding-left:20px; float:right">
+
+<p>AGM Solutions, infine, può vantare una specializzazione nello sviluppo .net, orientando ed indirizzando il proprio approccio alla qualità dei prodotti programmati e gestiti grazie alla centralità di contenuti, alla valorizzazione dei metadati, alla rilevanza dei formati ed alle modalità di presentazione e ottimizzazione della consultazione dei dati.</p>
+
+<p>Elenco di alcune delle figure professionali presenti nel nostro database:</p>
+<ul>
+<li>Analisti Programmatori (junior e senior)</li>
+<li>Sviluppatori Java/J2ee</li>
+<li>.net (VB.Net - Asp.Net - C#), Visual Basic 6.0</li>
+<li>PL/SQL</li>
+<li>C, C++</li>
+<li>PHP</li>
+<li>SAS</li>
+<li>SAP</li>
+<li>Cobol CICS DB2 </li>
+</ul>
+<p>L'attività di consulenza prevede:</p>
+<ul>
+<li>Analisi puntuale dei bisogni aziendali</li>
+<li>Recruitment</li>
+<li>Ricerca nel ricco db aziendale delle figure ricercate e visionate</li>
+<li>Gestione completa delle Risorse Umane</li>
+<li>Monitoraggio costante delle attività, realizzato prestando attenzione alle necessità dei collaboratori e delle aziende che si affidano a noi.</li>
+<li>Eventuali attività di formazione mirata</li>
+</ul>

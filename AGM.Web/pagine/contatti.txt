@@ -1,0 +1,20 @@
+<table class="contatti">
+<tr><td class="contatti">
+<p>
+Sede Legale e Operativa: Via Astesani 54 - 20161 Milano (fermata MM3 Affori FN)<br />
+Seconda Sede Operativa: Via Agostoni 16 - 20851 Lissone (MB)
+</p>
+<p>AGM Solutions e i suoi servizi: <b>info@agmsolutions.net</b><br />
+Inviaci il tuo CV aggiornato: <b>selezione@agmsolutions.net</b><br />
+Richiedi informazioni contabili e amministrative: <b>amministrazione@agmsolutions.net</b><br />
+</p>
+<p>
+Telefono +39 (02) 26826722<br />
+Fax +39 (02) 28971060
+</p>
+
+</td>
+
+<td class="contatti"><iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.it/maps?f=q&amp;source=s_q&amp;hl=it&amp;geocode=&amp;q=agm+solutions&amp;aq=&amp;sll=41.442726,12.392578&amp;sspn=9.945746,19.753418&amp;ie=UTF8&amp;hq=agm+solutions&amp;hnear=&amp;t=m&amp;ll=45.520876,9.169249&amp;spn=0.071946,0.071946&amp;output=embed"></iframe><br /><small></small></td>
+</tr>
+</table>

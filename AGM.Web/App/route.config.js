@@ -1,14 +1,10 @@
-﻿app.config(function ($locationProvider) {
-    $locationProvider.html5Mode(true);
-});
-
-app.config(function ($stateProvider) {
+﻿app.config(function ($stateProvider) {
     $stateProvider
     .state('Login', {
         url: "/Login",
         views: {
             "content": {
-                templateUrl: resolveViewPath('Login/Login.html')
+                templateUrl: resolveViewPath('Authentication/Login.html')
             },
             "modal": {
                 template: ''
@@ -40,5 +36,12 @@ app.config(function ($stateProvider) {
                 controller: ''
             }
         }
+        //,
+        //resolve: {
+        //    authenticationCheck: function (authenticationDataService) {
+        //        debugger;
+        //        return authenticationDataService.isAuthenticated().then(function(resp) { return resp.data; });
+        //    }
+        //}
     });
 });

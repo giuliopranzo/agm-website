@@ -1,0 +1,17 @@
+<h1>Appliance Symantec</h1>
+<h2>Un nuovo strumento per il backup</h2>
+<p>Il 17 Gennaio 2010 Symantec ha presentato un nuovo sistema di backup e replica di dati per ampliare le infrastrutture aziendali, velocizzare i processi di backup e per risparmiare installazioni hardware e software.</p>
+<p>Il sistema NetBackup 5200 permette di effettuare i backup di uffici remoti, macchine virtuali e data center.</p>
+<img src="/immagini/netbackup-5200-appliance.jpg" style="float:right">
+<p>Le principali caratteristiche di Symantec NetBackup 5200 sono:</p>
+<ul>
+<li>Una soluzione completa e pronta all'uso per il backup e la deduplica, utilizzabile presso siti remoti primari e secondari e gestibile tramite un'unica console.</li>
+<li>Tutti gli agenti software di NetBackup possono essere utilizzati con NetBackup 5200 per semplificare le operazioni di protezione di applicazioni e database critici.</li>
+<li>La presenza di software e hardware integrato riduce i costi di installazione e amministrazione.</li>
+<li>Il modello di licenza TB front-end per la deduplica consente ai clienti importanti risparmi, evitando i costi aggiuntivi per la replicazione dei dati.</li>
+<li>Le funzioni di deduplica integrate a livello di sorgente e media server incrementano i vantaggi di questa tecnica, avvicinandola alla fonte dei dati e favorendo backup più veloci di sistemi fisici, virtuali e remoti.</li>
+<li>Un processo di deduplica potente e flessibile risponde ad un numero superiore di richieste dei data center con modalità operative per la deduplica inline e post-process.</li>
+<li>Supporto eterogeneo di tutte le principali piattaforme e applicazioni, inclusa la protezione di macchine virtuali.</li>
+<li>Sistema perfettamente integrabile in ambienti NetBackup preesistenti o di nuova realizzazione, senza bisogno di console di gestione a parte, permettendo di aggiornare o ampliare velocemente le infrastrutture di backup.</li>
+<li>Semplice da amministrare grazie ad un unico punto di contatto per il supporto tecnico sia software che hardware.</li>
+</ul>

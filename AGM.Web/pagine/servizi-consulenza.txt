@@ -1,0 +1,27 @@
+<h1>Servizi di consulenza</h1>
+<h2>Soluzioni di messaggistica</h2>
+<ul>
+<li>Progettazione e implementazione di Sistemi di messaggistica basati su infrastrutture Exchange</li>
+<li>Progettazione e realizzazione di migrazioni di Exchange Server 5.5, 2000, 2003, 2007 e 2010</li>
+<li>Sviluppo ad hoc di procedure automatizzate sia per l'ottimizzazione di task amministrativi che per la creazione di report statistici</li>
+</ul>
+<h2>Servizi di networking</h2>
+<ul>
+<li>Progettazione e implementazione di Reti basate su infrastruttura Microsoft Active Directory</li>
+<li>Progettazione e realizzazione di migrazioni dalle precedenti versioni di Windows (infrastruttura server e parco macchine)</li>
+<li>Integrazione di ambienti Active Directory eterogenei con l'utilizzo di Microsoft Idendity Integration</li>
+<li>Progettazione e Implementazione di soluzioni di aggiornamento automatico del software</li>
+</ul>
+<h2>Servizi di disaster recovery e high availability</h2>
+<ul>
+<li>Progettazione e revisione di piani di Backup, Disaster Recovery e Business Continuity</li>
+<li>Realizzazione di soluzioni di High Availability</li>
+</ul>
+<h2>Soluzioni di archiviazione</h2>
+<ul>
+<li>Progettazione di soluzioni di archiviazioni dati di posta elettronica, file system e MS SharePoint</li>
+</ul>
+<h2>Helpdesk di primo, secondo e terzo livello</h2>
+<ul>
+<li>Servizio di gestione on site del backend e del frontend informatico</li>
+</ul>

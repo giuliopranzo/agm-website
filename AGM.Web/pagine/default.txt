@@ -1,0 +1,22 @@
+<img src="/immagini/default1.gif" style="padding-left:20px; float:right">
+<p>AGM Solutions Srl è una società di consulenza nata nel 2002 dall’iniziativa di esperti professionisti dell’Information Technology.</p> 
+<p>L’offerta di servizi abbraccia l’intera catena delle esigenze tecnologiche delle aziende nell’ambito dello sviluppo, del System Engineering e dell’assistenza on-site. La modularità dei pacchetti di soluzioni offerti dà ad ogni azienda la possibilità di gestire in modo granulare e progressivo gli investimenti per il miglioramento e l’ottimizzazione della propria infrastruttura IT.</p>
+<p>Le nostre aree di intervento possono essere così schematizzate:</p>
+<ul>
+<li>Counseling e Recruitment: Sviluppo, Progettazione, System Engineering, Presidio On Site</li>
+<li>Infrastructure: Attività IMAC, Messaging Solutions, Sharepoint Solutions</li>
+<li>Storage: Soluzioni di archiviazione per la gestione documentale</li>
+<li>Networking: Unified Communications, VOIP e cablaggio strutturato</li>
+<li>Security: Disaster Recovery Plans</li>
+<li>Hospitality: distribuzione di soluzioni dedicate all’intrattenimento</li>
+</ul>
+<p>10 anni di presenza costante nel mondo IT fanno di AGM una realtà in continua evoluzione.</p>
+<p>Attenta alle esigenze dei propri clienti ed alle ultime tendenze di mercato, ha come obiettivo il raggiungimento del successo in tutte le soluzioni offerte, attraverso l’innovazione tecnologica delle proprie risorse ed, allo stesso tempo, dei propri clienti.</p>
+<p>Specializzazioni: Servizi PMI, Consulting Services, Development Area, Cabling & Networking</p>
+<img src="/immagini/microsoft.jpg" alt="Microsoft">
+<a href="/appliance-symantec/" target="_self"><img src="/immagini/symantec.png" style="padding-left:20px" alt="appliance Symantec per il backup e il disaster recovery"></a>
+<a href="/splunk-analisi-log/" target="_self"><img src="/immagini/splunk.png" style="padding-left:20px" alt="gestione log sistema con Splunk"></a>
+<a href="/megadoc-gestione-documentale/" target="_self"><img src="/immagini/megadoc.gif" style="padding-left:20px" alt="gestione documentale MegaDoc by M-Files"></a>
+<a href="/intrattenimento-nivo-hotel-resort/" target="_self"><img src="/immagini/nonius.jpg" style="padding-left:20px" alt="Nivo software per l'intrattenimento ospedialiero e di hotel e resort"></a>
+<a href="/infrastrutture-rete-networking/" target="_self"><img src="/immagini/d-link.jpg" style="padding-left:20px" alt="router D-Link per la tua infrastruttura di rete"></a>
+<img src="/immagini/atr.jpg" style="padding-left:20px" alt="ATR Telematica">

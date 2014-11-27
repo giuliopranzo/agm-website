@@ -1,0 +1,9 @@
+<img src="/immagini/lavora-con-noi.jpg" style="float: right">
+<h1>Lavora con noi</h1>
+<p>La nostra struttura di Recruitment seleziona costantemente professionisti operanti nei settori dell’Information Technology, ICT e TLC.</p>
+<p>Attraverso una gestione integrale del processo di ricerca e selezione dei job profiles, la nostra mission è quella di raggiungere il match ideale tra le richieste dei nostri clienti e la naturale propensione delle risorse individuate.</p>
+<p>Proprio per questo motivo, desideriamo entrare costantemente in contatto con le seguenti figure professionali: analisti e programmatori Java/J2ee, .net, Vb, VB 6, ASP, C#, C, C++, PHP, Navision, Cobol, Delphi, Gupta, HTML, AS400, così come tecnici di primo e secondo livello, sistemisti (Windows, Linux e Mac), Network Administrator, esperti di rete, professionisti dell’ IT security, RF Planner, ma anche Project Manager, DBA ed esperti in attività di formazione ambito IT.</p>
+<p>Nella pagina <a target="_self" href="/ricerca-personale-posizioni-aperte/">Posizioni aperte</a> è possibile visionare l’elenco delle ricerche ad oggi attive ed inviare la propria candidatura al nostro Team HR. Quest’ultimo, in caso di compatibilità con la job description, provvederà a contattarvi per un colloquio conoscitivo c/o la nostra struttura.</p>
+<p>Per tutte le candidature generiche invece, preghiamo inviare CV aggiornato in formato europeo (<b><a href="/pagine/CVTemplate.doc">scarica qui il template</a></b>) al seguente indirizzo di posta: <b><a href="mailto:selezione@agmsolutions.net">selezione@agmsolutions.net</a></b></p>
+<p>Le stesse saranno integrate nel nostro dB e il Team HR ricontatterà i profili validi a fronte delle nuove ricerche attive.</p>
+<p>Da ultimo, ricordiamo di esprimere il proprio consenso all’autorizzazione al trattamento dei dati personali, secondo quanto previsto dalla Legge 196/03.</p>

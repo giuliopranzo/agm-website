@@ -1,0 +1,91 @@
+<img src="/immagini/megadoc.jpg" style="float:right; padding-left:20px;">
+<h1>MegaDOC: la nostra soluzione per la gestione documentale</h1>
+<h2>10 Buoni Motivi per utilizzare MegaDOC</h2>
+<ul>
+
+<li><b>Interfaccia Windows facile da usare</b></li><ul>
+<li>Si integra con Windows, un&rsquo;interfaccia familiare a qualunque utente, l&rsquo;archivio dei documenti appare come un disco virtuale.</li>
+<li>E&rsquo; possibile trascinare documenti, messaggi di posta e qualunque altro tipo di file da e verso MegaDOC</li>
+</ul>
+</li>
+
+<li><b>Controllo totale dei Vostri documenti</b></li><ul>
+<li>Le operazioni di estrazione e ri-archiviazione dei documenti eliminano i problemi legati a modifiche simultanee</li>Preserva le versioni precedenti dei documenti in maniera automatica</li>
+<li>Registra un log delle modifiche con nome utente, data, ora e commenti</li>
+<li>Funzioni di attribuzione automatica dei nomi e dei numeri progressivi</li>
+</ul>
+</li>
+
+<li><b>La ricerca immediata e le viste dinamiche fanno risparmiare tempo ogni giorno</b></li><ul>
+<li>MegaDOC aiuta a trovare il documento giusto semplicemente digitando poche lettere nel box di ricerca veloce</li>
+<li>Si possono vedere dinamicamente i documenti in qualunque struttura verticale, a scelta</li>
+<li>MegaDOC rende disponibile lo stesso documento su pi&ugrave; cartelle, senza creare copie inutili</li>
+</ul>
+</li>
+
+<li><b>Indipendenza dal luogo di lavoro</b></li><ul>
+<li>Veloce anche su connessioni remote</li>
+<li>Gli utenti in mobilit&agrave; possono vedere, creare, modificare e archiviare documenti in modalit&agrave; off-line con un sistema di sincronizzazione automatica</li>
+<li>Attivando <b>MegaDOC Web Access</b> i documenti sono disponibili a tutti utilizzando un semplice browser, inclusi utenti MAC e Linux</li>La funzione di replica velocizza la gestione dei documenti da ambienti geograficamente remoti</l>
+</ul>
+</li>
+
+<li><b>Sicurezza</b></li><ul>
+<li>Controllo della visibilit&agrave; dei dati; &egrave; possibile nascondere i documenti sensibili mantenendo comunque un unico luogo di archiviazione</li>
+<li>Semplici impostazioni e permessi personalizzabili riducono il rischio dell&rsquo;errore umano</li>
+<li>Compatibile con Active Directory</li>
+<li>Il sistema di gestione documentale pianifica automaticamente il backup di tutti i dati</li>
+</ul>
+</li>
+
+<li><b>Collaborazione e WorkFlow</b></li><ul>
+<li>Notifiche via e-mail dei nuovi documenti modificati</li>
+<li>Semplici attivit&agrave; per collaborazione ad hoc</li>
+<li>Funzionalit&agrave; base o avanzate per WorkFlow di processi normali</li>
+</ul>
+</li>
+
+<li><b>Strutture dati personalizzabili</b></li><ul>
+<li>MegaDOCfornisce le pi&ugrave; avanzate funzionalit&agrave; di strutturazione dei meta dati, incluse liste multi-selezione e campi filtrati</li>
+<li>Relazioni tra documenti, utilizzo di raccolte e modelli</li>
+<li>Oltre ai documenti MegaDOC pu&ograve; gestire qualunque tipo di struttura dati</li>
+</ul>
+</li>
+
+<li><b>Installazione ed implementazione semplice</b></li><ul>
+<li>Installazione semplicissima, ideale per implementare un sistema di gestione documentale senza costi eccessivi</li>
+<li>Trascinamento dei file esistenti su MegaDOC</li>
+<li>Non richiede personale IT dedicato</li>
+<li>Servizio di consulenza professionale accurato</li>
+</ul>
+</li>
+
+<li><b>Connessione a sistemi di terze parti</b></li><ul>
+<li>E&rsquo; possibile definire dei collegamenti attivi con database esterni, come CRM software gestionali ecc.</li>
+<li>Importazione e collegamenti a file esistenti nelle condivisioni di rete</li>
+<li>Caricamento dei documenti cartacei da qualunque scanner e dispositivo multifunzione</li>
+<li>Importazione messaggi e-mail direttamente dal server di posta</li>
+<li>Utilizzo delle librerie MegaDOC per requisiti di integrazioni particolari</li>
+</ul>
+</li>
+
+<li><b>Integrazione con altre applicazioni Windows e supporto per tutti i formati di file</b></li><ul>
+<li>MegaDOC si integra con tutte le applicazioni Windows, incluse le applicazioni Office, CAD, gestionali di magazzini e produzione ecc, permettendo agli utenti di accedere agli archivi con comandi standard come Apri, Salva, Salva con nome, ecc</li>
+<li>MegaDOC supporta inoltre tutti i formati di file: documenti di Word, fogli di calcolo di Excel, i file PDF, modelli CAD, immagini, ecc</li>
+</ul>
+</li>
+
+</ul>
+
+<h2>Ulteriori vantaggi di MegaDOC</h2>
+<ul>
+<li>Nessun limite sul numero dei documenti gestiti annualmente</li>
+<li>Licenze anche solo di consultazione per un sensibile risparmio sul prezzo di acquisto</li>
+<li>Minimo spazio su disco occupato dai documenti</li>Ricerche Full Text</li>
+<li>Gestione del Work Flow dei documenti</li>
+<li>Possibilit&agrave; di gestire nuovi documenti tramite Word o Excel</li>
+<li>Di semplice utilizzo</li>
+<li>Personalizzabile ed integrabile con altri software</li>
+<li>Creazione indici documenti con copia e incolla</li>
+<li>Sviluppato sia in ambiente Windows che Web</li>
+</ul>

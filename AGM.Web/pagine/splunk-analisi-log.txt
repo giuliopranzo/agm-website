@@ -1,0 +1,14 @@
+
+<h1>Con Splunk aumentate l'intelligence operativa</h1>
+<p>Splunk è un motore per dati IT che potete utilizzare per raccogliere, indicizzare e controllare i dati IT generati dinamicamente da tutte le vostre applicazioni, server e dispositivi, fisici, virtuali e nel cloud. Cercate e analizzate tutti i dati storici e in tempo reale con un unico strumento.</p>
+<img src="/immagini/splunk.png" style="padding-right:20px; float:left">
+<img src="/immagini/splunk1.gif" style="padding-left:20px; padding-bottom: 5px; float:right">
+
+<p>Potete utilizzare Splunk per risolvere i problemi delle applicazioni e indagare sugli incidenti riguardanti la sicurezza in pochi minuti anziché in ore o giorni, evitare riduzioni del livello di servizio o disservizi, garantire la conformità alle normative a un costo inferiore e aumentare il livello di consapevolezza dell'IT e dell'intera azienda.</p>
+
+<h2>È un software – si scarica e si installa in 5 minuti</h2>
+<p>Provate Splunk sul vostro computer portatile e poi trasferitelo su uno o più datacenter. Splunk è un pacchetto software autonomo eseguibile su tutti i principali sistemi operativi. Scegliete la vostra piattaforma, scaricatelo e installatelo. Al termine dell'installazione, avrete un'interfaccia web per gli utenti e un motore per indicizzare i dati IT.</p>
+
+<h2>Indicizzate tutti i dati da qualsiasi origine</h2>
+
+<p>Splunk indicizza in tempo reale dati IT di qualsiasi tipo da qualsiasi origine. Create una correlazione tra Splunk e i log di sistema dei server o i dispositivi di rete, configurate il polling WMI, controllate file di log in tempo reale, attivate il monitoraggio delle modifiche al file system o al registro di sistema Windows o programmate uno script che rilevi le metriche di sistema. Splunk indicizza tutti dati IT senza la necessità di acquistare, scrivere o amministrare parser o adattatori specifici. Sia i dati non elaborati che l'indice elaborato vengono archiviati in un datastore compresso ad alta efficienza basato sul file system, con la possibilità di firmare ed eseguire l'audit dei dati per assicurarne l'integrità.</p>

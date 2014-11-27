@@ -1,28 +1,35 @@
 ﻿app.config(function($httpProvider) {
     $httpProvider.defaults.withCredentials = true;
-    $httpProvider.defaults.xsrfHeaderName = 'SOMHTOKEN';
-    $httpProvider.defaults.xsrfCookieName = 'SOMSESSID';
+    $httpProvider.defaults.xsrfHeaderName = 'SSID';
+    $httpProvider.defaults.xsrfCookieName = 'SSID';
 
-    $httpProvider.interceptors.push(function($q, $rootScope, AppHelper) {
+    $httpProvider.interceptors.push(function($q, $rootScope, $location, appHelper, authenticationHelper) {
         return {
             'request': function(config) {
-                AppHelper.setLoadingData(true);
+                appHelper.setLoadingData(true);
+
+                config.headers = config.headers || {};
+                if (authenticationHelper.getAuthToken()) {
+                    config.headers.AuthToken = authenticationHelper.getAuthToken();
+                }
+                config.headers.requestResource = $location.$$url;
+
                 return config;
             },
             'response': function(response) {
                 if (response && response.data && response.data._authExp)
-                    AppHelper.setSOMSESSEXP(response._authExp);
-                AppHelper.setLoadingData(false);
+                    appHelper.setSOMSESSEXP(response._authExp);
+                appHelper.setLoadingData(false);
                 return response;
             },
             'requestError': function(rejection) {
-                AppHelper.setLoadingData(false);
+                appHelper.setLoadingData(false);
                 return $q.reject(rejection);
             },
             'responseError': function(response) {
                 if (response && response.status != 200)
-                    AppHelper.comFailed(response.status, response.data);
-                AppHelper.setLoadingData(false);
+                    appHelper.comFailed(response.status, response.data);
+                appHelper.setLoadingData(false);
                 return $q.reject(response);
             }
         };

@@ -1,0 +1,81 @@
+﻿body {
+	margin: 0;
+	padding: 10px 50px 0px 50px;
+	font-size: 10.5pt;
+	font-family: calibri, tahoma, Arial;
+	color: #65523A;
+	text-align:justify
+}
+
+h1 {FONT-WEIGHT: bold; color: #5F84A5; FONT-SIZE: 14pt; FONT-FAMILY: 'Maven Pro', Arial, sans serif; }
+h2 {FONT-WEIGHT: bold; color: #5F84A5; FONT-SIZE: 12pt; FONT-FAMILY: calibri, tahoma, arial; }
+h3 {FONT-WEIGHT: bold; color: #5F84A5; FONT-SIZE: 11pt; FONT-FAMILY: calibri, Tahoma ,arial; }
+a {color: #65523A; text-decoration:none; }
+a:hover {color: #65523A; text-decoration:underline; }
+
+ul, ol {list-style-type:  circle; list-style-position: outside;}
+
+table { border-collapse:collapse; border: 1px solid #65523A}
+th {color:white; border: 1px solid #65523A; background-color:#414141; text-align:left; padding:1px 3px 1px 3px}
+td {border: 1px solid #65523A; padding:1px 3px 1px 3px}
+td.a1 {background-color: white}
+td.a2 {background-color: #CCFFFF}
+td.a3 {background-color: #CCFFFF}
+td.a4 {background-color: #CCFF99}
+td.a5 {background-color: #FFFF66}
+td.a6 {background-color: #FF6A6A}
+td.a8 {background-color: #CC99FF}
+td.a9 {background-color: white}
+td.a10 {background-color: #FF6A6A}
+td.a11 {background-color: black; color:white }
+td.festivo {background-color:#94BFDA}
+form table {border: 0px solid #65523A;}
+form td {border: 0px solid #65523A;}
+textarea {font-size: 10.5pt; font-family: calibri, tahoma, Arial; color: #65523A;}
+
+table.contatti {border-collapse:collapse; width:940px; margin:0px 0px 0px 0px; border: 0px solid #65523A;}
+td.contatti {vertical-align:top; border: 0px solid #65523A;}
+
+img {border:0px}
+
+.container{
+width: 940px;
+margin: 0 auto;
+position:relative;
+padding-bottom:10px;
+}
+
+#header {
+	background-image: url('/immagini/logo.png');
+	background-repeat: no-repeat;
+	background-position: 5px;
+	background-color:white;
+	height: 70px;
+}
+
+#main {
+	position:relative;
+	background-color: white;
+	padding:5px 0px 10px 0px;
+}
+
+#footer {
+	position:relative;
+	width: 935px;
+	height: 140px;
+	color: white;
+	font-size: 10pt;	
+	padding: 5px 0px 0px 5px;
+	-moz-border-radius: 2px;
+	border-radius: 5px;
+	background: #414141;
+}
+.lista {
+	float: left;
+	width: 170px;
+}
+
+h3.footer { color: white; margin-bottom: 0; FONT-SIZE: 10pt;}
+a.footer { color: white; text-decoration:none;  FONT-SIZE: 10pt;}
+a.footer:hover { color: white; text-decoration: underline; }
+ul.footer { list-style-image:url('/immagini/freccia.png'); margin-top: 0; }

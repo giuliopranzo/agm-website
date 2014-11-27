@@ -1,0 +1,7 @@
+<h1>Prodotti per l'intrattenimento</h1>
+
+<img src="/immagini/nivo1.jpg" style="padding-left:20px; float:right">
+
+<p>AGM Solutions, attraverso la collaborazione con NIVO (un Sistema di Intrattenimento Avanzato), offre un sistema di hospitality che sfrutta il televisore, mediante il supporto del BOX NIVO.</p>
+<p>Questo sistema d'intrattenimento permette il collegamento della TV ad un Box che gestisce diversi canali, dalla tv ad internet, dalla radio ai giochi, sino ai servizi interattivi (ad esempio, noleggio biciclette, prenotazione campo da tennis, negozi) ed a quelli di informazione al pubblico (informazioni meteo, orari apertura/chiusura/turnazione farmacie, schedulazione dei voli...).</p>
+<p>Come i decoder di nuova generazione attualmente in commercio, NIVO è un server OnDemand che vi permetterà di archiviare, brani e video e di visionarli in seguito.</p>

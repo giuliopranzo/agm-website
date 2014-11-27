@@ -1,0 +1,19 @@
+<h1>Splunk>live!<br>
+ROMA: 5 marzo 2013 - MILANO: 7 marzo 2013</h1>
+
+<img src="/immagini/splunk1.gif" style="padding-left:20px; float:right">
+
+<h2>AGM Solutions si sta preparando a prendere parte a Splunk>live! il 7 Marzo 2013 a Milano!</h2>
+
+<p>Unisciti a noi a al resto della comunità italiana Splunk per scoprire come centinaia di clienti nel mondo usano Splunk per gestire meglio i loro datacenter, ottenere altà affidabilità, scoprire i guasti in tempo record e raggiungere gli obiettivi di compliance a costi inferiori.</p>
+
+<p>I partecipanti avranno l'opportunità di fare esperienza hands-on con il prodotto e scoprire direttamente da clienti enterprise come Sky, Unicrediti, A-tono e Banca Popolare di Sondrio come il loro lavoro è cambiato da quando hanno iniziato ad utilizzare Splunk.</p>
+
+<p>Perché dovreste partecipare?<p>
+<ul>
+<li>Per scoprire in che modo le organizzazioni utilizzano Splunk per espandere il settore IT e le opportunità di Business</li> 
+<li>Per toccare con mano, insieme ai Partner Splunk, le potenzialità di alcune applicazioni selezionate per voi </li>
+<li>Per partecipare al workshop di livello base, se ancora non conoscete Splunk</li>
+</ul>
+
+<p>Maggiori informazioni sull'evento e la registrazione all'avento alla pagina <a href="http://live.splunk.com/italia" target="_blank">http://live.splunk.com/italia</a></p>

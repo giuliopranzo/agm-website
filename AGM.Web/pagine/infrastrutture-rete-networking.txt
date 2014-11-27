@@ -1,0 +1,12 @@
+<img src="/immagini/networking1.jpg" style="position:absolute; right:0; bottom:0">
+<div style="width: 620px;">
+<h1>Cabling & Networking</h1>
+<h2>Cabling</h2>
+<p>Fornire servizi costantemente al passo con l’evoluzione tecnologica è vitale nel mondo IT.</p>
+<p>Grazie alle nostre esperienze, ai continui aggiornamenti, ad attrezzature e strumenti di controllo specifici siamo in grado di realizzare impianti efficienti e performanti, collaudati e certificati. </p>
+<p>AGM Solutions è in grado di trovare soluzioni tecniche e impiantistiche per tutti gli ambienti: da quello industriale a quello terziario.</p>
+<p>Negli ultimi anni infatti, abbiamo implementato le infrastrutture informatiche di uffici, banche e depositi, installando sistemi di cablaggio strutturato in grado di offrire prestazioni elevate e soluzioni tecniche all’avanguardia.</p>
+<h2>Networking</h2>
+<p>Internet si basa sul trasporto di "pacchetti" di dati inviati da una sorgente ad una destinazione attraverso una rete. Gli apparati per il trasporto di tali pacchetti sono denominati router e switch e sono i componenti di base di Internet e di tutte le altre reti. </p>
+<p>Il trasporto dei dati permette a un dispositivo di dialogare con un altro, indipendentemente dall’ubicazione fisica: gli switch sono utilizzati per collegare i dispositivi ad un’unica rete locale (la LAN) mentre i router servono per mettere in collegamento reti diverse (WAN). Oggi, router e switch integrano funzionalità aggiuntive, divenendo il supporto di tutte le comunicazioni aziendali.</p>
+</div>

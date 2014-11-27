@@ -1,4 +1,4 @@
-﻿app.factory('AppHelper', function ($rootScope, ApplicationGlobals) {
+﻿app.factory('appHelper', function ($rootScope, localStorageService, applicationGlobals) {
     var helper = {
         setSESSIONEXP: function (exp) {
             $.cookie('SESSIONEXP', exp, { expires: 7, path: '/' });
@@ -6,14 +6,26 @@
         deleteSESSIONEXP: function () {
             $.removeCookie('SESSIONEXP', { path: '/' });
         },
-        setCookie: function (name, value, cookeExpiration, cookiePath) {
-            $.cookie(name, value, { expires: cookeExpiration, path: cookiePath });
+        setCookie: function (name, value, path, cookieExpiration) {
+            if (cookieExpiration)
+                $.cookie(name, value, { expires: cookieExpiration, path: path });
+            else
+                $.cookie(name, value, { path: path });
         },
         deleteCookie: function (name, cookiePath) {
             $.removeCookie(name, { path: cookiePath });
         },
         getCookie: function (name) {
             return $.cookie(name);
+        },
+        setLocalStorage: function(name, value) {
+            localStorageService.set(name, value);
+        },
+        getLocalStorage: function (name) {
+            return localStorageService.get(name);
+        },
+        deleteLocalStorage: function (name) {
+            localStorageService.remove(name);
         },
         loaderShow: function (value) {
             if (value)
@@ -23,12 +35,12 @@
         },
         setLoadingData: function (value) {
             if (value) {
-                ApplicationGlobals.dataRequestCount++;
+                applicationGlobals.dataRequestCount++;
                 this.loaderShow(true);
             }
             else {
-                ApplicationGlobals.dataRequestCount--;
-                if (!ApplicationGlobals.isLoadingData())
+                applicationGlobals.dataRequestCount--;
+                if (!applicationGlobals.isLoadingData())
                     this.loaderShow(false);
             }
         },
@@ -41,7 +53,7 @@
     return helper;
 });
 
-app.factory('ApplicationGlobals', function () {
+app.factory('applicationGlobals', function () {
     var applicationGlobals = {
         isLoadingData: function () { return (this.dataRequestCount > 0); },
         dataRequestCount: 0,

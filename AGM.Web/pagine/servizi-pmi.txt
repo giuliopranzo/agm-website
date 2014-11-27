@@ -1,0 +1,22 @@
+<h1>Servizi per piccole e medie imprese</h1>
+<h2>Presa in carico dell'infrastruttura informatica</h2>
+<ul>
+<img src="/immagini/servizi-pmi1.jpg" style="padding-left:20px; float:right">
+<li>Infrastruttura di rete</li>
+<ul><li> Assessment e Review configurazione apparati di rete (switch e router LAN, Firewall ed eventuali AP WLAN)</li></ul>
+<li>Backend</li>
+<li>Assessment e Review Domain Policy (computers, users, domain controllers)</li>
+<li>Assessment e Review applicazioni installate:</li>
+<ul>
+<li>Verifica versioni e stato aggiornamenti installati</li>
+<li>Verifica configurazioni software in base a Best Practices e/o documentazione disponibile</li>
+</ul>
+<li>Ottimizzazione utilizzo risorse ed eventuale stesura di script e procedure automatizzate</li>
+<li>Postazioni di lavoro</li>
+<li>Compliance con legge 196/2003</li>
+<li>Stesura passi per l'adeguamento dell'infrastruttura</li>
+<li>Assistenza per la stesura del Documento Programmatico per la Sicurezza (DPS)</li>
+</ul>
+<h2>Gestione dell'infrastruttura informatica</h2>
+<p>Questa fase si innesta al termine della presa in carico ed annovera una serie di attività di gestione ordinaria che comprendono la verifica dello stato del Server, PDL e apparati di rete, nonchè gli interventi in assistenza sulla PDL stessa (schedulati in base a chiamata o segnalazione dell'utenza).</p>
+<p>Questi interventi sono effettuati con cadenza settimanale, bimensile o periodica, in presenza on-site o con connessione remota. La frequenza e la modalità di intervento sono definiti in relazione al numero di server e client presenti nell'infrastruttura e subordinate alle disponibilità tecniche ed alle esigenze specifiche del cliente.</p>
