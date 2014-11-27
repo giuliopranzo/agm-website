@@ -10,7 +10,7 @@
 
                 config.headers = config.headers || {};
                 if (authenticationHelper.getAuthToken()) {
-                    config.headers.AuthToken = authenticationHelper.getAuthToken();
+                    config.headers.SSTKN = authenticationHelper.getAuthToken();
                 }
                 config.headers.requestResource = $location.$$url;
 

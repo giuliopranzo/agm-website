@@ -1,4 +1,5 @@
-﻿using AGM.Web.Infrastructure.Attributes;
+﻿using AGM.Web.Infrastructure;
+using AGM.Web.Infrastructure.Attributes;
 using AGM.Web.Models;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Security.Claims;
+using System.Threading;
 using System.Web.Http;
 
 namespace AGM.Web.Controllers
@@ -28,8 +30,7 @@ namespace AGM.Web.Controllers
             var tokenDescriptor = new SecurityTokenDescriptor()
             {
                 Subject = new ClaimsIdentity(claims),
-                TokenIssuerName = "Agm",
-                Lifetime = new Lifetime(now, now.AddMinutes(30))
+                TokenIssuerName = "Agm"
             };
 
             var jwtToken = tokenHandler.CreateToken(tokenDescriptor);
@@ -66,8 +67,11 @@ namespace AGM.Web.Controllers
         [HttpGet]
         public ApiResponse GetCurrentUser()
         {
-
-            return new ApiResponse() {};
+            return new ApiResponse() 
+            {
+                Succeed = true,
+                Data = (Thread.CurrentPrincipal as CustomPrincipal).User
+            };
         }
     }
 }

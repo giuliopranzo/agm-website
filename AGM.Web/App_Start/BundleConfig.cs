@@ -24,6 +24,7 @@ namespace AGM.Web
 
             bundles.Add(new ScriptBundle("~/bundles/applibs").Include(
                 "~/Scripts/angular.js",
+                "~/Scripts/angular-sanitize.js",
                 "~/Scripts/angular-ui-router.js",
                 "~/Scripts/angular-animate.js",
                 "~/Scripts/angular-local-storage.js",
@@ -34,7 +35,7 @@ namespace AGM.Web
             ));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                 "~/Content/Site.css"));
+                "~/Content/Site.css"));
 
             // Set EnableOptimizations to false for debugging. For more information,
             // visit http://go.microsoft.com/fwlink/?LinkId=301862

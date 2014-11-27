@@ -1,5 +1,5 @@
 ﻿@section SPAViews {
-    <div ng-app="agm" ng-controller="main">
+    <div class="bs-docs-section" ng-app="agm" ng-controller="main">
         <div class="navbar navbar-fixed-top">
             <div class="container container-header">
                 <div class="navbar-header">
@@ -15,13 +15,16 @@
                         <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>
                         <li>@Html.ActionLink("API", "Index", "Help", new { area = "HelpPage" }, null)</li>
                     </ul>
+                    <ul class="nav navbar-nav" style="float:right;">
+                        <li ng-show="authenticated" style="float:right;"><a bs-dropdown="dropdown" ng-bind="user"></a></li>
+                        <li ng-hide="authenticated" style="float:right;"><a ui-sref="Login">Login</a></li>
+                    </ul>
                 </div>
             </div>
         </div>
-        <a ui-sref="Login">Login</a>
         <div ui-view="content"></div>
         <div ui-view="modal"></div>
-    </div>
+</div>
 }
 @section Scripts{
     @Scripts.Render("~/bundles/applibs")

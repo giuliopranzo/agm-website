@@ -4,6 +4,18 @@
         url: "/Login",
         views: {
             "content": {
+                templateUrl: resolveViewPath('Authentication/Login.html'),
+                controller: 'authentication'
+            },
+            "modal": {
+                template: ''
+            }
+        }
+    })
+    .state('Logout', {
+        url: "/Logout",
+        views: {
+            "content": {
                 templateUrl: resolveViewPath('Authentication/Login.html')
             },
             "modal": {

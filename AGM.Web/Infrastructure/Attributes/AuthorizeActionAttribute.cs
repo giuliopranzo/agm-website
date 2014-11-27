@@ -4,6 +4,9 @@ using System.IdentityModel.Tokens;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Claims;
+using System.Security.Principal;
+using System.Threading;
 using System.Web;
 using System.Web.Http;
 
@@ -26,12 +29,11 @@ namespace AGM.Web.Infrastructure.Attributes
 
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var token = tokenHandler.ReadToken(tokenEnc) as JwtSecurityToken;
-                if (token == null)
+                if (token == null || token.Claims.All(c => c.Type != "unique_name"))
                     throw new OperationException(System.Net.HttpStatusCode.Unauthorized, "Sessione non autenticata");
-                if (token.ValidTo < DateTime.Now)
-                    throw new OperationException(System.Net.HttpStatusCode.Unauthorized, "Sessione scaduta");
 
-                Users = token.Claims.First().Subject.Name;
+                Thread.CurrentPrincipal = new CustomPrincipal(token.Claims.Where(c => c.Type == "unique_name").First().Value);
+                Users = token.Claims.Where(c => c.Type == "unique_name").First().Value;
             }
             catch (Exception ex)
             {

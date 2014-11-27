@@ -1,4 +1,4 @@
-﻿app.controller('authentication', function ($scope, $alert, $location, authenticationDataService, appHelper) {
+﻿app.controller('authentication', function ($scope, $alert, $location, authenticationDataService, authenticationHelper) {
     $scope.email = '';
     $scope.password = '';
 
@@ -13,8 +13,8 @@
                 duration: 3
             });
 
-            appHelper.setAuthToken(resp.token, true);
-            })
+            $location.path('/');
+        })
         .catch(function() {
             $alert({
                 content: response.data.message,
@@ -23,26 +23,6 @@
                 duration: 3
             });
         });
-        
-        //$auth.login({
-        //    email: $scope.email,
-        //    password: $scope.password
-        //}).then(function () {
-        //    $alert({
-        //        content: 'You have successfully logged in',
-        //        animation: 'fadeZoomFadeDown',
-        //        type: 'material',
-        //        duration: 3
-        //    });
-        //})
-        //.catch(function (response) {
-        //    $alert({
-        //        content: response.data.message,
-        //        animation: 'fadeZoomFadeDown',
-        //        type: 'material',
-        //        duration: 3
-        //    });
-        //});
     };
 
     $scope.isAuthenticated = function () {
