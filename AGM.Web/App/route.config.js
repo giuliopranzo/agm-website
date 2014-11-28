@@ -4,8 +4,7 @@
         url: "/Login",
         views: {
             "content": {
-                templateUrl: resolveViewPath('Authentication/Login.html'),
-                controller: 'authentication'
+                templateUrl: resolveViewPath('Authentication/Login.html')
             },
             "modal": {
                 template: ''
@@ -23,16 +22,58 @@
             }
         }
     })
-    .state('Detail', {
-        url: "/Detail/:glimpseId",
+    .state('MonthlyReports', {
+        url: "/MonthlyReports",
         views: {
             "content": {
-                template: '',
-                controller: ''
+                templateUrl: resolveViewPath('MonthlyReports/MonthlyReports.html')
             },
             "modal": {
-                templateUrl: '',
-                controller: ''
+                template: ''
+            }
+        }
+    })
+    .state('JobAds', {
+        url: "/JobAds",
+        views: {
+            "content": {
+                template: ''
+            },
+            "modal": {
+                template: ''
+            }
+        }
+    })
+    .state('JobApplicants', {
+        url: "/JobApplicants",
+        views: {
+            "content": {
+                template: ''
+            },
+            "modal": {
+                template: ''
+            }
+        }
+    })
+    .state('Profile', {
+        url: "/Profile",
+        views: {
+            "content": {
+                template: ''
+            },
+            "modal": {
+                template: ''
+            }
+        }
+    })
+    .state('Festivity', {
+        url: "/Festivity",
+        views: {
+            "content": {
+                template: ''
+            },
+            "modal": {
+                template: ''
             }
         }
     })
@@ -40,20 +81,11 @@
         url: "/",
         views: {
             "content": {
-                template: '',
-                controller: ''
+                template: ''
             },
             "modal": {
-                template: '',
-                controller: ''
+                template: ''
             }
         }
-        //,
-        //resolve: {
-        //    authenticationCheck: function (authenticationDataService) {
-        //        debugger;
-        //        return authenticationDataService.isAuthenticated().then(function(resp) { return resp.data; });
-        //    }
-        //}
     });
 });

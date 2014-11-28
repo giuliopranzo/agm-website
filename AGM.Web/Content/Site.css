@@ -68,3 +68,17 @@ textarea {
         padding: 10px 15px;
     }
 }
+
+.login-control {
+    display: block;
+    margin: auto;
+}
+
+.login-title {
+    text-align: center;
+    margin: 0 0 15px;
+}
+
+.simpleLink {
+    cursor: pointer;
+}

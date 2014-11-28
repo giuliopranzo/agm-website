@@ -20,7 +20,7 @@ app.controller("main", function ($scope, $rootScope, $location, $state, $statePa
     $scope.user = '';
     $scope.authenticated = false;
 
-    $scope.dropdown = [
+    $scope.ddUser = [
         {
             "text": "<i class=\"fa fa-user\"></i>&nbsp;Profilo",
             "href": "/Profile"
@@ -31,6 +31,17 @@ app.controller("main", function ($scope, $rootScope, $location, $state, $statePa
         {
             "text": "<i class=\"fa fa-sign-out\"></i>&nbsp;Logout",
             "href": "/Logout"
+        }
+    ];
+
+    $scope.ddSettings = [
+        {
+            "text": "<i class=\"fa fa-user\"></i>&nbsp;Festività",
+            "href": "/Festivity"
+        },
+        {
+            "text": "<i class=\"fa fa-user\"></i>&nbsp;Utenti",
+            "href": "/Users"
         }
     ];
 

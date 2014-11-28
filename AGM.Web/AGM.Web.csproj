@@ -168,6 +168,9 @@
     <Content Include="App\Authentication\authentication.service.js" />
     <Content Include="App\http.config.js" />
     <Content Include="App\Authentication\Login.html" />
+    <Content Include="App\MonthlyReports\MonthlyReports.html" />
+    <Content Include="App\MonthlyReports\monthlyReports.js" />
+    <Content Include="App\MonthlyReports\monthlyReports.service.js" />
     <Content Include="App\route.config.js" />
     <Content Include="Content\animate.css" />
     <Content Include="Content\animate.min.css" />

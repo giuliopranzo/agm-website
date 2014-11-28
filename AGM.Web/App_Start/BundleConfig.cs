@@ -18,7 +18,10 @@ namespace AGM.Web
                 "~/App/app.service.js",
                 "~/App/Authentication/authentication.config.js",
                 "~/App/Authentication/authentication.service.js",
-                "~/App/Authentication/authentication.js"
+                "~/App/Authentication/authentication.js",
+                //"~/App/MonthlyReports/monthlyReports.config.js",
+                "~/App/MonthlyReports/monthlyReports.service.js",
+                "~/App/MonthlyReports/monthlyReports.js"
                 
             ));
 

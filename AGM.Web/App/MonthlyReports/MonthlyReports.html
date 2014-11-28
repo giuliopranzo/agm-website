@@ -1,0 +1,12 @@
+﻿<h3 class="login-title login-control">Rapportini</h3>
+<div ng-controller="monthlyReports">
+    <div ng-hide="detailVisible">
+        <div ng-repeat="user in users">
+            <div ng-show="showLetter(user.name)" ng-bind="getLetter(user.name)"></div>
+            <div><a ng-click="showDetail(user.id)"><span ng-bind="user.name"></span></a></div>
+        </div>
+    </div>
+    <div ng-show="detailVisible">
+        <div><a ng-click="">Indietro</a></div>
+    </div>
+</div>
