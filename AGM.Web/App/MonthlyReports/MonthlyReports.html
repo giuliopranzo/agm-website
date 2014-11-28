@@ -2,11 +2,14 @@
 <div ng-controller="monthlyReports">
     <div ng-hide="detailVisible">
         <div class="container-fluid">
-            <div ng-repeat="user in users | orderBy:'name':false">
-                <div class="col-xs-12 nameListLetterHead" ng-show="showLetter(user.name)" ng-bind="getLetter(user.name)"></div>
+            <div class="col-xs-12 col-md-6 form-group">
+                <input class="form-control" type="text" ng-model="searchText" placeholder="Ricerca..." />
+            </div>
+            <div ng-repeat="user in users | filter:searchText:false | orderBy:'name':false">
+                <div class="col-xs-12 nameListLetterHead" ng-show="showLetter($index, user.name)" ng-bind="getLetter(user.name)"></div>
                 <div class="col-xs-12 col-md-3">
                     <button class="btn btn-default btn-block nameListElement" ng-click="showDetail(user.id)">
-                        <img ng-src="{{user.picture}}?v={{$index}}" />
+                        <img ng-src="{{user.picture}}?v={{user.indexù}}" />
                         <div>
                             <span class="person-name" ng-bind="user.name"></span>
                             <span class="company-name" ng-bind="user.company"></span>

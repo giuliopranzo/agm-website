@@ -3,7 +3,9 @@
     $scope.detailVisible = false;
     $scope.currentLetter = '';
 
-    $scope.showLetter = function (name) {
+    $scope.showLetter = function (index, name) {
+        if (index == 0)
+            $scope.currentLetter = '';
         var letter = name.substr(0, 1);
         var res = (letter != $scope.currentLetter);
         $scope.currentLetter = letter;
