@@ -25,6 +25,10 @@ namespace AGM.Web
                 
             ));
 
+            bundles.Add(new ScriptBundle("~/bundles/datamockups").Include(
+                "~/App/Mockup/users.js"
+            ));
+
             bundles.Add(new ScriptBundle("~/bundles/applibs").Include(
                 "~/Scripts/angular.js",
                 "~/Scripts/angular-sanitize.js",

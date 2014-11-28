@@ -82,3 +82,36 @@ textarea {
 .simpleLink {
     cursor: pointer;
 }
+
+.nameListElement {
+  margin: 0 5px 10px;
+  text-align: left;
+  padding: 0;
+}
+
+.nameListLetterHead {
+    border-bottom: 1px solid #E8E8E8;
+    margin: 5px 0 10px;
+    font-weight: bold;
+    color: #B0B0AE;
+}
+
+.nameListElement div {
+    display: inline-block;
+}
+
+.nameListElement img {
+    vertical-align: top;
+}
+
+.nameListElement div span {
+    display: block;
+}
+
+.person-name{
+    font-size: 12px;
+}
+
+.company-name{
+    font-size: 9px;
+}

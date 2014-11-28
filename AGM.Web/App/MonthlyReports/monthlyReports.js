@@ -1,10 +1,5 @@
 ﻿app.controller('monthlyReports', function($scope, $alert, $location) {
-    $scope.users = [
-        { "id": 0, "name": "A-Utente1", "company": "Azienda1" },
-        { "id": 1, "name": "A-Utente2", "company": "Azienda2" },
-        { "id": 2, "name": "A-Utente3", "company": "Azienda3" },
-        { "id": 3, "name": "B-Utente4", "company": "Azienda4" }
-    ];
+    $scope.users = usersMockup;
     $scope.detailVisible = false;
     $scope.currentLetter = '';
 

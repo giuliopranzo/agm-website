@@ -1,9 +1,19 @@
 ﻿<h3 class="login-title login-control">Rapportini</h3>
 <div ng-controller="monthlyReports">
     <div ng-hide="detailVisible">
-        <div ng-repeat="user in users">
-            <div ng-show="showLetter(user.name)" ng-bind="getLetter(user.name)"></div>
-            <div><a ng-click="showDetail(user.id)"><span ng-bind="user.name"></span></a></div>
+        <div class="container-fluid">
+            <div ng-repeat="user in users | orderBy:'name':false">
+                <div class="col-xs-12 nameListLetterHead" ng-show="showLetter(user.name)" ng-bind="getLetter(user.name)"></div>
+                <div class="col-xs-12 col-md-3">
+                    <button class="btn btn-default btn-block nameListElement" ng-click="showDetail(user.id)">
+                        <img ng-src="{{user.picture}}?v={{$index}}" />
+                        <div>
+                            <span class="person-name" ng-bind="user.name"></span>
+                            <span class="company-name" ng-bind="user.company"></span>
+                        </div>
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
     <div ng-show="detailVisible">
