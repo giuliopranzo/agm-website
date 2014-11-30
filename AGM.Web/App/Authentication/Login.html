@@ -1,12 +1,18 @@
-﻿<h3 class="login-title login-control">Login area riservata</h3>
-<div ng-controller="authentication">
-    <div class="form-group">
-        <input class="login-control form-control" type="text" ng-model="email" placeholder="Email" />
+﻿<div ng-controller="authentication">
+    <h3 class="login-title login-control">Login area riservata</h3>
+    <div class="row row-centered">
+        <div class="form-group col-xs-12 col-md-4 login-group">
+            <input class="login-control form-control" type="text" ng-model="email" placeholder="Email" />
+        </div>
     </div>
-    <div class="form-group">
-        <input class="login-control form-control" type="password" ng-model="password" placeholder="Password" />
+    <div class="row row-centered">
+        <div class="form-group col-xs-12 col-md-4 login-group">
+            <input class="login-control form-control" type="password" ng-model="password" placeholder="Password" />
+        </div>
     </div>
-    <div class="form-group">
-        <input class="login-control btn btn-info" type="button" value="Login" ng-click="authenticate()" />
+    <div class="row row-centered">
+        <div class="form-group col-xs-12 col-md-4 login-group">
+            <input class="login-control btn btn-info" type="button" value="Login" ng-click="authenticate()" />
+        </div>
     </div>
 </div>

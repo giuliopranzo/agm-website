@@ -15,7 +15,7 @@ namespace AGM.Web
 
             routes.MapRoute(
                 name: "Default",
-                url:"{*routeSegment}",
+                url:"backoffice/{*routeSegment}",
                 defaults: new { controller = "Home", action = "Index"}
             );
         }

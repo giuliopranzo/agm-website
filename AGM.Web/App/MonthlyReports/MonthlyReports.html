@@ -3,13 +3,13 @@
     <div ng-hide="detailVisible">
         <div class="container-fluid">
             <div class="col-xs-12 col-md-6 form-group">
-                <input class="form-control" type="text" ng-model="searchText" placeholder="Ricerca..." />
+                <input class="form-control" type="text" ng-model="search.name" placeholder="Ricerca..." />
             </div>
-            <div ng-repeat="user in users | filter:searchText:false | orderBy:'name':false">
-                <div class="col-xs-12 nameListLetterHead" ng-show="showLetter($index, user.name)" ng-bind="getLetter(user.name)"></div>
+            <div ng-repeat="user in users | filter:search:false | orderBy:'name':false as usersFiltered">
+                <div class="col-xs-12 nameListLetterHead" ng-show="showLetter($index)" ng-bind="getFirstChar(user.name)"></div>
                 <div class="col-xs-12 col-md-3">
                     <button class="btn btn-default btn-block nameListElement" ng-click="showDetail(user.id)">
-                        <img ng-src="{{user.picture}}?v={{user.indexù}}" />
+                        <img ng-src="{{user.picture}}?v={{user.index}}" alt="" />
                         <div>
                             <span class="person-name" ng-bind="user.name"></span>
                             <span class="company-name" ng-bind="user.company"></span>
@@ -20,6 +20,6 @@
         </div>
     </div>
     <div ng-show="detailVisible">
-        <div><a ng-click="">Indietro</a></div>
+        <div><a ng-click="backToUsers()">Indietro</a></div>
     </div>
 </div>

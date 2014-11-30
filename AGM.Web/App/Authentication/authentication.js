@@ -1,6 +1,9 @@
-﻿app.controller('authentication', function ($scope, $alert, $location, authenticationDataService, authenticationHelper) {
+﻿app.controller('authentication', function ($scope, $alert, $location, $stateParams, authenticationDataService, authenticationHelper) {
     $scope.email = '';
     $scope.password = '';
+    $scope.returnPath = $stateParams.returnPath;
+    if (!$scope.returnPath)
+        $scope.returnPath = '/';
 
     $scope.authenticate = function () {
         var postData = { Email: $scope.email, Password: $scope.password };
@@ -13,7 +16,7 @@
                 duration: 3
             });
 
-            $location.path('/');
+            $location.url($scope.returnPath);
         })
         .catch(function() {
             $alert({

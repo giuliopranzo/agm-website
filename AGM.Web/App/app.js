@@ -30,7 +30,7 @@ app.controller("main", function ($scope, $rootScope, $location, $state, $statePa
         },
         {
             "text": "<i class=\"fa fa-sign-out\"></i>&nbsp;Logout",
-            "href": "/Logout"
+            "href": "/backoffice/Logout"
         }
     ];
 
@@ -47,18 +47,12 @@ app.controller("main", function ($scope, $rootScope, $location, $state, $statePa
 
     $rootScope.$on('$stateChangeSuccess',
             function (event, toState, toParams, fromState, fromParams) {
+                if (fromState.name == "")
+                    $scope.getCurrentUser($location.path());
                 switch (toState.name) {
                     case 'Index':
                         if ($scope.user == '')
-                            authenticationDataService.getCurrentUser()
-                                .then(function (resp) {
-                                    $scope.user = resp.data;
-                                    $scope.authenticated = true;
-                                })
-                                .catch(function () {
-                                    $location.path('/Login');
-                                }
-                            );
+                            $scope.getCurrentUser();
                         break;
                     case 'Logout':
                         authenticationHelper.deleteAuthToken();
@@ -68,5 +62,17 @@ app.controller("main", function ($scope, $rootScope, $location, $state, $statePa
                         break;
                 }
             });
+
+    $scope.getCurrentUser = function(returnPath) {
+        authenticationDataService.getCurrentUser()
+            .then(function(resp) {
+                $scope.user = resp.data;
+                $scope.authenticated = true;
+            })
+            .catch(function() {
+                    $location.url('/Login?returnPath=' + returnPath);
+                }
+            );
+    };
 });
 

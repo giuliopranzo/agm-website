@@ -31,6 +31,7 @@
 
 .container-header {
     border-bottom: 1px solid #C4C4C4;
+    background-color: #ffffff;
 }
 
 .body-content {
@@ -107,4 +108,13 @@
 
 .company-name{
     font-size: 9px;
+}
+
+.login-group {
+    display:inline-block;
+    float:none;
+}
+
+.row-centered {
+    text-align: center;
 }

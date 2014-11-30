@@ -77,7 +77,7 @@ app.factory('authenticationHelper', function ($q, appHelper) {
                 return appHelper.getCookie('SSTKN');
             },
             deleteAuthToken: function () {
-                appHelper.deleteCookie('SSTKN');
+                appHelper.deleteCookie('SSTKN', '/');
             }
         }
     }

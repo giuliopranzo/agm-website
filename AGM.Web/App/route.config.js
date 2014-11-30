@@ -1,7 +1,7 @@
 ﻿app.config(function ($stateProvider) {
     $stateProvider
     .state('Login', {
-        url: "/Login",
+        url: "/Login?returnPath",
         views: {
             "content": {
                 templateUrl: resolveViewPath('Authentication/Login.html')
@@ -32,6 +32,9 @@
                 template: ''
             }
         }
+    })
+    .state('MonthlyReports.detail', {
+        url: "/:reportId"
     })
     .state('JobAds', {
         url: "/JobAds",

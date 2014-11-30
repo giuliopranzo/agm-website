@@ -22,7 +22,7 @@ namespace AGM.Web
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
-                routeTemplate: "api/{controller}/{action}"
+                routeTemplate: "backoffice/api/{controller}/{action}"
             );
         }
     }

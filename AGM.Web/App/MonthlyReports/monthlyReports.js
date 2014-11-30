@@ -1,22 +1,29 @@
-﻿app.controller('monthlyReports', function($scope, $alert, $location) {
+﻿app.controller('monthlyReports', function ($scope, $alert, $location, $stateParams) {
     $scope.users = usersMockup;
     $scope.detailVisible = false;
-    $scope.currentLetter = '';
+    $scope.reportId = $stateParams.reportId;
+    if ($scope.reportId)
+        $scope.detailVisible = true;
 
-    $scope.showLetter = function (index, name) {
-        if (index == 0)
-            $scope.currentLetter = '';
-        var letter = name.substr(0, 1);
-        var res = (letter != $scope.currentLetter);
-        $scope.currentLetter = letter;
-        return res;
+    $scope.showLetter = function (index) {
+        if (index == 0 || $scope.usersFiltered[index].name.substr(0, 1) != $scope.usersFiltered[index - 1].name.substr(0, 1))
+            return true;
+        return false;
     };
 
-    $scope.getLetter = function(name) {
-        return name.substr(0, 1);
+    $scope.getFirstChar = function(value) {
+        return value.substr(0, 1);
     }
 
-    $scope.showDetail = function(id) {
+    $scope.showDetail = function (id) {
+        $scope.reportId = id;
         $location.path('/MonthlyReports/' + id);
+        $scope.detailVisible = true;
+    }
+
+    $scope.backToUsers = function() {
+        $scope.reportId = null;
+        $location.path('/MonthlyReports');
+        $scope.detailVisible = false;
     }
 });
