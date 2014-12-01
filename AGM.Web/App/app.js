@@ -2,7 +2,7 @@
 var controllerBasePath = '/App/';
 var factoryBasePath = '/App/';
 
-var app = angular.module('agm', ['ngAnimate', 'ngSanitize', 'ui.router', 'LocalStorageModule', 'mgcrea.ngStrap']);
+var app = angular.module('agm', ['ui.bootstrap', 'ngAnimate', 'ngSanitize', 'ui.router', 'LocalStorageModule', 'mgcrea.ngStrap']);
 
 function resolveViewPath(viewName) {
     return viewBasePath + viewName;
@@ -47,7 +47,7 @@ app.controller("main", function ($scope, $rootScope, $location, $state, $statePa
 
     $rootScope.$on('$stateChangeSuccess',
             function (event, toState, toParams, fromState, fromParams) {
-                if (fromState.name == "")
+                if (fromState.name == "" || (fromState.name == "Login" && toState.name != Login))
                     $scope.getCurrentUser($location.path());
                 switch (toState.name) {
                     case 'Index':

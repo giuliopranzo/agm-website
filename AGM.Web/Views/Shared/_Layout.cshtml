@@ -7,18 +7,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <base href="/backoffice/">
     <link href="~/Content/bootstrap.min.css" rel="stylesheet">
-    <link href="~/Content/animate.min.css" rel="stylesheet">
     <link href="~/css/font-awesome.css" rel="stylesheet">
     @Styles.Render("~/Content/css")
+    <link href="~/Content/animate.min.css" rel="stylesheet">
 </head>
 <body>
     <div class="container body-content">
         @RenderBody()
         @RenderSection("SPAViews", required: false)
-        <hr />
+        @*<hr />
         <footer>
             <p>AGM Solutions srl &copy; @DateTime.Now.Year - Area riservata</p>
-        </footer>
+        </footer>*@
     </div>
     
     @RenderSection("Scripts", required: false)

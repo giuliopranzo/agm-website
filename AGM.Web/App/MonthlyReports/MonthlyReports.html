@@ -1,6 +1,6 @@
-﻿<h3 class="login-title login-control">Rapportini</h3>
-<div ng-controller="monthlyReports">
-    <div ng-hide="detailVisible">
+﻿<div class="monthlyRep" ng-controller="monthlyReports">
+    <h3 class="login-title login-control">Rapportini</h3>
+    <div class="monthlyRep-users" ng-hide="detailVisible">
         <div class="container-fluid">
             <div class="col-xs-12 col-md-6 form-group">
                 <input class="form-control" type="text" ng-model="search.name" placeholder="Ricerca..." />
@@ -17,10 +17,39 @@
                     </button>
                 </div>
             </div>
-            <button ng-click="test()">TEST!</button>
         </div>
+        <div agm-footer></div>
     </div>
-    <div ng-show="detailVisible">
-        <div><a ng-click="backToUsers()">Indietro</a></div>
+    <div class="monthlyRep-detail" ng-show="detailVisible">
+        <div>
+            <i class="fa fa-arrow-circle-o-left sign" ng-click="backToUsers()"></i>&nbsp;<h2 class="detailUserName" ng-bind="detail.user.name"></h2>
+        </div>
+        <div class="col-xs-12 col-md-3 form-group">
+            <input id="monthPicker" type="text" class="form-control inputDatePicker" ng-model="selectedDate" ng-change="getUserDetail(selectedDate)"
+                   data-min-view="1"
+                   data-date-format="MMMM yyyy"
+                   data-date-type="iso"
+                   data-min-date="01/01/2014"
+                   data-autoclose="1"
+                   bs-datepicker
+                   readonly>
+        </div>
+        <div class="clearfix"></div>
+
+        <div class="reportList">
+            <div class="row reportRow">
+                <div class="col-xs-12 col-md-2 reportHeader">Giorno</div>
+                <div class="col-xs-12 col-md-2 reportHeader">Ore</div>
+                <div class="col-xs-12 col-md-8 reportHeader reportHeaderLast">Note</div>
+            </div>
+            <div ng-repeat="day in detail.report">
+                <div class="row reportRow" ng-class="{reportHolidayRow: day.workday}">
+                    <div class="col-xs-12 col-md-2 reportColumn" ng-bind="day.date"></div>
+                    <div class="col-xs-12 col-md-2 reportColumn reportColumnNumeric" ng-bind="day.hours"></div>
+                    <div class="col-xs-12 col-md-8 reportColumn reportColumnLast" ng-bind="day.notes"></div>
+                </div>
+            </div>
+        </div>   
+        <div agm-footer></div>
     </div>
 </div>

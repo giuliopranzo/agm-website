@@ -34,7 +34,7 @@
         }
     })
     .state('MonthlyReports.detail', {
-        url: "/:reportId"
+        url: "/:reportId/:selectedDate"
     })
     .state('JobAds', {
         url: "/JobAds",

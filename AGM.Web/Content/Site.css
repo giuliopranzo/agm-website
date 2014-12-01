@@ -140,3 +140,163 @@
 .row-centered {
     text-align: center;
 }
+
+.monthlyRep-detail {
+    position: relative;
+    display: inline;
+}
+
+.sign {
+    color: rgba(163, 163, 163, 0.5);
+    cursor: pointer;
+    font-size: 52px;
+    margin-bottom: 30px;
+}
+
+.detailUserName {
+    padding-left: 15px;
+}
+
+.reportRow {
+    display: block;
+    background-color: #ffffff;
+    margin: 0;
+}
+
+.reportHolidayRow {
+    background-color: #94BFDA;
+}
+
+.reportHeader {
+    background-color: #808080;
+    color: #FFFFFF;
+    font-size: 12px;
+    line-height: 18px;
+    border-style: solid;
+    border-color: #65523A;
+    border-width: 1px 0 1px 1px;
+}
+
+.reportHeaderLast {
+    border-width: 1px 1px 1px 1px;
+}
+
+.reportColumn {
+    border-style: solid;
+    border-color: #65523A;
+    border-width: 0 0 1px 1px;
+    font-size: 12px;
+}
+
+.reportColumnNumeric {
+    text-align: right;
+}
+
+.reportList {
+    padding: 0 15px;
+}
+
+.reportColumnFirst {
+
+}
+
+.reportColumnLast {
+    border-width: 0 1px 1px 1px;
+}
+
+.inputDatePicker {
+    cursor: pointer !important;
+}
+
+.datepicker.dropdown-menu {
+  width: 250px;
+  height: 250px;
+}
+.datepicker.dropdown-menu button {
+  outline: none;
+  border: 0px;
+}
+.datepicker.dropdown-menu tbody {
+  height: 180px;
+}
+.datepicker.dropdown-menu tbody button {
+  padding: 6px;
+}
+.datepicker.dropdown-menu.datepicker-mode-1 tbody button,
+.datepicker.dropdown-menu.datepicker-mode-2 tbody button {
+  height: 65px;
+}
+
+
+.monthlyRep {
+    position: relative;
+}
+
+.monthlyRep-users {
+    position: absolute;
+    display:inline-block;
+    width:100%;
+}
+
+.monthlyRep-users.ng-hide-add {
+    -webkit-animation:0.5s exit_left linear; 
+    animation:0.5s exit_left linear; 
+}
+
+.monthlyRep-users.ng-hide-remove { 
+    -webkit-animation:0.5s enter_left linear; 
+    animation:0.5s enter_left linear; 
+}
+
+.monthlyRep-detail{
+    position: absolute;
+    display:inline-block;
+    width: 100%;
+}
+
+.monthlyRep-detail.ng-hide-add {
+    -webkit-animation:0.5s exit_right linear; 
+    animation:0.5s exit_right linear; 
+}
+
+.monthlyRep-detail.ng-hide-remove { 
+    -webkit-animation:0.5s enter_right linear; 
+    animation:0.5s enter_right linear; 
+}
+
+@-webkit-keyframes enter_left {
+  from { left:-100%;opacity:1; }
+  to { left:0; opacity:1; }
+}
+@keyframes enter_left {
+  from { left:-100%;opacity:1; }
+  to { left:0; opacity:1; }
+}
+
+@-webkit-keyframes enter_right {
+  from { left:100%;opacity:1; }
+  to { left:0; opacity:1; }
+}
+@keyframes enter_right {
+  from { left:100%;opacity:1; }
+  to { left:0; opacity:1; }
+}
+
+@-webkit-keyframes exit_left {
+  from { left:0;opacity:1; }
+  to { left:-100%; opacity:1; }
+}
+@keyframes exit_left {
+  from { left:0;opacity:1; }
+  to { left:-100%; opacity:1; }
+}
+
+@-webkit-keyframes exit_right {
+  from { left:0;opacity:1; }
+  to { left:100%; opacity:1; }
+}
+@keyframes exit_right {
+  from { left:0;opacity:1; }
+  to { left:100%; opacity:1; }
+}
+

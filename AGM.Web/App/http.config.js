@@ -27,8 +27,8 @@
                 return $q.reject(rejection);
             },
             'responseError': function(response) {
-                if (response && response.status != 200)
-                    appHelper.comFailed(response.status, response.data);
+                //if (response && response.status != 200)
+                //    appHelper.comFailed(response.status, response.data);
                 appHelper.setLoadingData(false);
                 return $q.reject(response);
             }

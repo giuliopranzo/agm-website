@@ -16,6 +16,7 @@ namespace AGM.Web
                 "~/App/http.config.js",
                 "~/App/route.config.js",
                 "~/App/app.service.js",
+                "~/App/footer.directive.js",
                 "~/App/Authentication/authentication.config.js",
                 "~/App/Authentication/authentication.service.js",
                 "~/App/Authentication/authentication.js",
@@ -31,12 +32,15 @@ namespace AGM.Web
 
             bundles.Add(new ScriptBundle("~/bundles/applibs").Include(
                 "~/Scripts/angular.js",
+                "~/Scripts/i18n/angular-locale_it-it.js",
                 "~/Scripts/angular-sanitize.js",
                 "~/Scripts/angular-ui-router.js",
                 "~/Scripts/angular-animate.js",
                 "~/Scripts/angular-local-storage.js",
                 "~/Scripts/angular-strap.js",
                 "~/Scripts/angular-strap.tpl.js",
+                "~/Scripts/angular-ui/ui-bootstrap.js",
+                "~/Scripts/angular-ui/ui-bootstrap-tpls.js",
                 "~/Scripts/jquery-1.10.2.js",
                 "~/Scripts/jquery.cookie.js"
             ));
