@@ -13,17 +13,26 @@
 
     $scope.getFirstChar = function(value) {
         return value.substr(0, 1);
-    }
+    };
 
-    $scope.showDetail = function (id) {
+    $scope.showDetail = function(id) {
         $scope.reportId = id;
         $location.path('/MonthlyReports/' + id);
         $scope.detailVisible = true;
-    }
+    };
 
     $scope.backToUsers = function() {
         $scope.reportId = null;
         $location.path('/MonthlyReports');
         $scope.detailVisible = false;
-    }
+    };
+
+    $scope.test = function() {
+        $alert({
+            content: 'You have successfully logged in',
+            animation: 'fadeZoomFadeDown',
+            type: 'info',
+            duration: 60
+        });
+    };
 });

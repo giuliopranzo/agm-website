@@ -10,10 +10,10 @@
         authenticationDataService.authenticate(postData)
         .then(function (resp) {
             $alert({
-                content: 'You have successfully logged in',
+                content: 'Login effettuato con successo',
                 animation: 'fadeZoomFadeDown',
-                type: 'material',
-                duration: 3
+                type: 'info',
+                duration: 5
             });
 
             $location.url($scope.returnPath);
@@ -22,8 +22,8 @@
             $alert({
                 content: response.data.message,
                 animation: 'fadeZoomFadeDown',
-                type: 'material',
-                duration: 3
+                type: 'error',
+                duration: 30
             });
         });
     };

@@ -69,9 +69,12 @@ app.controller("main", function ($scope, $rootScope, $location, $state, $statePa
                 $scope.user = resp.data;
                 $scope.authenticated = true;
             })
-            .catch(function() {
+            .catch(function () {
+                if (returnPath && returnPath != '/Login')
                     $location.url('/Login?returnPath=' + returnPath);
-                }
+                else
+                    $location.url('/Login');
+            }
             );
     };
 });

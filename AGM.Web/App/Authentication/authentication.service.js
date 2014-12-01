@@ -1,16 +1,5 @@
 ﻿app.factory('authenticationDataService', function ($http, $q, authenticationContainer, authenticationHelper) {
     return {
-        genericGet: function(url) {
-            var deferred = $q.defer();
-
-            $http({ method: 'GET', url: url }).success(function (respData, status, headers, config) {
-                deferred.resolve(respData);
-            }).error(function (respData, status, headers, config) {
-                debugger;
-                deferred.reject(respData, status);
-            });
-            return deferred.promise;
-        },
         authenticate: function (authData) {
             var deferred = $q.defer();
 
@@ -42,7 +31,6 @@
                 deferred.reject(respData);
             });
             return deferred.promise;
-            //return this.genericGet('api/Auth/GetCurrentUser');
         }
     }
 });
@@ -57,19 +45,6 @@ app.factory('authenticationContainer', function() {
 
 app.factory('authenticationHelper', function ($q, appHelper) {
         return {
-            //getCurrentUser: function () {
-            //    var deferred = $q.defer();
-            //    authenticationDataService.getCurrentUser().then(
-            //        function (resp) {
-            //            authenticationContainer.currentUser = resp.data;
-            //            deferred.resolve(resp.data);
-            //        },
-            //        function (message) {
-            //            deferred.reject(message);
-            //        }
-            //    );
-            //    return deferred.promise;
-            //},
             setAuthToken: function (value, cancelOnClose) {
                 appHelper.setCookie('SSTKN', value, '/', ((cancelOnClose) ? null : 30));
             },
