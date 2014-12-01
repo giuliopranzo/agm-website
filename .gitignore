@@ -5,3 +5,5 @@
 /AGM.Web/bin
 /AGM.Web/obj/Debug
 /packages
+*.user
+*.suo
