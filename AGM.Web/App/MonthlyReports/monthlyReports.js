@@ -1,7 +1,8 @@
-﻿app.controller('monthlyReports', function ($scope, $alert, $location, $stateParams, $filter, monthlyReportsDataService) {
+﻿app.controller('monthlyReports', function ($scope, $alert, $location, $stateParams, $filter, usersSource, monthlyReportsDataService) {
 
     $scope.init = function () {
-        $scope.users = usersMockup;
+        if (usersSource)
+            $scope.users = usersSource;
         $scope.detail = {};
         $scope.detailVisible = false;
 

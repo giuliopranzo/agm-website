@@ -5,12 +5,14 @@ using System;
 using System.Collections.Generic;
 using System.IdentityModel.Protocols.WSTrust;
 using System.IdentityModel.Tokens;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Threading;
 using System.Web.Http;
+using Newtonsoft.Json;
 
 namespace AGM.Web.Controllers
 {
@@ -19,12 +21,43 @@ namespace AGM.Web.Controllers
         [HttpPost]
         public ApiResponse Login(dynamic loginData)
         {
-            var now = DateTime.Now;
+            string username = loginData.Username;
+            string password = loginData.Password;
+
+            if (ConfigurationHelper.UseMockupData)
+            {
+                using (var re = new StreamReader(System.Web.Hosting.HostingEnvironment.MapPath("~/App/Mockup/users.js")))
+                {
+                    JsonTextReader reader = new JsonTextReader(re);
+                    JsonSerializer se = new JsonSerializer();
+                    var parsedData = se.Deserialize<List<User>>(reader);
+                    if (parsedData.All(u => u.Username.ToLower() != username.ToLower() || u.Password != password))
+                        return new ApiResponse(false)
+                        {
+                            Errors =
+                                new ApiResponseError[] { new ApiResponseError() { Message = "Nome utente o password errati" } }
+                        };
+                }
+            }
+            else
+            {
+                using (var context = new AgmDataContext())
+                {
+                    if (context.Users.All(u => u.Username.ToLower() != username.ToLower() || u.Password != password))
+                        return new ApiResponse(false)
+                        {
+                            Errors =
+                                new ApiResponseError[]
+                                {new ApiResponseError() {Message = "Nome utente o password errati"}}
+                        };
+                }
+            }
+
             var tokenHandler = new JwtSecurityTokenHandler();
             
             var claims = new List<Claim>()
             {
-                new Claim(ClaimTypes.Name, loginData.Email.ToString()) 
+                new Claim(ClaimTypes.Name, loginData.Username.ToString()) 
             };
 
             var tokenDescriptor = new SecurityTokenDescriptor()

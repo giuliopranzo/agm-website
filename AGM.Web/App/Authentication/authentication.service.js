@@ -4,7 +4,8 @@
             var deferred = $q.defer();
 
             $http({ method: 'POST', url: 'api/Auth/Login', data: authData }).success(function (respData, status, headers, config) {
-                authenticationHelper.setAuthToken(respData.token, true);
+                if (respData && respData.succeed)
+                    authenticationHelper.setAuthToken(respData.token, true);
                 deferred.resolve(respData);
             }).error(function (respData, status, headers, config) {
                 deferred.reject(respData);

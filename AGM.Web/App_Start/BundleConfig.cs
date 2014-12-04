@@ -14,7 +14,6 @@ namespace AGM.Web
                 "~/App/app.js",
                 "~/App/app.config.js",
                 "~/App/http.config.js",
-                "~/App/route.config.js",
                 "~/App/app.service.js",
                 "~/App/footer.directive.js",
                 "~/App/Authentication/authentication.config.js",
@@ -22,7 +21,8 @@ namespace AGM.Web
                 "~/App/Authentication/authentication.js",
                 //"~/App/MonthlyReports/monthlyReports.config.js",
                 "~/App/MonthlyReports/monthlyReports.service.js",
-                "~/App/MonthlyReports/monthlyReports.js"
+                "~/App/MonthlyReports/monthlyReports.js",
+                "~/App/route.config.js"
                 
             ));
 

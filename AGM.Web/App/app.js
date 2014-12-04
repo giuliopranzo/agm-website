@@ -47,7 +47,7 @@ app.controller("main", function ($scope, $rootScope, $location, $state, $statePa
 
     $rootScope.$on('$stateChangeSuccess',
             function (event, toState, toParams, fromState, fromParams) {
-                if (fromState.name == "" || (fromState.name == "Login" && toState.name != Login))
+                if (fromState.name == "" || (fromState.name == "Login" && toState.name != 'Login'))
                     $scope.getCurrentUser($location.path());
                 switch (toState.name) {
                     case 'Index':

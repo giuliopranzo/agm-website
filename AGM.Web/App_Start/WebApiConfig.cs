@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Web.Http;
 using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json;
@@ -17,6 +18,7 @@ namespace AGM.Web
             // Use lower case for JSON data.
             config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new LowercaseContractResolver();
 
+            config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
             // Web API routes
             config.MapHttpAttributeRoutes();
 
@@ -24,6 +26,8 @@ namespace AGM.Web
                 name: "DefaultApi",
                 routeTemplate: "backoffice/api/{controller}/{action}"
             );
+
+            
         }
     }
 }

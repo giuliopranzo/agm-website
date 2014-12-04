@@ -1,4 +1,4 @@
-﻿<div class="monthlyRep" ng-controller="monthlyReports">
+﻿<div class="monthlyRep">
     <h3 class="login-title login-control">Rapportini</h3>
     <div class="monthlyRep-users" ng-hide="detailVisible">
         <div class="container-fluid">
@@ -9,7 +9,7 @@
                 <div class="col-xs-12 nameListLetterHead" ng-show="showLetter($index)" ng-bind="getFirstChar(user.name)"></div>
                 <div class="col-xs-12 col-md-3">
                     <button class="btn btn-default btn-block nameListElement" ng-click="showDetail(user.id)">
-                        <img ng-src="{{user.picture}}?v={{user.index}}" alt="" />
+                        <img ng-src="{{user.picture}}" alt="" />
                         <div>
                             <span class="person-name" ng-bind="user.name"></span>
                             <span class="company-name" ng-bind="user.company"></span>
@@ -35,20 +35,29 @@
                    readonly>
         </div>
         <div class="clearfix"></div>
+        
+        <div ng-repeat="day in detail.report">
+            
+        </div>
 
         <div class="reportList">
             <div class="row reportRow">
                 <div class="col-xs-12 col-md-2 reportHeader">Giorno</div>
                 <div class="col-xs-12 col-md-2 reportHeader">Ore</div>
-                <div class="col-xs-12 col-md-8 reportHeader reportHeaderLast">Note</div>
+                <div class="col-xs-12 col-md-1 reportHeader">Tot. Ore</div>
+                <div class="col-xs-12 col-md-2 reportHeader">Spese</div>
+                <div class="col-xs-12 col-md-1 reportHeader">Tot. Spese</div>
+                <div class="col-xs-12 col-md-4 reportHeader reportHeaderLast">Note</div>
             </div>
-            <div ng-repeat="day in detail.report">
-                <div class="row reportRow" ng-class="{reportHolidayRow: day.workday}">
+
+                <div class="row reportRow" ng-class="{reportHolidayRow: !day.workday}" ng-repeat="day in detail.report">
                     <div class="col-xs-12 col-md-2 reportColumn" ng-bind="day.date"></div>
-                    <div class="col-xs-12 col-md-2 reportColumn reportColumnNumeric" ng-bind="day.hours"></div>
-                    <div class="col-xs-12 col-md-8 reportColumn reportColumnLast" ng-bind="day.notes"></div>
+                    <div class="col-xs-12 col-md-2 reportColumn">&nbsp;</div>
+                    <div class="col-xs-12 col-md-1 reportColumn reportColumnNumeric" ng-bind="day.hours"></div>
+                    <div class="col-xs-12 col-md-2 reportColumn">&nbsp;</div>
+                    <div class="col-xs-12 col-md-1 reportColumn reportColumnNumeric" ng-bind="day.expenses"></div>
+                    <div class="col-xs-12 col-md-4 reportColumn reportColumnLast">&nbsp;</div>
                 </div>
-            </div>
         </div>   
         <div agm-footer></div>
     </div>

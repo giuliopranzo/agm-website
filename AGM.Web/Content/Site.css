@@ -175,6 +175,8 @@
     border-style: solid;
     border-color: #65523A;
     border-width: 1px 0 1px 1px;
+    padding: 0 1px;
+    text-align: center;
 }
 
 .reportHeaderLast {
@@ -186,6 +188,7 @@
     border-color: #65523A;
     border-width: 0 0 1px 1px;
     font-size: 12px;
+    padding: 0 1px;
 }
 
 .reportColumnNumeric {

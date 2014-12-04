@@ -25,12 +25,12 @@ namespace AGM.Web.Infrastructure.Attributes
                 var headerTokenEnc = headers.GetCookieValue("SSTKN");
 
                 if (string.IsNullOrEmpty(sessionId) || string.IsNullOrEmpty(tokenEnc) || sessionId != headerSessionId || tokenEnc != headerTokenEnc )
-                    throw new OperationException(System.Net.HttpStatusCode.Unauthorized, "Sessione non autenticata");
+                    throw new OperationException(System.Net.HttpStatusCode.BadRequest, "Sessione non autenticata");
 
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var token = tokenHandler.ReadToken(tokenEnc) as JwtSecurityToken;
                 if (token == null || token.Claims.All(c => c.Type != "unique_name"))
-                    throw new OperationException(System.Net.HttpStatusCode.Unauthorized, "Sessione non autenticata");
+                    throw new OperationException(System.Net.HttpStatusCode.BadRequest, "Sessione non autenticata");
 
                 Thread.CurrentPrincipal = new CustomPrincipal(token.Claims.Where(c => c.Type == "unique_name").First().Value);
                 Users = token.Claims.Where(c => c.Type == "unique_name").First().Value;
