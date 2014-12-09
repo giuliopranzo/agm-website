@@ -1,18 +1,20 @@
 ﻿<div ng-controller="authentication">
     <h3 class="login-title login-control">Login area riservata</h3>
-    <div class="row row-centered">
-        <div class="form-group col-xs-12 col-md-4 login-group">
-            <input class="login-control form-control" type="text" ng-model="username" placeholder="Username" />
-        </div>
-    </div>
-    <div class="row row-centered">
-        <div class="form-group col-xs-12 col-md-4 login-group">
-            <input class="login-control form-control" type="password" ng-model="password" placeholder="Password" />
-        </div>
-    </div>
-    <div class="row row-centered">
-        <div class="form-group col-xs-12 col-md-4 login-group">
-            <input class="login-control btn btn-info" type="button" value="Login" ng-click="authenticate()" />
-        </div>
-    </div>
+    <form name="loginForm" novalidate>
+        <fieldset class="col-xs-12 col-md-4 login-group">
+            <div class="login-innerGroup">
+                <div class="input-group login-control">
+                    <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
+                    <input required class="form-control" type="text" ng-model="username" placeholder="Username">
+                </div>
+                <div class="input-group login-control">
+                    <span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
+                    <input required class="form-control" type="password" ng-model="password" placeholder="Password">
+                </div>
+                <button ng-hide="loginForm.$invalid" class="btn btn-info login-control" ng-click="authenticate()">Login</button>
+                <button ng-show="loginForm.$invalid" class="btn btn-info login-control" disabled="disabled">Login</button>
+            </div>
+        </fieldset>
+        <div class="clearfix"></div>
+    </form>
 </div>

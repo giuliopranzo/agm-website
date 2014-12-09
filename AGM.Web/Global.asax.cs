@@ -15,6 +15,8 @@ namespace AGM.Web
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            var cash = AGM.Web.Models.AgmStaticDataContext.HourReasons;
         }
     }
 }

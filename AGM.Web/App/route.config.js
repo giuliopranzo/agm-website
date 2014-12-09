@@ -35,14 +35,24 @@
             },
             resolve: {
                 usersSource: function(monthlyReportsDataService) {
-                    return monthlyReportsDataService.getAllUsers().then(function (respData) {
+                    return monthlyReportsDataService.getAllUsers().then(function(respData) {
                         return respData.data;
                     });
                 }
             }
         })
         .state('MonthlyReports.detail', {
-            url: "/:reportId/:selectedDate"
+            url: "/:reportId/:selectedDate",
+            resolve: {
+                userReportSource: function($stateParams, usersSource, monthlyReportsDataService) {
+                    return monthlyReportsDataService.getReportDetail($stateParams.reportId, $stateParams.selectedDate).then(function (respData) {
+                        return respData.data;
+                        //$scope.detail = respData.data;
+                        //$scope.selectedDate = respData.data.currentmonth;
+                        //$location.path('/MonthlyReports/' + $scope.reportId + '/' + $filter('date')($scope.selectedDate, 'yyyy-MM'));
+                    });
+                }
+            }
         })
         .state('JobAds', {
             url: "/JobAds",

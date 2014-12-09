@@ -22,12 +22,19 @@ namespace AGM.Web.Models
 
         public DbSet<User> Users { get; set; }
         public DbSet<MonthlyReportHour> MonthlyReportHours { get; set; }
-
+        public DbSet<MonthlyReportExpense> MonthlyReportExpenses { get; set; }
+        public DbSet<MonthlyReportNote> MonthlyReportNotes { get; set; }
+        public DbSet<HourReason> HourReasons { get; set; }
+        public DbSet<ExpenseReason> ExpenseReasons { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Configurations.Add(new UserMap());
             modelBuilder.Configurations.Add(new MonthlyReportHourMap());
+            modelBuilder.Configurations.Add(new MonthlyReportExpenseMap());
+            modelBuilder.Configurations.Add(new MonthlyReportNoteMap());
+            modelBuilder.Configurations.Add(new HourReasonMap());
+            modelBuilder.Configurations.Add(new ExpenseReasonMap());
         }
     }
 }

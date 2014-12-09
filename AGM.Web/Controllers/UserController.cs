@@ -27,21 +27,66 @@ namespace AGM.Web.Controllers
                 var schemaTable = sqlreader.GetSchemaTable();
                 foreach (System.Data.DataRow col in schemaTable.Rows)
                 {
-                    cols.Add(string.Format("{0} - {1} - {2}", col["ColumnName"], col["IsKey"], col["IsIdentity"]));
+                    cols.Add(string.Format("{0} - {1}", col["ColumnName"], col["IsIdentity"]));
                 }
                 defs.Add("utenti", cols);
                 sqlreader.Close();
 
                 cols = new List<string>();
-                command = new System.Data.SqlClient.SqlCommand("select * from rappore where idutente=38", conn);
+                command = new System.Data.SqlClient.SqlCommand("select TOP 1 * from rappore where idutente=38", conn);
                 sqlreader = command.ExecuteReader();
                 schemaTable = sqlreader.GetSchemaTable();
                 foreach (System.Data.DataRow col in schemaTable.Rows)
                 {
-                    cols.Add(string.Format("{0} - {1} - {2}", col["ColumnName"], col["IsKey"], col["IsIdentity"]));
+                    cols.Add(string.Format("{0} - {1}", col["ColumnName"], col["IsIdentity"]));
                 }
                 defs.Add("rappore", cols);
                 sqlreader.Close();
+
+                cols = new List<string>();
+                command = new System.Data.SqlClient.SqlCommand("select * from rappcausali", conn);
+                sqlreader = command.ExecuteReader();
+                schemaTable = sqlreader.GetSchemaTable();
+                foreach (System.Data.DataRow col in schemaTable.Rows)
+                {
+                    cols.Add(string.Format("{0} - {1}", col["ColumnName"], col["IsIdentity"]));
+                }
+                defs.Add("rappcausali", cols);
+                sqlreader.Close();
+
+                cols = new List<string>();
+                command = new System.Data.SqlClient.SqlCommand("select * from rappcausalispese", conn);
+                sqlreader = command.ExecuteReader();
+                schemaTable = sqlreader.GetSchemaTable();
+                foreach (System.Data.DataRow col in schemaTable.Rows)
+                {
+                    cols.Add(string.Format("{0} - {1}", col["ColumnName"], col["IsIdentity"]));
+                }
+                defs.Add("rappcausalispese", cols);
+                sqlreader.Close();
+
+                cols = new List<string>();
+                command = new System.Data.SqlClient.SqlCommand("select TOP 1 * from rappspese where idutente=38", conn);
+                sqlreader = command.ExecuteReader();
+                schemaTable = sqlreader.GetSchemaTable();
+                foreach (System.Data.DataRow col in schemaTable.Rows)
+                {
+                    cols.Add(string.Format("{0} - {1}", col["ColumnName"], col["IsIdentity"]));
+                }
+                defs.Add("rappspese", cols);
+                sqlreader.Close();
+
+                cols = new List<string>();
+                command = new System.Data.SqlClient.SqlCommand("select TOP 1 * from rappdescrizioni where idutente=38", conn);
+                sqlreader = command.ExecuteReader();
+                schemaTable = sqlreader.GetSchemaTable();
+                foreach (System.Data.DataRow col in schemaTable.Rows)
+                {
+                    cols.Add(string.Format("{0} - {1}", col["ColumnName"], col["IsIdentity"]));
+                }
+                defs.Add("rappdescrizioni", cols);
+                sqlreader.Close();
+
                 conn.Close();
 
             }
