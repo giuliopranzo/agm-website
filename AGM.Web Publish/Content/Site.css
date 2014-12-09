@@ -211,6 +211,10 @@
     float: right;
 }
 
+.asideBodyContainer {
+    padding: 10px;
+}
+
 .modalBg {
     position: fixed;
     top: 0;

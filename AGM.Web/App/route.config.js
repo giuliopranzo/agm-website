@@ -44,9 +44,9 @@
         .state('MonthlyReports.detail', {
             url: "/:reportId/:selectedDate",
             resolve: {
-                userReportSource: function($stateParams, usersSource, monthlyReportsDataService) {
+                userReportSource: function($stateParams, monthlyReportsDataService) {
                     return monthlyReportsDataService.getReportDetail($stateParams.reportId, $stateParams.selectedDate).then(function (respData) {
-                        return respData.data;
+                        $stateParams.userReportSource = respData.data;
                         //$scope.detail = respData.data;
                         //$scope.selectedDate = respData.data.currentmonth;
                         //$location.path('/MonthlyReports/' + $scope.reportId + '/' + $filter('date')($scope.selectedDate, 'yyyy-MM'));

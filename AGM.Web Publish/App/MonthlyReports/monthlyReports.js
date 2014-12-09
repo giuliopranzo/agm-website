@@ -1,4 +1,13 @@
 ﻿app.controller('monthlyReports', function ($rootScope, $scope, $alert, $location, $state, $filter, usersSource, monthlyReportsDataService) {
+    $rootScope.$on('$stateChangeSuccess',
+            function (event, toState, toParams, fromState, fromParams) {
+                if (toState.name == 'MonthlyReports.detail') {
+                    $scope.detail = toParams.userReportSource;
+                    $scope.selectedDate = toParams.userReportSource.currentmonth;
+                    $scope.detailVisible = true;
+                }
+            });
+
     $scope.alert = $alert({
         animation: 'fadeZoomFadeDown',
         duration: 5,
@@ -11,21 +20,12 @@
         $scope.detail = {};
         $scope.detailVisible = false;
 
-        if (userReportSource) {
-            $scope.detail = userReportSource;
-            $scope.selectedDate = userReportSource.currentmonth;
+        if ($state && $state.params && $state.params.userReportSource) {
+            $scope.detail = $state.params.userReportSource;
+            $scope.selectedDate = $state.params.userReportSource.currentmonth;
             $scope.detailVisible = true;
         }
     }
-
-    $rootScope.$on('$stateChangeSuccess',
-            function (event, toState, toParams, fromState, fromParams) {
-                if (toState.name == 'MonthlyReports.detail') {
-                    $scope.detail = toParams.userReportSource;
-                    $scope.selectedDate = toParams.userReportSource.currentmonth;
-                    $scope.detailVisible = true;
-                }
-            });
 
     $scope.showLetter = function (index) {
         if (index == 0 || $scope.usersFiltered[index].name.substr(0, 1) != $scope.usersFiltered[index - 1].name.substr(0, 1))
