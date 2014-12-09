@@ -7,3 +7,19 @@
 /packages
 *.user
 *.suo
+/AGM.Web/obj/Release
+/AGM.Web/annunci
+/AGM.Web/cgi-bin
+/AGM.Web/editor
+/AGM.Web/immagini
+/AGM.Web/include
+/AGM.Web/intranet
+/AGM.Web/default_custom.asp
+/AGM.Web/index.html
+/AGM.Web/informativa.html
+/AGM.Web/robots.txt
+/AGM.Web/sitemap.asp
+/AGM.Web/style.css
+/AGM.Web/termini.html
+/AGM.Web/u.asp
+/AGM.Web Publish
