@@ -162,7 +162,7 @@
     right: 0;
     z-index: 1049;
     overflow: auto;
-    min-width: 300px;
+    width: 300px;
     background: #fff;
 }
 
@@ -213,6 +213,31 @@
 
 .asideBodyContainer {
     padding: 10px;
+}
+
+.asideErrorInput {
+    position: absolute;
+    top: 10px;
+    left: -3px;
+    color: #A94442;
+    cursor: pointer;
+}
+
+.asideinsertNote {
+    resize: none;
+}
+
+.datepicker {
+    left: 0 !important;
+}
+
+.controlMinSeparated {
+    margin-top: 5px;
+}
+
+.btnFill {
+    text-align: left;
+    width: 100%;
 }
 
 .modalBg {

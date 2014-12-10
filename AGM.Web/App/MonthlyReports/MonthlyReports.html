@@ -21,45 +21,69 @@
         <div agm-footer></div>
     </div>
     <div class="monthlyRep-detail" ng-show="detailVisible">
+        <a id="reportDetailTop"></a>
         <div>
             <i class="fa fa-arrow-circle-o-left sign" ng-click="backToUsers()"></i>&nbsp;<h4 class="detailUserName" ng-bind="detail.user.name"></h4>
         </div>
         <div class="col-xs-12 col-md-3 form-group">
-            <input id="monthPicker" type="text" class="form-control inputDatePicker" ng-model="selectedDate" ng-change="getUserDetail(selectedDate)"
-                   data-min-view="1"
-                   data-date-format="MMMM yyyy"
-                   data-date-type="iso"
-                   data-min-date="2014-01-01 00:00:00"
-                   data-autoclose="1"
-                   bs-datepicker
-                   readonly>
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
+                <input id="monthPicker" type="text" class="form-control inputDatePicker" ng-model="selectedDate" ng-change="getUserDetail(selectedDate)"
+                       data-min-view="1"
+                       data-date-format="MMMM yyyy"
+                       data-date-type="iso"
+                       data-min-date="2014-01-01 00:00:00"
+                       data-autoclose="1"
+                       bs-datepicker
+                       readonly>
+            </div>
         </div>
         <div class="toolContainer"><i class="fa fa-plus-circle sign" ng-click="toggleAsideInsert()"></i></div>
         <div class="clearfix"></div>
         
         <div class="asideInsert" ng-show="showInsert">
-            <div class="asideTitleContainer"><span class="asideTitle">Inserimento report</span><i class="fa fa-times asideCloseIcon" ng-click="toggleAsideInsert()"></i></div>
+            <div class="asideTitleContainer"><span class="asideTitle">Inserimento rapportino</span><i class="fa fa-times asideCloseIcon" ng-click="toggleAsideInsert()"></i></div>
             <div class="asideBodyContainer">
-                <div class="col-xs-12 form-group">
-                    <input id="insertDayPicker" type="text" class="form-control inputDatePicker" ng-model="selectedInsertDate" ng-change="getUserDetail(selectedDate)"
-                           data-date-format="EEEE dd"
-                           data-date-type="iso"
-                           data-min-date="2014-12-01 00:00:00"
-                           data-max-date="2014-12-31 00:00:00"
-                           data-autoclose="1"
-                           bs-datepicker
-                           readonly>
-                </div>
-                <div class="col-xs-12 form-group">
-                    <input type="text" class="form-control" placeholder="Ore" />
-                    <button type="button" class="btn btn-default" ng-model="insertSelectedHourReason" data-html="1" ng-options="reason.id as reason.name for reason in detail.hourreasons" bs-select>
-                        Action <span class="caret"></span>
-                    </button>
-                </div>
-                <div class="col-xs-12 form-group">
-                </div>
-                <div class="col-xs-12 form-group">
-                </div>
+                <form name="asideInsert" novalidate>
+                    <div class="col-xs-12 form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
+                            <input id="insertDayPicker" type="text" class="form-control inputDatePicker" ng-model="selectedInsertDate" ng-change="getUserDetail(selectedDate)"
+                                   data-date-format="EEEE dd"
+                                   data-date-type="iso"
+                                   data-min-date="2014-12-01 00:00:00"
+                                   data-max-date="2014-12-31 00:00:00"
+                                   data-autoclose="1"
+                                   bs-datepicker
+                                   readonly>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 form-group">
+                        <div ng-class="{'has-error':!asideInsert.hour.$valid}">
+                            <input name="hour" type="number" ng-model="insertHour" class="form-control" placeholder="Ore" min="0" max="24" />
+                            <i ng-show="!asideInsert.hour.$valid" class="fa fa-exclamation-circle asideErrorInput" data-title="Il numero delle ore deve essere compreso tra 0 e 24" data-placement="right" data-trigger="click" bs-tooltip></i>
+                        </div>
+                        <button type="button" class="btn btn-default controlMinSeparated btnFill" ng-model="insertSelectedHourReason" ng-options="reason.id as reason.name for reason in detail.hourreasons" bs-select>
+                            Action <span class="caret"></span>
+                        </button>
+                    </div>
+                    <div class="col-xs-12 form-group">
+                        <div ng-class="{'has-error':!asideInsert.expense.$valid}">
+                            <input name="expense" type="number" ng-model="insertExpense" class="form-control" placeholder="Spese km|€" min="0" max="9999" />
+                            <i ng-show="!asideInsert.expense.$valid" class="fa fa-exclamation-circle asideErrorInput" data-title="Il numero deve essere compreso tra 0 e 9999" data-placement="right" data-trigger="click" bs-tooltip></i>
+                        </div>
+                        <button type="button" class="btn btn-default controlMinSeparated btnFill" ng-model="insertSelectedExpenseReason" data-html="1" ng-options="reason.id as reason.name for reason in detail.expensereasons" bs-select>
+                            Action <span class="caret"></span>
+                        </button>
+                    </div>
+                    <div class="col-xs-12 form-group">
+                        <textarea ng-model="insertNote" maxlength="50" class="form-control asideinsertNote" placeholder="Note"></textarea>
+                    </div>
+                    <div class="col-xs-12 form-group">
+                        <button ng-hide="(asideInsert.$invalid || (insertHour == null && insertExpense == null && insertNote == null))" class="btn btn-info" ng-click="insertReport()">Inserisci</button>
+                        <button ng-show="(asideInsert.$invalid || (insertHour == null && insertExpense == null && insertNote == null))" class="btn btn-info" disabled="disabled">Inserisci</button>
+                    </div>
+                </form>
             </div>
         </div>
         <div class="modalBg" ng-show="showInsert"></div>

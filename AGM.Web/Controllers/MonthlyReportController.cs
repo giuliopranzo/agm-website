@@ -47,6 +47,7 @@ namespace AGM.Web.Controllers
             var userExpenseReports = new List<MonthlyReportExpense>();
             var userNoteReports = new List<MonthlyReportNote>();
             var hourReasons = new List<HourReason>();
+            var expenseReasons = new List<ExpenseReason>();
             using (var context = new AgmDataContext())
             {
                 user = context.Users.First(u => u.Id == id);
@@ -54,6 +55,7 @@ namespace AGM.Web.Controllers
                 userExpenseReports = context.MonthlyReportExpenses.Where(e => e.UserId == id && e.Month == currentMonthDate.Month).ToList();
                 userNoteReports = context.MonthlyReportNotes.Where(e => e.UserId == id && e.Month == currentMonthDate.Month).ToList();
                 hourReasons = context.HourReasons.ToList();
+                expenseReasons = context.ExpenseReasons.ToList();
             }
 
             var startDate = new DateTime(currentMonthDate.Year, currentMonthDate.Month, 1);
@@ -103,7 +105,8 @@ namespace AGM.Web.Controllers
                     },
                     CurrentMonth = currentMonthString,
                     Report = report,
-                    HourReasons = hourReasons
+                    HourReasons = hourReasons,
+                    ExpenseReasons = expenseReasons
                 }
             };
         }
