@@ -15,13 +15,13 @@ namespace AGM.Web.Models
         public int Year { get; set; }
         public string HoursRaw { get; set; }
 
-        public int HoursCount
+        public double HoursCount
         {
             get
             {
-                int o;
-                int.TryParse(HoursRaw, out o);
-                return o;
+                double o;
+                double.TryParse(HoursRaw, out o);
+                return Math.Round(o,2);
             }
         }
 

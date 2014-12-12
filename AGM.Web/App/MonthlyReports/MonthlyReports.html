@@ -51,8 +51,8 @@
                             <input id="insertDayPicker" type="text" class="form-control inputDatePicker" ng-model="selectedInsertDate" ng-change="getUserDetail(selectedDate)"
                                    data-date-format="EEEE dd"
                                    data-date-type="iso"
-                                   data-min-date="2014-12-01 00:00:00"
-                                   data-max-date="2014-12-31 00:00:00"
+                                   data-min-date="{{detail.minmonthdate}}"
+                                   data-max-date="{{detail.maxmonthdate}}"
                                    data-autoclose="1"
                                    bs-datepicker
                                    readonly>
@@ -60,7 +60,7 @@
                     </div>
                     <div class="col-xs-12 form-group">
                         <div ng-class="{'has-error':!asideInsert.hour.$valid}">
-                            <input name="hour" type="number" ng-model="insertHour" class="form-control" placeholder="Ore" min="0" max="24" />
+                            <input name="hour" type="number" ng-model="insertHour" class="form-control" placeholder="Ore" min="0" max="24" step="any" />
                             <i ng-show="!asideInsert.hour.$valid" class="fa fa-exclamation-circle asideErrorInput" data-title="Il numero delle ore deve essere compreso tra 0 e 24" data-placement="right" data-trigger="click" bs-tooltip></i>
                         </div>
                         <button type="button" class="btn btn-default controlMinSeparated btnFill" ng-model="insertSelectedHourReason" ng-options="reason.id as reason.name for reason in detail.hourreasons" bs-select>
@@ -68,10 +68,14 @@
                         </button>
                     </div>
                     <div class="col-xs-12 form-group">
-                        <div ng-class="{'has-error':!asideInsert.expense.$valid}">
-                            <input name="expense" type="number" ng-model="insertExpense" class="form-control" placeholder="Spese km|€" min="0" max="9999" />
-                            <i ng-show="!asideInsert.expense.$valid" class="fa fa-exclamation-circle asideErrorInput" data-title="Il numero deve essere compreso tra 0 e 9999" data-placement="right" data-trigger="click" bs-tooltip></i>
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <span ng-show="insertSelectedExpenseReason == 1 || insertSelectedExpenseReason == 2">km</span>
+                                <span ng-show="insertSelectedExpenseReason != 1 && insertSelectedExpenseReason != 2">€</span>
+                            </span>
+                            <input name="expense" type="number" ng-model="insertExpense" class="form-control" placeholder="Spese" min="0" max="9999" step="any" />
                         </div>
+                        <i ng-show="!asideInsert.expense.$valid" class="fa fa-exclamation-circle asideErrorInput" data-title="Il numero deve essere compreso tra 0 e 9999" data-placement="right" data-trigger="click" bs-tooltip></i>
                         <button type="button" class="btn btn-default controlMinSeparated btnFill" ng-model="insertSelectedExpenseReason" data-html="1" ng-options="reason.id as reason.name for reason in detail.expensereasons" bs-select>
                             Action <span class="caret"></span>
                         </button>
@@ -105,28 +109,24 @@
                 <span class="col-xs-12 col-md-1 reportColumn" ng-bind="day.date"></span>
                 <span class="col-xs-12 col-md-3 reportColumn">
                     <span class="reportBadgeContainer" ng-repeat="houritem in day.hourscollection">
-                        <img class="reportBadge" alt="" ng-src="https://img.shields.io/badge/{{houritem.reason}}-{{houritem.hourscount}}-blue.svg?style=flat" ng-click="showStrip('hour$' + houritem.id)" />
-                        <span class="actionStripRight"><i class="fa fa-trash-o actionStripItem" ng-click="removeHour(houritem.id)"></i></span>
+                        <img class="reportBadge" alt="" ng-src="https://img.shields.io/badge/{{houritem.reason}}-{{houritem.hourscount}}-blue.svg?style=flat" />
+                        <span class="actionStripRight"><i class="fa fa-trash-o actionStripItem" ng-click="removeReport('Hour', houritem.id)"></i></span>
                     </span>
                 </span>
                 <span class="col-xs-12 col-md-1 reportColumn reportColumnNumeric" ng-bind="day.hours"></span>
                 <span class="col-xs-12 col-md-3 reportColumn">
-                    <!--<span class="label label-primary itemLabel" ng-repeat="expenseitem in day.expensescollection" ng-bind="expenseitem.completedescription"></span>-->
                     <span class="reportBadgeContainer" ng-repeat="expenseitem in day.expensescollection">
-                        <img class="reportBadge" alt="" ng-src="https://img.shields.io/badge/{{expenseitem.completedescription}}-blue.svg?style=flat" ng-click="showStrip('expense$' + expenseitem.id)" />
-                        <span class="actionStripRight"><i ng-show="expenseitem.reasonid == 1 || expenseitem.reasonid == 2" class="fa fa-info actionStripItem" ng-click="showExpenseInfo(expenseitem.id)"></i><i class="fa fa-trash-o actionStripItem" ng-click="removeExpense(expenseitem.id)"></i></span>
+                        <img class="reportBadge" alt="" ng-src="https://img.shields.io/badge/{{expenseitem.completedescription}}-blue.svg?style=flat" />
+                        <span class="actionStripRight"><i ng-show="expenseitem.reasonid == 1 || expenseitem.reasonid == 2" class="fa fa-info actionStripItem" ng-click="showExpenseInfo(expenseitem.id)"></i><i class="fa fa-trash-o actionStripItem" ng-click="removeReport('Expense', expenseitem.id)"></i></span>
                     </span>
                 </span>
                 <span class="col-xs-12 col-md-1 reportColumn reportColumnNumeric" ng-bind="day.expenses"></span>
                 <span class="col-xs-12 col-md-3 reportColumn reportColumnLast">
                     <span class="noteContainer" ng-repeat="noteitem in day.notescollection">
                         <span class="actionStripLeft noteSection noteText" ng-bind="noteitem.note"></span>
-                        <span class="actionStripRight noteSection"><i class="fa fa-trash-o actionStripItem" ng-click="removeNote(noteitem.id)"></i></span>
+                        <span class="actionStripRight noteSection"><i class="fa fa-trash-o actionStripItem" ng-click="removeReport('Note', noteitem.id)"></i></span>
                     </span>
                 </span>
-                <br />
-                
-                
             </div>
         </div>   
         <div agm-footer></div>

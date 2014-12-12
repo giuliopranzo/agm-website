@@ -23,7 +23,7 @@ namespace AGM.Web.Models
             {
                 double o;
                 double.TryParse(AmountRaw, out o);
-                return o;
+                return Math.Round(o, 2);
             }
         }
 

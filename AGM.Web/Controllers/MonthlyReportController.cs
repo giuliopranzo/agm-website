@@ -104,11 +104,95 @@ namespace AGM.Web.Controllers
                         Name = string.Format("{0} {1}", user.FirstName, user.LastName)
                     },
                     CurrentMonth = currentMonthString,
+                    SelectedInsertDate = ((currentMonthDate.Month == DateTime.Today.Month && currentMonthDate.Year == DateTime.Today.Year)? DateTime.Today : new DateTime(currentMonthDate.Year, currentMonthDate.Month, 1)).ToString("yyyy-MM-dd 00:00:00"),
+                    MinMonthDate = (new DateTime(currentMonthDate.Year, currentMonthDate.Month, 1)).ToString("yyyy-MM-dd 00:00:00"),
+                    MaxMonthDate = (new DateTime(currentMonthDate.Year, currentMonthDate.Month, DateTime.DaysInMonth(currentMonthDate.Year, currentMonthDate.Month))).ToString("yyyy-MM-dd 00:00:00"),
                     Report = report,
                     HourReasons = hourReasons,
                     ExpenseReasons = expenseReasons
                 }
             };
+        }
+
+        [HttpPost]
+        public ApiResponse Insert([FromBody]dynamic reportIn)
+        {
+            using (var context = new AgmDataContext())
+            {
+                var res = new List<object>();
+                if (reportIn.Hours != null && reportIn.Hours.HoursCount != null)
+                {
+                    var objHoursIn = context.MonthlyReportHours.Add(new MonthlyReportHour()
+                    {
+                        UserId = reportIn.UserId,
+                        HoursRaw = reportIn.Hours.HoursCount,
+                        ReasonId = reportIn.Hours.ReasonId,
+                        Day = ((DateTime) reportIn.Date).Day,
+                        Month = ((DateTime) reportIn.Date).Month,
+                        Year = ((DateTime) reportIn.Date).Year
+                    });
+                    res.Add(objHoursIn);
+                }
+
+                if (reportIn.Expenses != null && reportIn.Expenses.Amount != null)
+                {
+                    var objExpensesIn = context.MonthlyReportExpenses.Add(new MonthlyReportExpense()
+                    {
+                        UserId = reportIn.UserId,
+                        AmountRaw = reportIn.Expenses.Amount,
+                        ReasonId = reportIn.Expenses.ReasonId,
+                        Day = ((DateTime) reportIn.Date).Day,
+                        Month = ((DateTime) reportIn.Date).Month,
+                        Year = ((DateTime) reportIn.Date).Year
+                    });
+                    res.Add(objExpensesIn);
+                }
+
+                if (reportIn.Note != null)
+                {
+                    var objNoteIn = context.MonthlyReportNotes.Add(new MonthlyReportNote()
+                    {
+                        UserId = reportIn.UserId,
+                        Note = reportIn.Note,
+                        Day = ((DateTime) reportIn.Date).Day,
+                        Month = ((DateTime) reportIn.Date).Month,
+                        Year = ((DateTime) reportIn.Date).Year
+                    });
+                    res.Add(objNoteIn);
+                }
+
+                context.SaveChanges();
+                return new ApiResponse(true) {Data = res};
+            }
+            return new ApiResponse(true);
+        }
+
+        [HttpPost]
+        public ApiResponse Delete([FromBody]dynamic objIn)
+        {
+            var id = (int)objIn.Id;
+            var type = objIn.Type.ToString();
+            using (var context = new AgmDataContext())
+            {
+                if (type == "Hour" && context.MonthlyReportHours.Any(h => h.Id == id))
+                {
+                    var o = context.MonthlyReportHours.First(h => h.Id == id);
+                    context.MonthlyReportHours.Remove(o);
+                }
+                else if (type == "Expense" && context.MonthlyReportExpenses.Any(h => h.Id == id))
+                {
+                    var o = context.MonthlyReportExpenses.First(h => h.Id == id);
+                    context.MonthlyReportExpenses.Remove(o);
+                }
+                else if (type == "Note" && context.MonthlyReportNotes.Any(h => h.Id == id))
+                {
+                    var o = context.MonthlyReportNotes.First(h => h.Id == id);
+                    context.MonthlyReportNotes.Remove(o);
+                }
+                
+                context.SaveChanges();
+                return new ApiResponse(true){ Data=type };
+            }
         }
     }
 }
