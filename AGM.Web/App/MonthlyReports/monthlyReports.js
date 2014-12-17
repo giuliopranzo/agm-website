@@ -1,5 +1,11 @@
-﻿app.controller('monthlyReports', function ($rootScope, $scope, $alert, $location, $state, $filter, $anchorScroll, usersSource, monthlyReportsDataService) {
+﻿app.controller('monthlyReports', function ($rootScope, $scope, $alert, $location, $state, $filter, usersSource, monthlyReportsDataService, appHelper) {
     $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
+        if (toState.name == 'MonthlyReports') {
+            $scope.reportId = null;
+            $scope.detailVisible = false;
+            appHelper.scrollTo('reportTop');
+        }
+
         if (toState.name == 'MonthlyReports.detail') {
             $scope.reportId = toParams.reportId;
             $scope.detail = toParams.userReportSource;
@@ -11,9 +17,22 @@
             $scope.insertSelectedHourReason = $scope.detail.hourreasons[0].id;
             $scope.insertSelectedExpenseReason = $scope.detail.expensereasons[0].id;
             $scope.detailVisible = true;
-            $location.hash('reportDetailTop');
-            $anchorScroll();
+            appHelper.scrollTo('reportTop');
         }
+    });
+
+    $rootScope.$on('loader_show', function (event, callId) {
+        if (callId == 'mr_detail')
+            $scope.loading_detail = true;
+        if (callId == 'mr_insert')
+            $scope.loading_insert = true;
+    });
+
+    $rootScope.$on('loader_hide', function (event, callId) {
+        if (callId == 'mr_detail')
+            $scope.loading_detail = false;
+        if (callId == 'mr_insert')
+            $scope.loading_insert = false;
     });
 
     $scope.init = function() {
@@ -63,7 +82,7 @@
     }
 
     $scope.reloadUserDetail = function() {
-        monthlyReportsDataService.getReportDetail($scope.detail.user.id, $filter('date')(new Date($scope.selectedDate), 'yyyy-MM')).then(
+        monthlyReportsDataService.getReportDetail('mr_detail', $scope.detail.user.id, $filter('date')(new Date($scope.selectedDate), 'yyyy-MM')).then(
             function(respData) {
                 if (respData.succeed) {
                     $scope.detail = respData.data;
@@ -93,9 +112,7 @@
     }
 
     $scope.backToUsers = function() {
-        $scope.reportId = null;
         $location.path('/MonthlyReports');
-        $scope.detailVisible = false;
     };
 
     $scope.toggleAsideInsert = function() {
@@ -110,7 +127,7 @@
             Expenses: { Amount: $scope.insertExpense, ReasonId: $scope.insertSelectedExpenseReason },
             Note: $scope.insertNote
         };
-        monthlyReportsDataService.insertReportDetail(reportDetail).then(
+        monthlyReportsDataService.insertReportDetail('mr_insert', reportDetail).then(
             function (respData) {
                 if ($scope.alert)
                     $scope.alert.hide();
@@ -152,7 +169,7 @@
             Type: type,
             Id: id
         };
-        monthlyReportsDataService.deleteReportDetail(commandObj).then(
+        monthlyReportsDataService.deleteReportDetail('mr_detail', commandObj).then(
             function (respData) {
                 if ($scope.alert)
                     $scope.alert.hide();
@@ -185,6 +202,17 @@
                     duration: 5
                 });
             });
+    }
+
+    $scope.getRecurringNotes = function (viewValue) {
+        if (!$scope.detailVisible)
+            return null;
+
+        return monthlyReportsDataService.getRecurringNotes($scope.detail.user.id, viewValue).then(function(respData) {
+            if (respData.succeed)
+                return respData.data;
+            return null;
+        });
     }
 
     $scope.init();

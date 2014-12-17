@@ -1,4 +1,4 @@
-﻿app.factory('appHelper', function ($rootScope, localStorageService, applicationGlobals) {
+﻿app.factory('appHelper', function ($rootScope, $location, $anchorScroll, localStorageService, applicationGlobals) {
     var helper = {
         setSESSIONEXP: function (exp) {
             $.cookie('SESSIONEXP', exp, { expires: 7, path: '/' });
@@ -27,26 +27,32 @@
         deleteLocalStorage: function (name) {
             localStorageService.remove(name);
         },
-        loaderShow: function (value) {
+        loaderShow: function (value, callId) {
             if (value)
-                $rootScope.$broadcast("loader_show");
+                $rootScope.$broadcast("loader_show", callId);
             else
-                $rootScope.$broadcast("loader_hide");
+                $rootScope.$broadcast("loader_hide", callId);
         },
-        setLoadingData: function (value) {
+        setLoadingData: function (value, callId) {
             if (value) {
                 applicationGlobals.dataRequestCount++;
-                this.loaderShow(true);
+                this.loaderShow(true, callId);
             }
             else {
                 applicationGlobals.dataRequestCount--;
-                if (!applicationGlobals.isLoadingData())
-                    this.loaderShow(false);
+                //if (!applicationGlobals.isLoadingData())
+                    this.loaderShow(false, callId);
             }
         },
         comFailed: function (status, message) {
             if (message.indexOf('[SysError]') == -1)
                 $rootScope.$broadcast("com_error", { code: status, message: message });
+        },
+        scrollTo: function(id) {
+            var currLocation = $location.url();
+            $location.hash(id);
+            $anchorScroll();
+            $location.url(currLocation);
         }
     }
 

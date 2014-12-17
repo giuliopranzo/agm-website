@@ -6,7 +6,7 @@
     $httpProvider.interceptors.push(function($q, $rootScope, $location, appHelper, authenticationHelper) {
         return {
             'request': function(config) {
-                appHelper.setLoadingData(true);
+                appHelper.setLoadingData(true, ((config.headers._callId) ? config.headers._callId : ''));
 
                 config.headers = config.headers || {};
                 if (authenticationHelper.getAuthToken()) {
@@ -18,18 +18,18 @@
             },
             'response': function(response) {
                 if (response && response.data && response.data._authExp)
-                    appHelper.setSOMSESSEXP(response._authExp);
-                appHelper.setLoadingData(false);
+                    appHelper.setSESSIONEXP(response._authExp);
+                appHelper.setLoadingData(false, ((response.config.headers._callId) ? response.config.headers._callId : ''));
                 return response;
             },
             'requestError': function(rejection) {
-                appHelper.setLoadingData(false);
+                appHelper.setLoadingData(false, ((rejection.config.headers._callId) ? rejection.config.headers._callId : ''));
                 return $q.reject(rejection);
             },
             'responseError': function(response) {
                 //if (response && response.status != 200)
                 //    appHelper.comFailed(response.status, response.data);
-                appHelper.setLoadingData(false);
+                appHelper.setLoadingData(false, ((response.config.headers._callId) ? response.config.headers._callId : ''));
                 return $q.reject(response);
             }
         };

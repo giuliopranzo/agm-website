@@ -23,6 +23,7 @@ namespace AGM.Web.Controllers
         {
             string username = loginData.Username;
             string password = loginData.Password;
+            string name = string.Empty;
 
             if (ConfigurationHelper.UseMockupData)
             {
@@ -43,13 +44,15 @@ namespace AGM.Web.Controllers
             {
                 using (var context = new AgmDataContext())
                 {
-                    if (context.Users.All(u => u.Username.ToLower() != username.ToLower() || u.Password != password))
+                    if (context.Users.All(u => u.Username.ToLower() != username.ToLower() || u.Password != password || u._sectionMonthlyReportsVisible != 1))
                         return new ApiResponse(false)
                         {
                             Errors =
                                 new ApiResponseError[]
                                 {new ApiResponseError() {Message = "Nome utente o password errati"}}
                         };
+
+                    name = context.Users.First(u => u.Username.ToLower() == username.ToLower() && u.Password == password).Name;
                 }
             }
 
@@ -57,7 +60,7 @@ namespace AGM.Web.Controllers
             
             var claims = new List<Claim>()
             {
-                new Claim(ClaimTypes.Name, loginData.Username.ToString()) 
+                new Claim(ClaimTypes.Name, string.Format("{0}${1}", loginData.Username.ToString(), name))
             };
 
             var tokenDescriptor = new SecurityTokenDescriptor()
@@ -103,7 +106,7 @@ namespace AGM.Web.Controllers
             return new ApiResponse() 
             {
                 Succeed = true,
-                Data = (Thread.CurrentPrincipal as CustomPrincipal).User
+                Data = (Thread.CurrentPrincipal as CustomPrincipal).User.Split('$').GetValue(1) as string
             };
         }
     }

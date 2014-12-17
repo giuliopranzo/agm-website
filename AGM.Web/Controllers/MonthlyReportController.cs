@@ -48,6 +48,9 @@ namespace AGM.Web.Controllers
             var userNoteReports = new List<MonthlyReportNote>();
             var hourReasons = new List<HourReason>();
             var expenseReasons = new List<ExpenseReason>();
+            var totalHours = 0d;
+            var totalOrdinaryHours = 0d;
+            var totalExpenses = 0d;
             using (var context = new AgmDataContext())
             {
                 user = context.Users.First(u => u.Id == id);
@@ -90,6 +93,16 @@ namespace AGM.Web.Controllers
                     DayOfWeek = (int)currentDate.DayOfWeek
                 });
 
+                if (currentDate.Month == currentMonthDate.Month)
+                {
+                    totalHours += hoursCollection.Sum(r => r.HoursCount);
+                    
+                    if (hoursCollection.Any(r => r.ReasonId == 1))
+                        totalOrdinaryHours += hoursCollection.Where(r => r.ReasonId == 1).Sum(r => r.HoursCount);
+                    
+                    totalExpenses += expensesCollection.Sum(e => e.GetTotalAmount());
+                }
+
                 currentDate = currentDate.AddDays(1);
             }
 
@@ -109,7 +122,12 @@ namespace AGM.Web.Controllers
                     MaxMonthDate = (new DateTime(currentMonthDate.Year, currentMonthDate.Month, DateTime.DaysInMonth(currentMonthDate.Year, currentMonthDate.Month))).ToString("yyyy-MM-dd 00:00:00"),
                     Report = report,
                     HourReasons = hourReasons,
-                    ExpenseReasons = expenseReasons
+                    ExpenseReasons = expenseReasons,
+                    TotalHours = totalHours.ToString("N2", cultureIt),
+                    TotalDays = (totalHours / 8).ToString("N2", cultureIt),
+                    TotalOrdinaryHours =totalOrdinaryHours.ToString("N2", cultureIt),
+                    TotalOrdinaryDays = (totalOrdinaryHours / 8).ToString("N2", cultureIt),
+                    TotalExpenses = totalExpenses.ToString("N2", cultureIt)
                 }
             };
         }
@@ -193,6 +211,23 @@ namespace AGM.Web.Controllers
                 context.SaveChanges();
                 return new ApiResponse(true){ Data=type };
             }
+        }
+
+        [HttpGet]
+        public ApiResponse GetRecurringNotes(int id, string value)
+        {
+            var res = new List<string>();
+
+            using (var context = new AgmDataContext())
+            {
+                if (context.MonthlyReportNotes.Any(n => n.UserId == id && n.Note.Contains(value)))
+                    res = context.MonthlyReportNotes.Where(n => n.UserId == id && n.Note.Contains(value)).Select(n => n.Note).Distinct().ToList();
+            }
+
+            return new ApiResponse(true)
+            {
+                Data = res
+            };
         }
     }
 }

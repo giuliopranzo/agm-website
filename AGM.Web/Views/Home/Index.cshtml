@@ -3,22 +3,20 @@
         <div class="navbar navbar-fixed-top">
             <div class="container container-header">
                 <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
                     <div class="logo"><img src="~/images/logo.png" alt="" /></div>
+                    <div class="menuRightPart-sm visible-sm-block" style="float:right;">
+                        <i class="fa fa-ellipsis-v"></i>
+                    </div>
                 </div>
-                <div class="navbar-collapse collapse">
-                    <ul ng-show="authenticated" class="nav navbar-nav">
+                <div class="navbar-collapse hidden-sm">
+                    <ul ng-show="authenticated" class="nav navbar-nav menuLeftPart">
                         <li><a class="simpleLink" ui-sref="Index">Home</a></li>
                         <li><a class="simpleLink" ui-sref="MonthlyReports">Rapportini</a></li>
                         <li><a class="simpleLink" ui-sref="JobAds">Annunci</a></li>
                         <li><a class="simpleLink" ui-sref="JobApplicants">Candidati</a></li>
                         <li><a class="simpleLink" bs-dropdown="ddSettings">Impostazioni</a></li>
                     </ul>
-                    <ul class="nav navbar-nav" style="float:right;">
+                    <ul class="nav navbar-nav menuRightPart" style="float:right;">
                         <li ng-show="authenticated" style="float:right;"><a bs-dropdown="ddUser" ng-bind="user"></a></li>
                     </ul>
                 </div>

@@ -1,4 +1,11 @@
-﻿<div class="monthlyRep" ng-cloak>
+﻿<a id="reportTop" class="reportTop"></a>
+<div class="monthlyRep" ng-cloak>
+    <div class="hidden-print mr_affixToolContainer" role="complementary" data-offset-top="235" bs-affix>
+        <div class="container container-header">
+            <i class="fa fa-bolt signAffix" ng-click=""></i>
+            <i class="fa fa-plus-circle signAffix" ng-click="toggleAsideInsert()"></i>
+        </div>
+    </div>
     <h3 class="login-title login-control">Rapportini</h3>
     <div class="monthlyRep-users" ng-hide="detailVisible">
         <div class="container-fluid">
@@ -21,7 +28,6 @@
         <div agm-footer></div>
     </div>
     <div class="monthlyRep-detail" ng-show="detailVisible">
-        <a id="reportDetailTop"></a>
         <div>
             <i class="fa fa-arrow-circle-o-left sign" ng-click="backToUsers()"></i>&nbsp;<h4 class="detailUserName" ng-bind="detail.user.name"></h4>
         </div>
@@ -38,7 +44,10 @@
                        readonly>
             </div>
         </div>
-        <div class="toolContainer"><i class="fa fa-plus-circle sign" ng-click="toggleAsideInsert()"></i></div>
+        <div class="toolContainer">
+            <i class="fa fa-bolt sign" ng-click=""></i>
+            <i class="fa fa-plus-circle sign" ng-click="toggleAsideInsert()"></i>
+        </div>
         <div class="clearfix"></div>
         
         <div class="asideInsert" ng-show="showInsert">
@@ -81,7 +90,7 @@
                         </button>
                     </div>
                     <div class="col-xs-12 form-group">
-                        <textarea ng-model="insertNote" maxlength="50" class="form-control asideinsertNote" placeholder="Note"></textarea>
+                        <textarea ng-model="insertNote" maxlength="50" class="form-control asideinsertNote" placeholder="Note" ng-options="note as note for note in getRecurringNotes($viewValue)" bs-typeahead></textarea>
                     </div>
                     <div class="col-xs-12 form-group">
                         <button ng-hide="(asideInsert.$invalid || (insertHour == null && insertExpense == null && insertNote == null))" class="btn btn-info" ng-click="insertReport()">Inserisci</button>
@@ -89,21 +98,19 @@
                     </div>
                 </form>
             </div>
+            <div class="loading loadingAbs" ng-show="loading_insert"></div>
         </div>
+        
         <div class="modalBg" ng-show="showInsert"></div>
 
-        <div ng-repeat="day in detail.report">
-            
-        </div>
-
         <div class="reportList">
-            <div class="row reportRow">
+            <div class="row reportRow hidden-sm">
                 <div class="col-xs-12 col-md-1 reportHeader">Giorno</div>
                 <div class="col-xs-12 col-md-3 reportHeader">Dettaglio ore h</div>
                 <div class="col-xs-12 col-md-1 reportHeader">Ore h</div>
                 <div class="col-xs-12 col-md-3 reportHeader">Dettaglio spese €</div>
                 <div class="col-xs-12 col-md-1 reportHeader">Spese €</div>
-                <div class="col-xs-12 col-md-3 reportHeader reportHeaderLast">Note</div>
+                <div class="col-xs-12 col-md-3 reportHeader">Note</div>
             </div>
             <div class="row reportRow" ng-class="{reportHolidayRow: !day.workday}" ng-repeat="day in detail.report | filter:iscurrentmonth:true">
                 <span class="col-xs-12 col-md-1 reportColumn" ng-bind="day.date"></span>
@@ -121,14 +128,23 @@
                     </span>
                 </span>
                 <span class="col-xs-12 col-md-1 reportColumn reportColumnNumeric" ng-bind="day.expenses"></span>
-                <span class="col-xs-12 col-md-3 reportColumn reportColumnLast">
+                <span class="col-xs-12 col-md-3 reportColumn">
                     <span class="noteContainer" ng-repeat="noteitem in day.notescollection">
                         <span class="actionStripLeft noteSection noteText" ng-bind="noteitem.note"></span>
                         <span class="actionStripRight noteSection"><i class="fa fa-trash-o actionStripItem" ng-click="removeReport('Note', noteitem.id)"></i></span>
                     </span>
                 </span>
             </div>
-        </div>   
+        </div>
+        
+        <div class="reportSummary">
+            <span class="reportSummaryRow">totale ore: <b><span ng-bind="detail.totalhours"></span>h(<span ng-bind="detail.totaldays"></span> gg)</b></span>
+            <span class="reportSummaryRow">ordinarie: <span ng-bind="detail.totalordinaryhours"></span>h(<span ng-bind="detail.totalordinarydays"></span> gg)</span>
+            <br />
+            <span class="reportSummaryRow">totale spese: <b><span ng-bind="detail.totalexpenses"></span>€</b></span>
+        </div>
+          
         <div agm-footer></div>
     </div>
+    <div class="loading" ng-show="loading_detail"></div>
 </div>
