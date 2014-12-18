@@ -450,6 +450,10 @@ ul.typeahead {
     line-height: 50px;
 }
 
+.umSign {
+    margin-right: 5px;
+}
+
 .toolContainer {
     padding: 0 15px;
     float: right;
@@ -525,6 +529,17 @@ ul.typeahead {
     padding-bottom: 99999px;
 }
 
+.cellHeaderColumnRight {
+    float: right;
+    font-size: 12px;
+    margin-left: 10px;
+}
+
+.cellHeaderColumnLeft {
+    float: left;
+    font-size: 12px;
+}
+
 .reportRow .reportColumn:first-child {
     border-width: 0;
 }
@@ -534,10 +549,14 @@ ul.typeahead {
 }
 
 .reportList {
-    /*padding: 0 15px;*/
+    margin: 0 15px;
     border-width: 1px 1px;
     border-style: solid;
     border-color: #65523A;
+}
+
+.reportListHeader {
+    background-color: #808080;
 }
 
 .reportColumnLast {
@@ -588,6 +607,7 @@ ul.typeahead {
 .actionStripLeft {
     color: #FFF;
     z-index: 20;
+    margin-right: -5px;
     position: relative;
     height: 17px;
     display: inline-block;
@@ -647,6 +667,14 @@ ul.typeahead {
 .actionStripItem {
     margin: 0 5px;
     cursor: pointer;    
+}
+
+.prefixSign {
+    margin: 0 5px;
+}
+
+.prefixSignLeft {
+    margin: 0 5px 0 0;
 }
 
 .itemLabel {
@@ -781,6 +809,10 @@ ul.typeahead {
         float: left;    
     }
 
+    .menuRightPart-sm {
+        margin: 0 15px;
+    }
+
     .menuRightPart-sm i {
         line-height: 50px;
         margin: 0 10px;
@@ -799,6 +831,23 @@ ul.typeahead {
 
     .reportColumn {
         border-width: 0;
+    }
+
+    .dateRow {
+        width: 100%;
+    }
+
+    .dateRowWorkDay {
+        display: inline-block;
+        background-color: #E2E2E2;
+        border-width: 0 0 1px 0;
+        border-style: solid;
+        border-color: #C7C5C5;
+    }
+
+    .reportRow {
+        min-height: 60px;
+        padding: 0 0 5px;
     }
 }
 

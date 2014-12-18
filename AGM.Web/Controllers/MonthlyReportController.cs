@@ -82,7 +82,8 @@ namespace AGM.Web.Controllers
                 var notesCollection = userNoteReports.Where(e => e.Date == currentDate).ToList();
                 report.Add(new
                 {
-                    Date = string.Format("{0} {1}", Char.ToUpper(currentDate.ToString("dddd", cultureIt)[0]), currentDate.ToString(" d", cultureIt)),
+                    DateShort = string.Format("{0} {1}", Char.ToUpper(currentDate.ToString("dddd", cultureIt)[0]), currentDate.ToString(" d", cultureIt)),
+                    Date = string.Format("{0} {1}", currentDate.ToString("dddd", cultureIt), currentDate.ToString(" d", cultureIt)),
                     Hours = (hoursCollection.Any()) ? hoursCollection.Sum(r => r.HoursCount) : 0,
                     HoursCollection = hoursCollection,
                     Expenses = expensesCollection.Sum(e => e.GetTotalAmount()).ToString("N2", cultureIt),
