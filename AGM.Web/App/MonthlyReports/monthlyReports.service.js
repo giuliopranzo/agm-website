@@ -48,6 +48,16 @@
                 deferred.reject(respData);
             });
             return deferred.promise;
-        }
+        },
+        autocompleteReport: function (callId, reportDetailId, month) {
+            var deferred = $q.defer();
+
+            $http({ method: 'POST', headers: { _callId: callId }, url: 'api/MonthlyReport/Autocomplete', data: { id: reportDetailId, month: month } }).success(function (respData, status, headers, config) {
+                deferred.resolve(respData);
+            }).error(function (respData, status, headers, config) {
+                deferred.reject(respData);
+            });
+            return deferred.promise;
+        },
     }
 });

@@ -230,5 +230,34 @@ namespace AGM.Web.Controllers
                 Data = res
             };
         }
+
+        [HttpPost]
+        public ApiResponse Autocomplete(dynamic objIn)
+        {
+            var cultureIt = CultureInfo.GetCultureInfo("it-IT");
+            string month = objIn.month;
+
+            var currentMonthDate = DateTime.Parse(month, cultureIt);
+            var currentMonthString = currentMonthDate.ToString("yyyy-MM-dd", cultureIt);
+
+            var user = new User();
+            var userHourReports = new List<MonthlyReportHour>();
+            var userExpenseReports = new List<MonthlyReportExpense>();
+            var userNoteReports = new List<MonthlyReportNote>();
+            var hourReasons = new List<HourReason>();
+            var expenseReasons = new List<ExpenseReason>();
+            var totalHours = 0d;
+            var totalOrdinaryHours = 0d;
+            var totalExpenses = 0d;
+            using (var context = new AgmDataContext())
+            {
+                user = context.Users.First(u => u.Id == objIn.id);
+                userHourReports = context.MonthlyReportHours.Where(r => r.UserId == objIn.id && r.Month == currentMonthDate.Month).ToList();
+                userExpenseReports = context.MonthlyReportExpenses.Where(e => e.UserId == objIn.id && e.Month == currentMonthDate.Month).ToList();
+                userNoteReports = context.MonthlyReportNotes.Where(e => e.UserId == objIn.id && e.Month == currentMonthDate.Month).ToList();
+                hourReasons = context.HourReasons.ToList();
+                expenseReasons = context.ExpenseReasons.ToList();
+            }
+        }
     }
 }
