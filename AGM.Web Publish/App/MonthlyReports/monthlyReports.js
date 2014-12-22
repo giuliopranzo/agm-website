@@ -215,5 +215,47 @@
         });
     }
 
+    $scope.autocompleteReport = function () {
+        if ($scope.alert && $scope.alert.$isShown && $scope.alert.$options.type != 'confirm_autocomplete')
+            $scope.alert.hide();
+
+        if (!$scope.alert || !$scope.alert.$isShown)
+            $scope.alert = $alert({
+                content: 'Il mese corrente verrà compilato automaticamente, clicca nuovamente l\'icona per procedere',
+                animation: 'fadeZoomFadeDown',
+                type: 'confirm_autocomplete',
+                duration: 10
+            });
+        else {
+            $scope.alert.hide();
+            monthlyReportsDataService.autocompleteReport('mr_detail', $scope.detail.user.id, $filter('date')(new Date($scope.selectedDate), 'yyyy-MM')).then(
+                function (respData) {
+                    if (respData.succeed) {
+                        $scope.reloadUserDetail();
+                    } else {
+                        if ($scope.alert)
+                            $scope.alert.hide();
+
+                        $scope.alert = $alert({
+                            content: 'Errore durante l\'aggiornamento dei dati',
+                            animation: 'fadeZoomFadeDown',
+                            type: 'error',
+                            duration: 5
+                        });
+                    }
+                }
+            ).catch(function (respData) {
+                if ($scope.alert)
+                    $scope.alert.hide();
+                $scope.alert = $alert({
+                    content: 'Errore durante l\'aggiornamento dei dati',
+                    animation: 'fadeZoomFadeDown',
+                    type: 'error',
+                    duration: 5
+                });
+            });
+        }
+    };
+
     $scope.init();
 });

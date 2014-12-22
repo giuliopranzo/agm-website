@@ -59,18 +59,27 @@
 }
 
 .alert-error {
-    color: #ffffff;
-    background-color: rgba(255,0,0,0.5);
+    color: #000000;
+    font-weight: bold;
+    background-color: rgba(255,0,0,0.85);
 }
 
 .alert-info {
-    color: #ffffff;
-    background-color: rgba(0, 110, 255, 0.5);
+    color: #000000;
+    font-weight: bold;
+    background-color: rgba(0, 110, 255, 0.85);
 }
 
 .alert-warning {
     color: #000000;
-    background-color: rgba(255, 252, 0, 0.5);
+    font-weight: bold;
+    background-color: rgba(255, 252, 0, 0.85);
+}
+
+.alert-confirm_autocomplete {
+    color: #000000;
+    font-weight: bold;
+    background-color: rgba(255, 156, 28, 0.85);
 }
 
 .alert > span {

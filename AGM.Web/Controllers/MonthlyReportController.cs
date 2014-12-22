@@ -234,29 +234,47 @@ namespace AGM.Web.Controllers
         [HttpPost]
         public ApiResponse Autocomplete(dynamic objIn)
         {
-            var cultureIt = CultureInfo.GetCultureInfo("it-IT");
-            string month = objIn.month;
-
-            var currentMonthDate = DateTime.Parse(month, cultureIt);
-            var currentMonthString = currentMonthDate.ToString("yyyy-MM-dd", cultureIt);
-
-            var user = new User();
-            var userHourReports = new List<MonthlyReportHour>();
-            var userExpenseReports = new List<MonthlyReportExpense>();
-            var userNoteReports = new List<MonthlyReportNote>();
-            var hourReasons = new List<HourReason>();
-            var expenseReasons = new List<ExpenseReason>();
-            var totalHours = 0d;
-            var totalOrdinaryHours = 0d;
-            var totalExpenses = 0d;
-            using (var context = new AgmDataContext())
+            try
             {
-                user = context.Users.First(u => u.Id == objIn.id);
-                userHourReports = context.MonthlyReportHours.Where(r => r.UserId == objIn.id && r.Month == currentMonthDate.Month).ToList();
-                userExpenseReports = context.MonthlyReportExpenses.Where(e => e.UserId == objIn.id && e.Month == currentMonthDate.Month).ToList();
-                userNoteReports = context.MonthlyReportNotes.Where(e => e.UserId == objIn.id && e.Month == currentMonthDate.Month).ToList();
-                hourReasons = context.HourReasons.ToList();
-                expenseReasons = context.ExpenseReasons.ToList();
+                var userId = (int)objIn.id;
+                var cultureIt = CultureInfo.GetCultureInfo("it-IT");
+                string month = objIn.month;
+
+                var currentMonthDate = DateTime.Parse(month, cultureIt);
+                var currentMonthString = currentMonthDate.ToString("yyyy-MM-dd", cultureIt);
+
+                using (var context = new AgmDataContext())
+                {
+                    var user = context.Users.First(u => u.Id == userId);
+                    if (user != null)
+                    {
+                        var userHourReports = context.MonthlyReportHours.Where(r => r.UserId == userId && r.Month == currentMonthDate.Month).ToList();
+                        var hourReasons = context.HourReasons.ToList();
+
+                        var currentDate = new DateTime(currentMonthDate.Year, currentMonthDate.Month, 1);
+                        var endDate = new DateTime(currentMonthDate.Year, currentMonthDate.Month, DateTime.DaysInMonth(currentMonthDate.Year, currentMonthDate.Month));
+                        while (currentDate <= endDate)
+                        {
+                            if (currentDate.DayOfWeek != DayOfWeek.Saturday && currentDate.DayOfWeek != DayOfWeek.Sunday && !userHourReports.Any(r => r.Date == currentDate))
+                            {
+                                context.MonthlyReportHours.Add(new MonthlyReportHour() { UserId = user.Id, Day = currentDate.Day, Month = currentDate.Month, Year = currentDate.Year, HoursRaw = "8", ReasonId = hourReasons.First(r => r.Name == "ordinarie").Id });
+                            }
+
+                            currentDate = currentDate.AddDays(1);
+                        }
+                        context.SaveChanges();
+                    }
+                }
+
+                return new ApiResponse(true);
+            }
+            catch(Exception e)
+            {
+                return new ApiResponse(false)
+                {
+                    Errors = (new List<ApiResponseError>() { new ApiResponseError() { Message = e.Message } }).ToArray()
+                };
+
             }
         }
     }
