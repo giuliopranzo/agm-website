@@ -48,9 +48,11 @@ namespace AGM.Web.Controllers
             var userNoteReports = new List<MonthlyReportNote>();
             var hourReasons = new List<HourReason>();
             var expenseReasons = new List<ExpenseReason>();
+            var holidays = new List<Holiday>();
             var totalHours = 0d;
             var totalOrdinaryHours = 0d;
             var totalExpenses = 0d;
+            var totalHolidays = 0d;
             using (var context = new AgmDataContext())
             {
                 user = context.Users.First(u => u.Id == id);
@@ -59,6 +61,7 @@ namespace AGM.Web.Controllers
                 userNoteReports = context.MonthlyReportNotes.Where(e => e.UserId == id && e.Month == currentMonthDate.Month).ToList();
                 hourReasons = context.HourReasons.ToList();
                 expenseReasons = context.ExpenseReasons.ToList();
+                holidays = context.Holidays.ToList();
             }
 
             var startDate = new DateTime(currentMonthDate.Year, currentMonthDate.Month, 1);
@@ -89,7 +92,7 @@ namespace AGM.Web.Controllers
                     Expenses = expensesCollection.Sum(e => e.GetTotalAmount()).ToString("N2", cultureIt),
                     ExpensesCollection = expensesCollection,
                     NotesCollection = notesCollection,
-                    WorkDay = currentDate.DayOfWeek != DayOfWeek.Saturday && currentDate.DayOfWeek != DayOfWeek.Sunday,
+                    WorkDay = currentDate.DayOfWeek != DayOfWeek.Saturday && currentDate.DayOfWeek != DayOfWeek.Sunday && holidays.All(h => h.Date != currentDate),
                     IsCurrentMonth = (currentDate.Month == currentMonthDate.Month),
                     DayOfWeek = (int)currentDate.DayOfWeek
                 });
@@ -102,6 +105,11 @@ namespace AGM.Web.Controllers
                         totalOrdinaryHours += hoursCollection.Where(r => r.ReasonId == 1).Sum(r => r.HoursCount);
                     
                     totalExpenses += expensesCollection.Sum(e => e.GetTotalAmount());
+
+                    if (hoursCollection.Any(r => r.Reason == "ferie"))
+                    {
+                        totalHolidays += hoursCollection.Where(r => r.Reason == "ferie").Sum(r => r.HoursCount);
+                    }
                 }
 
                 currentDate = currentDate.AddDays(1);
@@ -128,7 +136,9 @@ namespace AGM.Web.Controllers
                     TotalDays = (totalHours / 8).ToString("N2", cultureIt),
                     TotalOrdinaryHours =totalOrdinaryHours.ToString("N2", cultureIt),
                     TotalOrdinaryDays = (totalOrdinaryHours / 8).ToString("N2", cultureIt),
-                    TotalExpenses = totalExpenses.ToString("N2", cultureIt)
+                    TotalExpenses = totalExpenses.ToString("N2", cultureIt),
+                    TotalHolidays = totalHolidays.ToString("N2", cultureIt),
+                    TotalHolidaysDays = (totalHolidays / 8).ToString("N2", cultureIt)
                 }
             };
         }
@@ -250,12 +260,12 @@ namespace AGM.Web.Controllers
                     {
                         var userHourReports = context.MonthlyReportHours.Where(r => r.UserId == userId && r.Month == currentMonthDate.Month).ToList();
                         var hourReasons = context.HourReasons.ToList();
-
+                        var holidays = context.Holidays.ToList();
                         var currentDate = new DateTime(currentMonthDate.Year, currentMonthDate.Month, 1);
                         var endDate = new DateTime(currentMonthDate.Year, currentMonthDate.Month, DateTime.DaysInMonth(currentMonthDate.Year, currentMonthDate.Month));
                         while (currentDate <= endDate)
                         {
-                            if (currentDate.DayOfWeek != DayOfWeek.Saturday && currentDate.DayOfWeek != DayOfWeek.Sunday && !userHourReports.Any(r => r.Date == currentDate))
+                            if (currentDate.DayOfWeek != DayOfWeek.Saturday && currentDate.DayOfWeek != DayOfWeek.Sunday && holidays.All(h => h.Date != currentDate) && !userHourReports.Any(r => r.Date == currentDate))
                             {
                                 context.MonthlyReportHours.Add(new MonthlyReportHour() { UserId = user.Id, Day = currentDate.Day, Month = currentDate.Month, Year = currentDate.Year, HoursRaw = "8", ReasonId = hourReasons.First(r => r.Name == "ordinarie").Id });
                             }

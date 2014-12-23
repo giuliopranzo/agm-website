@@ -1,7 +1,8 @@
 ﻿<a id="reportTop" class="reportTop"></a>
 <div class="monthlyRep" ng-cloak>
     <div class="hidden-print mr_affixToolContainer" role="complementary" data-offset-top="235" bs-affix>
-        <div class="container container-header">
+        <div class="container container-header" ng-show="detailVisible">
+            <i class="hidden-md hidden-lg fa fa-arrow-circle-o-left signAffix" ng-click="backToUsers()"></i>
             <i class="fa fa-bolt signAffix" ng-click="autocompleteReport()"></i>
             <i class="fa fa-plus-circle signAffix" ng-click="toggleAsideInsert()"></i>
         </div>
@@ -16,7 +17,7 @@
                 <div class="col-xs-12 nameListLetterHead" ng-show="showLetter($index)" ng-bind="getFirstChar(user.name)"></div>
                 <div class="col-xs-12 col-md-3">
                     <button class="btn btn-default btn-block nameListElement" ng-click="showDetail(user.id)">
-                        <img ng-src="{{user.picture}}" alt="" />
+                        <img ng-src="{{user.picture}}" alt="" style="height:48px;width:48px;" />
                         <div>
                             <span class="person-name" ng-bind="user.name"></span>
                             <span class="company-name" ng-bind="user.company"></span>
@@ -29,7 +30,7 @@
     </div>
     <div class="monthlyRep-detail" ng-show="detailVisible">
         <div>
-            <i class="fa fa-arrow-circle-o-left sign" ng-click="backToUsers()"></i>&nbsp;<h4 class="detailUserName" ng-bind="detail.user.name"></h4>
+            <i class="hidden-xs hidden-sm fa fa-arrow-circle-o-left sign" ng-click="backToUsers()"></i>&nbsp;<h4 class="detailUserName" ng-bind="detail.user.name"></h4>
         </div>
         <div class="col-xs-12 col-md-3 form-group">
             <div class="input-group">
@@ -44,7 +45,7 @@
                        readonly>
             </div>
         </div>
-        <div class="toolContainer">
+        <div class="hidden-xs hidden-sm toolContainer">
             <i class="fa fa-bolt sign" ng-click="autocompleteReport()"></i>
             <i class="fa fa-plus-circle sign" ng-click="toggleAsideInsert()"></i>
         </div>
@@ -149,6 +150,7 @@
         <div class="reportSummary">
             <span class="reportSummaryRow">totale ore: <b><span ng-bind="detail.totalhours"></span>h(<span ng-bind="detail.totaldays"></span> gg)</b></span>
             <span class="reportSummaryRow">ordinarie: <span ng-bind="detail.totalordinaryhours"></span>h(<span ng-bind="detail.totalordinarydays"></span> gg)</span>
+            <span class="reportSummaryRow" ng-show="detail.totalholidays != '0,00'">ferie: <span ng-bind="detail.totalholidays"></span>h(<span ng-bind="detail.totalholidaysdays"></span> gg)</span>
             <br />
             <span class="reportSummaryRow">totale spese: <b><span ng-bind="detail.totalexpenses"></span>€</b></span>
         </div>

@@ -21,8 +21,9 @@ namespace AGM.Web.Models
         {
             get
             {
+                var cultureIt = CultureInfo.GetCultureInfo("it-IT");
                 double o;
-                double.TryParse(AmountRaw, out o);
+                double.TryParse(AmountRaw,NumberStyles.Any, cultureIt, out o);
                 return Math.Round(o, 2);
             }
         }

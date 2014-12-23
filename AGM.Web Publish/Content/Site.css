@@ -22,7 +22,8 @@
 }
 
 .logo {
-    margin: 10px 15px;
+    /*margin: 10px 15px;*/
+    line-height: 50px;
 }
 
 .logo img{
@@ -115,7 +116,7 @@
 
 .login-title {
     text-align: center;
-    margin: 0 0 15px;
+    margin: 0 0 30px;
 }
 
 .simpleLink {
@@ -149,6 +150,7 @@
 
 .person-name{
     font-size: 12px;
+    font-weight: bold;
 }
 
 .company-name{
@@ -742,6 +744,7 @@ ul.typeahead {
 
 .monthlyRep {
     position: relative;
+    margin-top: -20px;
 }
 
 .monthlyRep-users {
@@ -815,11 +818,15 @@ ul.typeahead {
 @media (max-width: 991px) 
 { 
     .logo {
-        float: left;    
+        float: right;    
+    }
+
+    .logo img{
+        width: 70px;
     }
 
     .menuRightPart-sm {
-        margin: 0 15px;
+        margin: 0 15px 0 0;
     }
 
     .menuRightPart-sm i {
@@ -857,6 +864,26 @@ ul.typeahead {
     .reportRow {
         min-height: 60px;
         padding: 0 0 5px;
+    }
+
+    .mr_affixToolContainer.affix, .mr_affixToolContainer.affix-top {
+        display: inline-block;
+        z-index: 1031;
+        background-color: rgba(0, 0, 0, 0);
+    }
+
+    .mr_affixToolContainer.affix div.container-header, .mr_affixToolContainer.affix-top div.container-header {
+        border-width: 0;
+        background-color: rgba(0, 0, 0, 0);
+        position: fixed;
+        top: 0;
+        left: 0;
+        padding-left: 10px;
+    }
+
+    .signAffix {
+        margin: 0 0 5px 5px;
+        font-size: 30px;
     }
 }
 

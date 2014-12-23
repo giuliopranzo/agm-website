@@ -165,8 +165,10 @@
     <Compile Include="Models\ApiResponseError.cs" />
     <Compile Include="Models\AgmDataContext.cs" />
     <Compile Include="Models\ExpenseReason.cs" />
+    <Compile Include="Models\Holiday.cs" />
     <Compile Include="Models\HourReason.cs" />
     <Compile Include="Models\Mapping\ExpenseReasonMap.cs" />
+    <Compile Include="Models\Mapping\HolidayMap.cs" />
     <Compile Include="Models\Mapping\HourReasonMap.cs" />
     <Compile Include="Models\Mapping\MonthlyReportExpenseMap.cs" />
     <Compile Include="Models\Mapping\MonthlyReportHourMap.cs" />

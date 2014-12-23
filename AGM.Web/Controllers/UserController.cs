@@ -87,6 +87,19 @@ namespace AGM.Web.Controllers
                 defs.Add("rappdescrizioni", cols);
                 sqlreader.Close();
 
+                cols = new List<string>();
+                command = new System.Data.SqlClient.SqlCommand("select TOP 1 * from rappfestivi", conn);
+                sqlreader = command.ExecuteReader();
+                schemaTable = sqlreader.GetSchemaTable();
+                foreach (System.Data.DataRow col in schemaTable.Rows)
+                {
+                    cols.Add(string.Format("{0} - {1}", col["ColumnName"], col["IsIdentity"]));
+                }
+                defs.Add("rappfestivi", cols);
+                sqlreader.Read();
+                defs.Add("rappfestivi example", sqlreader[1].ToString());
+                sqlreader.Close();
+
                 conn.Close();
 
             }

@@ -16,13 +16,13 @@ namespace AGM.Web.Models
 
         public string Name
         {
-            get { return string.Format("{0} {1}", FirstName, LastName); }
+            get { return string.Format("{0} {1}", LastName, FirstName); }
 
         }
 
         public string Picture
         {
-            get { return string.Format("{0}{1}", "https://unsplash.it/48/48?image=", Id); }
+            get { return string.Format("http://robohash.org/bgset_bg1/agmuser_{0}?size=48x48", Id); }
         }
     }
 }

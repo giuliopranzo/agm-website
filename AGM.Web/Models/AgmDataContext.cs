@@ -26,6 +26,7 @@ namespace AGM.Web.Models
         public DbSet<MonthlyReportNote> MonthlyReportNotes { get; set; }
         public DbSet<HourReason> HourReasons { get; set; }
         public DbSet<ExpenseReason> ExpenseReasons { get; set; }
+        public DbSet<Holiday> Holidays { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -35,6 +36,7 @@ namespace AGM.Web.Models
             modelBuilder.Configurations.Add(new MonthlyReportNoteMap());
             modelBuilder.Configurations.Add(new HourReasonMap());
             modelBuilder.Configurations.Add(new ExpenseReasonMap());
+            modelBuilder.Configurations.Add(new HolidayMap());
         }
     }
 }
