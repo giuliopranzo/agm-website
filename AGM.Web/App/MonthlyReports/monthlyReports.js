@@ -111,7 +111,10 @@
         );
     }
 
-    $scope.backToUsers = function() {
+    $scope.backToUsers = function () {
+        if ($scope.alert)
+            $scope.alert.hide();
+
         $location.path('/MonthlyReports');
     };
 

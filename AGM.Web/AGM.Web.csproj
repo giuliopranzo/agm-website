@@ -193,6 +193,7 @@
     <Content Include="App\Authentication\Login.html" />
     <Content Include="App\Mockup\monthlyreports.js" />
     <Content Include="App\Mockup\users.js" />
+    <Content Include="App\MonthlyReports\MonthlyReports.css" />
     <Content Include="App\MonthlyReports\MonthlyReports.html" />
     <Content Include="App\MonthlyReports\monthlyReports.js" />
     <Content Include="App\MonthlyReports\monthlyReports.service.js" />
@@ -200,6 +201,8 @@
     <Content Include="App\Popover\popover.test.html" />
     <Content Include="App\Popover\popover.tpl.demo.html" />
     <Content Include="App\route.config.js" />
+    <Content Include="App\Users\Users.html" />
+    <Content Include="App\Users\users.js" />
     <Content Include="Content\animate.css" />
     <Content Include="Content\animate.min.css" />
     <Content Include="Content\bootstrap-theme.css" />
@@ -213,6 +216,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="images\logo.png" />
+    <Content Include="images\parallax-clients.jpg" />
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-animate.min.js" />
     <Content Include="Scripts\angular-local-storage.js" />

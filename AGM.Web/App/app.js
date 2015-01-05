@@ -19,6 +19,7 @@ function resolveFactoryPath(factoryName) {
 app.controller("main", function ($scope, $rootScope, $location, $state, $stateParams, authenticationDataService, authenticationHelper) {
     $scope.user = '';
     $scope.authenticated = false;
+    $scope.showMainMenu = false;
 
     $scope.ddUser = [
         {
@@ -47,7 +48,7 @@ app.controller("main", function ($scope, $rootScope, $location, $state, $statePa
 
     $rootScope.$on('$stateChangeSuccess',
             function (event, toState, toParams, fromState, fromParams) {
-                if (fromState.name == "" || (fromState.name == "Login" && toState.name != 'Login'))
+                if (fromState.name == "Login" && toState.name != 'Login')
                     $scope.getCurrentUser($location.path());
                 switch (toState.name) {
                     case 'Index':
@@ -63,6 +64,11 @@ app.controller("main", function ($scope, $rootScope, $location, $state, $statePa
                 }
             });
 
+    $scope.init = function () {
+        if ($scope.user == '')
+            $scope.getCurrentUser($location.path());
+    };
+
     $scope.getCurrentUser = function(returnPath) {
         authenticationDataService.getCurrentUser()
             .then(function(resp) {
@@ -73,9 +79,20 @@ app.controller("main", function ($scope, $rootScope, $location, $state, $statePa
                 if (returnPath && returnPath != '/Login')
                     $location.url('/Login?returnPath=' + returnPath);
                 else
-                    $location.url('/Login');
+                    $state.go('Login');
             }
             );
     };
+
+    $scope.toggleMainMenu = function () {
+        $scope.showMainMenu = !$scope.showMainMenu;
+    };
+
+    $scope.goTo = function (state) {
+        $scope.showMainMenu = false;
+        $state.go(state);
+    };
+
+    $scope.init();
 });
 

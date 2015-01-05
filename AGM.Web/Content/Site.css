@@ -166,23 +166,23 @@
     display: inline;
 }
 
-.asideInsert {
+.asideRight {
     position: fixed;
     top: 0;
     bottom: 0;
     right: 0;
     z-index: 1049;
     overflow: auto;
-    width: 300px;
+    width: 290px;
     background: #fff;
 }
 
-.asideInsert.ng-hide-add {
+.asideRight.ng-hide-add {
     -webkit-animation:0.5s hide_to_right linear; 
     animation:0.5s hide_to_right linear; 
 }
 
-.asideInsert.ng-hide-remove { 
+.asideRight.ng-hide-remove { 
     -webkit-animation:0.5s show_from_right linear; 
     animation:0.5s show_from_right linear; 
 }
@@ -813,6 +813,78 @@ ul.typeahead {
 @keyframes exit_right {
   from { left:0;opacity:1; }
   to { left:100%; opacity:1; }
+}
+
+.mainMenuHeaderTop{
+    position: absolute;
+    width: 100%;
+    height: 24px;
+    background-color: rgba(0, 0, 0, 0.2);
+    text-align: right;
+}
+
+.mainMenuHeaderTop > i{
+    cursor: pointer;
+    width: 20px;
+    line-height: 22px;
+    text-align: center;
+}
+
+.mainMenuHeaderTop > i.leftIcon{
+    float: left;
+}
+
+.mainMenuHeaderTop > i.rightIcon{
+    float: right;
+    margin-right: 5px;
+}
+
+.mainMenuHeaderTop > i:hover{
+    color: #FFFFFF;
+}
+
+.mainMenuHeaderBackground{
+    height: 110px;
+    background-size: cover;
+    background-image: url('../backoffice/root/images/parallax-clients.jpg');
+}
+
+.mainMenuHeaderUserPic{
+    position: relative;
+    overflow: hidden;
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    margin: -24px 0 0 5px;
+}
+
+.mainMenuHeaderUserName{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    line-height: 20px;
+    position: relative;
+    margin: -48px 0 34px 53px;
+    color: #FFF;
+    font-size: 19px;
+    text-shadow: 1px 1px 0 #000,     -1px -1px 0 #000,      1px -1px 0 #000,     -1px 1px 0 #000,     1px 1px 0 #000;
+}
+
+.mainMenuItem{
+    text-indent: 5px;
+    height: 40px;
+    line-height: 40px;
+    color: #282828;
+    border-width: 0 0 0 3px;
+    border-color: #FFFFFF;
+    border-style: solid;
+}
+
+.mainMenuItem:hover{
+    cursor: pointer;
+    border-color: #0579c6;
+    background-color: rgba(219, 219, 219, 0.2);
+    color: #000000;
 }
 
 @media (max-width: 991px) 

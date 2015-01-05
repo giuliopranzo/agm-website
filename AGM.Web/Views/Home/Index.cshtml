@@ -3,8 +3,8 @@
         <div class="navbar navbar-fixed-top">
             <div class="container container-header">
                 <div class="navbar-header">
-                    <div class="menuRightPart-sm visible-xs-block visible-sm-block" style="float:right;">
-                        <i class="fa fa-bars"></i>
+                    <div class="menuRightPart-sm visible-xs-block visible-sm-block" style="float:right;" ng-show="authenticated">
+                        <i class="fa fa-bars" ng-click="toggleMainMenu()"></i>
                     </div>
                     <div class="logo"><img src="~/images/logo.png" alt="" /></div>
                 </div>
@@ -17,14 +17,29 @@
                         <li><a class="simpleLink" bs-dropdown="ddSettings">Impostazioni</a></li>
                     </ul>
                     <ul class="nav navbar-nav menuRightPart" style="float:right;">
-                        <li ng-show="authenticated" style="float:right;"><a bs-dropdown="ddUser" ng-bind="user"></a></li>
+                        <li ng-show="authenticated" style="float:right;"><a bs-dropdown="ddUser" ng-bind="user.name"></a></li>
                     </ul>
                 </div>
             </div>
         </div>
+        <div class="hidden-md hidden-lg asideRight" ng-show="showMainMenu">
+            <div class="mainMenuHeaderTop">
+                <i class="fa fa-angle-right rightIcon" ng-click="toggleMainMenu()"></i>
+            </div>
+            <div class="mainMenuHeaderBackground"></div>
+            <div class="mainMenuHeaderUserPic">
+                <img ng-src="{{user.picture}}" alt="" style="height:48px;width:48px;" />
+            </div>
+            <div class="mainMenuHeaderUserName" ng-bind="user.name"></div>
+            <div class="mainMenuItem" ng-click="goTo('Index')">Homepage</div>
+            <div class="mainMenuItem" ng-click="goTo('MonthlyReports')">Rapportini</div>
+            <div class="mainMenuItem" ng-click="goTo('Logout')"><i class="fa fa-sign-out leftIcon"></i>Logout</div>
+        </div>
+        <div class="modalBg" ng-show="showMainMenu"></div>
+
         <div ui-view="content"></div>
         <div ui-view="modal"></div>
-</div>
+    </div>
 }
 @section Scripts{
     @Scripts.Render("~/bundles/datamockups")

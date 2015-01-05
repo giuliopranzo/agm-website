@@ -22,6 +22,25 @@
                 }
             }
         })
+        .state('Users', {
+            url: "/Users",
+            views: {
+                "content": {
+                    templateUrl: resolveViewPath('Users/Users.html'),
+                    controller: 'users'
+                },
+                "modal": {
+                    template: ''
+                }
+            },
+            resolve: {
+                usersSource: function (monthlyReportsDataService) {
+                    return monthlyReportsDataService.getAllUsers().then(function (respData) {
+                        return respData.data;
+                    });
+                }
+            }
+        })
         .state('MonthlyReports', {
             url: "/MonthlyReports",
             views: {

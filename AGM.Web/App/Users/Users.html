@@ -1,0 +1,26 @@
+﻿<a id="reportTop" class="reportTop"></a>
+<div class="monthlyRep" ng-cloak>
+    <h3 class="login-title login-control">Utenti</h3>
+    <div class="monthlyRep-users">
+        <div class="container-fluid">
+            <div class="col-xs-12 col-md-6 form-group">
+                <input class="form-control" type="text" ng-model="search.name" placeholder="Ricerca..." />
+            </div>
+            <div ng-repeat="user in users | filter:search:false | orderBy:'name':false as usersFiltered">
+                <div class="col-xs-12 nameListLetterHead" ng-show="showLetter($index)" ng-bind="getFirstChar(user.name)"></div>
+                <div class="col-xs-12 col-md-3">
+                    <button class="btn btn-default btn-block nameListElement" ng-click="showDetail(user.id)">
+                        <img ng-src="{{user.picture}}" alt="" style="height:48px;width:48px;" />
+                        <div>
+                            <span class="person-name" ng-bind="user.name"></span>
+                            <span class="company-name" ng-bind="user.company"></span>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div agm-footer></div>
+    </div>
+
+    <div class="loading" ng-show="loading_detail"></div>
+</div>

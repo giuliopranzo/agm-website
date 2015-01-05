@@ -22,6 +22,7 @@ namespace AGM.Web
                 //"~/App/MonthlyReports/monthlyReports.config.js",
                 "~/App/MonthlyReports/monthlyReports.service.js",
                 "~/App/MonthlyReports/monthlyReports.js",
+                "~/App/Users/users.js",
                 "~/App/route.config.js"
                 
             ));

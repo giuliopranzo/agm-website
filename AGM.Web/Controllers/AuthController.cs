@@ -103,11 +103,21 @@ namespace AGM.Web.Controllers
         [HttpGet]
         public ApiResponse GetCurrentUser()
         {
-            return new ApiResponse() 
+            using (var context = new AgmDataContext())
             {
-                Succeed = true,
-                Data = (Thread.CurrentPrincipal as CustomPrincipal).User.Split('$').GetValue(1) as string
-            };
+                var username = (Thread.CurrentPrincipal as CustomPrincipal).User.Split('$').GetValue(0) as string;
+                var user = context.Users.Single(u => u.Username == username);
+                return new ApiResponse(true)
+                {
+                    Data = new
+                    {
+                        user.Id,
+                        user.Name,
+                        user.Picture,
+                        user.Username
+                    }
+                };
+            }
         }
     }
 }
