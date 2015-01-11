@@ -1,0 +1,47 @@
+﻿<div class="monthlyRep" ng-cloak>
+    <h3 class="login-title login-control">Profilo utente</h3>
+    <form name="profileForm" novalidate>
+        <fieldset class="col-xs-12 col-sm-4 form-group">
+            <label>Email</label><input required class="form-control" type="text" placeholder="Email" ng-model="user.email" />
+            <label>Cognome</label><input required class="form-control" type="text" placeholder="Cognome" ng-model="user.lastname" />
+            <label>Nome</label><input required class="form-control" type="text" placeholder="Nome" ng-model="user.firstname"/>
+            <label>Password</label><input required class="form-control" type="text" placeholder="Password" ng-model="user.password"/>
+            <br/>
+            <div>
+                <label style="float:left;line-height: 34px;">Gestione utenti</label>
+                <div class="btn-group" style="float:right;" ng-model="user.sectionusersvisible" bs-radio-group>
+                    <label class="btn btn-default"><input type="radio" class="btn btn-default" value="false"> Off</label>
+                    <label class="btn btn-default"><input type="radio" class="btn btn-default" value="true"> On</label>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div>
+                <label style="float:left;line-height: 34px;">Gestione rapportini</label>
+                <div class="btn-group" style="float:right;" ng-model="user.sectionmonthlyreportsvisible" bs-radio-group>
+                    <label class="btn btn-default"><input type="radio" class="btn btn-default" value="false"> Off</label>
+                    <label class="btn btn-default"><input type="radio" class="btn btn-default" value="true"> On</label>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div>
+                <label style="float:left;line-height: 34px;">Gestione annunci</label>
+                <div class="btn-group" style="float:right;" ng-model="user.sectionjobadsvisible" bs-radio-group>
+                    <label class="btn btn-default"><input type="radio" class="btn btn-default" value="false"> Off</label>
+                    <label class="btn btn-default"><input type="radio" class="btn btn-default" value="true"> On</label>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div>
+                <label style="float:left;line-height: 34px;">Gestione candidati</label>
+                <div class="btn-group" style="float:right;" ng-model="user.sectionjobapplicantsvisible" bs-radio-group>
+                    <label class="btn btn-default"><input type="radio" class="btn btn-default" value="false"> Off</label>
+                    <label class="btn btn-default"><input type="radio" class="btn btn-default" value="true"> On</label>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <button type="button" class="btn btn-default" ng-model="user.isactive" bs-checkbox>Attivo</button>
+            <button ng-hide="profileForm.$invalid" class="btn btn-info" ng-click="authenticate()">Salva</button>
+            <button ng-show="profileForm.$invalid" class="btn btn-info" disabled="disabled">Salva</button>
+        </fieldset>
+    </form>
+</div>

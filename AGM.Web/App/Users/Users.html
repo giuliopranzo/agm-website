@@ -9,7 +9,7 @@
             <div ng-repeat="user in users | filter:search:false | orderBy:'name':false as usersFiltered">
                 <div class="col-xs-12 nameListLetterHead" ng-show="showLetter($index)" ng-bind="getFirstChar(user.name)"></div>
                 <div class="col-xs-12 col-md-3">
-                    <button class="btn btn-default btn-block nameListElement" ng-click="showDetail(user.id)">
+                    <button class="btn btn-default btn-block nameListElement" user-context-menu="{{user.id}}">
                         <img ng-src="{{user.picture}}" alt="" style="height:48px;width:48px;" />
                         <div>
                             <span class="person-name" ng-bind="user.name"></span>

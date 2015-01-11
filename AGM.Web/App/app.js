@@ -16,7 +16,7 @@ function resolveFactoryPath(factoryName) {
     return factoryBasePath + factoryName;
 }
 
-app.controller("main", function ($scope, $rootScope, $location, $state, $stateParams, authenticationDataService, authenticationHelper) {
+app.controller("main", function ($scope, $rootScope, $location, $state, $stateParams, $filter, authenticationDataService, authenticationHelper) {
     $scope.user = '';
     $scope.authenticated = false;
     $scope.showMainMenu = false;
@@ -82,6 +82,10 @@ app.controller("main", function ($scope, $rootScope, $location, $state, $statePa
                     $state.go('Login');
             }
             );
+    };
+
+    $scope.goToMonthlyReports = function () {
+        $location.path('/MonthlyReports/' + $scope.user.id + '/' + $filter('date')(new Date(), 'yyyy-MM'));
     };
 
     $scope.toggleMainMenu = function () {

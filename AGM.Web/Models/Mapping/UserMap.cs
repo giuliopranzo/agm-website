@@ -30,6 +30,7 @@ namespace AGM.Web.Models.Mapping
             this.Property(t => t.Username).HasColumnName("utente");
             this.Property(t => t.FirstName).HasColumnName("nome");
             this.Property(t => t.LastName).HasColumnName("cognome");
+            this.Property(t => t.Email).HasColumnName("email");
 
             this.Property(t => t.Password).HasColumnName("pass");
             this.Property(t => t._sectionUsersVisible).HasColumnName("utenti");

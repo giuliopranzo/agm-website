@@ -21,46 +21,28 @@ namespace AGM.Web.Controllers
         [HttpPost]
         public ApiResponse Login(dynamic loginData)
         {
-            string username = loginData.Username;
+            string email = loginData.Email;
             string password = loginData.Password;
             string name = string.Empty;
 
-            if (ConfigurationHelper.UseMockupData)
+            using (var context = new AgmDataContext())
             {
-                using (var re = new StreamReader(System.Web.Hosting.HostingEnvironment.MapPath("~/App/Mockup/users.js")))
-                {
-                    JsonTextReader reader = new JsonTextReader(re);
-                    JsonSerializer se = new JsonSerializer();
-                    var parsedData = se.Deserialize<List<User>>(reader);
-                    if (parsedData.All(u => u.Username.ToLower() != username.ToLower() || u.Password != password))
-                        return new ApiResponse(false)
-                        {
-                            Errors =
-                                new ApiResponseError[] { new ApiResponseError() { Message = "Nome utente o password errati" } }
-                        };
-                }
-            }
-            else
-            {
-                using (var context = new AgmDataContext())
-                {
-                    if (context.Users.All(u => u.Username.ToLower() != username.ToLower() || u.Password != password || u._sectionMonthlyReportsVisible != 1))
-                        return new ApiResponse(false)
-                        {
-                            Errors =
-                                new ApiResponseError[]
-                                {new ApiResponseError() {Message = "Nome utente o password errati"}}
-                        };
+                if (context.Users.All(u => u.Email.ToLower() != email.ToLower() || u.Password != password || u._sectionMonthlyReportsVisible != 1))
+                    return new ApiResponse(false)
+                    {
+                        Errors =
+                            new ApiResponseError[]
+                            {new ApiResponseError() {Message = "Email o password errati"}}
+                    };
 
-                    name = context.Users.First(u => u.Username.ToLower() == username.ToLower() && u.Password == password).Name;
-                }
+                name = context.Users.First(u => u.Email.ToLower() == email.ToLower() && u.Password == password).Name;
             }
 
             var tokenHandler = new JwtSecurityTokenHandler();
             
             var claims = new List<Claim>()
             {
-                new Claim(ClaimTypes.Name, string.Format("{0}${1}", loginData.Username.ToString(), name))
+                new Claim(ClaimTypes.Name, string.Format("{0}${1}", loginData.Email.ToString(), name))
             };
 
             var tokenDescriptor = new SecurityTokenDescriptor()
@@ -105,8 +87,8 @@ namespace AGM.Web.Controllers
         {
             using (var context = new AgmDataContext())
             {
-                var username = (Thread.CurrentPrincipal as CustomPrincipal).User.Split('$').GetValue(0) as string;
-                var user = context.Users.Single(u => u.Username == username);
+                var email = (Thread.CurrentPrincipal as CustomPrincipal).User.Split('$').GetValue(0) as string;
+                var user = context.Users.Single(u => u.Email == email);
                 return new ApiResponse(true)
                 {
                     Data = new
@@ -114,7 +96,8 @@ namespace AGM.Web.Controllers
                         user.Id,
                         user.Name,
                         user.Picture,
-                        user.Username
+                        user.Email,
+                        user.SectionUsersVisible
                     }
                 };
             }

@@ -23,7 +23,7 @@ namespace AGM.Web.Models
             {
                 var cultureIt = CultureInfo.GetCultureInfo("it-IT");
                 double o;
-                double.TryParse(AmountRaw,NumberStyles.Any, cultureIt, out o);
+                double.TryParse(AmountRaw, NumberStyles.Any, cultureIt, out o);
                 return Math.Round(o, 2);
             }
         }

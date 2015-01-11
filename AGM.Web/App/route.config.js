@@ -34,15 +34,40 @@
                 }
             },
             resolve: {
-                usersSource: function (monthlyReportsDataService) {
-                    return monthlyReportsDataService.getAllUsers().then(function (respData) {
-                        return respData.data;
+                usersSource: function (usersDataService) {
+                    return usersDataService.getAllUsers().then(function (respData) {
+                        if (respData.succeed)
+                            return respData.data;
+                        
+                        return null;
+                    });
+                }
+            }
+        })
+        .state('UserDetail', {
+            url: "/Users/:userId",
+            views: {
+                "content": {
+                    templateUrl: resolveViewPath('UserDetail/UserDetail.html'),
+                    controller: 'userDetail'
+                },
+                "modal": {
+                    template: ''
+                }
+            },
+            resolve: {
+                userSource: function ($stateParams, usersDataService) {
+                    return usersDataService.getUserDetail($stateParams.userId).then(function (respData) {
+                        if (respData.succeed)
+                            return respData.data;
+
+                        return null;
                     });
                 }
             }
         })
         .state('MonthlyReports', {
-            url: "/MonthlyReports",
+            url: "/MonthlyReports/:reportId/:selectedDate",
             views: {
                 "content": {
                     templateUrl: resolveViewPath('MonthlyReports/MonthlyReports.html'),
@@ -52,16 +77,6 @@
                     template: ''
                 }
             },
-            resolve: {
-                usersSource: function(monthlyReportsDataService) {
-                    return monthlyReportsDataService.getAllUsers().then(function(respData) {
-                        return respData.data;
-                    });
-                }
-            }
-        })
-        .state('MonthlyReports.detail', {
-            url: "/:reportId/:selectedDate",
             resolve: {
                 userReportSource: function($stateParams, monthlyReportsDataService) {
                     return monthlyReportsDataService.getReportDetail('mr_detail', $stateParams.reportId, $stateParams.selectedDate).then(function (respData) {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 
@@ -19,9 +20,19 @@ namespace AGM.Web.Models
         {
             get
             {
+                var cultureIt = CultureInfo.GetCultureInfo("it-IT");
                 double o;
-                double.TryParse(HoursRaw, out o);
+                double.TryParse(HoursRaw, NumberStyles.Any, cultureIt, out o);
                 return Math.Round(o,2);
+            }
+        }
+
+        public string HoursCountString
+        {
+            get
+            {
+                var cultureIt = CultureInfo.GetCultureInfo("it-IT");
+                return HoursCount.ToString("N2", cultureIt);
             }
         }
 

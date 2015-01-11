@@ -155,6 +155,7 @@
     <Compile Include="Infrastructure\Attributes\AuthorizeActionAttribute.cs" />
     <Compile Include="Infrastructure\ConfigurationHelper.cs" />
     <Compile Include="Infrastructure\CustomPrincipal.cs" />
+    <Compile Include="Infrastructure\Extensions\ApiControllerExtensions.cs" />
     <Compile Include="Infrastructure\Extensions\ModelExtensions.cs" />
     <Compile Include="Infrastructure\HttpRequestBaseExtension.cs" />
     <Compile Include="Infrastructure\HttpRequestHeadersExtension.cs" />
@@ -201,8 +202,11 @@
     <Content Include="App\Popover\popover.test.html" />
     <Content Include="App\Popover\popover.tpl.demo.html" />
     <Content Include="App\route.config.js" />
+    <Content Include="App\UserDetail\UserDetail.html" />
+    <Content Include="App\UserDetail\userDetail.js" />
     <Content Include="App\Users\Users.html" />
     <Content Include="App\Users\users.js" />
+    <Content Include="App\Users\users.service.js" />
     <Content Include="Content\animate.css" />
     <Content Include="Content\animate.min.css" />
     <Content Include="Content\bootstrap-theme.css" />

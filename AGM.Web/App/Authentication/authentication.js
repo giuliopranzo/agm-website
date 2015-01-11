@@ -1,5 +1,5 @@
 ﻿app.controller('authentication', function($scope, $alert, $location, $stateParams, authenticationDataService, authenticationHelper) {
-    $scope.username = '';
+    $scope.email = '';
     $scope.password = '';
     $scope.returnPath = $stateParams.returnPath;
     if (!$scope.returnPath)
@@ -12,7 +12,7 @@
     });
 
     $scope.authenticate = function () {
-        var postData = { Username: $scope.username, Password: $scope.password };
+        var postData = { Email: $scope.email, Password: $scope.password };
         authenticationDataService.authenticate(postData)
         .then(function (resp) {
             if (resp.succeed) {

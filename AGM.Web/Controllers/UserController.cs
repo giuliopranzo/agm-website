@@ -7,6 +7,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Http;
 using Newtonsoft.Json;
+using AGM.Web.Infrastructure.Attributes;
+using AGM.Web.Infrastructure.Extensions;
+using System.Threading;
 
 namespace AGM.Web.Controllers
 {
@@ -30,7 +33,27 @@ namespace AGM.Web.Controllers
                     cols.Add(string.Format("{0} - {1}", col["ColumnName"], col["IsIdentity"]));
                 }
                 defs.Add("utenti", cols);
+                sqlreader.Read();
+                object[] resUtenti = new object[cols.Count];
+                sqlreader.GetValues(resUtenti);
+                defs.Add("utenti example", JsonConvert.SerializeObject(resUtenti));
                 sqlreader.Close();
+
+                //command = new System.Data.SqlClient.SqlCommand("update utenti set utenti=1 where idutente=21", conn);
+                //var resAlter = command.ExecuteNonQuery();
+                //defs.Add("update result1", resAlter);
+
+                //command = new System.Data.SqlClient.SqlCommand("update utenti set email='nandowalter@gmail.com' where idutente=21", conn);
+                //var resAlter = command.ExecuteNonQuery();
+                //defs.Add("update result1", resAlter);
+
+                //command = new System.Data.SqlClient.SqlCommand("update utenti set email='davide.cavalli@agmsolutions.net' where idutente=4", conn);
+                //resAlter = command.ExecuteNonQuery();
+                //defs.Add("update result2", resAlter);
+
+                //command = new System.Data.SqlClient.SqlCommand("update utenti set email='michela.merlo@agmsolutions.net' where idutente=3", conn);
+                //resAlter = command.ExecuteNonQuery();
+                //defs.Add("update result3", resAlter);
 
                 cols = new List<string>();
                 command = new System.Data.SqlClient.SqlCommand("select TOP 1 * from rappore where idutente=38", conn);
@@ -117,26 +140,19 @@ namespace AGM.Web.Controllers
             };
         }
 
+        [AuthorizeAction]
         [HttpGet]
         public ApiResponse GetAll()
         {
-            if (ConfigurationHelper.UseMockupData)
-            {
-                using (var re = new StreamReader(HttpContext.Current.Server.MapPath("~/App/Mockup/users.js")))
-                {
-                    JsonTextReader reader = new JsonTextReader(re);
-                    JsonSerializer se = new JsonSerializer();
-                    object parsedData = se.Deserialize(reader);
-                    return new ApiResponse(true)
-                    {
-                        Data = parsedData
-                    };
-                }
-            }
-
             using (var context = new AgmDataContext())
             {
-                var users = context.Users.OrderBy(u => u.LastName).ToList(); 
+                var email = (Thread.CurrentPrincipal as CustomPrincipal).User.Split('$').GetValue(0) as string;
+                var user = context.Users.Single(u => u.Email == email);
+
+                if (!user.SectionUsersVisible)
+                    return new ApiResponse(false);
+
+                var users = context.Users.Where(u => u.Email != email).OrderBy(u => u.LastName).ToList(); 
                 return new ApiResponse(true)
                 {
                     Data = users.Select(u => new
@@ -146,6 +162,22 @@ namespace AGM.Web.Controllers
                         u.Picture,
                         u.Username
                     })
+                };
+            }
+        }
+
+        [AuthorizeAction]
+        [HttpGet]
+        public ApiResponse GetDetail(int id)
+        {
+            this.CheckCurrentUserPermission(id, ((x) => x.SectionUsersVisible));
+
+            using (var context = new AgmDataContext())
+            {
+                var user = context.Users.First(u => u.Id == id);
+                return new ApiResponse(true)
+                {
+                    Data = user
                 };
             }
         }

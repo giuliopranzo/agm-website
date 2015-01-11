@@ -252,7 +252,7 @@
 }
 
 .reportTop {
-    display: block; position: relative; top: -25px; visibility: hidden;
+    display: block; position: relative; top: -85px; visibility: hidden;
 }
 
 .reportSummary {
@@ -867,7 +867,11 @@ ul.typeahead {
     margin: -48px 0 34px 53px;
     color: #FFF;
     font-size: 19px;
-    text-shadow: 1px 1px 0 #000,     -1px -1px 0 #000,      1px -1px 0 #000,     -1px 1px 0 #000,     1px 1px 0 #000;
+    text-shadow: 1px 1px 0 #000,
+     -1px -1px 0 #000, 
+     1px -1px 0 #000,
+     -1px 1px 0 #000,
+     1px 1px 0 #000;
 }
 
 .mainMenuItem{

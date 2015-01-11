@@ -1,13 +1,15 @@
 ﻿<a id="reportTop" class="reportTop"></a>
 <div class="monthlyRep" ng-cloak>
     <div class="hidden-print mr_affixToolContainer" role="complementary" data-offset-top="235" bs-affix>
-        <div class="container container-header" ng-show="detailVisible">
-            <i class="hidden-md hidden-lg fa fa-arrow-circle-o-left signAffix" ng-click="backToUsers()"></i>
+        <div class="container container-header">
+            <i class="hidden-md hidden-lg fa fa-arrow-circle-o-left signAffix" ng-show="backToUsersVisible" ng-click="backToUsers()"></i>
             <i class="fa fa-bolt signAffix" ng-click="autocompleteReport()"></i>
             <i class="fa fa-plus-circle signAffix" ng-click="toggleAsideInsert()"></i>
         </div>
     </div>
     <h3 class="login-title login-control">Rapportini</h3>
+    <!--
+
     <div class="monthlyRep-users" ng-hide="detailVisible">
         <div class="container-fluid">
             <div class="col-xs-12 col-md-6 form-group">
@@ -28,9 +30,11 @@
         </div>
         <div agm-footer></div>
     </div>
-    <div class="monthlyRep-detail" ng-show="detailVisible">
+
+    -->
+    <div class="monthlyRep-detail">
         <div>
-            <i class="hidden-xs hidden-sm fa fa-arrow-circle-o-left sign" ng-click="backToUsers()"></i>&nbsp;<h4 class="detailUserName" ng-bind="detail.user.name"></h4>
+            <i class="hidden-xs hidden-sm fa fa-arrow-circle-o-left sign" ng-show="backToUsersVisible" ng-click="backToUsers()"></i>&nbsp;<h4 class="detailUserName" ng-bind="detail.user.name"></h4>
         </div>
         <div class="col-xs-12 col-md-3 form-group">
             <div class="input-group">
@@ -125,7 +129,7 @@
                 <span class="col-xs-12 col-md-3 reportColumn">
                     <span class="reportBadgeContainer" ng-repeat="houritem in day.hourscollection">
                         <span class="visible-xs-inline-block visible-sm-inline-block actionStripLeft"><i class="fa fa-clock-o prefixSign">h</i></span>
-                        <img class="reportBadge" alt="" ng-src="https://img.shields.io/badge/{{houritem.reason}}-{{houritem.hourscount}}-blue.svg?style=flat" />
+                        <img class="reportBadge" alt="" ng-src="https://img.shields.io/badge/{{houritem.reason}}-{{houritem.hourscountstring}}-blue.svg?style=flat" />
                         <span class="actionStripRight"><i class="fa fa-trash-o actionStripItem" ng-click="removeReport('Hour', houritem.id)"></i></span>
                     </span>
                 </span>
