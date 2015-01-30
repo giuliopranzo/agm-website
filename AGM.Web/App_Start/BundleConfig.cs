@@ -42,6 +42,7 @@ namespace AGM.Web
                 "~/Scripts/angular-local-storage.js",
                 "~/Scripts/angular-strap.js",
                 "~/Scripts/angular-strap.tpl.js",
+                "~/Scripts/angular-file-upload.min.js",
                 "~/Scripts/angular-ui/ui-bootstrap.js",
                 "~/Scripts/angular-ui/ui-bootstrap-tpls.js",
                 "~/Scripts/jquery-1.10.2.js",

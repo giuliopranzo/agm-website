@@ -27,7 +27,7 @@ namespace AGM.Web.Controllers
 
             using (var context = new AgmDataContext())
             {
-                if (context.Users.All(u => u.Email.ToLower() != email.ToLower() || u.Password != password || u._sectionMonthlyReportsVisible != 1))
+                if (context.Users.All(u => u.Email.ToLower() != email.ToLower() || u.Password != password || u._sectionMonthlyReportsVisible != 1 || u._isDeleted || u._isActive != 1 ))
                     return new ApiResponse(false)
                     {
                         Errors =
@@ -88,14 +88,14 @@ namespace AGM.Web.Controllers
             using (var context = new AgmDataContext())
             {
                 var email = (Thread.CurrentPrincipal as CustomPrincipal).User.Split('$').GetValue(0) as string;
-                var user = context.Users.Single(u => u.Email == email);
+                var user = context.Users.Single(u => u.Email == email && !u._isDeleted && u._isActive == 1);
                 return new ApiResponse(true)
                 {
                     Data = new
                     {
                         user.Id,
                         user.Name,
-                        user.Picture,
+                        user.Image,
                         user.Email,
                         user.SectionUsersVisible
                     }

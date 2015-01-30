@@ -28,17 +28,21 @@
             </div>
             <div class="mainMenuHeaderBackground"></div>
             <div class="mainMenuHeaderUserPic">
-                <img ng-src="{{user.picture}}" alt="" style="height:48px;width:48px;" />
+                <img ng-src="{{user.image}}" alt="" style="height:48px;width:48px;" />
             </div>
             <div class="mainMenuHeaderUserName" ng-bind="user.name"></div>
-            <div class="mainMenuItem" ng-click="goTo('Index')">Homepage</div>
-            <div class="mainMenuItem" ng-click="goTo('MonthlyReports')">Rapportini</div>
+            <div class="mainMenuItem" ng-click="goTo('Index')">Home</div>
+            <div class="mainMenuItem" ng-click="goToMineProfile()">Profilo</div>
+            <div class="mainMenuItem" ng-click="goTo('Users')" ng-show="user.sectionusersvisible">Utenti</div>
+            <div class="mainMenuItem" ng-click="goToMonthlyReports()">Rapportini</div>
             <div class="mainMenuItem" ng-click="goTo('Logout')"><i class="fa fa-sign-out leftIcon"></i>Logout</div>
         </div>
         <div class="modalBg" ng-show="showMainMenu"></div>
 
         <div ui-view="content"></div>
         <div ui-view="modal"></div>
+
+        <div class="loading" ng-show="loading"></div>
     </div>
 }
 @section Scripts{

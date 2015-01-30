@@ -16,7 +16,7 @@ namespace AGM.Web
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            var cash = AGM.Web.Models.AgmStaticDataContext.HourReasons;
+            //var cash = AGM.Web.Models.AgmStaticDataContext.HourReasons;
         }
     }
 }

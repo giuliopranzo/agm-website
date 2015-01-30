@@ -2,7 +2,7 @@
 var controllerBasePath = '/App/';
 var factoryBasePath = '/App/';
 
-var app = angular.module('agm', ['ngAnimate', 'ngSanitize', 'ui.router', 'LocalStorageModule', 'mgcrea.ngStrap']);
+var app = angular.module('agm', ['ngAnimate', 'ngSanitize', 'ui.router', 'LocalStorageModule', 'mgcrea.ngStrap', 'angularFileUpload']);
 
 function resolveViewPath(viewName) {
     return viewBasePath + viewName;
@@ -17,6 +17,17 @@ function resolveFactoryPath(factoryName) {
 }
 
 app.controller("main", function ($scope, $rootScope, $location, $state, $stateParams, $filter, authenticationDataService, authenticationHelper) {
+
+    $rootScope.$on('loader_show', function (event, callId) {
+        if (callId == 'mr_detail' || callId == 'usr_detail')
+            $scope.loading = true;
+    });
+
+    $rootScope.$on('loader_hide', function (event, callId) {
+        if (callId == 'mr_detail' || callId == 'usr_detail')
+            $scope.loading = false;
+    });
+
     $scope.user = '';
     $scope.authenticated = false;
     $scope.showMainMenu = false;
@@ -24,7 +35,7 @@ app.controller("main", function ($scope, $rootScope, $location, $state, $statePa
     $scope.ddUser = [
         {
             "text": "<i class=\"fa fa-user\"></i>&nbsp;Profilo",
-            "href": "/Profile"
+            "click": "goToMineProfile()"
         },
         {
             "divider": true
@@ -70,7 +81,7 @@ app.controller("main", function ($scope, $rootScope, $location, $state, $statePa
     };
 
     $scope.getCurrentUser = function(returnPath) {
-        authenticationDataService.getCurrentUser()
+        authenticationDataService.getCurrentUser('')
             .then(function(resp) {
                 $scope.user = resp.data;
                 $scope.authenticated = true;
@@ -85,8 +96,14 @@ app.controller("main", function ($scope, $rootScope, $location, $state, $statePa
     };
 
     $scope.goToMonthlyReports = function () {
+        $scope.showMainMenu = false;
         $location.path('/MonthlyReports/' + $scope.user.id + '/' + $filter('date')(new Date(), 'yyyy-MM'));
     };
+
+    $scope.goToMineProfile = function() {
+        $scope.showMainMenu = false;
+        $location.path('/Users/' + $scope.user.id);
+    }
 
     $scope.toggleMainMenu = function () {
         $scope.showMainMenu = !$scope.showMainMenu;

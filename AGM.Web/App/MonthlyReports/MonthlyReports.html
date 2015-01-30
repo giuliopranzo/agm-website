@@ -109,7 +109,7 @@
         <div class="modalBg" ng-show="showInsert"></div>
 
         <div class="reportList">
-            <div class="row reportRow hidden-xs hidden-sm reportListHeader">
+            <div class="row reportRow hidden-xs hidden-sm hidden-print reportListHeader">
                 <div class="col-xs-12 col-md-1 reportHeader">Giorno</div>
                 <div class="col-xs-12 col-md-3 reportHeader">Dettaglio ore h</div>
                 <div class="col-xs-12 col-md-1 reportHeader">Ore h</div>
@@ -130,7 +130,7 @@
                     <span class="reportBadgeContainer" ng-repeat="houritem in day.hourscollection">
                         <span class="visible-xs-inline-block visible-sm-inline-block actionStripLeft"><i class="fa fa-clock-o prefixSign">h</i></span>
                         <img class="reportBadge" alt="" ng-src="https://img.shields.io/badge/{{houritem.reason}}-{{houritem.hourscountstring}}-blue.svg?style=flat" />
-                        <span class="actionStripRight"><i class="fa fa-trash-o actionStripItem" ng-click="removeReport('Hour', houritem.id)"></i></span>
+                        <span class="actionStripRight"><i class="fa fa-trash-o actionStripItem hidden-print" ng-click="removeReport('Hour', houritem.id)"></i></span>
                     </span>
                 </span>
                 <span class="col-xs-12 col-md-1 hidden-xs hidden-sm reportColumn reportColumnNumeric"><i class="visible-xs-inline-block visible-sm-inline-block fa fa-clock-o umSign">h</i><span ng-bind="day.hours"></span></span>
@@ -138,14 +138,14 @@
                     <span class="reportBadgeContainer" ng-repeat="expenseitem in day.expensescollection">
                         <span class="visible-xs-inline-block visible-sm-inline-block actionStripLeft"><i class="fa fa-eur prefixSign"></i></span>
                         <img class="reportBadge" alt="" ng-src="https://img.shields.io/badge/{{expenseitem.completedescription}}-blue.svg?style=flat" />
-                        <span class="actionStripRight"><i ng-show="expenseitem.reasonid == 1 || expenseitem.reasonid == 2" class="fa fa-info actionStripItem" ng-click="showExpenseInfo(expenseitem.id)"></i><i class="fa fa-trash-o actionStripItem" ng-click="removeReport('Expense', expenseitem.id)"></i></span>
+                        <span class="actionStripRight"><i ng-show="expenseitem.reasonid == 1 || expenseitem.reasonid == 2" class="fa fa-info actionStripItem hidden-print" ng-click="showExpenseInfo(expenseitem.id)"></i><i class="fa fa-trash-o actionStripItem hidden-print" ng-click="removeReport('Expense', expenseitem.id)"></i></span>
                     </span>
                 </span>
                 <span class="col-xs-12 col-md-1 hidden-xs hidden-sm reportColumn reportColumnNumeric"><i class="visible-xs-inline-block visible-sm-inline-block fa fa-eur umSign"></i><span ng-bind="day.expenses"></span></span>
                 <span class="col-xs-12 col-md-3 reportColumn">
                     <span class="noteContainer" ng-repeat="noteitem in day.notescollection">
                         <span class="actionStripLeft noteSection noteText"><i class="visible-xs-inline-block visible-sm-inline-block fa fa-pencil-square-o prefixSignLeft"></i><span ng-bind="noteitem.note"></span></span>
-                        <span class="actionStripRight noteSection"><i class="fa fa-trash-o actionStripItem" ng-click="removeReport('Note', noteitem.id)"></i></span>
+                        <span class="actionStripRight noteSection"><i class="fa fa-trash-o actionStripItem hidden-print" ng-click="removeReport('Note', noteitem.id)"></i></span>
                     </span>
                 </span>
             </div>

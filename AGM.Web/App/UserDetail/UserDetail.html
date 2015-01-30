@@ -1,47 +1,63 @@
 ﻿<div class="monthlyRep" ng-cloak>
+    <div class="hidden-print mr_affixToolContainer" role="complementary" data-offset-top="235" bs-affix>
+        <div class="container container-header">
+            <i class="hidden-md hidden-lg fa fa-arrow-circle-o-left signAffix" ng-show="backToUsersVisible" ng-click="backToUsers()"></i>
+            <i class="hidden-md hidden-lg fa fa-trash-o signAffix" ng-show="deleteUserVisible" ng-click="deleteUser()"></i>
+        </div>
+    </div>
     <h3 class="login-title login-control">Profilo utente</h3>
+    <div>
+        <i class="hidden-xs hidden-sm fa fa-arrow-circle-o-left sign" ng-show="backToUsersVisible" ng-click="backToUsers()"></i>
+    </div>
+    <div class="hidden-xs hidden-sm toolContainer">
+        <i class="fa fa-trash-o sign" ng-show="deleteUserVisible" ng-click="deleteUser()"></i>
+    </div>
+    <div class="clearfix"></div>
     <form name="profileForm" novalidate>
         <fieldset class="col-xs-12 col-sm-4 form-group">
-            <label>Email</label><input required class="form-control" type="text" placeholder="Email" ng-model="user.email" />
-            <label>Cognome</label><input required class="form-control" type="text" placeholder="Cognome" ng-model="user.lastname" />
-            <label>Nome</label><input required class="form-control" type="text" placeholder="Nome" ng-model="user.firstname"/>
-            <label>Password</label><input required class="form-control" type="text" placeholder="Password" ng-model="user.password"/>
+            <div class="fileDropAreaAvatar" style="margin: 0 0 20px;">
+                <div class="fileUpload uploadButton">
+                    <i class="fa fa-upload" style="font-size:20px;margin:5px;"></i>
+                    <!--<span style="font-size:0.8em;">Cambia...</span>-->
+                    <input type="file" name="file" accept="image/*" class="custom-file-input" nv-file-select uploader="uploader" filters="sizeFilter">
+                </div>
+                <img ng-src="{{user.image}}" alt="" />
+            </div>
+            <div class="functionList">
+                <label>Attivo</label>
+                <input type="checkbox" ng-model="user._isactive" toggle-switch>
+                <div class="clearfix"></div>
+            </div>
+            <label class="profileFormLabel">Email</label><input required class="form-control" type="text" placeholder="Email" ng-model="user.email" maxlength="100" />
+            <label class="profileFormLabel">Cognome</label><input required class="form-control" type="text" placeholder="Cognome" ng-model="user.lastname" maxlength="50" />
+            <label class="profileFormLabel">Nome</label><input required class="form-control" type="text" placeholder="Nome" ng-model="user.firstname" maxlength="50"/>
+            <label class="profileFormLabel">Password</label><input required class="form-control" type="text" placeholder="Password" ng-model="user.password" maxlength="50"/>
             <br/>
-            <div>
-                <label style="float:left;line-height: 34px;">Gestione utenti</label>
-                <div class="btn-group" style="float:right;" ng-model="user.sectionusersvisible" bs-radio-group>
-                    <label class="btn btn-default"><input type="radio" class="btn btn-default" value="false"> Off</label>
-                    <label class="btn btn-default"><input type="radio" class="btn btn-default" value="true"> On</label>
-                </div>
+            <div class="functionList">
+                <label>Gestione utenti</label>
+                <input type="checkbox" ng-model="user._sectionusersvisible" toggle-switch>
                 <div class="clearfix"></div>
             </div>
-            <div>
-                <label style="float:left;line-height: 34px;">Gestione rapportini</label>
-                <div class="btn-group" style="float:right;" ng-model="user.sectionmonthlyreportsvisible" bs-radio-group>
-                    <label class="btn btn-default"><input type="radio" class="btn btn-default" value="false"> Off</label>
-                    <label class="btn btn-default"><input type="radio" class="btn btn-default" value="true"> On</label>
-                </div>
+            <div class="functionList">
+                <label>Gestione rapportini</label>
+                <input type="checkbox" ng-model="user._sectionmonthlyreportsvisible" toggle-switch>
                 <div class="clearfix"></div>
             </div>
-            <div>
-                <label style="float:left;line-height: 34px;">Gestione annunci</label>
-                <div class="btn-group" style="float:right;" ng-model="user.sectionjobadsvisible" bs-radio-group>
-                    <label class="btn btn-default"><input type="radio" class="btn btn-default" value="false"> Off</label>
-                    <label class="btn btn-default"><input type="radio" class="btn btn-default" value="true"> On</label>
-                </div>
+            <div class="functionList">
+                <label>Gestione annunci</label>
+                <input type="checkbox" ng-model="user._sectionjobadsvisible" toggle-switch>
                 <div class="clearfix"></div>
             </div>
-            <div>
-                <label style="float:left;line-height: 34px;">Gestione candidati</label>
-                <div class="btn-group" style="float:right;" ng-model="user.sectionjobapplicantsvisible" bs-radio-group>
-                    <label class="btn btn-default"><input type="radio" class="btn btn-default" value="false"> Off</label>
-                    <label class="btn btn-default"><input type="radio" class="btn btn-default" value="true"> On</label>
-                </div>
+            <div class="functionList">
+                <label>Gestione candidati</label>
+                <input type="checkbox" ng-model="user._sectionjobapplicantsvisible" toggle-switch>
                 <div class="clearfix"></div>
             </div>
-            <button type="button" class="btn btn-default" ng-model="user.isactive" bs-checkbox>Attivo</button>
-            <button ng-hide="profileForm.$invalid" class="btn btn-info" ng-click="authenticate()">Salva</button>
-            <button ng-show="profileForm.$invalid" class="btn btn-info" disabled="disabled">Salva</button>
+            
+            <div class="form-group bottomButton">
+                <button ng-hide="profileForm.$invalid" class="btn btn-info" ng-click="save()">Salva</button>
+                <button ng-show="profileForm.$invalid" class="btn btn-info" disabled="disabled">Salva</button>
+            </div>
         </fieldset>
     </form>
 </div>

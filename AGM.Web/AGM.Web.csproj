@@ -223,6 +223,8 @@
     <Content Include="images\parallax-clients.jpg" />
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-animate.min.js" />
+    <Content Include="Scripts\angular-file-upload.js" />
+    <Content Include="Scripts\angular-file-upload.min.js" />
     <Content Include="Scripts\angular-local-storage.js" />
     <Content Include="Scripts\angular-local-storage.min.js" />
     <Content Include="Scripts\angular-mocks.js" />
@@ -257,6 +259,7 @@
     <Content Include="Scripts\angular-sanitize.min.js.map" />
     <None Include="Properties\PublishProfiles\AGM ftp.pubxml" />
     <None Include="Properties\PublishProfiles\Local.pubxml" />
+    <Content Include="Scripts\angular-file-upload.min.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\i18n\angular-locale_it-it.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -290,6 +293,9 @@
   <ItemGroup>
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

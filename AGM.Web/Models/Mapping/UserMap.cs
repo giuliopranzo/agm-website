@@ -31,6 +31,7 @@ namespace AGM.Web.Models.Mapping
             this.Property(t => t.FirstName).HasColumnName("nome");
             this.Property(t => t.LastName).HasColumnName("cognome");
             this.Property(t => t.Email).HasColumnName("email");
+            this.Property(t => t._image).HasColumnName("image");
 
             this.Property(t => t.Password).HasColumnName("pass");
             this.Property(t => t._sectionUsersVisible).HasColumnName("utenti");
@@ -38,15 +39,18 @@ namespace AGM.Web.Models.Mapping
             this.Property(t => t._sectionMonthlyReportsVisible).HasColumnName("rapportini");
             this.Property(t => t._sectionJobApplicantsVisible).HasColumnName("candidati");
             this.Property(t => t._isActive).HasColumnName("attivo");
+            this.Property(t => t._isDeleted).HasColumnName("isDeleted");
 
             // Ignore
             this.Ignore(p => p.Name);
             this.Ignore(p => p.Company);
+            this.Ignore(p => p.Image);
             this.Ignore(p => p.SectionUsersVisible);
             this.Ignore(p => p.SectionJobAdsVisible);
             this.Ignore(p => p.SectionJobApplicantsVisible);
             this.Ignore(p => p.SectionMonthlyReportsVisible);
             this.Ignore(p => p.IsActive);
+            this.Ignore(p => p.IsDeleted);
         }
     }
 }

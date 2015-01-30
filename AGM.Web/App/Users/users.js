@@ -7,12 +7,12 @@
     });
 
     $rootScope.$on('loader_show', function (event, callId) {
-        if (callId == 'mr_detail')
+        if (callId == 'mr_detail' || callId == 'usr_detail')
             $scope.loading_detail = true;
     });
 
     $rootScope.$on('loader_hide', function (event, callId) {
-        if (callId == 'mr_detail')
+        if (callId == 'mr_detail' || callId == 'usr_detail')
             $scope.loading_detail = false;
     });
 
@@ -40,6 +40,10 @@
     $scope.showUserDetail = function (id) {
         $location.path('/Users/' + id);
     };
+
+    $scope.newUser = function() {
+        $location.path('/Users/0');
+    }
 
     $scope.init();
 });

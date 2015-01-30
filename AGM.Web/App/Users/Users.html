@@ -1,6 +1,15 @@
 ﻿<a id="reportTop" class="reportTop"></a>
 <div class="monthlyRep" ng-cloak>
+    <div class="hidden-print mr_affixToolContainer" role="complementary" data-offset-top="235" bs-affix>
+        <div class="container container-header">
+            <i class="fa fa-plus-circle signAffix" ng-click="newUser()"></i>
+        </div>
+    </div>
     <h3 class="login-title login-control">Utenti</h3>
+    <div class="hidden-xs hidden-sm toolContainer">
+        <i class="fa fa-plus-circle sign" ng-click="newUser()"></i>
+    </div>
+    <div class="clearfix"></div>
     <div class="monthlyRep-users">
         <div class="container-fluid">
             <div class="col-xs-12 col-md-6 form-group">
@@ -10,7 +19,7 @@
                 <div class="col-xs-12 nameListLetterHead" ng-show="showLetter($index)" ng-bind="getFirstChar(user.name)"></div>
                 <div class="col-xs-12 col-md-3">
                     <button class="btn btn-default btn-block nameListElement" user-context-menu="{{user.id}}">
-                        <img ng-src="{{user.picture}}" alt="" style="height:48px;width:48px;" />
+                        <img ng-src="{{user.image}}" alt="" style="height:48px;width:48px;" />
                         <div>
                             <span class="person-name" ng-bind="user.name"></span>
                             <span class="company-name" ng-bind="user.company"></span>
@@ -22,5 +31,5 @@
         <div agm-footer></div>
     </div>
 
-    <div class="loading" ng-show="loading_detail"></div>
+    <div class="loading" ng-show="loading"></div>
 </div>

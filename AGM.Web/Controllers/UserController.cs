@@ -1,4 +1,9 @@
-﻿using AGM.Web.Infrastructure;
+﻿using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
+using AGM.Web.Infrastructure;
 using AGM.Web.Models;
 using System;
 using System.Collections.Generic;
@@ -39,6 +44,14 @@ namespace AGM.Web.Controllers
                 defs.Add("utenti example", JsonConvert.SerializeObject(resUtenti));
                 sqlreader.Close();
 
+                //command = new System.Data.SqlClient.SqlCommand("ALTER TABLE utenti ADD image VARCHAR(250)", conn);
+                //var resAlter = command.ExecuteNonQuery();
+                //defs.Add("update result1", resAlter);
+
+                //command = new System.Data.SqlClient.SqlCommand("ALTER TABLE utenti ADD isDeleted bit DEFAULT 0 NOT NULL", conn);
+                //var resAlter = command.ExecuteNonQuery();
+                //defs.Add("update result1", resAlter);
+                
                 //command = new System.Data.SqlClient.SqlCommand("update utenti set utenti=1 where idutente=21", conn);
                 //var resAlter = command.ExecuteNonQuery();
                 //defs.Add("update result1", resAlter);
@@ -152,14 +165,14 @@ namespace AGM.Web.Controllers
                 if (!user.SectionUsersVisible)
                     return new ApiResponse(false);
 
-                var users = context.Users.Where(u => u.Email != email).OrderBy(u => u.LastName).ToList(); 
+                var users = context.Users.Where(u => u.Email != email && !u._isDeleted).OrderBy(u => u.LastName).ToList(); 
                 return new ApiResponse(true)
                 {
                     Data = users.Select(u => new
                     {
                         u.Id,
                         u.Name,
-                        u.Picture,
+                        u.Image,
                         u.Username
                     })
                 };
@@ -174,12 +187,124 @@ namespace AGM.Web.Controllers
 
             using (var context = new AgmDataContext())
             {
-                var user = context.Users.First(u => u.Id == id);
+
+                var user = context.Users.FirstOrDefault(u => u.Id == id && !u._isDeleted);
+                if (user == null && id == 0)
+                    user = new User();
                 return new ApiResponse(true)
                 {
                     Data = user
                 };
             }
         }
+
+        [AuthorizeAction]
+        [HttpPost]
+        public ApiResponse Set(User user)
+        {
+            this.CheckCurrentUserPermission(user.Id, ((x) => x.SectionUsersVisible));
+
+            using (var context = new AgmDataContext())
+            {
+                if (user._image.Contains("/Temp"))
+                {
+                    File.Move(HttpContext.Current.Server.MapPath(user._image), HttpContext.Current.Server.MapPath(user._image.Replace("/Temp", string.Empty)));
+                    user.Image = user._image.Replace("/Temp", string.Empty);
+                }
+
+                if (user.Id != 0 && context.Users.Any(u => u.Id == user.Id && !u._isDeleted))
+                {
+                    context.Users.Attach(user);
+                    ((IObjectContextAdapter) context).ObjectContext.ObjectStateManager.ChangeObjectState(user, EntityState.Modified);
+                }
+                else
+                {
+                    if (user.Id != 0)
+                        user.Id = 0;
+                    context.Users.Add(user);
+                }
+
+                var res = context.SaveChanges();
+
+                if (res > 0)
+                    return new ApiResponse(true);
+
+                return new ApiResponse(false);
+            }
+        }
+
+        [AuthorizeAction]
+        [HttpPost]
+        public ApiResponse Delete(dynamic inId)
+        {
+            int id = (int) inId;
+            this.CheckCurrentUserPermission(id, ((x) => x.SectionUsersVisible));
+
+            using (var context = new AgmDataContext())
+            {
+                var user = context.Users.FirstOrDefault(u => u.Id == id);
+                if (user == null)
+                    return new ApiResponse(false);
+
+                user._isDeleted = true;
+                var res = context.SaveChanges();
+
+                if (res > 0)
+                    return new ApiResponse(true);
+
+                return new ApiResponse(false);
+            }
+        }
+
+        [HttpPost]
+        [AuthorizeAction]
+        public async Task<object> UploadAvatarImage()
+        {
+            if (!Request.Content.IsMimeMultipartContent())
+            {
+                throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
+            }
+            string serverImgBaseUrl = "/images/Avatars/Temp";
+            var provider = new MultipartFormDataStreamProvider(HttpContext.Current.Server.MapPath(serverImgBaseUrl));
+            List<object> files = new List<object>();
+
+            try
+            {
+                await Request.Content.ReadAsMultipartAsync(provider);
+                foreach (MultipartFileData file in provider.FileData)
+                {
+                    if (file.Headers.ContentType.MediaType.StartsWith("image/"))
+                    {
+                        string originalFilename = file.Headers.ContentDisposition.FileName.Replace("\"", string.Empty);
+                        string filename = string.Format("{0}{1}", file.LocalFileName, Path.GetExtension(originalFilename));
+                        File.Move(file.LocalFileName, filename);
+                        files.Add(new
+                        {
+                            Index = provider.FormData["index"],
+                            File = new
+                            {
+                                ImageUrl = string.Format("{0}/{1}", serverImgBaseUrl, Path.GetFileName(filename))
+                            }
+                        });
+                    }
+                }
+
+
+                var response = new ApiResponse(true)
+                {
+                    Data = new
+                    {
+                        files = files
+                    }
+                };
+
+                return Request.CreateResponse(HttpStatusCode.OK, response);
+            }
+            catch (System.Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e);
+            }
+        }
+
     }
 }

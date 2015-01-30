@@ -891,6 +891,55 @@ ul.typeahead {
     color: #000000;
 }
 
+.profileFormLabel {
+    margin-top: 10px;
+}
+
+.functionList .toggle {
+    float: right;
+}
+
+.functionList>label {
+    float:left;
+    line-height: 34px;
+}
+
+.bottomButton {
+    margin-top: 20px;
+}
+
+.fileDropAreaAvatar img {
+    width: 148px;
+    height: 148px;
+    border-radius: 5px; 
+    -moz-border-radius: 5px; 
+    -webkit-border-radius: 5px;
+    border: 3px solid #5a5a5a;
+}
+
+.fileUpload input.custom-file-input {
+	position: absolute;
+    width: 29px;
+	top: 0;
+	right: 0;
+	margin: 0;
+	padding: 0;
+	font-size: 24px;
+	cursor: pointer;
+	opacity: 0;
+	filter: alpha(opacity=0);
+}
+
+.uploadButton {
+    position: absolute;
+    margin: 8px 0px 0px 8px;
+    color: #FFF;
+    background-color: rgba(0, 0, 0, 0.298039);
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+}
+
 @media (max-width: 991px) 
 { 
     .logo {
@@ -965,4 +1014,97 @@ ul.typeahead {
 
 @media (min-width: 992px) {
     
+}
+
+@media print {
+    .cellHeaderColumnRight, .cellHeaderColumnLeft, .reportBadgeContainer, .reportColumn {
+        font-size: 8px;
+        line-height: 8px;
+    }
+
+    .body-content, .login-title {
+        margin: auto;
+    }
+
+    .login-title {
+        font-size: 16px;
+    }
+
+    .reportColumn {
+        width: auto;
+        line-height: 14px;
+    }
+
+    .reportBadge {
+        height: 12px;
+    }
+
+    .reportRow {
+        min-height: 0;
+        padding: 0;
+    }
+
+    .reportBadgeContainer, .noteContainer {
+        height: 14px;
+        line-height: 0;
+        top: -1px;
+        margin-bottom: -4px;
+        position: relative;
+    }
+
+    .reportHolidayRow {
+        height: 14px;
+
+    }
+
+    .reportSummaryRow {
+        line-height: 14px;
+    }
+
+    .dateRow {
+        display: inline-block;
+        width: 125px;
+        font-size: 8px;
+        line-height: 8px;
+        vertical-align: middle;
+    }
+
+    .input-group-addon, .form-control {
+        font-size: 10px;    
+    }
+
+    .form-control {
+        height: 24px;
+    }
+
+    .dateRowWorkDay {
+        border-width: 0;
+    }
+
+    .detailUserName {
+        font-size: 12px;
+    }
+
+    .form-group {
+        margin-bottom: 5px;
+    }
+
+    body {
+        padding-top: 20px;
+        font-size: 8px;
+        line-height: 8px;
+    }
+
+    h4 {
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+
+    .actionStripRight {
+        height: 0;
+    }
+
+    .actionStripLeft {
+        height: 8px;
+    }
 }

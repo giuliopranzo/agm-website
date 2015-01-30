@@ -15,7 +15,7 @@ namespace AGM.Web.Infrastructure.Extensions
             using (var context = new AgmDataContext())
             {
                 var currentEmail = (Thread.CurrentPrincipal as CustomPrincipal).User.Split('$').GetValue(0) as string;
-                var currentUser = context.Users.Single(u => u.Email == currentEmail);
+                var currentUser = context.Users.Single(u => u.Email == currentEmail && !u._isDeleted && u._isActive == 1);
                 if (id != currentUser.Id && !checkFunction(currentUser))
                     throw new Exception("Operazione non autorizzata");
             }

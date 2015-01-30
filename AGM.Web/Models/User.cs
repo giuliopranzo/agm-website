@@ -13,6 +13,7 @@ namespace AGM.Web.Models
         public int _sectionMonthlyReportsVisible { get; set; }
         public int _sectionJobApplicantsVisible { get; set; }
         public int _isActive { get; set; }
+        public bool _isDeleted { get; set; }
 
         public bool SectionUsersVisible
         {
@@ -37,6 +38,11 @@ namespace AGM.Web.Models
         public bool IsActive
         {
             get { return _isActive == 1; }
+        }
+
+        public bool IsDeleted
+        {
+            get { return _isDeleted; }
         }
     }
 }

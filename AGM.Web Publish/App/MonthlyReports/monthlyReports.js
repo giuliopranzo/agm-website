@@ -1,12 +1,7 @@
-﻿app.controller('monthlyReports', function ($rootScope, $scope, $alert, $location, $state, $filter, usersSource, monthlyReportsDataService, appHelper) {
+﻿app.controller('monthlyReports', function ($rootScope, $scope, $alert, $location, $state, $filter, monthlyReportsDataService, authenticationContainer, appHelper) {
     $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
-        if (toState.name == 'MonthlyReports') {
-            $scope.reportId = null;
-            $scope.detailVisible = false;
-            appHelper.scrollTo('reportTop');
-        }
 
-        if (toState.name == 'MonthlyReports.detail') {
+        if (toState.name == 'MonthlyReports') {
             $scope.reportId = toParams.reportId;
             $scope.detail = toParams.userReportSource;
             $scope.selectedDate = toParams.userReportSource.currentmonth;
@@ -17,6 +12,7 @@
             $scope.insertSelectedHourReason = $scope.detail.hourreasons[0].id;
             $scope.insertSelectedExpenseReason = $scope.detail.expensereasons[0].id;
             $scope.detailVisible = true;
+            $scope.backToUsersVisible = (authenticationContainer.currentUser.id != $scope.reportId);
             appHelper.scrollTo('reportTop');
         }
     });
@@ -36,8 +32,8 @@
     });
 
     $scope.init = function() {
-        if (usersSource)
-            $scope.users = usersSource;
+        //if (usersSource)
+        //    $scope.users = usersSource;
         $scope.detail = {};
         $scope.detailVisible = false;
 
@@ -48,6 +44,11 @@
             $scope.selectedInsertDate = $state.params.userReportSource.selectedinsertdate;
             $scope.resetInsertFields();
             $scope.detailVisible = true;
+            $scope.backToUsersVisible = (authenticationContainer.currentUser.id != $scope.reportId);
+        }
+        else
+        {
+            $scope.showDetail(authenticationContainer.currentUser.id);
         }
     }
 
@@ -111,8 +112,11 @@
         );
     }
 
-    $scope.backToUsers = function() {
-        $location.path('/MonthlyReports');
+    $scope.backToUsers = function () {
+        if ($scope.alert)
+            $scope.alert.hide();
+
+        $location.path('/Users');
     };
 
     $scope.toggleAsideInsert = function() {

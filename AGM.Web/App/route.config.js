@@ -35,7 +35,7 @@
             },
             resolve: {
                 usersSource: function (usersDataService) {
-                    return usersDataService.getAllUsers().then(function (respData) {
+                    return usersDataService.getAllUsers('usr_detail').then(function (respData) {
                         if (respData.succeed)
                             return respData.data;
                         
@@ -57,7 +57,7 @@
             },
             resolve: {
                 userSource: function ($stateParams, usersDataService) {
-                    return usersDataService.getUserDetail($stateParams.userId).then(function (respData) {
+                    return usersDataService.getUserDetail('usr_detail', $stateParams.userId).then(function (respData) {
                         if (respData.succeed)
                             return respData.data;
 

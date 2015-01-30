@@ -6,10 +6,16 @@
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <base href="/backoffice/">
+
     <link href="~/Content/bootstrap.min.css" rel="stylesheet">
     <link href="~/css/font-awesome.css" rel="stylesheet">
     @Styles.Render("~/Content/css")
     <link href="~/Content/animate.min.css" rel="stylesheet">
+    
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.1.0/css/bootstrap-toggle.min.css" rel="stylesheet">
+    
+    @RenderSection("Scripts", required: false)
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.1.0/js/bootstrap-toggle.min.js"></script>
 </head>
 <body>
     <div class="container body-content">
@@ -20,7 +26,5 @@
             <p>AGM Solutions srl &copy; @DateTime.Now.Year - Area riservata</p>
         </footer>*@
     </div>
-    
-    @RenderSection("Scripts", required: false)
 </body>
 </html>

@@ -1,4 +1,16 @@
-﻿app.controller('authentication', function($scope, $alert, $location, $stateParams, authenticationDataService, authenticationHelper) {
+﻿app.controller('authentication', function($rootScope, $scope, $alert, $location, $stateParams, authenticationDataService, authenticationHelper) {
+    $rootScope.$on('loader_show', function (event, callId) {
+        if (callId == 'auth_logcheck')
+            $scope.checking_data = true;
+    });
+
+    $rootScope.$on('loader_hide', function (event, callId) {
+        if (callId == 'auth_logcheck')
+            $scope.checking_data = false;
+        
+    });
+
+    $scope.checking_data = false;
     $scope.email = '';
     $scope.password = '';
     $scope.returnPath = $stateParams.returnPath;
@@ -13,7 +25,7 @@
 
     $scope.authenticate = function () {
         var postData = { Email: $scope.email, Password: $scope.password };
-        authenticationDataService.authenticate(postData)
+        authenticationDataService.authenticate('auth_logcheck', postData)
         .then(function (resp) {
             if (resp.succeed) {
                 $scope.alert.hide();
@@ -46,7 +58,7 @@
     };
 
     $scope.isAuthenticated = function () {
-        authenticationDataService.isAuthenticated().then(function(resp) {
+        authenticationDataService.isAuthenticated('auth_logcheck').then(function (resp) {
             $alert({ content: resp.data.toString(), type: 'material', duration: 3 });
         });
     };
