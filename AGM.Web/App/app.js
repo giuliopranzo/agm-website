@@ -117,3 +117,13 @@ app.controller("main", function ($scope, $rootScope, $location, $state, $statePa
     $scope.init();
 });
 
+app.directive('printButton', [function () {
+    return {
+        link: function (scope, element, attrs) {
+            element.click(function() {
+                window.print();
+            });
+        }
+    };
+}]);
+

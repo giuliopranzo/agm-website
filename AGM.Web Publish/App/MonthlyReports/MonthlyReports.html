@@ -4,6 +4,7 @@
         <div class="container container-header">
             <i class="hidden-md hidden-lg fa fa-arrow-circle-o-left signAffix" ng-show="backToUsersVisible" ng-click="backToUsers()"></i>
             <i class="fa fa-bolt signAffix" ng-click="autocompleteReport()"></i>
+            <i class="fa fa-print signAffix" print-button></i>
             <i class="fa fa-plus-circle signAffix" ng-click="toggleAsideInsert()"></i>
         </div>
     </div>
@@ -51,6 +52,7 @@
         </div>
         <div class="hidden-xs hidden-sm toolContainer">
             <i class="fa fa-bolt sign" ng-click="autocompleteReport()"></i>
+            <i class="fa fa-print sign" print-button></i>
             <i class="fa fa-plus-circle sign" ng-click="toggleAsideInsert()"></i>
         </div>
         <div class="clearfix"></div>
@@ -121,8 +123,8 @@
                 <span class="col-xs-12 col-md-1 reportColumn">
                     <span class="hidden-md hidden-lg dateRow" ng-class="{dateRowWorkDay: day.workday}">
                         <span class="cellHeaderColumnLeft" ng-bind="day.date"></span>
-                        <span class="cellHeaderColumnRight"><i class="fa fa-eur umSign"></i><span ng-bind="day.expenses"></span></span>
-                        <span class="cellHeaderColumnRight"><i class="fa fa-clock-o umSign">h</i><span ng-bind="day.hours"></span></span>
+                        <span class="cellHeaderColumnRight" ng-class="{'print-hidden':(day.expenses == '0,00')}"><i class="fa fa-eur umSign"></i><span ng-bind="day.expenses"></span></span>
+                        <span class="cellHeaderColumnRight" ng-class="{'print-hidden':(day.hours == '0,00' && !day.workday)}"><i class="fa fa-clock-o umSign">h</i><span ng-bind="day.hours"></span></span>
                     </span>
                     <span class="hidden-xs hidden-sm" ng-bind="day.dateshort"></span>
                 </span>

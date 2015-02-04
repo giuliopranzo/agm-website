@@ -1017,9 +1017,13 @@ ul.typeahead {
 }
 
 @media print {
+    .monthlyRep-detail {
+        width: 70%;    
+    }
+
     .cellHeaderColumnRight, .cellHeaderColumnLeft, .reportBadgeContainer, .reportColumn {
-        font-size: 8px;
-        line-height: 8px;
+        font-size: 10px;
+        line-height: 10px;
     }
 
     .body-content, .login-title {
@@ -1036,25 +1040,25 @@ ul.typeahead {
     }
 
     .reportBadge {
-        height: 12px;
+        height: 14px;
+        margin: 0;
     }
 
     .reportRow {
-        min-height: 0;
+        min-height: 17px;
         padding: 0;
     }
 
     .reportBadgeContainer, .noteContainer {
-        height: 14px;
-        line-height: 0;
-        top: -1px;
-        margin-bottom: -4px;
+        /*height: 17px;*/
+        line-height: 16px;
+        /*top: -1px;*/
         position: relative;
     }
 
     .reportHolidayRow {
         height: 14px;
-
+        background-color: #EBEBEB !important;
     }
 
     .reportSummaryRow {
@@ -1063,14 +1067,15 @@ ul.typeahead {
 
     .dateRow {
         display: inline-block;
-        width: 125px;
-        font-size: 8px;
-        line-height: 8px;
+        width: 165px;
+        font-size: 10px;
+        line-height: 10px;
         vertical-align: middle;
     }
 
     .input-group-addon, .form-control {
-        font-size: 10px;    
+        font-size: 10px; 
+        border-width: 0;   
     }
 
     .form-control {
@@ -1105,6 +1110,10 @@ ul.typeahead {
     }
 
     .actionStripLeft {
-        height: 8px;
+        height: 16px;
+    }
+
+    .print-hidden {
+        display: none;
     }
 }
