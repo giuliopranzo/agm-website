@@ -15,9 +15,33 @@ namespace AGM.Web.Infrastructure.Extensions
             using (var context = new AgmDataContext())
             {
                 var currentEmail = (Thread.CurrentPrincipal as CustomPrincipal).User.Split('$').GetValue(0) as string;
-                var currentUser = context.Users.Single(u => u.Email == currentEmail && !u._isDeleted && u._isActive == 1);
+                var currentUser = context.Users.Single(u => u.Email.ToLower() == currentEmail.ToLower() && !u._isDeleted && u._isActive == 1);
                 if (id != currentUser.Id && !checkFunction(currentUser))
                     throw new Exception("Operazione non autorizzata");
+            }
+        }
+
+        public static void CheckCurrentUserPermission(this ApiController o, Func<User, bool> checkFunction)
+        {
+            using (var context = new AgmDataContext())
+            {
+                var currentEmail = (Thread.CurrentPrincipal as CustomPrincipal).User.Split('$').GetValue(0) as string;
+                var currentUser = context.Users.Single(u => u.Email.ToLower() == currentEmail.ToLower() && !u._isDeleted && u._isActive == 1);
+                if (!checkFunction(currentUser))
+                    throw new Exception("Operazione non autorizzata");
+            }
+        }
+
+        public static User GetCurrentUser(this ApiController o)
+        {
+            using (var context = new AgmDataContext())
+            {
+                var currentEmail = (Thread.CurrentPrincipal as CustomPrincipal).User.Split('$').GetValue(0) as string;
+                var currentUser =
+                    context.Users.Single(
+                        u => u.Email.ToLower() == currentEmail.ToLower() && !u._isDeleted && u._isActive == 1);
+
+                return currentUser;
             }
         }
     }

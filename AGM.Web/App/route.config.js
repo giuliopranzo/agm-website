@@ -81,9 +81,6 @@
                 userReportSource: function($stateParams, monthlyReportsDataService) {
                     return monthlyReportsDataService.getReportDetail('mr_detail', $stateParams.reportId, $stateParams.selectedDate).then(function (respData) {
                         $stateParams.userReportSource = respData.data;
-                        //$scope.detail = respData.data;
-                        //$scope.selectedDate = respData.data.currentmonth;
-                        //$location.path('/MonthlyReports/' + $scope.reportId + '/' + $filter('date')($scope.selectedDate, 'yyyy-MM'));
                     });
                 }
             }
@@ -92,10 +89,37 @@
             url: "/JobAds",
             views: {
                 "content": {
-                    template: ''
+                    templateUrl: resolveViewPath('JobAds/JobAds.html'),
+                    controller: 'jobAds'
                 },
                 "modal": {
                     template: ''
+                }
+            },
+            resolve: {
+                jobAdsSource: function ($stateParams, jobAdsDataService) {
+                    return jobAdsDataService.getJobAds('ja_main').then(function (respData) {
+                        return respData.data;
+                    });
+                }
+            }
+        })
+        .state('JobAds.Detail', {
+            url: "/:adId",
+            views: {
+                "ja_detail": {
+                    templateUrl: resolveViewPath('JobAds/Detail.html')
+                }
+            },
+            resolve: {
+                jobAdTextSource: function ($stateParams, jobAdsDataService) {
+                    return jobAdsDataService.getJobAdText('ja_main', $stateParams.adId).then(function (respData) {
+                        if (respData.succeed) {
+                            $stateParams.jobAdTextSource = respData.data;
+                        } else {
+                            $stateParams.jobAdTextSource = null;
+                        }
+                    });
                 }
             }
         })

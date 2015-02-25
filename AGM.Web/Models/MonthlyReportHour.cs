@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Globalization;
 using System.Linq;
 using System.Web;
@@ -48,6 +49,15 @@ namespace AGM.Web.Models
                 if (AgmStaticDataContext.HourReasons.Any(r => r.Id == ReasonId))
                     return AgmStaticDataContext.HourReasons.First(r => r.Id == ReasonId).Name;
                 return null;
+            }
+        }
+
+        public string CompleteDescription
+        {
+            get
+            {
+                var cultureIt = CultureInfo.GetCultureInfo("it-IT");
+                return string.Format("{0} {1}", Reason, HoursCount.ToString("N2", cultureIt));
             }
         }
     }

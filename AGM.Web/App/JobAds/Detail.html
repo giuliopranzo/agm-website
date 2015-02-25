@@ -1,0 +1,57 @@
+﻿<a id="pageTop" class="reportTop"></a>
+<div class="hidden-print mr_affixToolContainer" role="complementary" data-offset-top="235" bs-affix>
+    <div class="container container-header">
+        <i class="hidden-md hidden-lg fa fa-arrow-circle-o-left signAffix" ng-click="backToListPage()"></i>
+    </div>
+</div>
+<h3 class="login-title login-control">Dettaglio annuncio</h3>
+<div>
+    <div>
+        <i class="hidden-xs hidden-sm fa fa-arrow-circle-o-left sign" ng-click="backToListPage()"></i>
+    </div>
+    <div class="clearfix"></div>
+
+    <form name="profileForm" novalidate>
+        <fieldset>
+            <div class="col-xs-12 col-sm-4 form-group">
+                <label class="standardFormLabel">Titolo</label><input required class="form-control" type="email" placeholder="Titolo" ng-model="jobAd.title" maxlength="100" />
+                <label class="standardFormLabel">Descrizione</label><input required class="form-control" type="text" placeholder="Descrizione" ng-model="jobAd.description" maxlength="50" />
+                <label class="standardFormLabel">Località</label><input required class="form-control" type="text" placeholder="Località" ng-model="jobAd.location" maxlength="50" />
+
+                <label class="standardFormLabel">Inizio validità</label>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
+                    <input id="monthPicker" type="text" class="form-control inputDatePicker" ng-model="jobAd.datefrom"
+                           data-date-format="dd MMMM yyyy"
+                           data-date-type="date"
+                           data-min-date="2014-01-01 00:00:00"
+                           data-autoclose="1"
+                           data-placement="auto"
+                           bs-datepicker>
+                </div>
+
+                <label class="standardFormLabel">Fine validità</label>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
+                    <input id="monthPicker" type="text" class="form-control inputDatePicker" ng-model="jobAd.dateto"
+                           data-date-format="dd MMMM yyyy"
+                           data-date-type="date"
+                           data-min-date="2014-01-01 00:00:00"
+                           data-autoclose="1"
+                           data-placement="auto"
+                           bs-datepicker>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-8 form-group">
+                <label class="standardFormLabel">Testo</label>
+                <div text-angular class="text-angular form-control" name="jobadtext" ng-model="jobAdText"></div>
+            </div>
+            <div class="clearfix"></div>
+
+            <div class="col-xs-1 form-group bottomButton">
+                <button class="btn btn-info" ng-click="save()">Salva_</button>
+                <!--<button ng-show="profileForm.$invalid || userExists===true" class="btn btn-info" disabled="disabled">Salva</button>-->
+            </div>
+        </fieldset>
+    </form>
+</div>

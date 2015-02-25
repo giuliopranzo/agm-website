@@ -2,7 +2,7 @@
 var controllerBasePath = '/App/';
 var factoryBasePath = '/App/';
 
-var app = angular.module('agm', ['ngAnimate', 'ngSanitize', 'ui.router', 'LocalStorageModule', 'mgcrea.ngStrap', 'angularFileUpload']);
+var app = angular.module('agm', ['ngAnimate', 'ngSanitize', 'ui.router', 'LocalStorageModule', 'mgcrea.ngStrap', 'angularFileUpload', 'textAngular']);
 
 function resolveViewPath(viewName) {
     return viewBasePath + viewName;
@@ -126,4 +126,3 @@ app.directive('printButton', [function () {
         }
     };
 }]);
-

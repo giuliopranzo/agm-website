@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
 using System.Linq;
 using System.Web;
@@ -12,16 +13,6 @@ namespace AGM.Web.Models.Mapping
         {
             // Primary Key
             this.HasKey(t => t.Id);
-
-            // Properties
-            //this.Property(t => t.Title)
-            //    .HasMaxLength(50);
-
-            //this.Property(t => t.ImageUrl)
-            //    .HasMaxLength(255);
-
-            //this.Property(t => t.Location)
-            //    .HasMaxLength(100);
 
             // Table & Column Mappings
             this.ToTable("rappore");

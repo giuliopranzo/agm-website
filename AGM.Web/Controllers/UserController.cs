@@ -1,28 +1,53 @@
-﻿using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
-using AGM.Web.Infrastructure;
-using AGM.Web.Models;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Web;
-using System.Web.Http;
-using Newtonsoft.Json;
+﻿using AGM.Web.Infrastructure;
 using AGM.Web.Infrastructure.Attributes;
 using AGM.Web.Infrastructure.Extensions;
+using AGM.Web.Models;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Data.SqlClient;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Threading;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Http;
+using User = AGM.Web.Models.User;
 
 namespace AGM.Web.Controllers
 {
     public class UserController : ApiController
     {
+        private DataTable Add(SqlConnection cnn, string tablename)
+        {
+            DataTable dt = new DataTable();
+            dt.TableName = tablename;
+            using (SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM[" + tablename +"];", cnn))
+            {
+                da.FillSchema(dt, SchemaType.Source);
+                da.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+                da.Fill(dt);
+                foreach (DataColumn col in dt.Columns)
+                {
+                    if (col.AutoIncrement)
+                    {
+                        col.AutoIncrementSeed = 1;
+                        col.AutoIncrementStep = 1;
+                    }
+                }
+            }
+            return dt;
+        }
+
         [HttpGet]
         public ApiResponse TableDefs()
         {
+            DataSet dsSchemaExport = new DataSet();
             Dictionary<string, object> defs = new Dictionary<string, object>();
             List<string> cols = new List<string>();
             System.Data.SqlClient.SqlConnection conn = new System.Data.SqlClient.SqlConnection("Data Source=hostingmssql02;Initial Catalog=agmsolutions_net_site;Integrated Security=False;User Id=agmsolutions_net_user;Password=C0nsu1t:v0_A:rD070m:TiSOCA_;MultipleActiveResultSets=True");
@@ -33,6 +58,7 @@ namespace AGM.Web.Controllers
                     new System.Data.SqlClient.SqlCommand("select * from utenti where idutente=21", conn);
                 System.Data.SqlClient.SqlDataReader sqlreader = command.ExecuteReader();
                 var schemaTable = sqlreader.GetSchemaTable();
+                dsSchemaExport.Tables.Add(Add(conn, "utenti"));
                 foreach (System.Data.DataRow col in schemaTable.Rows)
                 {
                     cols.Add(string.Format("{0} - {1}", col["ColumnName"], col["IsIdentity"]));
@@ -72,6 +98,7 @@ namespace AGM.Web.Controllers
                 command = new System.Data.SqlClient.SqlCommand("select TOP 1 * from rappore where idutente=38", conn);
                 sqlreader = command.ExecuteReader();
                 schemaTable = sqlreader.GetSchemaTable();
+                dsSchemaExport.Tables.Add(Add(conn, "rappore"));
                 foreach (System.Data.DataRow col in schemaTable.Rows)
                 {
                     cols.Add(string.Format("{0} - {1}", col["ColumnName"], col["IsIdentity"]));
@@ -83,6 +110,7 @@ namespace AGM.Web.Controllers
                 command = new System.Data.SqlClient.SqlCommand("select * from rappcausali", conn);
                 sqlreader = command.ExecuteReader();
                 schemaTable = sqlreader.GetSchemaTable();
+                dsSchemaExport.Tables.Add(Add(conn, "rappcausali"));
                 foreach (System.Data.DataRow col in schemaTable.Rows)
                 {
                     cols.Add(string.Format("{0} - {1}", col["ColumnName"], col["IsIdentity"]));
@@ -94,6 +122,7 @@ namespace AGM.Web.Controllers
                 command = new System.Data.SqlClient.SqlCommand("select * from rappcausalispese", conn);
                 sqlreader = command.ExecuteReader();
                 schemaTable = sqlreader.GetSchemaTable();
+                dsSchemaExport.Tables.Add(Add(conn, "rappcausalispese"));
                 foreach (System.Data.DataRow col in schemaTable.Rows)
                 {
                     cols.Add(string.Format("{0} - {1}", col["ColumnName"], col["IsIdentity"]));
@@ -105,6 +134,7 @@ namespace AGM.Web.Controllers
                 command = new System.Data.SqlClient.SqlCommand("select TOP 1 * from rappspese where idutente=38", conn);
                 sqlreader = command.ExecuteReader();
                 schemaTable = sqlreader.GetSchemaTable();
+                dsSchemaExport.Tables.Add(Add(conn, "rappspese"));
                 foreach (System.Data.DataRow col in schemaTable.Rows)
                 {
                     cols.Add(string.Format("{0} - {1}", col["ColumnName"], col["IsIdentity"]));
@@ -116,6 +146,7 @@ namespace AGM.Web.Controllers
                 command = new System.Data.SqlClient.SqlCommand("select TOP 1 * from rappdescrizioni where idutente=38", conn);
                 sqlreader = command.ExecuteReader();
                 schemaTable = sqlreader.GetSchemaTable();
+                dsSchemaExport.Tables.Add(Add(conn, "rappdescrizioni"));
                 foreach (System.Data.DataRow col in schemaTable.Rows)
                 {
                     cols.Add(string.Format("{0} - {1}", col["ColumnName"], col["IsIdentity"]));
@@ -127,6 +158,7 @@ namespace AGM.Web.Controllers
                 command = new System.Data.SqlClient.SqlCommand("select TOP 1 * from rappfestivi", conn);
                 sqlreader = command.ExecuteReader();
                 schemaTable = sqlreader.GetSchemaTable();
+                dsSchemaExport.Tables.Add(Add(conn, "rappfestivi"));
                 foreach (System.Data.DataRow col in schemaTable.Rows)
                 {
                     cols.Add(string.Format("{0} - {1}", col["ColumnName"], col["IsIdentity"]));
@@ -135,6 +167,24 @@ namespace AGM.Web.Controllers
                 sqlreader.Read();
                 defs.Add("rappfestivi example", sqlreader[1].ToString());
                 sqlreader.Close();
+
+                cols = new List<string>();
+                command = new System.Data.SqlClient.SqlCommand("select TOP 1 * from annunci", conn);
+                sqlreader = command.ExecuteReader();
+                schemaTable = sqlreader.GetSchemaTable();
+                dsSchemaExport.Tables.Add(Add(conn, "annunci"));
+                foreach (System.Data.DataRow col in schemaTable.Rows)
+                {
+                    cols.Add(string.Format("{0} [{1}({2})] - {3}", col["ColumnName"], col["DataTypeName"], col["ColumnSize"], col["IsIdentity"]));
+                }
+                defs.Add("annunci", cols);
+                sqlreader.Read();
+                defs.Add("annunci example", sqlreader[4].ToString());
+                sqlreader.Close();
+
+
+                dsSchemaExport.WriteXml(HttpContext.Current.Server.MapPath("~/App_Data/tables.xml"), XmlWriteMode.WriteSchema);
+                dsSchemaExport.WriteXmlSchema(HttpContext.Current.Server.MapPath("~/App_Data/tables_schema.xsd"));
 
                 conn.Close();
 
@@ -203,6 +253,7 @@ namespace AGM.Web.Controllers
         public ApiResponse Set(User user)
         {
             this.CheckCurrentUserPermission(user.Id, ((x) => x.SectionUsersVisible));
+            var currentUser = this.GetCurrentUser();
 
             using (var context = new AgmDataContext())
             {
@@ -215,10 +266,25 @@ namespace AGM.Web.Controllers
                 if (user.Id != 0 && context.Users.Any(u => u.Id == user.Id && !u._isDeleted))
                 {
                     context.Users.Attach(user);
-                    ((IObjectContextAdapter) context).ObjectContext.ObjectStateManager.ChangeObjectState(user, EntityState.Modified);
+                    ((IObjectContextAdapter)context).ObjectContext.ObjectStateManager.ChangeObjectState(user, EntityState.Modified);
+
+                    if (!currentUser.SectionUsersVisible)
+                    {
+                        context.Entry(user).Property(x => x._isActive).IsModified = false;
+                        context.Entry(user).Property(x => x._sectionJobAdsVisible).IsModified = false;
+                        context.Entry(user).Property(x => x._sectionJobApplicantsVisible).IsModified = false;
+                        context.Entry(user).Property(x => x._sectionMonthlyReportsVisible).IsModified = false;
+                        context.Entry(user).Property(x => x._sectionUsersVisible).IsModified = false;
+                    }
                 }
                 else
                 {
+                    if (context.Users.Any(u => u.Email.ToLower() == user.Email.ToLower()))
+                        return new ApiResponse(false)
+                        {
+                            Errors = new List<ApiResponseError>(){ new ApiResponseError() {Code = -1, Message = "Utente già esistente"}}.ToArray()
+                        };
+
                     if (user.Id != 0)
                         user.Id = 0;
                     context.Users.Add(user);
@@ -306,5 +372,14 @@ namespace AGM.Web.Controllers
             }
         }
 
+        [HttpGet]
+        [AuthorizeAction]
+        public ApiResponse UserExists(string email)
+        {
+            using (var context = new AgmDataContext())
+            {
+                 return new ApiResponse(true){ Data = context.Users.Any(u => u.Email.ToLower().Equals(email.ToLower()))};
+            }
+        }
     }
 }

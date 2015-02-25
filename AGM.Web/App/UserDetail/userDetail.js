@@ -1,5 +1,7 @@
 ﻿app.controller('userDetail', function($rootScope, $scope, $alert, $location, $state, $filter, FileUploader, $http, appHelper, userSource, usersDataService, authenticationContainer) {
-
+    $scope.userExists = false;
+	$scope.currentUser = authenticationContainer.currentUser;
+	
     $rootScope.$on('loader_show', function (event, callId) {
         if (callId == 'usr_detail')
             $scope.loading = true;
@@ -69,7 +71,7 @@
                 }
             } else {
                 $scope.alert = $alert({
-                    content: 'Errore durante il salavataggio dei dati',
+                    content: (respData.errors && respData.errors.length >= 0)? respData.errors[0].message : 'Errore durante il salavataggio dei dati',
                     animation: 'fadeZoomFadeDown',
                     type: 'error',
                     duration: 5
@@ -84,8 +86,7 @@
                 type: 'error',
                 duration: 5
             });
-        }
-        );
+        });
     }
 
     $scope.deleteUser = function() {
@@ -135,6 +136,41 @@
             $scope.alert.hide();
 
         $location.path('/Users');
+    };
+
+    $scope.userExists = function() {
+        return usersDataService.userExists('usr_detail', $scope.user.email).then(function (respData) {
+            if ($scope.alert)
+                $scope.alert.hide();
+
+            if (respData.succeed) {
+                $scope.userExists = respData.succeed;
+                if (respData.data === true) {
+                    $scope.alert = $alert({
+                        content: 'Utente gia esistente',
+                        animation: 'fadeZoomFadeDown',
+                        type: 'info',
+                        duration: 5
+                    });
+                }
+            } else {
+                $scope.alert = $alert({
+                    content: (respData.errors && respData.errors.length > 0) ? respData.errors[0].message : 'Errore di comunicazione con il server',
+                    animation: 'fadeZoomFadeDown',
+                    type: 'error',
+                    duration: 5
+                });
+            }
+        }).catch(function (respData) {
+            if ($scope.alert)
+                $scope.alert.hide();
+            $scope.alert = $alert({
+                content: 'Errore di comunicazione con il server',
+                animation: 'fadeZoomFadeDown',
+                type: 'error',
+                duration: 5
+            });
+        });
     };
 
     $scope.init();

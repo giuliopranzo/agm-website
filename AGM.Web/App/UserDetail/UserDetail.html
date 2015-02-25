@@ -23,40 +23,40 @@
                 </div>
                 <img ng-src="{{user.image}}" alt="" />
             </div>
-            <div class="functionList">
+            <div class="functionList" ng-show="currentUser.sectionusersvisible">
                 <label>Attivo</label>
                 <input type="checkbox" ng-model="user._isactive" toggle-switch>
                 <div class="clearfix"></div>
             </div>
-            <label class="profileFormLabel">Email</label><input required class="form-control" type="text" placeholder="Email" ng-model="user.email" maxlength="100" />
+            <label class="profileFormLabel">Email</label><input required class="form-control" type="email" placeholder="Email" ng-model="user.email" maxlength="100" />
             <label class="profileFormLabel">Cognome</label><input required class="form-control" type="text" placeholder="Cognome" ng-model="user.lastname" maxlength="50" />
             <label class="profileFormLabel">Nome</label><input required class="form-control" type="text" placeholder="Nome" ng-model="user.firstname" maxlength="50"/>
             <label class="profileFormLabel">Password</label><input required class="form-control" type="text" placeholder="Password" ng-model="user.password" maxlength="50"/>
             <br/>
-            <div class="functionList">
+            <div class="functionList" ng-show="currentUser.sectionusersvisible">
                 <label>Gestione utenti</label>
                 <input type="checkbox" ng-model="user._sectionusersvisible" toggle-switch>
                 <div class="clearfix"></div>
             </div>
-            <div class="functionList">
+            <div class="functionList" ng-show="currentUser.sectionusersvisible">
                 <label>Gestione rapportini</label>
                 <input type="checkbox" ng-model="user._sectionmonthlyreportsvisible" toggle-switch>
                 <div class="clearfix"></div>
             </div>
-            <div class="functionList">
+            <div class="functionList" ng-show="currentUser.sectionusersvisible">
                 <label>Gestione annunci</label>
                 <input type="checkbox" ng-model="user._sectionjobadsvisible" toggle-switch>
                 <div class="clearfix"></div>
             </div>
-            <div class="functionList">
+            <div class="functionList" ng-show="currentUser.sectionusersvisible">
                 <label>Gestione candidati</label>
                 <input type="checkbox" ng-model="user._sectionjobapplicantsvisible" toggle-switch>
                 <div class="clearfix"></div>
             </div>
             
             <div class="form-group bottomButton">
-                <button ng-hide="profileForm.$invalid" class="btn btn-info" ng-click="save()">Salva</button>
-                <button ng-show="profileForm.$invalid" class="btn btn-info" disabled="disabled">Salva</button>
+                <button ng-hide="profileForm.$invalid || userExists===true" class="btn btn-info" ng-click="save()">Salva</button>
+                <button ng-show="profileForm.$invalid || userExists===true" class="btn btn-info" disabled="disabled">Salva</button>
             </div>
         </fieldset>
     </form>

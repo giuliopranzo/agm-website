@@ -35,6 +35,15 @@
                 deferred.reject(respData);
             });
             return deferred.promise;
+        },
+        userExists: function (callId, email) {
+            var deferred = $q.defer();
+            $http({ method: 'GET', headers: { _callId: callId }, url: 'api/User/UserExists?email=' + email }).success(function (respData, status, headers, config) {
+                deferred.resolve(respData);
+            }).error(function (respData, status, headers, config) {
+                deferred.reject(respData);
+            });
+            return deferred.promise;
         }
     }
 });

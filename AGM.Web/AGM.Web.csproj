@@ -61,6 +61,26 @@
       <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.1.0\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.SqlServer.ConnectionInfo, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Unofficial.Microsoft.SQLServer.SMO.11.0.3000.0\lib\Microsoft.SqlServer.ConnectionInfo.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Management.Sdk.Sfc, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Unofficial.Microsoft.SQLServer.SMO.11.0.3000.0\lib\Microsoft.SqlServer.Management.Sdk.Sfc.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Smo, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Unofficial.Microsoft.SQLServer.SMO.11.0.3000.0\lib\Microsoft.SqlServer.Smo.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.SmoExtended, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Unofficial.Microsoft.SQLServer.SMO.11.0.3000.0\lib\Microsoft.SqlServer.SmoExtended.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.SqlEnum">
+      <HintPath>..\packages\Unofficial.Microsoft.SQLServer.SMO.11.0.3000.0\lib\Microsoft.SqlServer.SqlEnum.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Web.Infrastructure">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
@@ -146,6 +166,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\JobAdController.cs" />
     <Compile Include="Controllers\MonthlyReportController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Core\LowercaseContractResolver.cs" />
@@ -168,9 +189,12 @@
     <Compile Include="Models\ExpenseReason.cs" />
     <Compile Include="Models\Holiday.cs" />
     <Compile Include="Models\HourReason.cs" />
+    <Compile Include="Models\JobAd.cs" />
+    <Compile Include="Models\JobAdSaveIn.cs" />
     <Compile Include="Models\Mapping\ExpenseReasonMap.cs" />
     <Compile Include="Models\Mapping\HolidayMap.cs" />
     <Compile Include="Models\Mapping\HourReasonMap.cs" />
+    <Compile Include="Models\Mapping\JobAdMap.cs" />
     <Compile Include="Models\Mapping\MonthlyReportExpenseMap.cs" />
     <Compile Include="Models\Mapping\MonthlyReportHourMap.cs" />
     <Compile Include="Models\Mapping\MonthlyReportNoteMap.cs" />
@@ -192,6 +216,11 @@
     <Content Include="App\footer.directive.js" />
     <Content Include="App\http.config.js" />
     <Content Include="App\Authentication\Login.html" />
+    <Content Include="App\JobAds\Detail.html" />
+    <Content Include="App\JobAds\JobAds.css" />
+    <Content Include="App\JobAds\JobAds.html" />
+    <Content Include="App\JobAds\jobAds.js" />
+    <Content Include="App\JobAds\jobAds.service.js" />
     <Content Include="App\Mockup\monthlyreports.js" />
     <Content Include="App\Mockup\users.js" />
     <Content Include="App\MonthlyReports\MonthlyReports.css" />
@@ -269,6 +298,9 @@
     <Content Include="Scripts\npm.js" />
     <Content Include="Scripts\satellizer.js" />
     <Content Include="Scripts\satellizer.min.js" />
+    <Content Include="Scripts\textAngular-rangy.min.js" />
+    <Content Include="Scripts\textAngular-sanitize.min.js" />
+    <Content Include="Scripts\textAngular.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />

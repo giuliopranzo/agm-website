@@ -43,6 +43,7 @@ namespace AGM.Web.Controllers
             var totalOrdinaryHours = 0d;
             var totalExpenses = 0d;
             var totalHolidays = 0d;
+            var summaryHours = new Dictionary<string, string>();
             using (var context = new AgmDataContext())
             {
                 user = context.Users.First(u => u.Id == id);
@@ -90,10 +91,10 @@ namespace AGM.Web.Controllers
                 if (currentDate.Month == currentMonthDate.Month)
                 {
                     totalHours += hoursCollection.Sum(r => r.HoursCount);
-                    
+
                     if (hoursCollection.Any(r => r.ReasonId == 1))
                         totalOrdinaryHours += hoursCollection.Where(r => r.ReasonId == 1).Sum(r => r.HoursCount);
-                    
+
                     totalExpenses += expensesCollection.Sum(e => e.GetTotalAmount());
 
                     if (hoursCollection.Any(r => r.Reason == "ferie"))
@@ -104,6 +105,17 @@ namespace AGM.Web.Controllers
 
                 currentDate = currentDate.AddDays(1);
             }
+
+            var summary = from t in userHourReports.Where(r => r.Date >= startDate && r.Date <= endDate && r.Date.Month == currentMonthDate.Month).ToList()
+                          group t by t.Reason
+                              into g
+                              select new
+                              {
+                                  id = g.First().ReasonId,
+                                  reason = g.Key,
+                                  count = g.Sum(x => x.HoursCount).ToString("N2", cultureIt),
+                                  days = (g.Sum(x => x.HoursCount)/8).ToString("N2", cultureIt)
+                              };
 
             return new ApiResponse()
             {
@@ -116,9 +128,9 @@ namespace AGM.Web.Controllers
                         Name = user.Name
                     },
                     CurrentMonth = currentMonthString,
-                    SelectedInsertDate = ((currentMonthDate.Month == DateTime.Today.Month && currentMonthDate.Year == DateTime.Today.Year)? DateTime.Today : new DateTime(currentMonthDate.Year, currentMonthDate.Month, 1)).ToString("yyyy-MM-dd 00:00:00"),
-                    MinMonthDate = (new DateTime(currentMonthDate.Year, currentMonthDate.Month, 1)).ToString("yyyy-MM-dd 00:00:00"),
-                    MaxMonthDate = (new DateTime(currentMonthDate.Year, currentMonthDate.Month, DateTime.DaysInMonth(currentMonthDate.Year, currentMonthDate.Month))).ToString("yyyy-MM-dd 00:00:00"),
+                    SelectedInsertDate = ((currentMonthDate.Month == DateTime.Today.Month && currentMonthDate.Year == DateTime.Today.Year)? DateTime.Today : new DateTime(currentMonthDate.Year, currentMonthDate.Month, 1)).ToString("yyyy-MM-dd"),
+                    MinMonthDate = (new DateTime(currentMonthDate.Year, currentMonthDate.Month, 1)).AddDays(-1).ToString("yyyy-MM-dd"),
+                    MaxMonthDate = (new DateTime(currentMonthDate.Year, currentMonthDate.Month, DateTime.DaysInMonth(currentMonthDate.Year, currentMonthDate.Month))).ToString("yyyy-MM-dd"),
                     Report = report,
                     HourReasons = hourReasons,
                     ExpenseReasons = expenseReasons,
@@ -128,7 +140,8 @@ namespace AGM.Web.Controllers
                     TotalOrdinaryDays = (totalOrdinaryHours / 8).ToString("N2", cultureIt),
                     TotalExpenses = totalExpenses.ToString("N2", cultureIt),
                     TotalHolidays = totalHolidays.ToString("N2", cultureIt),
-                    TotalHolidaysDays = (totalHolidays / 8).ToString("N2", cultureIt)
+                    TotalHolidaysDays = (totalHolidays / 8).ToString("N2", cultureIt),
+                    Summary = summary.OrderBy(s => s.id)
                 }
             };
         }
@@ -172,7 +185,7 @@ namespace AGM.Web.Controllers
                     res.Add(objExpensesIn);
                 }
 
-                if (reportIn.Note != null)
+                if (reportIn.Note != null && !string.IsNullOrEmpty(reportIn.Note.ToString()))
                 {
                     var objNoteIn = context.MonthlyReportNotes.Add(new MonthlyReportNote()
                     {
@@ -195,8 +208,6 @@ namespace AGM.Web.Controllers
         [HttpPost]
         public ApiResponse Delete([FromBody]dynamic objIn)
         {
-            this.CheckCurrentUserPermission((int)objIn.Id, ((x) => x.SectionUsersVisible));
-
             var id = (int)objIn.Id;
             var type = objIn.Type.ToString();
             using (var context = new AgmDataContext())
@@ -204,16 +215,19 @@ namespace AGM.Web.Controllers
                 if (type == "Hour" && context.MonthlyReportHours.Any(h => h.Id == id))
                 {
                     var o = context.MonthlyReportHours.First(h => h.Id == id);
+                    this.CheckCurrentUserPermission(o.UserId, ((x) => x.SectionUsersVisible));
                     context.MonthlyReportHours.Remove(o);
                 }
                 else if (type == "Expense" && context.MonthlyReportExpenses.Any(h => h.Id == id))
                 {
                     var o = context.MonthlyReportExpenses.First(h => h.Id == id);
+                    this.CheckCurrentUserPermission(o.UserId, ((x) => x.SectionUsersVisible));
                     context.MonthlyReportExpenses.Remove(o);
                 }
                 else if (type == "Note" && context.MonthlyReportNotes.Any(h => h.Id == id))
                 {
                     var o = context.MonthlyReportNotes.First(h => h.Id == id);
+                    this.CheckCurrentUserPermission(o.UserId, ((x) => x.SectionUsersVisible));
                     context.MonthlyReportNotes.Remove(o);
                 }
                 

@@ -13,8 +13,8 @@
                         <li><a class="simpleLink" ui-sref="Index">Home</a></li>
                         <li><a class="simpleLink" ui-sref="Users" ng-show="user.sectionusersvisible">Utenti</a></li>
                         <li><a class="simpleLink" ng-click="goToMonthlyReports()">Rapportini</a></li>
-                        @*<li><a class="simpleLink" ui-sref="JobAds">Annunci</a></li>
-                        <li><a class="simpleLink" bs-dropdown="ddSettings">Impostazioni</a></li>*@
+                        <li><a class="simpleLink" ui-sref="JobAds">Annunci</a></li>
+                        @*<li><a class="simpleLink" bs-dropdown="ddSettings">Impostazioni</a></li>*@
                     </ul>
                     <ul class="nav navbar-nav menuRightPart" style="float:right;">
                         <li ng-show="authenticated" style="float:right;"><a bs-dropdown="ddUser" ng-bind="user.name"></a></li>

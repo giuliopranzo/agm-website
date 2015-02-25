@@ -1,0 +1,83 @@
+﻿<div class="monthlyRep" ng-cloak>
+    <div ng-hide="isJobAdDetail">
+        <a id="pageTop" class="reportTop"></a>
+        <div class="hidden-print mr_affixToolContainer" role="complementary" data-offset-top="235" bs-affix>
+            <div class="container container-header">
+                <i class="fa fa-check-square-o signAffix"></i>
+                <i class="fa fa-plus-circle signAffix" ng-click="toggleAsideInsert()"></i>
+            </div>
+        </div>
+        <h3 class="login-title login-control">Annunci</h3>
+
+        <div>
+            <div class="col-xs-12 col-md-3 form-group">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-search fa-fw"></i></span>
+                    <input type="text" class="form-control" />
+                </div>
+            </div>
+            <div class="hidden-xs hidden-sm toolContainer">
+                <i class="fa fa-check-square-o sign" ng-click="selectionToggle()"></i>
+                <i class="fa fa-plus-circle sign" ng-click="toggleAsideInsert()"></i>
+            </div>
+            <div class="clearfix"></div>
+
+            <div class="baseTable2">
+                <div class="row" ng-class="{odd: $odd, selected: jobAd._selected}" ng-repeat="jobAd in jobAdsCollection" ng-click="goToDetail(jobAd.id)">
+                    <div class="rowHoverIndicator"></div>
+                    <div class="col-xs-12 col-md-8">
+                        <input style="vertical-align: middle; margin: 0 4px; height: 28px;" type="checkbox" ng-model="jobAd._selected" ng-click="$event.stopPropagation()" />
+                        <span style="font-weight:bold" ng-bind="jobAd.title"></span>
+                        <span ng-bind="' - ' + jobAd.description"></span>
+                    </div>
+                    <div class="col-xs-12 col-md-1" ng-bind="jobAd.location"></div>
+                    <div class="col-xs-12 col-md-2">
+                        <span ng-bind="jobAd.datefromraw"></span>
+                        <span ng-bind="' - ' + jobAd.datetoraw"></span>
+                    </div>
+                    <div class="col-xs-12 col-md-1" ng-bind="jobAd.refcode"></div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+
+            <div agm-footer></div>
+        </div>
+    </div>
+    
+    <div ui-view="ja_detail"></div>
+
+    <div class="loading" ng-show="loading_detail"></div>
+</div>
+
+<!--<div class="baseTable">
+        <div class="row">
+            <div class="col-xs-12 col-md-3">Titolo</div>
+            <div class="col-xs-12 col-md-5">Descrizione</div>
+            <div class="col-xs-12 col-md-1">Luogo</div>
+            <div class="col-xs-12 col-md-1">Inizio validità</div>
+            <div class="col-xs-12 col-md-1">Fine validità</div>
+            <div class="col-xs-12 col-md-1">Riferimento</div>
+        </div>
+        <div class="row" ng-class="{odd: $odd}" ng-repeat="jobAd in jobAds">
+            <div class="col-xs-12 col-md-3" ng-bind="jobAd.title">
+
+            </div>
+            <div class="col-xs-12 col-md-5" ng-bind="jobAd.description">
+
+            </div>
+            <div class="col-xs-12 col-md-1" ng-bind="jobAd.location">
+
+            </div>
+            <div class="col-xs-12 col-md-1" ng-bind="jobAd.datefromraw">
+
+            </div>
+            <div class="col-xs-12 col-md-1" ng-bind="jobAd.datetoraw">
+
+            </div>
+            <div class="col-xs-12 col-md-1" ng-bind="jobAd.refcode">
+
+            </div>
+        </div>
+    </div>-->
+
+

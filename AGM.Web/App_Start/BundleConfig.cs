@@ -19,12 +19,13 @@ namespace AGM.Web
                 "~/App/Authentication/authentication.config.js",
                 "~/App/Authentication/authentication.service.js",
                 "~/App/Authentication/authentication.js",
-                //"~/App/MonthlyReports/monthlyReports.config.js",
                 "~/App/MonthlyReports/monthlyReports.service.js",
                 "~/App/MonthlyReports/monthlyReports.js",
                 "~/App/Users/users.service.js",
                 "~/App/Users/users.js",
                 "~/App/UserDetail/userDetail.js",
+                "~/App/JobAds/jobAds.service.js",
+                "~/App/JobAds/jobAds.js",
                 "~/App/route.config.js"
                 
             ));
@@ -36,7 +37,7 @@ namespace AGM.Web
             bundles.Add(new ScriptBundle("~/bundles/applibs").Include(
                 "~/Scripts/angular.js",
                 "~/Scripts/i18n/angular-locale_it-it.js",
-                "~/Scripts/angular-sanitize.js",
+                //"~/Scripts/angular-sanitize.js",
                 "~/Scripts/angular-ui-router.js",
                 "~/Scripts/angular-animate.js",
                 "~/Scripts/angular-local-storage.js",
@@ -45,12 +46,16 @@ namespace AGM.Web
                 "~/Scripts/angular-file-upload.min.js",
                 "~/Scripts/angular-ui/ui-bootstrap.js",
                 "~/Scripts/angular-ui/ui-bootstrap-tpls.js",
+                "~/Scripts/textAngular-sanitize.min.js",
+                "~/Scripts/textAngular-rangy.min.js",
+                "~/Scripts/textAngular.min.js",
                 "~/Scripts/jquery-1.10.2.js",
                 "~/Scripts/jquery.cookie.js"
             ));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                "~/Content/Site.css"));
+                "~/Content/Site.css",
+                "~/App/JobAds/JobAds.css"));
 
             // Set EnableOptimizations to false for debugging. For more information,
             // visit http://go.microsoft.com/fwlink/?LinkId=301862

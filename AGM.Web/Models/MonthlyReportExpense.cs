@@ -51,13 +51,33 @@ namespace AGM.Web.Models
                 switch (ReasonId)
                 {
                     case 1:
-                        return string.Format("{0}-{1}", Reason, (Amount * 0.40).ToString("N2", cultureIt));
+                        return string.Format("{0} {1}", Reason, (Amount * 0.40).ToString("N2", cultureIt));
                         break;
                     case 2:
-                        return string.Format("{0}-{1}", Reason, (Amount * 0.40).ToString("N2", cultureIt));
+                        return string.Format("{0} {1}", Reason, (Amount * 0.40).ToString("N2", cultureIt));
                         break;
                     default:
-                        return string.Format("{0}-{1}", Reason, Amount.ToString("N2", cultureIt));
+                        return string.Format("{0} {1}", Reason, Amount.ToString("N2", cultureIt));
+                        break;
+                }
+            }
+        }
+
+        public string AmountCost
+        {
+            get
+            {
+                var cultureIt = CultureInfo.GetCultureInfo("it-IT");
+                switch (ReasonId)
+                {
+                    case 1:
+                        return string.Format("{0}", (Amount * 0.40).ToString("N2", cultureIt));
+                        break;
+                    case 2:
+                        return string.Format("{0}", (Amount * 0.40).ToString("N2", cultureIt));
+                        break;
+                    default:
+                        return string.Format("{0}", Amount.ToString("N2", cultureIt));
                         break;
                 }
             }
