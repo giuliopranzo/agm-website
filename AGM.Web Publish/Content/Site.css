@@ -914,7 +914,7 @@ ul.typeahead {
     color: #000000;
 }
 
-.profileFormLabel {
+.profileFormLabel, .standardFormLabel {
     margin-top: 10px;
 }
 
@@ -970,6 +970,143 @@ ul.typeahead {
 .hideIt {
     display: none;
 }
+
+.baseTable {
+    margin: 0 15px;
+    border-width: 1px 1px;
+    border-style: solid;
+    border-color: #65523A;
+}
+
+.baseTable > div:first-child {
+    background-color: #808080;
+}
+
+.baseTable > div:last-child {
+    border-width: 0;
+}
+
+.baseTable > div {
+    background-color: #ffffff;
+    margin: 0;
+
+    overflow: hidden;
+    border-width: 0 0 1px;
+    border-style: solid;
+    border-color: #65523A;
+
+    font-size: 12px;
+    line-height: 18px;
+}
+
+.baseTable > div.odd {
+    background-color: #94BFDA;
+}
+
+.baseTable > div.selected {
+    background-color: #D87373;
+}
+
+.baseTable > div > div:first-child {
+    border: 0;
+}
+
+.baseTable > div > div {
+    border-style: solid;
+    border-color: #65523A;
+    border-width: 0 0 0 1px;
+
+    margin-bottom: -99999px;
+    padding-bottom: 99999px;
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
+.baseTable > div:first-child > div {
+    color: #FFF;
+    padding: 0 1px;
+    text-align: center;
+
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.baseTable2 {
+    margin: 0 15px;
+    /*border-width: 1px 1px;
+    border-style: solid;
+    border-color: #65523A;*/
+}
+
+.baseTable2 > div:last-child {
+    border-width: 0;
+}
+
+.baseTable2 > div {
+    background-color: #ffffff;
+    margin: 0;
+
+    overflow: hidden;
+    border-width: 0 0 1px;
+    border-style: solid;
+    border-color: #b5b5b5;
+
+    font-size: 12px;
+    line-height: 30px;
+    cursor: pointer;
+}
+
+.baseTable2 > div.odd {
+    background-color: #E5EDF2 /*#94BFDA*/;
+}
+
+.baseTable2 > div.selected {
+    background-color: #D2CCCC;
+}
+
+.baseTable2 > div:hover > .rowHoverIndicator {
+    background-color: #9B9B9B;
+}
+
+.baseTable2 > div > div {
+
+    margin-bottom: -99999px;
+    padding-bottom: 99999px;
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
+.baseTable2 > div > div.rowHoverIndicator {
+    width: 2px;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @media (max-width: 991px) 
 { 
@@ -1092,8 +1229,7 @@ ul.typeahead {
     }
 
     .reportHolidayRow {
-        height: 14px;
-        background-color: #EBEBEB !important;
+        background-color: #ebebeb !important;
     }
 
     .reportSummaryRow {

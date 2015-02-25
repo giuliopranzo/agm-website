@@ -13,7 +13,7 @@
                         <li><a class="simpleLink" ui-sref="Index">Home</a></li>
                         <li><a class="simpleLink" ui-sref="Users" ng-show="user.sectionusersvisible">Utenti</a></li>
                         <li><a class="simpleLink" ng-click="goToMonthlyReports()">Rapportini</a></li>
-                        <li><a class="simpleLink" ui-sref="JobAds">Annunci</a></li>
+                        <li><a class="simpleLink" ui-sref="JobAds" ng-show="user.sectionjobadsvisible">Annunci</a></li>
                         @*<li><a class="simpleLink" bs-dropdown="ddSettings">Impostazioni</a></li>*@
                     </ul>
                     <ul class="nav navbar-nav menuRightPart" style="float:right;">
@@ -35,6 +35,7 @@
             <div class="mainMenuItem" ng-click="goToMineProfile()">Profilo</div>
             <div class="mainMenuItem" ng-click="goTo('Users')" ng-show="user.sectionusersvisible">Utenti</div>
             <div class="mainMenuItem" ng-click="goToMonthlyReports()">Rapportini</div>
+            <div class="mainMenuItem" ng-click="goTo('JobAds')" ng-show="user.sectionjobadsvisible">Annunci</div>
             <div class="mainMenuItem" ng-click="goTo('Logout')"><i class="fa fa-sign-out leftIcon"></i>Logout</div>
         </div>
         <div class="modalBg" ng-show="showMainMenu"></div>

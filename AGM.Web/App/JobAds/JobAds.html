@@ -3,22 +3,24 @@
         <a id="pageTop" class="reportTop"></a>
         <div class="hidden-print mr_affixToolContainer" role="complementary" data-offset-top="235" bs-affix>
             <div class="container container-header">
-                <i class="fa fa-check-square-o signAffix"></i>
-                <i class="fa fa-plus-circle signAffix" ng-click="toggleAsideInsert()"></i>
+                <i class="fa fa-plus-circle signAffix" ng-click="insert()"></i>
+                <i class="fa fa-check-square-o signAffix" ng-click="selectionToggle()"></i>
+                <i class="fa fa-trash-o signAffix" ng-show="thereAreSelected()" ng-click="deleteSelected()"></i>
             </div>
         </div>
         <h3 class="login-title login-control">Annunci</h3>
 
         <div>
-            <div class="col-xs-12 col-md-3 form-group">
+            <div class="col-xs-12 col-md-3 form-group" style="display:none;">
                 <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-search fa-fw"></i></span>
                     <input type="text" class="form-control" />
                 </div>
             </div>
             <div class="hidden-xs hidden-sm toolContainer">
+                <i class="fa fa-trash-o sign" ng-show="thereAreSelected()" ng-click="deleteSelected()"></i>
                 <i class="fa fa-check-square-o sign" ng-click="selectionToggle()"></i>
-                <i class="fa fa-plus-circle sign" ng-click="toggleAsideInsert()"></i>
+                <i class="fa fa-plus-circle sign" ng-click="insert()"></i>
             </div>
             <div class="clearfix"></div>
 
@@ -46,7 +48,7 @@
     
     <div ui-view="ja_detail"></div>
 
-    <div class="loading" ng-show="loading_detail"></div>
+    <div class="loading" ng-show="loading"></div>
 </div>
 
 <!--<div class="baseTable">

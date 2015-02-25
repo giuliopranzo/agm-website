@@ -97,7 +97,8 @@ namespace AGM.Web.Controllers
                         user.Name,
                         user.Image,
                         user.Email,
-                        user.SectionUsersVisible
+                        user.SectionUsersVisible,
+                        user.SectionJobAdsVisible
                     }
                 };
             }

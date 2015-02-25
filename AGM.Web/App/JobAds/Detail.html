@@ -11,17 +11,18 @@
     </div>
     <div class="clearfix"></div>
 
-    <form name="profileForm" novalidate>
+    <form name="jobAdForm" novalidate>
         <fieldset>
             <div class="col-xs-12 col-sm-4 form-group">
-                <label class="standardFormLabel">Titolo</label><input required class="form-control" type="email" placeholder="Titolo" ng-model="jobAd.title" maxlength="100" />
-                <label class="standardFormLabel">Descrizione</label><input required class="form-control" type="text" placeholder="Descrizione" ng-model="jobAd.description" maxlength="50" />
-                <label class="standardFormLabel">Località</label><input required class="form-control" type="text" placeholder="Località" ng-model="jobAd.location" maxlength="50" />
+                <label class="standardFormLabel">Titolo</label><input required class="form-control" type="text" placeholder="Titolo" ng-model="jobAd.title" maxlength="100" />
+                <label class="standardFormLabel">Descrizione</label><input required class="form-control" type="text" placeholder="Descrizione" ng-model="jobAd.description" maxlength="100" />
+                <label class="standardFormLabel">Località</label><input required class="form-control" type="text" placeholder="Località" ng-model="jobAd.location" maxlength="100" />
+                <label class="standardFormLabel">Riferimento</label><input required class="form-control" type="text" placeholder="Riferimento" ng-model="jobAd.refcode" maxlength="50" />
 
                 <label class="standardFormLabel">Inizio validità</label>
                 <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
-                    <input id="monthPicker" type="text" class="form-control inputDatePicker" ng-model="jobAd.datefrom"
+                    <input required id="monthPicker" type="text" class="form-control inputDatePicker" ng-model="jobAd.datefrom"
                            data-date-format="dd MMMM yyyy"
                            data-date-type="date"
                            data-min-date="2014-01-01 00:00:00"
@@ -33,7 +34,7 @@
                 <label class="standardFormLabel">Fine validità</label>
                 <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
-                    <input id="monthPicker" type="text" class="form-control inputDatePicker" ng-model="jobAd.dateto"
+                    <input required id="monthPicker" type="text" class="form-control inputDatePicker" ng-model="jobAd.dateto"
                            data-date-format="dd MMMM yyyy"
                            data-date-type="date"
                            data-min-date="2014-01-01 00:00:00"
@@ -43,14 +44,14 @@
                 </div>
             </div>
             <div class="col-xs-12 col-sm-8 form-group">
-                <label class="standardFormLabel">Testo</label>
+                <label class="standardFormLabel">Testo <i class="fa fa-file-text-o fa-fw" ng-click="insertTextModel()"></i></label>
                 <div text-angular class="text-angular form-control" name="jobadtext" ng-model="jobAdText"></div>
             </div>
             <div class="clearfix"></div>
 
             <div class="col-xs-1 form-group bottomButton">
-                <button class="btn btn-info" ng-click="save()">Salva_</button>
-                <!--<button ng-show="profileForm.$invalid || userExists===true" class="btn btn-info" disabled="disabled">Salva</button>-->
+                <button ng-hide="jobAdForm.$invalid || taTextIsEmpty()" class="btn btn-info" ng-click="save()">Salva</button>
+                <button ng-show="jobAdForm.$invalid || taTextIsEmpty()" class="btn btn-info" disabled="disabled">Salva</button>
             </div>
         </fieldset>
     </form>

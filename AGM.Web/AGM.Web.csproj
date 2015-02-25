@@ -178,6 +178,7 @@
     <Compile Include="Infrastructure\CustomPrincipal.cs" />
     <Compile Include="Infrastructure\Extensions\ApiControllerExtensions.cs" />
     <Compile Include="Infrastructure\Extensions\ModelExtensions.cs" />
+    <Compile Include="Infrastructure\Helpers\FileHelpers.cs" />
     <Compile Include="Infrastructure\HttpRequestBaseExtension.cs" />
     <Compile Include="Infrastructure\HttpRequestHeadersExtension.cs" />
     <Compile Include="Infrastructure\OperationException.cs" />

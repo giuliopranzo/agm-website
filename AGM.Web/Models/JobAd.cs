@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 
@@ -19,7 +20,8 @@ namespace AGM.Web.Models
         {
             get
             {
-                return DateTime.Parse(DateFromRaw);
+                var cultureIt = CultureInfo.GetCultureInfo("it-IT");
+                return DateTime.Parse(DateFromRaw, cultureIt);
             }
             set
             {
@@ -31,7 +33,8 @@ namespace AGM.Web.Models
         {
             get
             {
-                return DateTime.Parse(DateToRaw);
+                var cultureIt = CultureInfo.GetCultureInfo("it-IT");
+                return DateTime.Parse(DateToRaw, cultureIt);
             }
             set
             {

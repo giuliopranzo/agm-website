@@ -27,5 +27,14 @@
             });
             return deferred.promise;
         },
+        deleteJobAds: function (callId, objCollectionToDelete) {
+            var deferred = $q.defer();
+            $http({ method: 'POST', headers: { _callId: callId }, url: 'api/JobAd/Delete', data: objCollectionToDelete }).success(function (respData, status, headers, config) {
+                deferred.resolve(respData);
+            }).error(function (respData, status, headers, config) {
+                deferred.reject(respData);
+            });
+            return deferred.promise;
+        }
     }
 });
