@@ -35,7 +35,12 @@
     -->
     <div class="monthlyRep-detail">
         <div>
-            <i class="hidden-xs hidden-sm fa fa-arrow-circle-o-left sign" ng-show="backToUsersVisible" ng-click="backToUsers()"></i>&nbsp;<h4 class="detailUserName" ng-bind="detail.user.name"></h4>
+            <i class="hidden-xs hidden-sm fa fa-arrow-circle-o-left sign" ng-show="backToUsersVisible" ng-click="backToUsers()"></i>
+            <div class="detailUserName">
+                <div class="detailUsernameButton hidden-print-force" ng-show="backToUsersVisible" ng-class="{prevEnable: detail.prevuserid>0}" ng-click="goToReport(detail.prevuserid)"><i class="fa fa-angle-up"></i></div>
+                <h4 style="display:table-row;" ng-bind="detail.user.name"></h4>
+                <div class="detailUsernameButton hidden-print-force" ng-show="backToUsersVisible" ng-class="{nextEnable: detail.nextuserid>0}" ng-click="goToReport(detail.nextuserid)"><i class="fa fa-angle-down"></i></div>
+            </div>
         </div>
         <div class="col-xs-12 col-md-3 form-group">
             <div class="input-group">

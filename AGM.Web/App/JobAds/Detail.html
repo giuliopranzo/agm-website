@@ -16,7 +16,7 @@
             <div class="col-xs-12 col-sm-4 form-group">
                 <label class="standardFormLabel">Titolo</label><input required class="form-control" type="text" placeholder="Titolo" ng-model="jobAd.title" maxlength="100" />
                 <label class="standardFormLabel">Descrizione</label><input required class="form-control" type="text" placeholder="Descrizione" ng-model="jobAd.description" maxlength="100" />
-                <label class="standardFormLabel">Località</label><input required class="form-control" type="text" placeholder="Località" ng-model="jobAd.location" maxlength="100" />
+                <label class="standardFormLabel">Località</label><input required class="form-control" type="text" placeholder="Località" ng-model="jobAd.location" maxlength="100" typeahead="location.toponymName as location.toponymName for location in getLocation($viewValue)" />
                 <label class="standardFormLabel">Riferimento</label><input required class="form-control" type="text" placeholder="Riferimento" ng-model="jobAd.refcode" maxlength="50" />
 
                 <label class="standardFormLabel">Inizio validità</label>

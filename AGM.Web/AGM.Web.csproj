@@ -187,11 +187,13 @@
     <Compile Include="Models\ApiResponse.cs" />
     <Compile Include="Models\ApiResponseError.cs" />
     <Compile Include="Models\AgmDataContext.cs" />
+    <Compile Include="Models\Candidate.cs" />
     <Compile Include="Models\ExpenseReason.cs" />
     <Compile Include="Models\Holiday.cs" />
     <Compile Include="Models\HourReason.cs" />
     <Compile Include="Models\JobAd.cs" />
     <Compile Include="Models\JobAdSaveIn.cs" />
+    <Compile Include="Models\Mapping\CandidateMap.cs" />
     <Compile Include="Models\Mapping\ExpenseReasonMap.cs" />
     <Compile Include="Models\Mapping\HolidayMap.cs" />
     <Compile Include="Models\Mapping\HourReasonMap.cs" />
@@ -214,6 +216,9 @@
     <Content Include="App\Authentication\authentication.config.js" />
     <Content Include="App\Authentication\authentication.js" />
     <Content Include="App\Authentication\authentication.service.js" />
+    <Content Include="App\Candidates\Candidates.html" />
+    <Content Include="App\Candidates\candidates.js" />
+    <Content Include="App\Candidates\candidates.service.js" />
     <Content Include="App\footer.directive.js" />
     <Content Include="App\http.config.js" />
     <Content Include="App\Authentication\Login.html" />
@@ -222,8 +227,6 @@
     <Content Include="App\JobAds\JobAds.html" />
     <Content Include="App\JobAds\jobAds.js" />
     <Content Include="App\JobAds\jobAds.service.js" />
-    <Content Include="App\Mockup\monthlyreports.js" />
-    <Content Include="App\Mockup\users.js" />
     <Content Include="App\MonthlyReports\MonthlyReports.css" />
     <Content Include="App\MonthlyReports\MonthlyReports.html" />
     <Content Include="App\MonthlyReports\monthlyReports.js" />
@@ -321,6 +324,7 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App\Mockup\" />
     <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>

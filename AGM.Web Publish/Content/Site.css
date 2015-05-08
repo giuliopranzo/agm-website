@@ -487,7 +487,9 @@ ul.typeahead {
 }
 
 .detailUserName {
+    margin: 10px 0;
     padding-left: 15px;
+    display: table;
 }
 
 .reportRow {
@@ -971,6 +973,47 @@ ul.typeahead {
     display: none;
 }
 
+.detailUsernameButton {
+    display: table-row;
+    text-align: center;
+    color: #C5C3C3;
+}
+
+.detailUsernameButton.prevEnable:hover, .detailUsernameButton.nextEnable:hover {
+    color: #000;
+    background-color: #E8E7E7;
+    cursor: pointer;
+}
+
+.input-inner-icon {
+    position: absolute;
+    right: 5px;
+    top: 0;
+    bottom: 0;
+    height: 34px;
+    margin: 0 15px 0 0;
+    font-size: 14px;
+    cursor: pointer;
+    color: lightgray;
+}
+
+.input-inner-icon:hover {
+    color: gray;
+}
+
+.input-inner-icon i {
+    line-height: 34px;
+}
+
+.headerColumn {
+    visibility: hidden;
+}
+
+.headerColumn:hover {
+    display: inline-block;
+    visibility: visible;
+}
+
 .baseTable {
     margin: 0 15px;
     border-width: 1px 1px;
@@ -1290,6 +1333,10 @@ ul.typeahead {
 
     .hidden-print {
         display: none;
+    }
+
+    .hidden-print-force {
+        display: none !important;
     }
 
     .col-print-xs {

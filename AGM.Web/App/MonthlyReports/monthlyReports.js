@@ -261,5 +261,11 @@
         }
     };
 
+    $scope.goToReport = function (id) {
+        if (id > 0) {
+            $location.path('/MonthlyReports/' + id + '/' + $state.params.selectedDate);
+        }
+    };
+
     $scope.init();
 });

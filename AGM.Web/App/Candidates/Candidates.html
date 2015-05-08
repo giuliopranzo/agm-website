@@ -8,7 +8,7 @@
                 <i class="fa fa-trash-o signAffix" ng-show="thereAreSelected()" ng-click="deleteSelected()"></i>
             </div>
         </div>
-        <h3 class="login-title login-control">Annunci</h3>
+        <h3 class="login-title login-control">Candidati</h3>
 
         <div>
             <div class="col-xs-12 col-md-3 form-group" style="display:none;">
@@ -23,7 +23,7 @@
                 <i class="fa fa-plus-circle sign" ng-click="insert()"></i>
             </div>
             <div class="clearfix"></div>
-            
+
             <div class="col-xs-12 col-md-4 btn-group">
                 <input class="form-control" type="text" ng-model="search" placeholder="Ricerca..." />
                 <span class="input-inner-icon" ng-click="eraseSearch()"><i class="fa fa-times"></i></span>
@@ -38,21 +38,15 @@
 
             <div class="placeholderText" ng-show="jobAdsFiltered.length == 0" ng-bind="'Non ci sono elementi contenenti \'' + search + '\'.'">Non sono presenti elementi con i criteri di ricerca</div>
             <div class="baseTable2">
-                <div class="row" ng-class="{odd: $odd, selected: jobAd._selected}" ng-repeat="jobAd in jobAdsCollection | filter:search:false | orderBy:getOrder():isOrderDesc() as jobAdsFiltered" ng-click="goToDetail(jobAd.id)">
+                <div class="row" ng-class="{odd: $odd, selected: candidate._selected}" ng-repeat="candidate in candidatesCollection | filter:search:false | orderBy:getOrder():isOrderDesc() as candidatesFiltered" ng-click="goToDetail(candidate.id)">
                     <div class="rowHoverIndicator"></div>
-                    <div class="col-xs-12 col-md-8">
-                        <input style="vertical-align: middle; margin: 0 4px; height: 28px;" type="checkbox" ng-model="jobAd._selected" ng-click="$event.stopPropagation()" />
-                        <span style="font-weight:bold" ng-bind="jobAd.title"></span>
-                        <span ng-bind="' - ' + jobAd.description"></span>
+                    <div class="col-xs-12 col-md-3">
+                        <input style="vertical-align: middle; margin: 0 4px; height: 28px;" type="checkbox" ng-model="candidate._selected" ng-click="$event.stopPropagation()" />
+                        <span style="font-weight:bold" ng-bind="candidate.name"></span>
                     </div>
-                    <div class="col-xs-12 col-md-1" ng-bind="jobAd.location"></div>
-                    <div class="col-xs-12 col-md-2">
-                        <span ng-bind="jobAd.datefromraw"></span>
-                        <span ng-bind="' - '"></span>
-                        <span ng-bind="jobAd.datetoraw"></span>
-                        <i class="fa fa-exclamation-circle" ng-class="{jobAdAlmostExpired: jobAd.almostexpired, jobAdExpired: jobAd.expired}" ng-show="jobAd.expired || jobAd.almostexpired"></i>
-                    </div>
-                    <div class="col-xs-12 col-md-1" ng-bind="jobAd.refcode"></div>
+                    <div class="col-xs-12 col-md-1" ng-bind="candidate.birthdate"></div>
+                    <div class="col-xs-12 col-md-2" ng-bind="candidate.jobtype"></div>
+                    <div class="col-xs-12 col-md-1" ng-bind="candidate.status"></div>
                 </div>
             </div>
             <div class="clearfix"></div>
@@ -60,10 +54,8 @@
             <div agm-footer></div>
         </div>
     </div>
-    
-    <div ui-view="ja_detail"></div>
+
+    <div ui-view="ca_detail"></div>
 
     <div class="loading" ng-show="loading"></div>
 </div>
-
-

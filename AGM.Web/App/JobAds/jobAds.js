@@ -1,4 +1,4 @@
-﻿app.controller('jobAds', ['$scope', '$rootScope', '$state', '$location', '$filter', 'textAngularManager', 'jobAdsSource', 'jobAdsDataService', function ($scope, $rootScope, $state, $location, $filter, textAngularManager, jobAdsSource, jobAdsDataService) {
+﻿app.controller('jobAds', ['$scope', '$rootScope', '$state', '$location', '$filter', 'appDataService', 'textAngularManager', 'jobAdsSource', 'jobAdsDataService', function ($scope, $rootScope, $state, $location, $filter, appDataService, textAngularManager, jobAdsSource, jobAdsDataService) {
     $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
         $scope.isJobAdDetail = (toState.name == 'JobAds.Detail');
         if (toState.name == 'JobAds.Detail') {
@@ -19,9 +19,23 @@
             $scope.loading = false;
     });
 
+    $scope.orderOptions = [
+        { label: 'Titolo ASC', value: 'title$A' },
+        { label: 'Titolo DESC', value: 'title$D' },
+        { label: 'Località ASC', value: 'location$A' },
+        { label: 'Località DESC', value: 'location$D' },
+        { label: 'Inizio val. ASC', value: 'datefrom$A' },
+        { label: 'Inizio val. DESC', value: 'datefrom$D' },
+        { label: 'Fine val. ASC', value: 'dateto$A' },
+        { label: 'Fine val. DESC', value: 'dateto$D' },
+        { label: 'Riferimento ASC', value: 'refcode$A' },
+        { label: 'Riferimento DESC', value: 'refcode$D' }
+    ];
+
+    $scope.orderField = $scope.orderOptions[5].value;
+
     $scope.init = function() {
-        $scope.jobAdsCollection = $filter('filter')(jobAdsSource, function(value, index) { return (value.id != 0); });
-        $scope.selectedAll = false;
+        $scope.initData();
 
         $scope.isJobAdDetail = ($state.current.name == 'JobAds.Detail');
         $scope.jobAd = $filter('filter')(jobAdsSource, { id: $state.params.adId })[0];
@@ -29,6 +43,11 @@
 
         $scope.textModel = '<p>AGM Solutions è una System Integrator attiva nel mondo ICT dal 2002, i nostri progetti spaziano dalle soluzioni infrastrutturali alla realizzazione di portali e web application fino ad arrivare a tematiche di Networking e ICT Security.</p><p>Per un nostro cliente con sede a {##} siamo alla ricerca di {##}.</p><p><span style="font-size: 10.5pt;">Il candidato ideale dovrà soddisfare i seguenti requisiti:</span><br></p>';
     };
+
+    $scope.initData = function() {
+        $scope.jobAdsCollection = $filter('filter')(jobAdsSource, function (value, index) { return (value.id != 0); });
+        $scope.selectedAll = false;
+    }
 
     $scope.selectionToggle = function () {
         var alreadySelected = false;
@@ -52,7 +71,11 @@
     };
 
     $scope.backToListPage = function () {
-        $location.path('/JobAds');
+        jobAdsDataService.getJobAds('ja_main').then(function (respData) {
+            jobAdsSource = respData.data;
+            $scope.initData();
+            $location.path('/JobAds');
+        });
     };
 
     $scope.get = function() {
@@ -161,6 +184,41 @@
 
     $scope.insertTextModel = function() {
         $scope.jobAdText = $scope.textModel + ($scope.jobAdText? $scope.jobAdText : '');
+    };
+
+    $scope.eraseSearch = function() {
+        $scope.search = '';
+    };
+
+    $scope.getExpirationMex = function(jobAd) {
+        var title = "";
+        if (jobAd.expired) {
+            title = "Annuncio Scaduto";
+        } else if (jobAd.almostexpired) {
+            title = "In scadenza";
+        }
+        return { title: title }
+    };
+
+    $scope.getOrder = function () {
+        var val = $scope.orderField
+        return val.replace(val.substr(-2), '');
+    };
+
+    $scope.isOrderDesc = function() {
+        var order = $scope.orderField.substr(-1);
+        return (order == 'D');
+    };
+
+    $scope.getLocation = function(viewValue) {
+        return appDataService.getLocation('location', viewValue).then(function(res) {
+            return $filter('filter')(res.geonames, function (value, index) {
+                if (!value || !value.toponymName || !viewValue) {
+                    return false;
+                }
+                return value.toponymName.toLowerCase().indexOf(viewValue.toLowerCase()) == 0;
+            }).slice(0,5);;
+        });
     };
 
     $scope.init();

@@ -41,5 +41,21 @@ namespace AGM.Web.Models
                 DateToRaw = value.ToString("dd/MM/yyyy");
             }
         }
+
+        public bool Expired
+        {
+            get
+            {
+                return DateTo < DateTime.Today;
+            }
+        }
+
+        public bool AlmostExpired
+        {
+            get
+            {
+                return DateTo.AddDays(-3) <= DateTime.Today;
+            }
+        }
     }
 }

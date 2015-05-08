@@ -70,7 +70,11 @@ namespace AGM.Web.Controllers
                 defs.Add("utenti example", JsonConvert.SerializeObject(resUtenti));
                 sqlreader.Close();
 
-                //command = new System.Data.SqlClient.SqlCommand("ALTER TABLE utenti ADD image VARCHAR(250)", conn);
+                //command = new System.Data.SqlClient.SqlCommand("delete from rappcausali where nome = 'D.Lgs. 151'", conn);
+                //var resDel = command.ExecuteNonQuery();
+                //defs.Add("update result1", resDel);
+
+                //command = new System.Data.SqlClient.SqlCommand("insert into rappcausali (idcausale,nome) values (9,'D.Lgs. 151')", conn);
                 //var resAlter = command.ExecuteNonQuery();
                 //defs.Add("update result1", resAlter);
 
@@ -180,6 +184,18 @@ namespace AGM.Web.Controllers
                 defs.Add("annunci", cols);
                 sqlreader.Read();
                 defs.Add("annunci example", sqlreader[4].ToString());
+                sqlreader.Close();
+
+                cols = new List<string>();
+                command = new System.Data.SqlClient.SqlCommand("select TOP 1 * from candidati", conn);
+                sqlreader = command.ExecuteReader();
+                schemaTable = sqlreader.GetSchemaTable();
+                dsSchemaExport.Tables.Add(Add(conn, "candidati"));
+                foreach (System.Data.DataRow col in schemaTable.Rows)
+                {
+                    cols.Add(string.Format("{0} [{1}({2})] - {3}", col["ColumnName"], col["DataTypeName"], col["ColumnSize"], col["IsIdentity"]));
+                }
+                defs.Add("candidati", cols);
                 sqlreader.Close();
 
 

@@ -33,6 +33,9 @@ namespace AGM.Web.Controllers
             }
 
             var user = new User();
+            var currentUser = this.GetCurrentUser();
+            var prevUserId = -1;
+            var nextUserId = -1;
             var userHourReports = new List<MonthlyReportHour>();
             var userExpenseReports = new List<MonthlyReportExpense>();
             var userNoteReports = new List<MonthlyReportNote>();
@@ -47,6 +50,13 @@ namespace AGM.Web.Controllers
             using (var context = new AgmDataContext())
             {
                 user = context.Users.First(u => u.Id == id);
+                var currentUserId = this.GetCurrentUser().Id;
+                var users = (currentUserId != id) ? context.Users.Where(u => u.Id != currentUserId && u._isDeleted == false).OrderBy(u => u.LastName).ToList() : new List<User>();
+                var currentUserIndex = users.IndexOf(user);
+
+                
+                prevUserId = (currentUser.SectionUsersVisible && currentUserIndex > 0) ? users[currentUserIndex -1].Id : -1;
+                nextUserId = (currentUser.SectionUsersVisible && currentUserIndex < (users.Count - 1)) ? users[currentUserIndex + 1].Id : -1;
                 userHourReports = context.MonthlyReportHours.Where(r => r.UserId == id && r.Month == currentMonthDate.Month).ToList();
                 userExpenseReports = context.MonthlyReportExpenses.Where(e => e.UserId == id && e.Month == currentMonthDate.Month).ToList();
                 userNoteReports = context.MonthlyReportNotes.Where(e => e.UserId == id && e.Month == currentMonthDate.Month).ToList();
@@ -141,7 +151,9 @@ namespace AGM.Web.Controllers
                     TotalExpenses = totalExpenses.ToString("N2", cultureIt),
                     TotalHolidays = totalHolidays.ToString("N2", cultureIt),
                     TotalHolidaysDays = (totalHolidays / 8).ToString("N2", cultureIt),
-                    Summary = summary.OrderBy(s => s.id)
+                    Summary = summary.OrderBy(s => s.id),
+                    PrevUserId = prevUserId,
+                    NextUserId = nextUserId
                 }
             };
         }
