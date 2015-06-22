@@ -168,6 +168,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\JobAdController.cs" />
     <Compile Include="Controllers\MonthlyReportController.cs" />
+    <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Core\LowercaseContractResolver.cs" />
     <Compile Include="Global.asax.cs">
@@ -235,6 +236,9 @@
     <Content Include="App\Popover\popover.test.html" />
     <Content Include="App\Popover\popover.tpl.demo.html" />
     <Content Include="App\route.config.js" />
+    <Content Include="App\Settings\Settings.html" />
+    <Content Include="App\Settings\settings.js" />
+    <Content Include="App\Settings\settings.service.js" />
     <Content Include="App\UserDetail\UserDetail.html" />
     <Content Include="App\UserDetail\userDetail.js" />
     <Content Include="App\Users\Users.html" />
@@ -306,6 +310,7 @@
     <Content Include="Scripts\textAngular-sanitize.min.js" />
     <Content Include="Scripts\textAngular.min.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="SQLUpdates\1.sql" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />

@@ -1,8 +1,10 @@
-﻿app.controller('jobAds', ['$scope', '$rootScope', '$state', '$location', '$filter', 'appDataService', 'textAngularManager', 'jobAdsSource', 'jobAdsDataService', function ($scope, $rootScope, $state, $location, $filter, appDataService, textAngularManager, jobAdsSource, jobAdsDataService) {
+﻿app.controller('jobAds', ['$scope', '$rootScope', '$state', '$location', '$filter', '$alert', 'appDataService', 'textAngularManager', 'jobAdsSource', 'jobAdsDataService', function ($scope, $rootScope, $state, $location, $filter, $alert, appDataService, textAngularManager, jobAdsSource, jobAdsDataService) {
     $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
         $scope.isJobAdDetail = (toState.name == 'JobAds.Detail');
         if (toState.name == 'JobAds.Detail') {
-            $scope.jobAd = $filter('filter')(jobAdsSource, { id: toParams.adId })[0];
+            $scope.jobAd = $filter('filter')(jobAdsSource, { id: Number(toParams.adId) }, true)[0];
+            if (angular.isUndefined($scope.jobAd))
+                $scope.jobAd = {}
             $scope.jobAdText = $state.params.jobAdTextSource;
         } else {
             $scope.jobAd = {};
@@ -38,10 +40,12 @@
         $scope.initData();
 
         $scope.isJobAdDetail = ($state.current.name == 'JobAds.Detail');
-        $scope.jobAd = $filter('filter')(jobAdsSource, { id: $state.params.adId })[0];
+        $scope.jobAd = $filter('filter')(jobAdsSource, { id: Number($state.params.adId) }, true)[0];
+        if (angular.isUndefined($scope.jobAd))
+            $scope.jobAd = {}
         $scope.jobAdText = $state.params.jobAdTextSource;
 
-        $scope.textModel = '<p>AGM Solutions è una System Integrator attiva nel mondo ICT dal 2002, i nostri progetti spaziano dalle soluzioni infrastrutturali alla realizzazione di portali e web application fino ad arrivare a tematiche di Networking e ICT Security.</p><p>Per un nostro cliente con sede a {##} siamo alla ricerca di {##}.</p><p><span style="font-size: 10.5pt;">Il candidato ideale dovrà soddisfare i seguenti requisiti:</span><br></p>';
+        $scope.textModel = '<p>AGM Solutions è una System Integrator attiva nel mondo ICT dal 2002, i nostri progetti spaziano dalle soluzioni infrastrutturali alla realizzazione di portali e web application fino ad arrivare a tematiche di Networking e ICT Security.</p><p>Per un nostro cliente con sede a {##} siamo alla ricerca di {##}.</p><p><span style="font-size: 10.5pt;">Il candidato ideale dovrà soddisfare i seguenti requisiti:</span><br/><br/></p>';
     };
 
     $scope.initData = function() {

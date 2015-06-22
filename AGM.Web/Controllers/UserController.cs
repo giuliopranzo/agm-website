@@ -70,11 +70,11 @@ namespace AGM.Web.Controllers
                 defs.Add("utenti example", JsonConvert.SerializeObject(resUtenti));
                 sqlreader.Close();
 
-                //command = new System.Data.SqlClient.SqlCommand("delete from rappcausali where nome = 'D.Lgs. 151'", conn);
-                //var resDel = command.ExecuteNonQuery();
-                //defs.Add("update result1", resDel);
+                command = new System.Data.SqlClient.SqlCommand("delete from annunci where idannuncio = 0", conn);
+                var resDel = command.ExecuteNonQuery();
+                defs.Add("update result1", resDel);
 
-                //command = new System.Data.SqlClient.SqlCommand("insert into rappcausali (idcausale,nome) values (9,'D.Lgs. 151')", conn);
+                //command = new System.Data.SqlClient.SqlCommand("insert into rappcausali (idcausale,nome) values (10,'Permessi ex-festività')", conn);
                 //var resAlter = command.ExecuteNonQuery();
                 //defs.Add("update result1", resAlter);
 
@@ -303,7 +303,8 @@ namespace AGM.Web.Controllers
 
                     if (user.Id != 0)
                         user.Id = 0;
-                    context.Users.Add(user);
+                    var insNewUser = context.Users.Add(user);
+                    insNewUser._image = null;
                 }
 
                 var res = context.SaveChanges();

@@ -26,6 +26,8 @@ namespace AGM.Web
                 "~/App/UserDetail/userDetail.js",
                 "~/App/JobAds/jobAds.service.js",
                 "~/App/JobAds/jobAds.js",
+                "~/App/Settings/settings.service.js",
+                "~/App/Settings/settings.js",
                 "~/App/route.config.js"
                 
             ));

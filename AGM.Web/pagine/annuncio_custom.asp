@@ -11,7 +11,6 @@ else
 %>
 <head>
 <title><%=annunci("titolo")%> | AGM Solutions</title>
-<meta name="description" content="<%=annunci("dove")%>. <%=replace(left(objFile.ReadLine,130),"<p>","")%> ...">
 </head>
 <%
 	objFile.close

@@ -14,7 +14,7 @@
                         <li><a class="simpleLink" ui-sref="Users" ng-show="user.sectionusersvisible">Utenti</a></li>
                         <li><a class="simpleLink" ng-click="goToMonthlyReports()">Rapportini</a></li>
                         <li><a class="simpleLink" ui-sref="JobAds" ng-show="user.sectionjobadsvisible">Annunci</a></li>
-                        @*<li><a class="simpleLink" bs-dropdown="ddSettings">Impostazioni</a></li>*@
+                        <li><a class="simpleLink" ui-sref="Settings" ng-show="user.sectionusersvisible">Impostazioni</a></li>
                     </ul>
                     <ul class="nav navbar-nav menuRightPart" style="float:right;">
                         <li ng-show="authenticated" style="float:right;"><a bs-dropdown="ddUser" ng-bind="user.name"></a></li>

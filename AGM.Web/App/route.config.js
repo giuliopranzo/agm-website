@@ -156,6 +156,20 @@
                 }
             }
         })
+        .state('Settings', {
+            url: "/Settings",
+            views: {
+                "content": {
+                    templateUrl: resolveViewPath('Settings/Settings.html'),
+                    controller: 'settings'
+                },
+                "modal": {
+                    template: ''
+                }
+            },
+            resolve: {
+            }
+        })
         .state('Index', {
             url: "/",
             views: {
