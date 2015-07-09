@@ -203,11 +203,13 @@
     <Compile Include="Models\Mapping\MonthlyReportHourMap.cs" />
     <Compile Include="Models\Mapping\MonthlyReportNoteMap.cs" />
     <Compile Include="Models\Mapping\UserMap.cs" />
+    <Compile Include="Models\Mapping\VersionMap.cs" />
     <Compile Include="Models\MonthlyReportExpense.cs" />
     <Compile Include="Models\MonthlyReportHour.cs" />
     <Compile Include="Models\MonthlyReportNote.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserBase.cs" />
+    <Compile Include="Models\Version.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -252,6 +254,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
     <Content Include="css\font-awesome.css" />
+    <Content Include="DbUpdates\AGM_001.sql" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />

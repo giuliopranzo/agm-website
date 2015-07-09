@@ -9,6 +9,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Data.SqlClient;
+using System.Data.SqlTypes;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -23,25 +24,94 @@ namespace AGM.Web.Controllers
 {
     public class UserController : ApiController
     {
-        private DataTable Add(SqlConnection cnn, string tablename)
+        [HttpGet]
+        public ApiResponse DatabaseCheck()
         {
-            DataTable dt = new DataTable();
-            dt.TableName = tablename;
-            using (SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM[" + tablename +"];", cnn))
-            {
-                da.FillSchema(dt, SchemaType.Source);
-                da.MissingSchemaAction = MissingSchemaAction.AddWithKey;
-                da.Fill(dt);
-                foreach (DataColumn col in dt.Columns)
+            var basePath = "~/DbUpdates/";
+            var res = "";
+            var path = HttpContext.Current.Server.MapPath(basePath);
+            var exceptionText = string.Empty;
+            
+            if (!Directory.Exists(path))
+                return new ApiResponse(false)
                 {
-                    if (col.AutoIncrement)
+                    Errors = new ApiResponseError[]{ new ApiResponseError(){ Message = "Path for db updates doesn't exists!" }}  //Directory.GetFiles(path, "AGM_???.sql", SearchOption.TopDirectoryOnly).ToArray()
+                };
+
+            var updateFiles = Directory.GetFiles(path, "AGM_???.sql", SearchOption.TopDirectoryOnly);
+            var targetVersion = 0;
+            var currentVersion = new Models.Version() { Code = "0", LastUpdateTryDate = SqlDateTime.MinValue.Value, UpdateDate = SqlDateTime.MinValue.Value };
+            
+            if (updateFiles.Any())
+            {
+                targetVersion = updateFiles.Select(f => int.Parse(Path.GetFileNameWithoutExtension(f).Substring(4))).Max();
+            }
+
+            using (var context = new AgmDataContext())
+            {
+                if (context.Versions.Any())
+                {
+                    currentVersion = context.Versions.ToList().Last();
+                }
+                else
+                {
+                    context.Versions.Add(currentVersion);
+                }
+
+                for (var v = int.Parse(currentVersion.Code) + 1; v <= targetVersion; v++)
+                {
+                    currentVersion.LastUpdateTryDate = DateTime.Now;
+                    try
                     {
-                        col.AutoIncrementSeed = 1;
-                        col.AutoIncrementStep = 1;
+                        var filename = string.Format("{0}AGM_{1}.sql", basePath, v.ToString().PadLeft(3, '0'));
+                        var completePath = HttpContext.Current.Server.MapPath(filename);
+                        if (File.Exists(completePath))
+                        {
+                            var sqlText = string.Empty;
+                            using (StreamReader sr = new StreamReader(completePath))
+                            {
+                                sqlText = sr.ReadToEnd();
+                            }
+
+                            using (
+                                SqlConnection conn =
+                                    new SqlConnection(
+                                        "Data Source=hostingmssql02;Initial Catalog=agmsolutions_net_site;Integrated Security=False;User Id=agmsolutions_net_user;Password=C0nsu1t:v0_A:rD070m:TiSOCA_;MultipleActiveResultSets=True")
+                                )
+                            {
+                                conn.Open();
+                                SqlCommand command = new SqlCommand(sqlText, conn);
+                                res = command.ExecuteNonQuery().ToString();
+                            }
+
+                            var newVersion = new Models.Version();
+                            newVersion.Code = v.ToString();
+                            newVersion.LastUpdateTryDate = currentVersion.LastUpdateTryDate;
+                            newVersion.UpdateDate = DateTime.Now;
+                            newVersion.UpdateSucceeded = true;
+
+                            context.Versions.Add(newVersion);
+                            context.Versions.Remove(currentVersion);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        currentVersion.UpdateSucceeded = false;
+                        exceptionText = e.Message;
+                    }
+                    finally
+                    {
+                        context.SaveChanges();
                     }
                 }
+
+
+                return new ApiResponse(true)
+                {
+                    Data = context.Versions.ToList().Last(),
+                    Errors = (string.IsNullOrEmpty(exceptionText)) ? null : new ApiResponseError[]{ new ApiResponseError(){ Message = exceptionText } }
+                };
             }
-            return dt;
         }
 
         [HttpGet]
@@ -70,9 +140,10 @@ namespace AGM.Web.Controllers
                 defs.Add("utenti example", JsonConvert.SerializeObject(resUtenti));
                 sqlreader.Close();
 
-                command = new System.Data.SqlClient.SqlCommand("delete from annunci where idannuncio = 0", conn);
-                var resDel = command.ExecuteNonQuery();
-                defs.Add("update result1", resDel);
+                //command = new System.Data.SqlClient.SqlCommand("CREATE TABLE [dbo].[version] ([Code]           NVARCHAR (50) NOT NULL,[UpdateDate]        DATETIME      NULL,[UpdateSucceeded]   BIT           NULL,[LastUpdateTryDate] DATETIME      NULL,PRIMARY KEY CLUSTERED ([Code] ASC));", conn);
+                //command = new System.Data.SqlClient.SqlCommand("DROP TABLE [dbo].[version];", conn);
+                //var resDel = command.ExecuteNonQuery();
+                //defs.Add("update result1", resDel);
 
                 //command = new System.Data.SqlClient.SqlCommand("insert into rappcausali (idcausale,nome) values (10,'Permessi ex-festività')", conn);
                 //var resAlter = command.ExecuteNonQuery();
@@ -81,7 +152,7 @@ namespace AGM.Web.Controllers
                 //command = new System.Data.SqlClient.SqlCommand("ALTER TABLE utenti ADD isDeleted bit DEFAULT 0 NOT NULL", conn);
                 //var resAlter = command.ExecuteNonQuery();
                 //defs.Add("update result1", resAlter);
-                
+
                 //command = new System.Data.SqlClient.SqlCommand("update utenti set utenti=1 where idutente=21", conn);
                 //var resAlter = command.ExecuteNonQuery();
                 //defs.Add("update result1", resAlter);
@@ -210,13 +281,34 @@ namespace AGM.Web.Controllers
                 if (conn.State == System.Data.ConnectionState.Open)
                     conn.Close();
 
-                return new ApiResponse(false) { Errors = new ApiResponseError[]{ new ApiResponseError(){ Message = e.Message}}};
+                return new ApiResponse(false) { Errors = new ApiResponseError[] { new ApiResponseError() { Message = e.Message } } };
             }
 
             return new ApiResponse(true)
             {
                 Data = defs
             };
+        }
+
+        private DataTable Add(SqlConnection cnn, string tablename)
+        {
+            DataTable dt = new DataTable();
+            dt.TableName = tablename;
+            using (SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM[" + tablename +"];", cnn))
+            {
+                da.FillSchema(dt, SchemaType.Source);
+                da.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+                da.Fill(dt);
+                foreach (DataColumn col in dt.Columns)
+                {
+                    if (col.AutoIncrement)
+                    {
+                        col.AutoIncrementSeed = 1;
+                        col.AutoIncrementStep = 1;
+                    }
+                }
+            }
+            return dt;
         }
 
         [AuthorizeAction]
