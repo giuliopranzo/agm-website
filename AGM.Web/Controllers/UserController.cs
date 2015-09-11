@@ -1,4 +1,5 @@
-﻿using AGM.Web.Infrastructure;
+﻿using System.Configuration;
+using AGM.Web.Infrastructure;
 using AGM.Web.Infrastructure.Attributes;
 using AGM.Web.Infrastructure.Extensions;
 using AGM.Web.Models;
@@ -73,11 +74,7 @@ namespace AGM.Web.Controllers
                                 sqlText = sr.ReadToEnd();
                             }
 
-                            using (
-                                SqlConnection conn =
-                                    new SqlConnection(
-                                        "Data Source=hostingmssql02;Initial Catalog=agmsolutions_net_site;Integrated Security=False;User Id=agmsolutions_net_user;Password=C0nsu1t:v0_A:rD070m:TiSOCA_;MultipleActiveResultSets=True")
-                                )
+                            using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["AgmDataContext"].ConnectionString))
                             {
                                 conn.Open();
                                 SqlCommand command = new SqlCommand(sqlText, conn);
@@ -120,7 +117,7 @@ namespace AGM.Web.Controllers
             DataSet dsSchemaExport = new DataSet();
             Dictionary<string, object> defs = new Dictionary<string, object>();
             List<string> cols = new List<string>();
-            System.Data.SqlClient.SqlConnection conn = new System.Data.SqlClient.SqlConnection("Data Source=hostingmssql02;Initial Catalog=agmsolutions_net_site;Integrated Security=False;User Id=agmsolutions_net_user;Password=C0nsu1t:v0_A:rD070m:TiSOCA_;MultipleActiveResultSets=True");
+            System.Data.SqlClient.SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["AgmDataContext"].ConnectionString);
             try
             {
                 conn.Open();
@@ -290,6 +287,75 @@ namespace AGM.Web.Controllers
             };
         }
 
+        [HttpGet]
+        public ApiResponse Export(string year, string month)
+        {
+            var reasonCode = new Dictionary<string, string>()
+            {
+                {"ordinarie", "---"},
+                {"ferie", "FP"},
+                {"r.o.l.", "P1"},
+                {"straordinarie (solo se approvate)", "S1"},
+                {"malattia", "M1"},
+                {"infortunio", "I1"},
+                {"donazione sangue", "DS"},
+                {"congedo matrimoniale", "CM"},
+                {"D.Lgs. 151", "AL "},
+                {"Permessi ex-festività", "P2"}
+            };
+            
+            Thread.CurrentPrincipal = new CustomPrincipal("nandowalter@gmail.com$Fernando Walter Gagni");
+            List<string> res = new List<string>();
+            using (var context = new AgmDataContext())
+            {
+                var users = context.Users.ToList();
+                foreach (var user in users.Where(u => !u.IsDeleted && u.IsActive && u.IdExport.HasValue))
+                {
+                    dynamic completeReport = (new MonthlyReportController()).ExtractMonthlyReport(user.Id, string.Format("{0}-{1}", year, month.PadLeft(2, '0')));
+                    var hourReport = completeReport.Data.Report;
+                    var userName = user.Name;
+                    foreach (var itemParent in hourReport)
+                    {
+                        if (itemParent.CompleteDate.ToString("MM") == month.PadLeft(2,'0'))
+                        {
+                            if ((itemParent.HoursCollection as IEnumerable<MonthlyReportHour>).Any())
+                            {
+                                foreach (var item in itemParent.HoursCollection)
+                                {
+                                    TimeSpan timespan = TimeSpan.FromHours(2.75);
+                                    var hours = TimeSpan.FromHours((item as MonthlyReportHour).HoursCount).ToString("hhmm");
+                                    var reason = (item as MonthlyReportHour).Reason;
+                                    var reasonCurr = (reasonCode.Any(r => r.Key == reason)? reasonCode[reason] : reason);
+                                    res.Add(string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}", 
+                                        "00000", 
+                                        "00",
+                                        user.IdExport.ToString().PadLeft(4,'0'),
+                                        item.Date.ToString("ddMMyy"),
+                                        reasonCurr.PadRight(3, ' '),
+                                        hours, 
+                                        (reasonCurr == "---" || reasonCurr == "S1") ? hours : "0000", 
+                                        "0", 
+                                        "0"));
+                                }
+                            }
+                            else
+                            {
+                                res.Add(string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}", "00000", "00",
+                                    user.IdExport.ToString().PadLeft(4, '0'),
+                                    itemParent.CompleteDate.ToString("ddMMyy"), "---", "0000", "0000",
+                                    (itemParent.WorkDay) ? "0" : (!itemParent.IsHoliday) ? "1" : "2", "0"));
+                            }
+                        }
+                    }
+                }
+            }
+
+            return new ApiResponse(true)
+            {
+                Data = res
+            };
+        }
+
         private DataTable Add(SqlConnection cnn, string tablename)
         {
             DataTable dt = new DataTable();
@@ -331,7 +397,8 @@ namespace AGM.Web.Controllers
                         u.Id,
                         u.Name,
                         u.Image,
-                        u.Username
+                        u.Username,
+                        u.IdExport
                     })
                 };
             }
@@ -345,10 +412,15 @@ namespace AGM.Web.Controllers
 
             using (var context = new AgmDataContext())
             {
+                var currentUser = this.GetCurrentUser();
 
                 var user = context.Users.FirstOrDefault(u => u.Id == id && !u._isDeleted);
                 if (user == null && id == 0)
                     user = new User();
+
+                if (!currentUser.SectionUsersVisible)
+                    user.IdExport = -1;
+
                 return new ApiResponse(true)
                 {
                     Data = user
@@ -371,6 +443,15 @@ namespace AGM.Web.Controllers
                     user.Image = user._image.Replace("/Temp", string.Empty);
                 }
 
+                if (user.IdExport.HasValue && context.Users.Any(u => u.IdExport == user.IdExport && !u._isDeleted))
+                {
+                    var suggestedId = (context.Users.Any(u => u.IdExport != null && !u._isDeleted)) ? context.Users.Where(u => u.IdExport != null && !u._isDeleted).Max(u => u.IdExport).Value + 1 : 1;
+                    return new ApiResponse(false)
+                    {
+                        Errors = new List<ApiResponseError>() { new ApiResponseError() { Code = -2, Message = string.Format("ID Export già utilizzato. ID Export suggerito:{0}", suggestedId) } }.ToArray()
+                    };
+                }
+
                 if (user.Id != 0 && context.Users.Any(u => u.Id == user.Id && !u._isDeleted))
                 {
                     context.Users.Attach(user);
@@ -378,6 +459,7 @@ namespace AGM.Web.Controllers
 
                     if (!currentUser.SectionUsersVisible)
                     {
+                        context.Entry(user).Property(x => x.IdExport).IsModified = false;
                         context.Entry(user).Property(x => x._isActive).IsModified = false;
                         context.Entry(user).Property(x => x._sectionJobAdsVisible).IsModified = false;
                         context.Entry(user).Property(x => x._sectionJobApplicantsVisible).IsModified = false;

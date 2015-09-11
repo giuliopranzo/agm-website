@@ -26,7 +26,7 @@ namespace AGM.Web.Models
         public DbSet<MonthlyReportNote> MonthlyReportNotes { get; set; }
         public DbSet<HourReason> HourReasons { get; set; }
         public DbSet<ExpenseReason> ExpenseReasons { get; set; }
-        public DbSet<Holiday> Holidays { get; set; }
+        public DbSet<Festivity> Festivities { get; set; }
         public DbSet<JobAd> JobAds { get; set; }
         public DbSet<Version> Versions { get; set; }
 
@@ -38,7 +38,7 @@ namespace AGM.Web.Models
             modelBuilder.Configurations.Add(new MonthlyReportNoteMap());
             modelBuilder.Configurations.Add(new HourReasonMap());
             modelBuilder.Configurations.Add(new ExpenseReasonMap());
-            modelBuilder.Configurations.Add(new HolidayMap());
+            modelBuilder.Configurations.Add(new FestivityMap());
             modelBuilder.Configurations.Add(new JobAdMap());
             modelBuilder.Configurations.Add(new VersionMap());
         }

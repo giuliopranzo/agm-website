@@ -1,0 +1,45 @@
+﻿<div>
+    <div>
+        <h4 style="float: left;"><i class="fa settingsSectionTitleCaret" ng-click="isFestivityCollapsed = !isFestivityCollapsed" ng-class="{'fa-caret-right': isFestivityCollapsed, 'fa-caret-down': !isFestivityCollapsed}"></i>Festività</h4>
+        <div class="clearfix"></div>
+    </div>
+    <hr />
+    <div collapse="isFestivityCollapsed">
+        <div class="container-fluid">
+            <div class="col-xs-12 col-md-6 form-group">
+                <form name="mainForm" novalidate>
+                    <input required id="insertDayPicker" type="text" class="form-control inputDatePicker" ng-model="newFestivity.date" placeholder="Nuova festività..."
+                           data-date-format="EEEE dd/MM/yyyy"
+                           data-date-type="date"
+                           data-autoclose="1"
+                           bs-datepicker
+                           readonly>
+                    <button ng-hide="!newFestivity.date" class="btn btn-info" ng-click="insertFestivity()">Inserisci</button>
+                    <button ng-show="!newFestivity.date" class="btn btn-info" disabled="disabled">Inserisci</button>
+                </form>
+            </div>
+            <div class="clearfix"></div>
+
+            <div>
+                <div class="toolContainer">
+                    <i class="fa fa-trash-o sign" ng-show="thereAreSelected()" ng-click="deleteSelected()"></i>
+                    <i class="fa fa-check-square-o sign" ng-click="selectionToggle()"></i>
+                </div>
+                <div class="clearfix"></div>
+                
+                <fwg-pager fwg-pager-data="dataSource" fwg-pager-order="defaultOrder" fwg-pager-on-change="onDataChange(currentPageData)"></fwg-pager>
+                <div class="placeholderText" ng-show="currentPageData.length == 0" ng-bind="'Non ci sono elementi'"></div>
+                <div class="baseTable2 settingsTable">
+                    <div class="row" ng-class="{odd: $odd, selected: item._selected}" ng-repeat="item in currentPageData">
+                        <div class="rowHoverIndicator"></div>
+                        <div class="col-xs-12 col-md-4">
+                            <input style="vertical-align: middle; margin: 0 4px; height: 28px;" type="checkbox" ng-model="item._selected" ng-click="$event.stopPropagation()" />
+                            <span style="font-weight: bold" ng-bind="item.date | date:'dd/MM/yyyy'"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Optimization;
+using AGM.Web.Infrastructure;
 
 namespace AGM.Web
 {
@@ -10,31 +11,10 @@ namespace AGM.Web
         // For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
-            bundles.Add(new ScriptBundle("~/bundles/app").Include(
-                "~/App/app.js",
-                "~/App/app.config.js",
-                "~/App/http.config.js",
-                "~/App/app.service.js",
-                "~/App/footer.directive.js",
-                "~/App/Authentication/authentication.config.js",
-                "~/App/Authentication/authentication.service.js",
-                "~/App/Authentication/authentication.js",
-                "~/App/MonthlyReports/monthlyReports.service.js",
-                "~/App/MonthlyReports/monthlyReports.js",
-                "~/App/Users/users.service.js",
-                "~/App/Users/users.js",
-                "~/App/UserDetail/userDetail.js",
-                "~/App/JobAds/jobAds.service.js",
-                "~/App/JobAds/jobAds.js",
-                "~/App/Settings/settings.service.js",
-                "~/App/Settings/settings.js",
-                "~/App/route.config.js"
-                
-            ));
-
-            bundles.Add(new ScriptBundle("~/bundles/datamockups").Include(
-                "~/App/Mockup/users.js"
-            ));
+            var appBundle = new ScriptBundle("~/bundles/app");
+            appBundle.Orderer = new AppBundleOrderer(new List<string>() { "data-mock", "app.js"});
+            appBundle.IncludeDirectory("~/App", "*.js", true);
+            bundles.Add(appBundle);
 
             bundles.Add(new ScriptBundle("~/bundles/applibs").Include(
                 "~/Scripts/angular.js",

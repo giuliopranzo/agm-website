@@ -2,7 +2,7 @@
 var controllerBasePath = '/App/';
 var factoryBasePath = '/App/';
 
-var app = angular.module('agm', ['ngAnimate', 'ngSanitize', 'ui.router', 'ui.bootstrap', 'LocalStorageModule', 'mgcrea.ngStrap', 'angularFileUpload', 'textAngular']);
+var app = angular.module('agm', ['ngAnimate', 'ngSanitize', 'ui.router', 'ui.bootstrap', 'LocalStorageModule', 'mgcrea.ngStrap', 'angularFileUpload', 'textAngular', 'fwg.pagerUp']);
 
 function resolveViewPath(viewName) {
     return viewBasePath + viewName;

@@ -59,7 +59,6 @@
     <Folder Include="Properties" />
     <Folder Include="dbo\" />
     <Folder Include="dbo\Tables\" />
-    <Folder Include="Storage\" />
     <Folder Include="Security\" />
   </ItemGroup>
   <ItemGroup>
@@ -83,7 +82,6 @@
     <Build Include="dbo\Tables\candidaticategorie.sql" />
     <Build Include="dbo\Tables\candidati.sql" />
     <Build Include="dbo\Tables\annunci.sql" />
-    <Build Include="Storage\agmsolutions_net_site_fulltext.sql" />
     <Build Include="Security\agmsolutions_net_user.sql" />
     <Build Include="Security\RoleMemberships.sql" />
     <Build Include="Security\Permissions.sql" />

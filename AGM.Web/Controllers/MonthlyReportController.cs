@@ -21,7 +21,11 @@ namespace AGM.Web.Controllers
         public ApiResponse Get(int id, string month)
         {
             this.CheckCurrentUserPermission(id, ((x) => x.SectionUsersVisible));
+            return ExtractMonthlyReport(id, month);
+        }
 
+        public ApiResponse ExtractMonthlyReport(int id, string month)
+        {
             var cultureIt = CultureInfo.GetCultureInfo("it-IT");
             var currentMonthDate = DateTime.Today;
             var currentMonthString = currentMonthDate.ToString("yyyy-MM-dd", cultureIt);
@@ -41,7 +45,7 @@ namespace AGM.Web.Controllers
             var userNoteReports = new List<MonthlyReportNote>();
             var hourReasons = new List<HourReason>();
             var expenseReasons = new List<ExpenseReason>();
-            var holidays = new List<Holiday>();
+            var holidays = new List<Festivity>();
             var totalHours = 0d;
             var totalOrdinaryHours = 0d;
             var totalExpenses = 0d;
@@ -54,15 +58,14 @@ namespace AGM.Web.Controllers
                 var users = (currentUserId != id) ? context.Users.Where(u => u.Id != currentUserId && u._isDeleted == false).OrderBy(u => u.LastName).ToList() : new List<User>();
                 var currentUserIndex = users.IndexOf(user);
 
-                
-                prevUserId = (currentUser.SectionUsersVisible && currentUserIndex > 0) ? users[currentUserIndex -1].Id : -1;
+                prevUserId = (currentUser.SectionUsersVisible && currentUserIndex > 0) ? users[currentUserIndex - 1].Id : -1;
                 nextUserId = (currentUser.SectionUsersVisible && currentUserIndex < (users.Count - 1)) ? users[currentUserIndex + 1].Id : -1;
                 userHourReports = context.MonthlyReportHours.Where(r => r.UserId == id && r.Month == currentMonthDate.Month).ToList();
                 userExpenseReports = context.MonthlyReportExpenses.Where(e => e.UserId == id && e.Month == currentMonthDate.Month).ToList();
                 userNoteReports = context.MonthlyReportNotes.Where(e => e.UserId == id && e.Month == currentMonthDate.Month).ToList();
-                hourReasons = context.HourReasons.ToList();
+                hourReasons = context.HourReasons.Where(h => h.IsDeleted == false).ToList();
                 expenseReasons = context.ExpenseReasons.ToList();
-                holidays = context.Holidays.ToList();
+                holidays = context.Festivities.ToList();
             }
 
             var startDate = new DateTime(currentMonthDate.Year, currentMonthDate.Month, 1);
@@ -75,7 +78,7 @@ namespace AGM.Web.Controllers
             {
                 endDate = endDate.AddDays(1);
             }
-            
+
             var currentDate = startDate;
             var report = new List<object>();
 
@@ -86,6 +89,7 @@ namespace AGM.Web.Controllers
                 var notesCollection = userNoteReports.Where(e => e.Date == currentDate).ToList();
                 report.Add(new
                 {
+                    CompleteDate = currentDate,
                     DateShort = string.Format("{0} {1}", Char.ToUpper(currentDate.ToString("dddd", cultureIt)[0]), currentDate.ToString(" d", cultureIt)),
                     Date = string.Format("{0} {1}", currentDate.ToString("dddd", cultureIt), currentDate.ToString(" d", cultureIt)),
                     Hours = (hoursCollection.Any()) ? hoursCollection.Sum(r => r.HoursCount).ToString("N2", cultureIt) : 0.ToString("N2", cultureIt),
@@ -94,6 +98,7 @@ namespace AGM.Web.Controllers
                     ExpensesCollection = expensesCollection,
                     NotesCollection = notesCollection,
                     WorkDay = currentDate.DayOfWeek != DayOfWeek.Saturday && currentDate.DayOfWeek != DayOfWeek.Sunday && holidays.All(h => h.Date != currentDate),
+                    IsHoliday = currentDate.DayOfWeek == DayOfWeek.Sunday || holidays.Any(h => h.Date == currentDate),
                     IsCurrentMonth = (currentDate.Month == currentMonthDate.Month),
                     DayOfWeek = (int)currentDate.DayOfWeek
                 });
@@ -124,7 +129,7 @@ namespace AGM.Web.Controllers
                                   id = g.First().ReasonId,
                                   reason = g.Key,
                                   count = g.Sum(x => x.HoursCount).ToString("N2", cultureIt),
-                                  days = (g.Sum(x => x.HoursCount)/8).ToString("N2", cultureIt)
+                                  days = (g.Sum(x => x.HoursCount) / 8).ToString("N2", cultureIt)
                               };
 
             return new ApiResponse()
@@ -138,7 +143,7 @@ namespace AGM.Web.Controllers
                         Name = user.Name
                     },
                     CurrentMonth = currentMonthString,
-                    SelectedInsertDate = ((currentMonthDate.Month == DateTime.Today.Month && currentMonthDate.Year == DateTime.Today.Year)? DateTime.Today : new DateTime(currentMonthDate.Year, currentMonthDate.Month, 1)).ToString("yyyy-MM-dd"),
+                    SelectedInsertDate = ((currentMonthDate.Month == DateTime.Today.Month && currentMonthDate.Year == DateTime.Today.Year) ? DateTime.Today : new DateTime(currentMonthDate.Year, currentMonthDate.Month, 1)).ToString("yyyy-MM-dd"),
                     MinMonthDate = (new DateTime(currentMonthDate.Year, currentMonthDate.Month, 1)).AddDays(-1).ToString("yyyy-MM-dd"),
                     MaxMonthDate = (new DateTime(currentMonthDate.Year, currentMonthDate.Month, DateTime.DaysInMonth(currentMonthDate.Year, currentMonthDate.Month))).ToString("yyyy-MM-dd"),
                     Report = report,
@@ -146,7 +151,7 @@ namespace AGM.Web.Controllers
                     ExpenseReasons = expenseReasons,
                     TotalHours = totalHours.ToString("N2", cultureIt),
                     TotalDays = (totalHours / 8).ToString("N2", cultureIt),
-                    TotalOrdinaryHours =totalOrdinaryHours.ToString("N2", cultureIt),
+                    TotalOrdinaryHours = totalOrdinaryHours.ToString("N2", cultureIt),
                     TotalOrdinaryDays = (totalOrdinaryHours / 8).ToString("N2", cultureIt),
                     TotalExpenses = totalExpenses.ToString("N2", cultureIt),
                     TotalHolidays = totalHolidays.ToString("N2", cultureIt),
@@ -290,7 +295,7 @@ namespace AGM.Web.Controllers
                     {
                         var userHourReports = context.MonthlyReportHours.Where(r => r.UserId == userId && r.Month == currentMonthDate.Month).ToList();
                         var hourReasons = context.HourReasons.ToList();
-                        var holidays = context.Holidays.ToList();
+                        var holidays = context.Festivities.ToList();
                         var currentDate = new DateTime(currentMonthDate.Year, currentMonthDate.Month, 1);
                         var endDate = new DateTime(currentMonthDate.Year, currentMonthDate.Month, DateTime.DaysInMonth(currentMonthDate.Year, currentMonthDate.Month));
                         while (currentDate <= endDate)

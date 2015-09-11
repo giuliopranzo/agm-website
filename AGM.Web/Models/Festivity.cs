@@ -1,18 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using System.Linq;
 using System.Web;
+using AGM.Web.Infrastructure.Helpers;
 
 namespace AGM.Web.Models
 {
-    public class HourReason
+    public class Festivity
     {
         public int Id { get; set; }
-        [MaxLength(25)]
-        public string Name { get; set; }
+        public DateTime Date { get; set; }
         public bool IsDeleted { get; set; }
-        [MaxLength(3)]
-        public string CodeExport { get; set; }
     }
 }

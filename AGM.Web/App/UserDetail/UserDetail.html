@@ -28,6 +28,11 @@
                 <input type="checkbox" ng-model="user._isactive" toggle-switch>
                 <div class="clearfix"></div>
             </div>
+            <div class="functionList" ng-show="currentUser.sectionusersvisible">
+                <label>ID Export</label>
+                <input type="number" class="form-control" ng-model="user.idexport">
+                <div class="clearfix"></div>
+            </div>
             <label class="profileFormLabel">Email</label><input required class="form-control" type="email" placeholder="Email" ng-model="user.email" maxlength="100" />
             <label class="profileFormLabel">Cognome</label><input required class="form-control" type="text" placeholder="Cognome" ng-model="user.lastname" maxlength="50" />
             <label class="profileFormLabel">Nome</label><input required class="form-control" type="text" placeholder="Nome" ng-model="user.firstname" maxlength="50"/>

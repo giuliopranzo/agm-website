@@ -7,6 +7,7 @@ namespace AGM.Web.Models
 {
     public class User : UserBase
     {
+        public int? IdExport { get; set; }
         public string Password { get; set; }
         public int _sectionUsersVisible { get; set; }
         public int _sectionJobAdsVisible { get; set; }

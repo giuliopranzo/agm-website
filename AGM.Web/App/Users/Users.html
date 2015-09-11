@@ -23,6 +23,7 @@
                         <div>
                             <span class="person-name" ng-bind="user.name"></span>
                             <span class="company-name" ng-bind="user.company"></span>
+                            <span class="company-name" ng-show="!user.idexport || user.idexport == -1"><i class="fa fa-exclamation-triangle"></i>No ID Export</span>
                         </div>
                     </button>
                 </div>

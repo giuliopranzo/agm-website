@@ -6,9 +6,9 @@ using System.Web;
 
 namespace AGM.Web.Models.Mapping
 {
-    public class HolidayMap: EntityTypeConfiguration<Holiday>
+    public class FestivityMap: EntityTypeConfiguration<Festivity>
     {
-        public HolidayMap()
+        public FestivityMap()
         {
             // Primary Key
             this.HasKey(t => t.Id);
@@ -16,10 +16,7 @@ namespace AGM.Web.Models.Mapping
             // Table & Column Mappings
             this.ToTable("rappfestivi");
             this.Property(t => t.Id).HasColumnName("idgiorno");
-            this.Property(t => t.DateRaw).HasColumnName("giorno");
-
-            // Ignore
-            this.Ignore(p => p.Date);
+            this.Property(t => t.Date).HasColumnName("date");
         }
     }
 }

@@ -25,6 +25,6 @@ response.write "<h1>"&annunci("titolo")&"</h1>"
 %>
 <p>Le ricerche sono rivolte a candidati dell'uno e dell'altro sesso ai sensi della L. 903/77 e L. 125/91.</p>
 <p>Inviare cv completo all'indirizzo di posta elettronica
-<a href="mailto:selezione@agmsolutions.net?subject=rif. <%=annunci("riferimento")%>"><b>selezione@agmsolutions.net</b></a>, citando nell’oggetto il seguente riferimento: <b><%=annunci("riferimento")%>.</b></p>
+<a href="mailto:hr@agmsolutions.net?subject=rif. <%=annunci("riferimento")%>"><b>hr@agmsolutions.net</b></a>, citando nell’oggetto il seguente riferimento: <b><%=annunci("riferimento")%>.</b></p>
 <% end if %>
 <!--#include virtual="/Include/footer.asp"-->

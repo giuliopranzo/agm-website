@@ -20,6 +20,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -174,11 +175,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\AppBundleOrderer.cs" />
     <Compile Include="Infrastructure\Attributes\AuthorizeActionAttribute.cs" />
     <Compile Include="Infrastructure\ConfigurationHelper.cs" />
     <Compile Include="Infrastructure\CustomPrincipal.cs" />
     <Compile Include="Infrastructure\Extensions\ApiControllerExtensions.cs" />
     <Compile Include="Infrastructure\Extensions\ModelExtensions.cs" />
+    <Compile Include="Infrastructure\Helpers\DateHelpers.cs" />
     <Compile Include="Infrastructure\Helpers\FileHelpers.cs" />
     <Compile Include="Infrastructure\HttpRequestBaseExtension.cs" />
     <Compile Include="Infrastructure\HttpRequestHeadersExtension.cs" />
@@ -190,13 +193,13 @@
     <Compile Include="Models\AgmDataContext.cs" />
     <Compile Include="Models\Candidate.cs" />
     <Compile Include="Models\ExpenseReason.cs" />
-    <Compile Include="Models\Holiday.cs" />
+    <Compile Include="Models\Festivity.cs" />
     <Compile Include="Models\HourReason.cs" />
     <Compile Include="Models\JobAd.cs" />
     <Compile Include="Models\JobAdSaveIn.cs" />
     <Compile Include="Models\Mapping\CandidateMap.cs" />
     <Compile Include="Models\Mapping\ExpenseReasonMap.cs" />
-    <Compile Include="Models\Mapping\HolidayMap.cs" />
+    <Compile Include="Models\Mapping\FestivityMap.cs" />
     <Compile Include="Models\Mapping\HourReasonMap.cs" />
     <Compile Include="Models\Mapping\JobAdMap.cs" />
     <Compile Include="Models\Mapping\MonthlyReportExpenseMap.cs" />
@@ -234,10 +237,15 @@
     <Content Include="App\MonthlyReports\MonthlyReports.html" />
     <Content Include="App\MonthlyReports\monthlyReports.js" />
     <Content Include="App\MonthlyReports\monthlyReports.service.js" />
+    <Content Include="App\pagerUp.js" />
     <Content Include="App\Popover\popover-html-unsafe-popup.html" />
     <Content Include="App\Popover\popover.test.html" />
     <Content Include="App\Popover\popover.tpl.demo.html" />
     <Content Include="App\route.config.js" />
+    <Content Include="App\Settings\Festivity.html" />
+    <Content Include="App\Settings\festivity.js" />
+    <Content Include="App\Settings\HourReason.html" />
+    <Content Include="App\Settings\hourReason.js" />
     <Content Include="App\Settings\Settings.html" />
     <Content Include="App\Settings\settings.js" />
     <Content Include="App\Settings\settings.service.js" />
@@ -254,6 +262,12 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
     <Content Include="css\font-awesome.css" />
+    <Content Include="DbUpdates\AGM_007.sql" />
+    <Content Include="DbUpdates\AGM_006.sql" />
+    <Content Include="DbUpdates\AGM_005.sql" />
+    <Content Include="DbUpdates\AGM_004.sql" />
+    <Content Include="DbUpdates\AGM_003.sql" />
+    <Content Include="DbUpdates\AGM_002.sql" />
     <Content Include="DbUpdates\AGM_001.sql" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
@@ -325,9 +339,11 @@
     </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
@@ -356,16 +372,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
-          <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>28306</DevelopmentServerPort>
-          <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:28306/</IISUrl>
-          <NTLMAuthentication>False</NTLMAuthentication>
-          <UseCustomServer>False</UseCustomServer>
-          <CustomServerUrl>
-          </CustomServerUrl>
-          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+          <SaveServerSettingsInUserFile>True</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
     </VisualStudio>

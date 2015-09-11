@@ -19,6 +19,7 @@ namespace AGM.Web.Models.Mapping
             this.Property(t => t.Id).HasColumnName("idcausale");
             this.Property(t => t.Name).HasColumnName("nome");
             this.Property(t => t.IsDeleted).HasColumnName("isDeleted");
+            this.Property(t => t.CodeExport).HasColumnName("codeexport");
         }
     }
 }

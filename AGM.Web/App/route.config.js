@@ -165,9 +165,35 @@
                 },
                 "modal": {
                     template: ''
+                },
+                "hourReasonSection@Settings": {
+                    templateUrl: resolveViewPath('Settings/HourReason.html'),
+                    controller: 'hourReason'
+                },
+                "festivitySection@Settings": {
+                    templateUrl: resolveViewPath('Settings/Festivity.html'),
+                    controller: 'festivity'
                 }
             },
             resolve: {
+                hourReasonSource: function (settingsDataService) {
+                    return settingsDataService.getHourReasons('se_main').then(function (respData) {
+                        if (respData.succeed) {
+                            return respData.data;
+                        } else {
+                            return null;
+                        }
+                    });
+                },
+                festivitySource: function(settingsDataService) {
+                    return settingsDataService.getFestivities('se_main').then(function (respData) {
+                        if (respData.succeed) {
+                            return respData.data;
+                        } else {
+                            return null;
+                        }
+                    });
+                }
             }
         })
         .state('Index', {

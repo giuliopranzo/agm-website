@@ -1138,6 +1138,14 @@ ul.typeahead {
     padding-right: 0;
 }
 
+.settingsTable {
+    height: 350px;
+}
+
+.settingsSectionTitleCaret {
+    width: 15px;
+    cursor: pointer;
+}
 
 
 

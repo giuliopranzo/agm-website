@@ -27,6 +27,8 @@ namespace AGM.Web.Models.Mapping
             // Table & Column Mappings
             this.ToTable("Utenti");
             this.Property(t => t.Id).HasColumnName("idutente");
+            this.Property(t => t.IdExport).HasColumnName("idExport");
+            this.Property(t => t.IdExport).IsOptional();
             this.Property(t => t.Username).HasColumnName("utente");
             this.Property(t => t.FirstName).HasColumnName("nome");
             this.Property(t => t.LastName).HasColumnName("cognome");
