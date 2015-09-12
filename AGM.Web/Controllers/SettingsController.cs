@@ -214,5 +214,61 @@ namespace AGM.Web.Controllers
             }
         }
         #endregion
+
+        #region Meal Voucher
+        [AuthorizeAction]
+        [HttpGet]
+        public ApiResponse GetMealVoucherOptions()
+        {
+            using (var context = new AgmDataContext())
+            {
+                var email = (Thread.CurrentPrincipal as CustomPrincipal).User.Split('$').GetValue(0) as string;
+                var user = context.Users.Single(u => u.Email == email);
+
+                if (!user.SectionUsersVisible)
+                    return new ApiResponse(false);
+
+                var options = context.Options.Where(f => f.Section == OptionSection.MealVoucher);
+                return new ApiResponse(true)
+                {
+                    Data = (options.Any()) ? options.First().Value : (new MealVoucherOptions() { Amount = 0.00 })
+                };
+            }
+        }
+
+        [AuthorizeAction]
+        [HttpPost]
+        public ApiResponse UpdateMealVoucherOptions(MealVoucherOptions mealVoucherOptions)
+        {
+            using (var context = new AgmDataContext())
+            {
+                var email = (Thread.CurrentPrincipal as CustomPrincipal).User.Split('$').GetValue(0) as string;
+                var user = context.Users.Single(u => u.Email == email);
+
+                if (!user.SectionUsersVisible)
+                    return new ApiResponse(false);
+
+                if (!context.Options.Any(o => o.Section == OptionSection.MealVoucher))
+                {
+                    Option newOption = new Option()
+                    {
+                        Section = OptionSection.MealVoucher,
+                        Value = mealVoucherOptions
+                    };
+
+                    context.Options.Add(newOption);
+                }
+                else
+                {
+                    var optionToupdate = context.Options.First(o => o.Section == OptionSection.MealVoucher);
+                    optionToupdate.SerializedValue = null;
+                    optionToupdate.Value = mealVoucherOptions;
+                }
+
+                context.SaveChanges();
+                return new ApiResponse(true);
+            }
+        }
+        #endregion
     }
 }

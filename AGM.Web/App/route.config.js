@@ -173,6 +173,10 @@
                 "festivitySection@Settings": {
                     templateUrl: resolveViewPath('Settings/Festivity.html'),
                     controller: 'festivity'
+                },
+                "mealVoucherSection@Settings": {
+                    templateUrl: resolveViewPath('Settings/MealVoucher.html'),
+                    controller: 'mealVoucher'
                 }
             },
             resolve: {
@@ -187,6 +191,15 @@
                 },
                 festivitySource: function(settingsDataService) {
                     return settingsDataService.getFestivities('se_main').then(function (respData) {
+                        if (respData.succeed) {
+                            return respData.data;
+                        } else {
+                            return null;
+                        }
+                    });
+                },
+                mealVoucherSource: function (settingsDataService) {
+                    return settingsDataService.getMealVoucherOptions('se_main').then(function (respData) {
                         if (respData.succeed) {
                             return respData.data;
                         } else {

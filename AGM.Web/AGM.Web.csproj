@@ -186,6 +186,7 @@
     <Compile Include="Infrastructure\HttpRequestBaseExtension.cs" />
     <Compile Include="Infrastructure\HttpRequestHeadersExtension.cs" />
     <Compile Include="Infrastructure\OperationException.cs" />
+    <Compile Include="Infrastructure\OptionSection.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AgmStaticDataContext.cs" />
     <Compile Include="Models\ApiResponse.cs" />
@@ -199,6 +200,7 @@
     <Compile Include="Models\JobAdSaveIn.cs" />
     <Compile Include="Models\Mapping\CandidateMap.cs" />
     <Compile Include="Models\Mapping\ExpenseReasonMap.cs" />
+    <Compile Include="Models\Mapping\OptionMap.cs" />
     <Compile Include="Models\Mapping\FestivityMap.cs" />
     <Compile Include="Models\Mapping\HourReasonMap.cs" />
     <Compile Include="Models\Mapping\JobAdMap.cs" />
@@ -207,9 +209,11 @@
     <Compile Include="Models\Mapping\MonthlyReportNoteMap.cs" />
     <Compile Include="Models\Mapping\UserMap.cs" />
     <Compile Include="Models\Mapping\VersionMap.cs" />
+    <Compile Include="Models\MealVoucherOptions.cs" />
     <Compile Include="Models\MonthlyReportExpense.cs" />
     <Compile Include="Models\MonthlyReportHour.cs" />
     <Compile Include="Models\MonthlyReportNote.cs" />
+    <Compile Include="Models\Option.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserBase.cs" />
     <Compile Include="Models\Version.cs" />
@@ -242,10 +246,12 @@
     <Content Include="App\Popover\popover.test.html" />
     <Content Include="App\Popover\popover.tpl.demo.html" />
     <Content Include="App\route.config.js" />
+    <Content Include="App\Settings\MealVoucher.html" />
     <Content Include="App\Settings\Festivity.html" />
     <Content Include="App\Settings\festivity.js" />
     <Content Include="App\Settings\HourReason.html" />
     <Content Include="App\Settings\hourReason.js" />
+    <Content Include="App\Settings\mealVoucher.js" />
     <Content Include="App\Settings\Settings.html" />
     <Content Include="App\Settings\settings.js" />
     <Content Include="App\Settings\settings.service.js" />
@@ -262,6 +268,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
     <Content Include="css\font-awesome.css" />
+    <Content Include="DbUpdates\AGM_008.sql" />
     <Content Include="DbUpdates\AGM_007.sql" />
     <Content Include="DbUpdates\AGM_006.sql" />
     <Content Include="DbUpdates\AGM_005.sql" />

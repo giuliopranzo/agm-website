@@ -28,6 +28,7 @@ namespace AGM.Web.Models
         public DbSet<ExpenseReason> ExpenseReasons { get; set; }
         public DbSet<Festivity> Festivities { get; set; }
         public DbSet<JobAd> JobAds { get; set; }
+        public DbSet<Option> Options { get; set; }
         public DbSet<Version> Versions { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -40,6 +41,7 @@ namespace AGM.Web.Models
             modelBuilder.Configurations.Add(new ExpenseReasonMap());
             modelBuilder.Configurations.Add(new FestivityMap());
             modelBuilder.Configurations.Add(new JobAdMap());
+            modelBuilder.Configurations.Add(new OptionMap());
             modelBuilder.Configurations.Add(new VersionMap());
         }
     }

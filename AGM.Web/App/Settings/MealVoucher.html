@@ -1,0 +1,23 @@
+﻿<div>
+    <div>
+        <h4 style="float: left;"><i class="fa settingsSectionTitleCaret" ng-click="isMealVoucherCollapsed = !isMealVoucherCollapsed" ng-class="{'fa-caret-right': isMealVoucherCollapsed, 'fa-caret-down': !isMealVoucherCollapsed}"></i>Buoni pasto</h4>
+        <div class="clearfix"></div>
+    </div>
+    <hr />
+    <div collapse="isMealVoucherCollapsed">
+        <div class="container-fluid">
+            <div class="col-xs-12 col-md-3 form-group">
+                <form name="mealVoucherForm" novalidate>
+                    <div class="input-group" ng-class="{'has-error':!mealVoucherForm.amount.$valid, 'has-success':mealVoucherForm.amount.$dirty}">
+                        <div class="input-group-addon">€</div>
+                        <input name="amount" type="number" ng-model="options.amount" class="form-control" placeholder="Valore buono..." min="0" max="10" step="any"/>
+                    </div>
+                    <i ng-show="!mealVoucherForm.amount.$valid" class="fa fa-exclamation-circle asideErrorInput" data-title="Il valore deve essere compreso tra 0 e 24" data-placement="right" data-trigger="click" bs-tooltip></i>
+                    <button ng-hide="!mealVoucherForm.amount.$valid || !mealVoucherForm.amount.$dirty" class="btn btn-info" ng-click="updateOptions()">Aggiorna</button>
+                    <button ng-show="!mealVoucherForm.amount.$valid || !mealVoucherForm.amount.$dirty" class="btn btn-info" disabled="disabled">Aggiorna</button>
+                </form>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>

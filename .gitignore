@@ -23,3 +23,7 @@
 /AGM.Web/termini.html
 /AGM.Web/u.asp
 /AGM.Web Publish
+/.vs/config/applicationhost.config
+/AGMDb/bin/Debug
+/AGMDb/obj/Debug
+/AGMDb/AGMDb.dbmdl
