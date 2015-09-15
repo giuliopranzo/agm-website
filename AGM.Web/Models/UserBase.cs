@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using AGM.Web.Infrastructure;
 using Newtonsoft.Json;
 
 namespace AGM.Web.Models
@@ -17,6 +18,28 @@ namespace AGM.Web.Models
         public string _image { get; set; }
 
         public string Company { get { return "COMPANY"; } }
+        public string RetributionItemConfSerialized { get; set; }
+
+        public List<RetributionItemConf> RetributionItemConfiguration
+        {
+            get
+            {
+                if (!string.IsNullOrEmpty(RetributionItemConfSerialized))
+                    return Newtonsoft.Json.JsonConvert.DeserializeObject<List<RetributionItemConf>>(RetributionItemConfSerialized);
+
+                var res = new List<RetributionItemConf>();
+                foreach (var val in Enum.GetValues(typeof (RetributionItemType)))
+                {
+                    res.Add(new RetributionItemConf() {Type = (RetributionItemType)val, EnableValue = 0});
+                }
+                return res;
+            }
+            set
+            {
+                if (string.IsNullOrEmpty(RetributionItemConfSerialized))
+                    RetributionItemConfSerialized = Newtonsoft.Json.JsonConvert.SerializeObject(value);
+            }
+        }
 
         public string Name
         {

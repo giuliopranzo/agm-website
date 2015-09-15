@@ -24,16 +24,19 @@ namespace AGM.Web.Controllers
             return ExtractMonthlyReport(id, month);
         }
 
+        [AuthorizeAction]
         public ApiResponse ExtractMonthlyReport(int id, string month)
         {
             var cultureIt = CultureInfo.GetCultureInfo("it-IT");
             var currentMonthDate = DateTime.Today;
             var currentMonthString = currentMonthDate.ToString("yyyy-MM-dd", cultureIt);
+            var currentMonthStringCompact = currentMonthDate.ToString("yyyyMM", cultureIt);
 
             if (!string.IsNullOrEmpty(month))
             {
                 currentMonthDate = DateTime.Parse(month, cultureIt);
                 currentMonthString = currentMonthDate.ToString("yyyy-MM-dd", cultureIt);
+                currentMonthStringCompact = currentMonthDate.ToString("yyyyMM", cultureIt);
             }
 
             var user = new User();
@@ -51,6 +54,7 @@ namespace AGM.Web.Controllers
             var totalExpenses = 0d;
             var totalHolidays = 0d;
             var summaryHours = new Dictionary<string, string>();
+            var retributionItems = new List<RetributionItem>();
             using (var context = new AgmDataContext())
             {
                 user = context.Users.First(u => u.Id == id);
@@ -66,6 +70,7 @@ namespace AGM.Web.Controllers
                 hourReasons = context.HourReasons.Where(h => h.IsDeleted == false).ToList();
                 expenseReasons = context.ExpenseReasons.ToList();
                 holidays = context.Festivities.ToList();
+                retributionItems = (currentUser.SectionUsersVisible /*&& currentUserIndex > 0*/)? context.RetributionItems.Where(r => r.UserId == id && r.Month == currentMonthStringCompact).ToList() : new List<RetributionItem>();
             }
 
             var startDate = new DateTime(currentMonthDate.Year, currentMonthDate.Month, 1);
@@ -132,6 +137,24 @@ namespace AGM.Web.Controllers
                                   days = (g.Sum(x => x.HoursCount) / 8).ToString("N2", cultureIt)
                               };
 
+            if (currentUser.SectionUsersVisible)
+            {
+                foreach(var item in user.RetributionItemConfiguration)
+                {
+                    if (item.EnableValue == 1 && retributionItems.All(i => i.Type != item.Type))
+                    {
+                        var newRetributionItem = new RetributionItem();
+                        newRetributionItem.Month = currentMonthStringCompact;
+                        newRetributionItem.UserId = id;
+                        newRetributionItem.Type = item.Type;
+                        newRetributionItem.Qty = 0;
+                        newRetributionItem.Amount = (item.Type == RetributionItemType.MealVoucher) ? 5.29 : 0.00;
+                        newRetributionItem.Total = 0;
+                        retributionItems.Add(newRetributionItem);
+                    }
+                }
+            }
+
             return new ApiResponse()
             {
                 Succeed = true,
@@ -157,6 +180,7 @@ namespace AGM.Web.Controllers
                     TotalHolidays = totalHolidays.ToString("N2", cultureIt),
                     TotalHolidaysDays = (totalHolidays / 8).ToString("N2", cultureIt),
                     Summary = summary.OrderBy(s => s.id),
+                    RetributionItems = retributionItems,
                     PrevUserId = prevUserId,
                     NextUserId = nextUserId
                 }
@@ -308,6 +332,60 @@ namespace AGM.Web.Controllers
                             currentDate = currentDate.AddDays(1);
                         }
                         context.SaveChanges();
+                    }
+                }
+
+                return new ApiResponse(true);
+            }
+            catch(Exception e)
+            {
+                return new ApiResponse(false)
+                {
+                    Errors = (new List<ApiResponseError>() { new ApiResponseError() { Message = e.Message } }).ToArray()
+                };
+
+            }
+        }
+
+        [AuthorizeAction]
+        [HttpPost]
+        public ApiResponse UpdateRetributionItems(List<RetributionItem> objIn)
+        {
+            var userId = objIn[0].UserId;
+            this.CheckCurrentUserPermission(userId, ((x) => x.SectionUsersVisible));
+
+            try
+            { 
+                using (var db = new AgmDataContext())
+                {
+                    foreach (var item in objIn)
+                    {
+                        if (item.Total == 0.00 &&
+                            db.RetributionItems.Any(
+                                r => r.Month == item.Month && r.Type == item.Type && r.UserId == item.UserId))
+                        {
+                            db.RetributionItems.Remove(item);
+                        }
+
+                        if (item.Total != 0.00 &&
+                            !db.RetributionItems.Any(
+                                r => r.Month == item.Month && r.Type == item.Type && r.UserId == item.UserId))
+                        {
+                            db.RetributionItems.Add(item);
+                        }
+
+                        if (item.Total != 0.00 &&
+                            db.RetributionItems.Any(
+                                r => r.Month == item.Month && r.Type == item.Type && r.UserId == item.UserId))
+                        {
+                            var dbItem = db.RetributionItems.First(
+                                r => r.Month == item.Month && r.Type == item.Type && r.UserId == item.UserId);
+                            dbItem.Qty = item.Qty;
+                            dbItem.Amount = item.Amount;
+                            dbItem.Total = item.Total;
+                        }
+
+                        db.SaveChanges();
                     }
                 }
 

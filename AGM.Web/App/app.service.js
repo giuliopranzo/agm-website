@@ -67,7 +67,7 @@ app.factory('applicationGlobals', function () {
     return applicationGlobals;
 });
 
-app.factory('appDataService', function($http, $q) {
+app.factory('appDataService', function($http, $q, appHelper) {
     return {
         getLocation: function(callId, viewValue) {
             var deferred = $q.defer();
@@ -79,6 +79,24 @@ app.factory('appDataService', function($http, $q) {
             });
             return deferred.promise;
 
+        },
+        exportMonthlyReports: function(callId) {
+            var deferred = $q.defer();
+            $http({ method: 'GET', url: 'api/User/Export', params: { 'year': '2015', 'month': '08'} }).success(function (respData, status, headers, config) {
+                deferred.resolve(respData);
+            }).error(function (respData, status, headers, config) {
+                deferred.reject(respData);
+            });
+            return deferred.promise;
+        },
+        exportRetributionItems: function (callId) {
+            var deferred = $q.defer();
+            $http({ method: 'GET', url: 'api/User/ExportRI', params: { 'year': '2015', 'month': '03' } }).success(function (respData, status, headers, config) {
+                deferred.resolve(respData);
+            }).error(function (respData, status, headers, config) {
+                deferred.reject(respData);
+            });
+            return deferred.promise;
         }
     }
 });

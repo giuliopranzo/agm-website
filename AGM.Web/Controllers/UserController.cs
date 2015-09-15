@@ -15,6 +15,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
@@ -52,7 +53,7 @@ namespace AGM.Web.Controllers
             {
                 if (context.Versions.Any())
                 {
-                    currentVersion = context.Versions.ToList().Last();
+                    currentVersion = context.Versions.ToList().OrderBy(v => int.Parse(v.Code)).Last();
                 }
                 else
                 {
@@ -105,7 +106,7 @@ namespace AGM.Web.Controllers
 
                 return new ApiResponse(true)
                 {
-                    Data = context.Versions.ToList().Last(),
+                    Data = context.Versions.ToList().OrderBy(v => int.Parse(v.Code)).Last(),
                     Errors = (string.IsNullOrEmpty(exceptionText)) ? null : new ApiResponseError[]{ new ApiResponseError(){ Message = exceptionText } }
                 };
             }
@@ -255,15 +256,15 @@ namespace AGM.Web.Controllers
                 sqlreader.Close();
 
                 cols = new List<string>();
-                command = new System.Data.SqlClient.SqlCommand("select TOP 1 * from candidati", conn);
+                command = new System.Data.SqlClient.SqlCommand("select TOP 1 * from rappvociretributive", conn);
                 sqlreader = command.ExecuteReader();
                 schemaTable = sqlreader.GetSchemaTable();
-                dsSchemaExport.Tables.Add(Add(conn, "candidati"));
+                dsSchemaExport.Tables.Add(Add(conn, "rappvociretributive"));
                 foreach (System.Data.DataRow col in schemaTable.Rows)
                 {
                     cols.Add(string.Format("{0} [{1}({2})] - {3}", col["ColumnName"], col["DataTypeName"], col["ColumnSize"], col["IsIdentity"]));
                 }
-                defs.Add("candidati", cols);
+                defs.Add("rappvociretributive", cols);
                 sqlreader.Close();
 
 
@@ -287,12 +288,13 @@ namespace AGM.Web.Controllers
             };
         }
 
+        [AuthorizeAction]
         [HttpGet]
         public ApiResponse Export(string year, string month)
         {
             var reasonCode = new Dictionary<string, string>()
             {
-                {"ordinarie", "---"},
+                {"ordinarie", "   "},
                 {"ferie", "FP"},
                 {"r.o.l.", "P1"},
                 {"straordinarie (solo se approvate)", "S1"},
@@ -333,7 +335,7 @@ namespace AGM.Web.Controllers
                                         item.Date.ToString("ddMMyy"),
                                         reasonCurr.PadRight(3, ' '),
                                         hours, 
-                                        (reasonCurr == "---" || reasonCurr == "S1") ? hours : "0000", 
+                                        (reasonCurr == "   " || reasonCurr == "S1") ? hours : "0000", 
                                         "0", 
                                         "0"));
                                 }
@@ -342,7 +344,7 @@ namespace AGM.Web.Controllers
                             {
                                 res.Add(string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}", "00000", "00",
                                     user.IdExport.ToString().PadLeft(4, '0'),
-                                    itemParent.CompleteDate.ToString("ddMMyy"), "---", "0000", "0000",
+                                    itemParent.CompleteDate.ToString("ddMMyy"), "   ", "0000", "0000",
                                     (itemParent.WorkDay) ? "0" : (!itemParent.IsHoliday) ? "1" : "2", "0"));
                             }
                         }
@@ -350,10 +352,117 @@ namespace AGM.Web.Controllers
                 }
             }
 
+            Guid newGuid = Guid.NewGuid();
+            var mappedPath = System.Web.Hosting.HostingEnvironment.MapPath(string.Format("~/Exports/{0}", newGuid));
+            using (FileStream f = new FileStream(mappedPath, FileMode.Create))
+            {
+                using (StreamWriter sw = new StreamWriter(f))
+                {
+                    foreach (var item in res)
+                    {
+                        sw.WriteLine(item);
+                    }
+                    sw.Flush();
+                }
+            }
+
             return new ApiResponse(true)
             {
-                Data = res
+                Data = newGuid.ToString()
             };
+        }
+
+        [AuthorizeAction]
+        [HttpGet]
+        public ApiResponse ExportRI(string year, string month)
+        {
+            var exportCode = new Dictionary<int, string>()
+            {
+                {0, "020"},
+                {1, "805"},
+                {2, "100"},
+                {3, "102"},
+                {4, "104"},
+                {5, "101"},
+                {6, "103"},
+                {7, "105"},
+                {8, "290"},
+            };
+
+            var res = new List<string>();
+            string monthSearch = year + month;
+            using (var context = new AgmDataContext())
+            {
+                var users = context.Users.ToList();
+                foreach (var user in users.Where(u => !u.IsDeleted && u.IsActive && u.IdExport.HasValue))
+                {
+                    var retItems = context.RetributionItems.Where(r => r.UserId == user.Id && r.Month == monthSearch);
+                    if (retItems.Any())
+                    {
+                        foreach (var item in retItems)
+                        {
+                            string pattern = "{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}";
+                            res.Add(string.Format(pattern, "00000", "00", user.IdExport.Value.ToString().PadLeft(4, '0'),
+                                "    ",
+                                exportCode[(int) item.Type], "                              ",
+                                (item.Qty*1000).ToString().PadLeft(7, '0'),
+                                ((int) (item.Amount*100000)).ToString().PadLeft(11, '0'),
+                                ((int) (item.Total*100)).ToString().PadLeft(9, '0'), year.Substring(2), month, "0"));
+                        }
+                    }
+                }
+            }
+
+            Guid newGuid = Guid.NewGuid();
+            var mappedPath = System.Web.Hosting.HostingEnvironment.MapPath(string.Format("~/Exports/{0}", newGuid));
+            using (FileStream f = new FileStream(mappedPath, FileMode.Create))
+            {
+                using (StreamWriter sw = new StreamWriter(f))
+                {
+                    foreach (var item in res)
+                    {
+                        sw.WriteLine(item);
+                    }
+                    sw.Flush();
+                }
+            }
+
+            return new ApiResponse(true)
+            {
+                Data = newGuid.ToString()
+            };
+        }
+
+        [HttpGet]
+        public HttpResponseMessage GetExportMH(string guid)
+        {
+            var mappedPath = System.Web.Hosting.HostingEnvironment.MapPath(string.Format("~/Exports/{0}", guid));
+
+            HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
+            var stream = new FileStream(mappedPath, FileMode.Open);
+            result.Content = new StreamContent(stream);
+            result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+            result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+            {
+                FileName = "export_rapportini.txt"
+            };
+            return result;
+        }
+
+        [HttpGet]
+        public HttpResponseMessage GetExportRI(string guid)
+        {
+            var mappedPath = System.Web.Hosting.HostingEnvironment.MapPath(string.Format("~/Exports/{0}", guid));
+
+            HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
+            var stream = new FileStream(mappedPath, FileMode.Open);
+            result.Content = new StreamContent(stream);
+            result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+            result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+            {
+                FileName = "export_voci_retributive.txt"
+            };
+            return result;
         }
 
         private DataTable Add(SqlConnection cnn, string tablename)
@@ -443,7 +552,7 @@ namespace AGM.Web.Controllers
                     user.Image = user._image.Replace("/Temp", string.Empty);
                 }
 
-                if (user.IdExport.HasValue && context.Users.Any(u => u.IdExport == user.IdExport && !u._isDeleted))
+                if (user.IdExport.HasValue && context.Users.Any(u => u.IdExport == user.IdExport && u.Id != user.Id && !u._isDeleted))
                 {
                     var suggestedId = (context.Users.Any(u => u.IdExport != null && !u._isDeleted)) ? context.Users.Where(u => u.IdExport != null && !u._isDeleted).Max(u => u.IdExport).Value + 1 : 1;
                     return new ApiResponse(false)
@@ -465,6 +574,7 @@ namespace AGM.Web.Controllers
                         context.Entry(user).Property(x => x._sectionJobApplicantsVisible).IsModified = false;
                         context.Entry(user).Property(x => x._sectionMonthlyReportsVisible).IsModified = false;
                         context.Entry(user).Property(x => x._sectionUsersVisible).IsModified = false;
+                        context.Entry(user).Property(x => x.RetributionItemConfSerialized).IsModified = false;
                     }
                 }
                 else

@@ -213,7 +213,7 @@
             url: "/",
             views: {
                 "content": {
-                    template: ''
+                    templateUrl: resolveViewPath('Index/Index.html'),
                 },
                 "modal": {
                     template: ''

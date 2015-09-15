@@ -187,6 +187,7 @@
     <Compile Include="Infrastructure\HttpRequestHeadersExtension.cs" />
     <Compile Include="Infrastructure\OperationException.cs" />
     <Compile Include="Infrastructure\OptionSection.cs" />
+    <Compile Include="Infrastructure\RetributionItemType.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AgmStaticDataContext.cs" />
     <Compile Include="Models\ApiResponse.cs" />
@@ -207,6 +208,7 @@
     <Compile Include="Models\Mapping\MonthlyReportExpenseMap.cs" />
     <Compile Include="Models\Mapping\MonthlyReportHourMap.cs" />
     <Compile Include="Models\Mapping\MonthlyReportNoteMap.cs" />
+    <Compile Include="Models\Mapping\RetributionItemMap.cs" />
     <Compile Include="Models\Mapping\UserMap.cs" />
     <Compile Include="Models\Mapping\VersionMap.cs" />
     <Compile Include="Models\MealVoucherOptions.cs" />
@@ -214,6 +216,8 @@
     <Compile Include="Models\MonthlyReportHour.cs" />
     <Compile Include="Models\MonthlyReportNote.cs" />
     <Compile Include="Models\Option.cs" />
+    <Compile Include="Models\RetributionItem.cs" />
+    <Compile Include="Models\RetributionItemConf.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserBase.cs" />
     <Compile Include="Models\Version.cs" />
@@ -232,6 +236,7 @@
     <Content Include="App\footer.directive.js" />
     <Content Include="App\http.config.js" />
     <Content Include="App\Authentication\Login.html" />
+    <Content Include="App\Index\Index.html" />
     <Content Include="App\JobAds\Detail.html" />
     <Content Include="App\JobAds\JobAds.css" />
     <Content Include="App\JobAds\JobAds.html" />
@@ -268,6 +273,9 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
     <Content Include="css\font-awesome.css" />
+    <Content Include="DbUpdates\AGM_011.sql" />
+    <Content Include="DbUpdates\AGM_010.sql" />
+    <Content Include="DbUpdates\AGM_009.sql" />
     <Content Include="DbUpdates\AGM_008.sql" />
     <Content Include="DbUpdates\AGM_007.sql" />
     <Content Include="DbUpdates\AGM_006.sql" />
@@ -356,6 +364,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App\Mockup\" />
+    <Folder Include="Exports\" />
     <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>

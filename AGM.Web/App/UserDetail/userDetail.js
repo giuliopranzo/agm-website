@@ -1,7 +1,9 @@
 ﻿app.controller('userDetail', function($rootScope, $scope, $alert, $location, $state, $filter, FileUploader, $http, appHelper, userSource, usersDataService, authenticationContainer) {
+    $scope.retributionItemTypeEnumNames = ['Buoni pasto', 'Rimborso spese', 'Trasferta Italia', 'Trasferta Italia 1/3', 'Trasferta Italia 2/3', 'Trasferta estero', 'Trasferta estero 1/3', 'Trasferta estero 2/3', 'Trattenuta per acconto'];
     $scope.userExists = false;
 	$scope.currentUser = authenticationContainer.currentUser;
-	
+    $scope.isRetributionItemConfCollapsed = true;
+
     $rootScope.$on('loader_show', function (event, callId) {
         if (callId == 'usr_detail')
             $scope.loading = true;
@@ -53,7 +55,8 @@
         item.remove;
     };
 
-    $scope.save = function() {
+    $scope.save = function () {
+        $scope.user.retributionitemconfserialized = JSON.stringify($scope.user.retributionitemconfiguration);
         usersDataService.setUser('usr_detail', $scope.user).then(function (respData) {
             if ($scope.alert)
                 $scope.alert.hide();

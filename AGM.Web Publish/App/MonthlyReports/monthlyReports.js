@@ -36,6 +36,7 @@
         //    $scope.users = usersSource;
         $scope.detail = {};
         $scope.detailVisible = false;
+        $scope.retributionItemTypeEnumNames = ['Buoni pasto', 'Rimborso spese', 'Trasferta Italia', 'Trasferta Italia 1/3', 'Trasferta Italia 2/3', 'Trasferta estero', 'Trasferta estero 1/3', 'Trasferta estero 2/3', 'Trattenuta per acconto'];
 
         if ($state && $state.params && $state.params.userReportSource) {
             $scope.reportId = $state.params.reportId;
@@ -50,6 +51,11 @@
         {
             $scope.showDetail(authenticationContainer.currentUser.id);
         }
+    }
+
+    $scope.recalculateTotal = function (index) {
+        var partial = Number($scope.detail.retributionitems[index].qty * $scope.detail.retributionitems[index].amount);
+        $scope.detail.retributionitems[index].total = Number(partial.toFixed(2));
     }
 
     $scope.iscurrentmonth = function (obj) {
@@ -266,6 +272,42 @@
             $location.path('/MonthlyReports/' + id + '/' + $state.params.selectedDate);
         }
     };
+
+    $scope.updateRetributionItems = function() {
+        monthlyReportsDataService.updateRetributionItems('mr_insert', $scope.detail.retributionitems).then(
+            function (respData) {
+                if ($scope.alert)
+                    $scope.alert.hide();
+
+                if (respData.succeed) {
+                    $scope.alert = $alert({
+                        content: 'Salvataggio avvenuto con successo',
+                        animation: 'fadeZoomFadeDown',
+                        type: 'info',
+                        duration: 5
+                    });
+                    $scope.reloadUserDetail();
+                } else {
+                    $scope.alert = $alert({
+                        content: 'Errore durante il salvataggio',
+                        animation: 'fadeZoomFadeDown',
+                        type: 'error',
+                        duration: 5
+                    });
+                }
+            })
+            .catch(
+            function (respData) {
+                if ($scope.alert)
+                    $scope.alert.hide();
+                $scope.alert = $alert({
+                    content: 'Errore durante il salvataggio',
+                    animation: 'fadeZoomFadeDown',
+                    type: 'error',
+                    duration: 5
+                });
+            });
+    }
 
     $scope.init();
 });

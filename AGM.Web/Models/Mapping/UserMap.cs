@@ -42,6 +42,7 @@ namespace AGM.Web.Models.Mapping
             this.Property(t => t._sectionJobApplicantsVisible).HasColumnName("candidati");
             this.Property(t => t._isActive).HasColumnName("attivo");
             this.Property(t => t._isDeleted).HasColumnName("isDeleted");
+            this.Property(t => t.RetributionItemConfSerialized).HasColumnName("retributionItemConf");
 
             // Ignore
             this.Ignore(p => p.Name);
@@ -53,6 +54,7 @@ namespace AGM.Web.Models.Mapping
             this.Ignore(p => p.SectionMonthlyReportsVisible);
             this.Ignore(p => p.IsActive);
             this.Ignore(p => p.IsDeleted);
+            this.Ignore(p => p.RetributionItemConfiguration);
         }
     }
 }

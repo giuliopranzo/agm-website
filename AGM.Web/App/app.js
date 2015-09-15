@@ -16,7 +16,7 @@ function resolveFactoryPath(factoryName) {
     return factoryBasePath + factoryName;
 }
 
-app.controller("main", function ($scope, $rootScope, $location, $state, $stateParams, $filter, authenticationDataService, authenticationHelper) {
+app.controller("main", function ($scope, $rootScope, $location, $state, $stateParams, $filter, appDataService, authenticationDataService, authenticationHelper) {
 
     $rootScope.$on('loader_show', function (event, callId) {
         if (callId == 'mr_detail' || callId == 'usr_detail')
@@ -112,6 +112,20 @@ app.controller("main", function ($scope, $rootScope, $location, $state, $statePa
     $scope.goTo = function (state) {
         $scope.showMainMenu = false;
         $state.go(state);
+    };
+
+    $scope.startExportMH = function() {
+        appDataService.exportMonthlyReports('main').then(function (res) {
+            if (res.succeed)
+                window.open('/backoffice/api/User/GetExportMH?guid=' + res.data);
+        });
+    };
+
+    $scope.startExportRI = function () {
+        appDataService.exportRetributionItems('main').then(function (res) {
+            if (res.succeed)
+                window.open('/backoffice/api/User/GetExportRI?guid=' + res.data);
+        });
     };
 
     $scope.init();
