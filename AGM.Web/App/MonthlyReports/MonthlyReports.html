@@ -164,35 +164,37 @@
             <span class="reportSummaryRow">totale spese: <b><span ng-bind="detail.totalexpenses"></span>€</b></span>
         </div>
 
-        <form name="retributionItems" novalidate>
-            <div ng-repeat="item in detail.retributionitems" style="margin: 5px 0;">
-                <div class="col-xs-12 col-md-2">
-                    <label ng-bind="retributionItemTypeEnumNames[item.type]"></label>
-                    <div ng-show="item.type != 8">
-                        <div ng-class="{'has-error':!retributionItems.qty_{{$index}}.$valid, 'has-success':retributionItems.qty_{{$index}}.$dirty}">
-                            <input name="qty_{{$index}}" ng-change="recalculateTotal($index)" type="number" ng-model="detail.retributionitems[$index].qty" class="form-control" placeholder="Quantità..." min="0" max="31" step="any"/>
+        <div class="retributionItemsSection">
+            <form name="retributionItems" novalidate>
+                <div ng-repeat="item in detail.retributionitems" style="margin: 5px 0;">
+                    <div class="col-xs-12 col-md-2">
+                        <label ng-bind="retributionItemTypeEnumNames[item.type]"></label>
+                        <div ng-show="item.type != 8">
+                            <div ng-class="{'has-error':!retributionItems.qty_{{$index}}.$valid, 'has-success':retributionItems.qty_{{$index}}.$dirty}">
+                                <input name="qty_{{$index}}" ng-change="recalculateTotal($index)" type="number" ng-model="detail.retributionitems[$index].qty" class="form-control" placeholder="Quantità..." min="0" max="31" step="any" />
+                            </div>
+                            <div class="input-group" ng-class="{'has-error':!retributionItems.amount_{{$index}}.$valid, 'has-success':retributionItems.amount_{{$index}}.$dirty}">
+                                <div class="input-group-addon">€</div>
+                                <input ng-change="recalculateTotal($index)" name="amount_{{$index}}" type="number" ng-model="detail.retributionitems[$index].amount" class="form-control" placeholder="Valore..." min="0" max="5000" step="any" />
+                            </div>
                         </div>
-                        <div class="input-group" ng-class="{'has-error':!retributionItems.amount_{{$index}}.$valid, 'has-success':retributionItems.amount_{{$index}}.$dirty}">
+
+                        <div ng-if="item.type != 8" class="input-group" ng-class="{'has-error':!retributionItems.total_{{$index}}.$valid, 'has-success':retributionItems.total_{{$index}}.$dirty}">
                             <div class="input-group-addon">€</div>
-                            <input ng-change="recalculateTotal($index)" name="amount_{{$index}}" type="number" ng-model="detail.retributionitems[$index].amount" class="form-control" placeholder="Valore..." min="0" max="5000" step="any"/>
+                            <input name="total_{{$index}}" type="number" ng-model="detail.retributionitems[$index].total" class="form-control" placeholder="Totale..." min="0" max="5000" step="any" readonly />
+                        </div>
+
+                        <div ng-if="item.type == 8" class="input-group" ng-class="{'has-error':!retributionItems.total_{{$index}}.$valid, 'has-success':retributionItems.total_{{$index}}.$dirty}">
+                            <div class="input-group-addon">€</div>
+                            <input name="total_{{$index}}" type="number" ng-model="detail.retributionitems[$index].total" class="form-control" placeholder="Totale..." min="0" max="5000" step="any" />
                         </div>
                     </div>
-
-                    <div ng-if="item.type != 8" class="input-group" ng-class="{'has-error':!retributionItems.total_{{$index}}.$valid, 'has-success':retributionItems.total_{{$index}}.$dirty}">
-                        <div class="input-group-addon">€</div>
-                        <input name="total_{{$index}}" type="number" ng-model="detail.retributionitems[$index].total" class="form-control" placeholder="Totale..." min="0" max="5000" step="any" readonly/>
-                    </div>
-
-                    <div ng-if="item.type == 8" class="input-group" ng-class="{'has-error':!retributionItems.total_{{$index}}.$valid, 'has-success':retributionItems.total_{{$index}}.$dirty}">
-                        <div class="input-group-addon">€</div>
-                        <input name="total_{{$index}}" type="number" ng-model="detail.retributionitems[$index].total" class="form-control" placeholder="Totale..." min="0" max="5000" step="any"/>
-                    </div>
+                    <div class="clearfix"></div>
                 </div>
-                <div class="clearfix"></div>
-            </div>
-            <button ng-hide="!retributionItems.$valid || !retributionItems.$dirty" class="btn btn-info" ng-click="updateRetributionItems()">Salva</button>
-            <button ng-show="!retributionItems.$valid || !retributionItems.$dirty" class="btn btn-info" disabled="disabled">Salva</button>
-        </form>
+                <button ng-hide="!retributionItems.$valid || !retributionItems.$dirty" class="btn btn-info" ng-click="updateRetributionItems()">Salva</button>
+                <button ng-show="!retributionItems.$valid || !retributionItems.$dirty" class="btn btn-info" disabled="disabled">Salva</button>
+            </form>
+        </div>
         <div class="clearfix"></div>
 
         <div agm-footer></div>

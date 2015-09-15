@@ -1256,6 +1256,13 @@ ul.typeahead {
     .reportColumn {
         width: auto;
         line-height: 14px;
+
+        margin-bottom: 0 !important;
+        padding-bottom: 0 !important;
+    }
+
+    .retributionItemsSection {
+        display: none;
     }
 
     .reportBadge {
