@@ -1,19 +1,25 @@
 ﻿<a id="reportTop" class="reportTop"></a>
+<div class="breadcrumb hidden-xs hidden-sm" style="display: table;">
+    <div class="pageHeader_pageTitle">
+        <span>Utenti</span>
+        <span class="pageHeader_subtitle">elenco utenti</span>
+    </div>
+    <div class="pageHeader_breadCrumb"><a class="pageHeader_breadCrumbLink" ui-sref="Index">Home</a> > Utenti</div>
+</div>
 <div class="monthlyRep" ng-cloak>
-    <div class="hidden-print mr_affixToolContainer" role="complementary" data-offset-top="235" bs-affix>
+    <div class="hidden-print mr_affixToolContainer" role="complementary" data-offset-top="235" bs-affix ng-hide="applicationGlobals.showMainMenu">
         <div class="container container-header">
             <i class="fa fa-plus-circle signAffix" ng-click="newUser()"></i>
         </div>
-    </div>
-    <h3 class="login-title login-control">Utenti</h3>
-    <div class="hidden-xs hidden-sm toolContainer">
-        <i class="fa fa-plus-circle sign" ng-click="newUser()"></i>
     </div>
     <div class="clearfix"></div>
     <div class="monthlyRep-users">
         <div class="container-fluid">
             <div class="col-xs-12 col-md-6 form-group">
                 <input class="form-control" type="text" ng-model="search.name" placeholder="Ricerca..." />
+            </div>
+            <div class="hidden-xs hidden-sm toolContainer">
+                <i class="fa fa-plus-circle sign" ng-click="newUser()"></i>
             </div>
             <div ng-repeat="user in users | filter:search:false | orderBy:'name':false as usersFiltered">
                 <div class="col-xs-12 nameListLetterHead" ng-show="showLetter($index)" ng-bind="getFirstChar(user.name)"></div>

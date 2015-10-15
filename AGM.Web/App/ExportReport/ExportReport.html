@@ -1,0 +1,114 @@
+﻿<div class="monthlyRep" ng-cloak>
+    <div ng-hide="isJobAdDetail">
+        <a id="pageTop" class="reportTop"></a>
+        <div class="hidden-print mr_affixToolContainer" role="complementary" data-offset-top="235" bs-affix>
+            <div class="container container-header">
+                <i class="fa fa-arrow-circle-o-left signAffix" ng-click="backToExport()"></i>
+            </div>
+        </div>
+        <h3 class="section-title login-control">Export report <span ng-show="reportType=='MH'">rapportini</span><span ng-show="reportType=='RI'">voci retributive</span></h3>
+        <div>
+            <i class="hidden-print fa fa-arrow-circle-o-left sign" ng-click="backToExport()"></i>
+        </div>
+
+        <div ng-show="reportType=='RI'">
+            <div class="exportReportTable">
+                <div class="row">
+                    <div class="col-xs-12 col-md-1">
+                        <div style="font-weight: bold; line-height: 15px;">&nbsp;</div>
+                    </div>
+                    <div class="col-xs-12 col-md-11 exportReportColumn" style="display: table; margin: 0; padding: 0;">
+                        <div style="width: 20px;" class="exportReportColumnHeaderContainer">
+                            &nbsp;
+                        </div>
+                        <div ng-repeat="retItemType in retItemTypes" class="exportReportColumnHeaderContainer">
+                            <div class="exportReportColumnHeader" ng-bind="retItemType"></div>
+                        </div>
+                        <div>&nbsp;</div>
+                    </div>
+                </div>
+
+                <div class="row" ng-class="{odd: $odd}" ng-repeat="user in users" ng-if="reportRI[user.id]">
+                    <div class="col-xs-12 col-md-1">
+                        <div style="font-weight: bold; line-height: 15px;" ng-bind="user.name"></div>
+                    </div>
+                    <div class="col-xs-12 col-md-11 exportReportColumn" style="display: table; margin: 0; padding: 0;">
+                        <div style="padding: 0; vertical-align: top; width: 20px; height: 100%; display: table-cell; border-width: 0 1px 0 0; border-style: dashed; border-color: lightgray;">
+                            <div class="exportReportColumnNumeric" style="font-size: 10px;">qty</div>
+                            <div class="exportReportColumnNumeric" style="font-size: 10px;">val</div>
+                            <div class="exportReportColumnNumeric" style="font-size: 10px;">tot</div>
+                        </div>
+                        <div ng-repeat="retItemTypeValue in retItemTypesValues" style="padding: 0 2px 0 0; width: 45px; height: 100%; display: inline-block; border-width: 0 1px 0 0; border-style: dashed; border-color: lightgray;">
+                            <div ng-if="reportRI[user.id][retItemTypeValue]">
+                                <div class="exportReportColumnNumeric" ng-bind="reportRI[user.id][retItemTypeValue].qty"></div>
+                                <div class="exportReportColumnNumeric" ng-bind="reportRI[user.id][retItemTypeValue].amount | number : 2"></div>
+                                <div class="exportReportColumnNumeric" ng-bind="reportRI[user.id][retItemTypeValue].total | number : 2"></div>
+                            </div>
+                            <div ng-if="!reportRI[user.id][retItemTypeValue]">
+                                <div class="exportReportColumnNumeric">&nbsp;</div>
+                                <div class="exportReportColumnNumeric">&nbsp;</div>
+                                <div class="exportReportColumnNumeric">&nbsp;</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+
+            <div agm-footer></div>
+        </div>
+
+        <div ng-show="reportType=='MH'">
+            <div class="exportReportTable">
+                <div class="row">
+                    <div class="col-xs-12 col-md-1">
+                        <div style="font-weight: bold; line-height: 15px;">&nbsp;</div>
+                    </div>
+                    <div class="col-xs-12 col-md-11 exportReportColumn" style="display: table; margin: 0; padding: 0;">
+                        <div style="width: 20px;" class="exportReportColumnHeaderContainer">
+                            &nbsp;
+                        </div>
+                        <div ng-repeat="hourReasonType in hourReasonTypes" class="exportReportColumnHeaderContainer">
+                            <div class="exportReportColumnHeader" ng-bind="hourReasonType"></div>
+                        </div>
+                        <div>&nbsp;</div>
+                    </div>
+                </div>
+
+                <div class="row" ng-class="{odd: $odd}" ng-repeat="user in users" ng-if="reportMH[user.id]">
+                    <div class="col-xs-12 col-md-1">
+                        <div style="font-weight: bold; line-height: 15px;" ng-bind="user.name"></div>
+                    </div>
+                    <div class="col-xs-12 col-md-11 exportReportColumn" style="display: table; margin: 0; padding: 0;">
+                        <div style="padding: 0; vertical-align: top; width: 20px; height: 100%; display: table-cell; border-width: 0 1px 0 0; border-style: dashed; border-color: lightgray;">
+                            <div class="exportReportColumnNumeric" style="font-size: 10px;">h</div>
+                            <div class="exportReportColumnNumeric">&nbsp;</div>
+                            <div class="exportReportColumnNumeric">gg</div>
+                        </div>
+                        <div ng-repeat="hourReasonTypeValue in hourReasonTypesValues" style="padding: 0 2px 0 0;width: 45px; height: 100%;display: inline-block;border-width: 0 1px 0 0;border-style: dashed;border-color: lightgray;">
+                            <div ng-if="reportMH[user.id][hourReasonTypeValue]">
+
+
+                                <div class="exportReportColumnNumeric" ng-bind="reportMH[user.id][hourReasonTypeValue] | number : 2"></div>
+                                <div class="exportReportColumnNumeric">&nbsp;</div>
+                                <div class="exportReportColumnNumeric" ng-bind ="reportMH[user.id][hourReasonTypeValue]/8.00 | number: 2"></div>
+                            </div>
+                            <div ng-if="!reportMH[user.id][hourReasonTypeValue]">
+                                <div class="exportReportColumnNumeric">&nbsp;</div>
+                                <div class="exportReportColumnNumeric">&nbsp;</div>
+                                <div class="exportReportColumnNumeric">&nbsp;</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+
+            <div agm-footer></div>
+        </div>
+    </div>
+
+    <div ui-view="ja_detail"></div>
+
+    <div class="loading" ng-show="loading"></div>
+</div>

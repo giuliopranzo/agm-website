@@ -28,11 +28,36 @@
 
 .logo img{
     width: 86px;
+    margin: auto;
+}
+
+.navbar {
+    background-color: #C1CAF3;
+    border: 0 solid transparent;
+}
+
+.navbar-brand {
+    width: 200px;
+    background-color: #B2BEF3;
 }
 
 .container-header {
     border-bottom: 1px solid #C4C4C4;
     background-color: #ffffff;
+}
+
+.menuRightPart-sm {
+    margin: 0 15px 0 0;
+    cursor: pointer;
+}
+
+.menuRightPart-sm i {
+    line-height: 50px;
+    margin: 0 10px;
+    font-size: 26px;
+    color: #5D5D5D;
+    text-align: center;
+    width: 15px;
 }
 
 .body-content {
@@ -116,7 +141,14 @@
 
 .login-title {
     text-align: center;
-    margin: 0 0 30px;
+    margin: 0 0 15px;
+    color: #EAEAEA;
+}
+
+.section-title {
+    text-align: center;
+    margin: 0 0 15px;
+    color: #000000;
 }
 
 .simpleLink {
@@ -164,6 +196,45 @@
 .monthlyRep-detail {
     position: relative;
     display: inline;
+}
+
+.asideLeft {
+    position: fixed;
+    top: 50px;
+    bottom: 0;
+    left: 0;
+    z-index: 1049;
+    overflow: hidden;
+    width: 200px;
+    background: #F1F1F1;
+}
+
+.asideLeft.ng-hide-add {
+    -webkit-animation:0.5s hide_to_left linear; 
+    animation:0.5s hide_to_left linear; 
+}
+
+.asideLeft.ng-hide-remove { 
+    -webkit-animation:0.5s show_from_left linear; 
+    animation:0.5s show_from_left linear; 
+}
+
+@-webkit-keyframes show_from_left {
+  from { left:-100%;opacity:1; }
+  to { left:0; opacity:1; }
+}
+@keyframes show_from_left {
+  from { left:-100%;opacity:1; }
+  to { left:0; opacity:1; }
+}
+
+@-webkit-keyframes hide_to_left {
+  from { left:0;opacity:1; }
+  to { left:-100%; opacity:1; }
+}
+@keyframes hide_to_left {
+  from { left:0;opacity:1; }
+  to { left:-100%; opacity:1; }
 }
 
 .asideRight {
@@ -276,9 +347,50 @@ ul.typeahead {
     overflow: hidden;
 }
 
+.loginSide {
+    display: table;
+    position: absolute;
+    height: 100%;
+    width: 100%; 
+    top: 0; 
+    left: 0; 
+    z-index: 1045;
+}
+
+.loginForm {
+    margin: auto;
+    width: 400px;
+    background-color: rgba(101, 99, 99, 0.30);
+    border-radius: 5px 5px 5px 5px;
+    -moz-border-radius: 5px 5px 5px 5px;
+    -webkit-border-radius: 5px 5px 5px 5px;
+    border: 1px solid #66AFCA;
+}
+
+.loginBackground {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1040;
+    background: url('../images/loginback2.jpg');
+    background-size: cover;
+}
+
 .modalBg {
     position: fixed;
     top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1040;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.modalBg-menu {
+    position: fixed;
+    top: 50px;
     bottom: 0;
     left: 0;
     right: 0;
@@ -535,11 +647,45 @@ ul.typeahead {
     border-style: solid;
     border-color: #65523A;
     border-width: 0 0 1px 1px;
-    font-size: 12px;
     padding: 0 1px;
 
     margin-bottom: -99999px;
     padding-bottom: 99999px;
+}
+
+.exportReportColumn span {
+    margin: 0;
+    padding: 0;
+}
+
+.exportReportColumnNumeric {
+    line-height: 15px;
+    text-align: right;
+}
+
+.exportReportColumnHeaderContainer {
+    border-width: 0px 1px 0px 0px;
+    border-style: dashed;
+    border-color: #D3D3D3;
+    display: table-cell;
+    overflow: visible;
+    text-align: left;
+    width: 45px;
+    position: relative;
+    height: 130px;
+}
+ 
+
+.exportReportColumnHeader {    
+    -ms-transform:rotate(270deg); /* IE 9 */
+    -moz-transform:rotate(270deg); /* Firefox */
+    -webkit-transform:rotate(270deg); /* Safari and Chrome */
+    -o-transform:rotate(270deg); /* Opera */
+    display: inline-block;
+    position: absolute;
+    width: 150px;
+    left: -50px;
+    top: 40px;
 }
 
 .cellHeaderColumnRight {
@@ -1074,18 +1220,35 @@ ul.typeahead {
     padding-bottom: 0;
 }
 
+.exportReportTable {
+    margin: 0 15px;
+    /*border-width: 1px 1px;
+    border-style: solid;
+    border-color: #65523A;*/
+}
 
+.exportReportTable > div:last-child {
+    border-width: 0;
+}
 
+.exportReportTable > div {
+    background-color: #ffffff;
+    margin: 0;
 
+    overflow: hidden;
+    border-width: 0 0 1px;
+    border-style: solid;
+    border-color: #b5b5b5;
 
+    font-family: monospace; 
+    font-size: 11px;
+    line-height: 15px;
+    cursor: pointer;
+}
 
-
-
-
-
-
-
-
+.exportReportTable > div.odd {
+    background-color: #E5EDF2 /*#94BFDA*/;
+}
 
 .baseTable2 {
     margin: 0 15px;
@@ -1154,39 +1317,60 @@ ul.typeahead {
 
 
 
+@media (max-width: 767px) {
+    .loginForm {
+        margin: auto;
+        width: auto;
+        background-color: inherit;
+        border-radius: 0 0 0 0;
+        -moz-border-radius: 0 0 0 0;
+        -webkit-border-radius: 0 0 0 0;
+        border: 0 solid #66AFCA;
+    }
 
+    .login-title {
+        color: #000000;
+    }
+}
 
+@media (min-width: 992px) {
+    .loginSide {
+        display: table;
+        position: absolute;
+        height: 100%;
+        width: auto;
+        top: 0;
+        left: auto;
+        right: 0;
+        z-index: 1045;
+        background-color: rgba(0, 0, 0, 0.30);
+    }
 
-
+    .loginForm {
+        margin: auto;
+        width: 400px;
+        background-color: transparent;
+        border-radius: 0 0 0 0;
+        -moz-border-radius: 0 0 0 0;
+        -webkit-border-radius: 0 0 0 0;
+        border: 0 solid #66AFCA;
+    }
+}
 
 @media (max-width: 991px) 
 { 
     .logo {
-        float: right;    
+            
     }
 
     .logo img{
         width: 70px;
     }
 
-    .menuRightPart-sm {
-        margin: 0 15px 0 0;
-    }
-
-    .menuRightPart-sm i {
-        line-height: 50px;
-        margin: 0 10px;
-        font-size: 26px;
-        color: #C4C4C4;
-        cursor: pointer;
-        text-align: center;
-        width: 15px;
-    }
-
     .navbar-header {
         margin-right: -15px !important;
         margin-left: -15px !important;
-        float: none !important;
+        /*float: none !important;*/
     }
 
     .reportColumn {
@@ -1231,10 +1415,6 @@ ul.typeahead {
     }
 }
 
-@media (min-width: 992px) {
-    
-}
-
 @media print {
     .monthlyRep-detail {
         width: 540px;    
@@ -1243,6 +1423,11 @@ ul.typeahead {
     .cellHeaderColumnRight, .cellHeaderColumnLeft, .reportBadgeContainer, .reportColumn {
         font-size: 10px;
         line-height: 10px;
+    }
+
+    .section-title {
+         margin: auto;
+         font-size: 16px;
     }
 
     .body-content, .login-title {
@@ -1256,6 +1441,13 @@ ul.typeahead {
     .reportColumn {
         width: auto;
         line-height: 14px;
+
+        margin-bottom: 0 !important;
+        padding-bottom: 0 !important;
+    }
+
+    .retributionItemsSection {
+        display: none;
     }
 
     .reportBadge {

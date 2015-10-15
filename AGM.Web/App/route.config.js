@@ -22,14 +22,14 @@
                 }
             }
         })
-        .state('Users', {
+        .state('Root.Users', {
             url: "/Users",
             views: {
-                "content": {
+                "content@": {
                     templateUrl: resolveViewPath('Users/Users.html'),
                     controller: 'users'
                 },
-                "modal": {
+                "modal@": {
                     template: ''
                 }
             },
@@ -44,14 +44,14 @@
                 }
             }
         })
-        .state('UserDetail', {
+        .state('Root.UserDetail', {
             url: "/Users/:userId",
             views: {
-                "content": {
+                "content@": {
                     templateUrl: resolveViewPath('UserDetail/UserDetail.html'),
                     controller: 'userDetail'
                 },
-                "modal": {
+                "modal@": {
                     template: ''
                 }
             },
@@ -66,14 +66,14 @@
                 }
             }
         })
-        .state('MonthlyReports', {
+        .state('Root.MonthlyReports', {
             url: "/MonthlyReports/:reportId/:selectedDate",
             views: {
-                "content": {
+                "content@": {
                     templateUrl: resolveViewPath('MonthlyReports/MonthlyReports.html'),
                     controller: 'monthlyReports'
                 },
-                "modal": {
+                "modal@": {
                     template: ''
                 }
             },
@@ -85,14 +85,14 @@
                 }
             }
         })
-        .state('JobAds', {
+        .state('Root.JobAds', {
             url: "/JobAds",
             views: {
-                "content": {
+                "content@": {
                     templateUrl: resolveViewPath('JobAds/JobAds.html'),
                     controller: 'jobAds'
                 },
-                "modal": {
+                "modal@": {
                     template: ''
                 }
             },
@@ -104,7 +104,7 @@
                 }
             }
         })
-        .state('JobAds.Detail', {
+        .state('Root.JobAds.Detail', {
             url: "/:adId",
             views: {
                 "ja_detail": {
@@ -156,14 +156,14 @@
                 }
             }
         })
-        .state('Settings', {
+        .state('Root.Settings', {
             url: "/Settings",
             views: {
-                "content": {
+                "content@": {
                     templateUrl: resolveViewPath('Settings/Settings.html'),
                     controller: 'settings'
                 },
-                "modal": {
+                "modal@": {
                     template: ''
                 },
                 "hourReasonSection@Settings": {
@@ -209,14 +209,86 @@
                 }
             }
         })
-        .state('Index', {
+        .state('Root.Export', {
+            url: "/Export/{selectedDate:[0-9]{6}}",
+            views: {
+                "content@": {
+                    templateUrl: resolveViewPath('Export/Export.html'),
+                    controller: 'export'
+                },
+                "modal@": {
+                    template: ''
+                }
+            },
+            resolve: {
+                exportSource: ['$filter', '$stateParams', 'exportDataService', function ($filter, $stateParams, exportDataService) {
+                    var dataFiltered = $stateParams.selectedDate;
+                    if (!dataFiltered)
+                        dataFiltered = $filter('date')(new Date(), 'yyyyMM');
+                    return exportDataService.getExportMonth('mr_detail', dataFiltered).then(function (res) {
+                        return {
+                            data: (res.succeed) ? res.data : null,
+                            month: dataFiltered,
+                            selectedDate: new Date(dataFiltered.substr(0, 4) + '-' + dataFiltered.substr(4, 2))
+                        }
+                    });
+                }],
+                userSource: ['usersDataService', function (usersDataService) {
+                    return usersDataService.getAllUsers('mr_detail').then(function(respData) {
+                        if (respData.succeed)
+                            return respData.data;
+
+                        return null;
+                    });
+                }]
+            }
+        })
+        .state('Root.Export.ReportMH', {
+            url: "/ReportMH",
+            views: {
+                "content@": {
+                    templateUrl: resolveViewPath('ExportReport/ExportReport.html'),
+                    controller: 'exportReport'
+                },
+                "modal@": {
+                    template: ''
+                }
+            },
+            data: {
+                reportType: 'MH'
+            }
+        })
+        .state('Root.Export.ReportRI', {
+            url: "/ReportRI",
+            views: {
+                "content@": {
+                    templateUrl: resolveViewPath('ExportReport/ExportReport.html'),
+                    controller: 'exportReport'
+                },
+                "modal@": {
+                    template: ''
+                }
+            },
+            data: {
+                reportType: 'RI'
+            }
+        })
+        .state('Root.Index', {
             url: "/",
             views: {
-                "content": {
-                    templateUrl: resolveViewPath('Index/Index.html'),
+                "content@": {
+                    templateUrl: resolveViewPath('Index/Index.html')
                 },
-                "modal": {
+                "modal@": {
                     template: ''
+                }
+            }
+        })
+        .state('Root', {
+            abstract: true,
+            views: {
+                "menu": {
+                    templateUrl: resolveViewPath('Menu/Menu.html')
                 }
             }
         });

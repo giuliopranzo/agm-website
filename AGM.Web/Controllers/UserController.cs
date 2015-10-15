@@ -433,37 +433,6 @@ namespace AGM.Web.Controllers
             };
         }
 
-        [HttpGet]
-        public HttpResponseMessage GetExportMH(string guid)
-        {
-            var mappedPath = System.Web.Hosting.HostingEnvironment.MapPath(string.Format("~/Exports/{0}", guid));
-
-            HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
-            var stream = new FileStream(mappedPath, FileMode.Open);
-            result.Content = new StreamContent(stream);
-            result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
-            result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
-            {
-                FileName = "export_rapportini.txt"
-            };
-            return result;
-        }
-
-        [HttpGet]
-        public HttpResponseMessage GetExportRI(string guid)
-        {
-            var mappedPath = System.Web.Hosting.HostingEnvironment.MapPath(string.Format("~/Exports/{0}", guid));
-
-            HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
-            var stream = new FileStream(mappedPath, FileMode.Open);
-            result.Content = new StreamContent(stream);
-            result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
-            result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
-            {
-                FileName = "export_voci_retributive.txt"
-            };
-            return result;
-        }
 
         private DataTable Add(SqlConnection cnn, string tablename)
         {

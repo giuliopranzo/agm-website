@@ -11,20 +11,20 @@
     <link href="~/css/font-awesome.css" rel="stylesheet">
     @Styles.Render("~/Content/css")
     <link href="~/Content/animate.min.css" rel="stylesheet">
-    
+
     <link href="https://gitcdn.github.io/bootstrap-toggle/2.1.0/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <link href="~/Content/nanoscroller.css" rel="stylesheet">
     
     @RenderSection("Scripts", required: false)
     <script src="https://gitcdn.github.io/bootstrap-toggle/2.1.0/js/bootstrap-toggle.min.js"></script>
+    <script src="~/Scripts/jquery.nanoscroller.min.js"></script>
 </head>
 <body>
-    <div class="container body-content">
-        @RenderBody()
-        @RenderSection("SPAViews", required: false)
-        @*<hr />
-        <footer>
-            <p>AGM Solutions srl &copy; @DateTime.Now.Year - Area riservata</p>
-        </footer>*@
+    <div class="nano">
+        <div class="main-scroller nano-content">
+            @RenderBody()
+            @RenderSection("SPAViews", required: false)
+        </div>
     </div>
 </body>
 </html>

@@ -15,6 +15,9 @@ namespace AGM.Web.Infrastructure
         DailyAllowanceAbroad,
         DailyAllowanceAbroadOneThird,
         DailyAllowanceAbroadTwoThird,
-        DeductForAdvance
+        DeductForAdvance,
+        Internship,
+        Compensation,
+        Freelancer
     }
 }

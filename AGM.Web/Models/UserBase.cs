@@ -24,15 +24,16 @@ namespace AGM.Web.Models
         {
             get
             {
+                var currentRetItems = new List<RetributionItemConf>();
                 if (!string.IsNullOrEmpty(RetributionItemConfSerialized))
-                    return Newtonsoft.Json.JsonConvert.DeserializeObject<List<RetributionItemConf>>(RetributionItemConfSerialized);
+                    currentRetItems =  Newtonsoft.Json.JsonConvert.DeserializeObject<List<RetributionItemConf>>(RetributionItemConfSerialized);
 
-                var res = new List<RetributionItemConf>();
                 foreach (var val in Enum.GetValues(typeof (RetributionItemType)))
                 {
-                    res.Add(new RetributionItemConf() {Type = (RetributionItemType)val, EnableValue = 0});
+                    if (currentRetItems.All(i => i.Type != (RetributionItemType)val))
+                        currentRetItems.Add(new RetributionItemConf() {Type = (RetributionItemType)val, EnableValue = 0});
                 }
-                return res;
+                return currentRetItems;
             }
             set
             {

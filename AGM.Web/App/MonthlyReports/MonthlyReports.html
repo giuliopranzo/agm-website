@@ -1,21 +1,29 @@
 ﻿<a id="reportTop" class="reportTop"></a>
+<div class="breadcrumb hidden-xs hidden-sm" style="display: table;">
+    <div class="pageHeader_pageTitle">
+        <span>Rapportini</span>
+        <span class="pageHeader_subtitle">ore mensili</span>
+    </div>
+    <div class="pageHeader_breadCrumb"><a class="pageHeader_breadCrumbLink" ui-sref="Index">Home</a> > Rapportini</div>
+</div>
 <div class="monthlyRep" ng-cloak>
-    <div class="hidden-print mr_affixToolContainer" role="complementary" data-offset-top="235" bs-affix>
+    <div class="hidden-print mr_affixToolContainer" role="complementary" data-offset-top="235" bs-affix ng-hide="applicationGlobals.showMainMenu">
         <div class="container container-header">
-            <i class="hidden-md hidden-lg fa fa-arrow-circle-o-left signAffix" ng-show="backToUsersVisible" ng-click="backToUsers()"></i>
-            <i class="fa fa-bolt signAffix" ng-click="autocompleteReport()"></i>
+            <i class="hidden-md hidden-lg fa fa-arrow-circle-o-left signAffix" ng-hide="myMonthlyReport" ng-click="backToUsers()"></i>
+            <i class="fa fa-bolt signAffix" ng-click="autocompleteReport()" ng-hide="detail.islocked"></i>
+            <i class="fa signAffix" ng-class="{'fa-lock': (detail.islocked && !btnLockHover) || (btnLockOver && !detail.islocked), 'fa-unlock-alt': (!detail.islocked && !btnLockOver) || (btnLockOver && detail.islocked)}" ng-click="toggleLock()" ng-mouseover="btnLockOver=true" ng-mouseout="btnLockOver=false"></i>
             <i class="fa fa-print signAffix" print-button></i>
-            <i class="fa fa-plus-circle signAffix" ng-click="toggleAsideInsert()"></i>
+            <i class="fa fa-plus-circle signAffix" ng-click="toggleAsideInsert()" ng-hide="detail.islocked"></i>
         </div>
     </div>
-    <h3 class="login-title login-control">Rapportini</h3>
+
     <div class="monthlyRep-detail">
-        <div>
-            <i class="hidden-xs hidden-sm fa fa-arrow-circle-o-left sign" ng-show="backToUsersVisible" ng-click="backToUsers()"></i>
+        <div ng-hide="myMonthlyReport">
+            <i class="hidden-xs hidden-sm fa fa-arrow-circle-o-left sign" ng-click="backToUsers()"></i>
             <div class="detailUserName">
-                <div class="detailUsernameButton hidden-print-force" ng-show="backToUsersVisible" ng-class="{prevEnable: detail.prevuserid>0}" ng-click="goToReport(detail.prevuserid)"><i class="fa fa-angle-up"></i></div>
+                <div class="detailUsernameButton hidden-print-force" ng-class="{prevEnable: detail.prevuserid>0}" ng-click="goToReport(detail.prevuserid)"><i class="fa fa-angle-up"></i></div>
                 <h4 style="display:table-row;" ng-bind="detail.user.name"></h4>
-                <div class="detailUsernameButton hidden-print-force" ng-show="backToUsersVisible" ng-class="{nextEnable: detail.nextuserid>0}" ng-click="goToReport(detail.nextuserid)"><i class="fa fa-angle-down"></i></div>
+                <div class="detailUsernameButton hidden-print-force" ng-class="{nextEnable: detail.nextuserid>0}" ng-click="goToReport(detail.nextuserid)"><i class="fa fa-angle-down"></i></div>
             </div>
         </div>
         <div class="col-xs-12 col-md-3 form-group">
@@ -32,9 +40,10 @@
             </div>
         </div>
         <div class="hidden-xs hidden-sm toolContainer">
-            <i class="fa fa-bolt sign" ng-click="autocompleteReport()"></i>
+            <i class="fa fa-bolt sign" ng-click="autocompleteReport()" ng-hide="detail.islocked"></i>
+            <i class="fa fa-lock sign" ng-hide="!currentUser.sectionusersvisible && detail.islocked" ng-class="{'fa-lock': (detail.islocked && !btnLockHover) || (btnLockOver && !detail.islocked), 'fa-unlock-alt': (!detail.islocked && !btnLockOver) || (btnLockOver && detail.islocked)}" ng-click="toggleLock()" ng-mouseover="btnLockOver=true" ng-mouseout="btnLockOver=false"></i>
             <i class="fa fa-print sign" print-button></i>
-            <i class="fa fa-plus-circle sign" ng-click="toggleAsideInsert()"></i>
+            <i class="fa fa-plus-circle sign" ng-click="toggleAsideInsert()" ng-hide="detail.islocked"></i>
         </div>
         <div class="clearfix"></div>
         
@@ -117,7 +126,7 @@
                             <span class="actionStripRight hidden-print"><i class="fa fa-trash-o actionStripItem" ng-click="removeReport('Hour', houritem.id)"></i></span>-->
                         
                         <span class="actionStrip noteSection noteText hidden-print"><i class="visible-xs-inline-block visible-sm-inline-block fa fa-clock-o prefixSignLeft"></i><span ng-bind="houritem.completedescription"></span></span>
-                        <span class="actionStrip noteSection hidden-print"><i class="fa fa-trash-o actionStripItem hidden-print" ng-click="removeReport('Hour', houritem.id)"></i></span>
+                        <span class="actionStrip noteSection hidden-print"><i class="fa fa-trash-o actionStripItem hidden-print" ng-click="removeReport('Hour', houritem.id)" ng-hide="detail.islocked"></i></span>
                         
                         <span class="visible-print-block hidden-noprint" ng-class="{'highlightThis': houritem.reasonid != 1}"><span ng-bind="houritem.reason"></span><span ng-bind="' h ' + houritem.hourscountstring"></span></span>
                     </span>
@@ -134,7 +143,7 @@
                             <span class="actionStripRight hidden-print"><i ng-show="expenseitem.reasonid == 1 || expenseitem.reasonid == 2" class="fa fa-info actionStripItem" ng-click="showExpenseInfo(expenseitem.id)"></i><i class="fa fa-trash-o actionStripItem hidden-print" ng-click="removeReport('Expense', expenseitem.id)"></i></span>-->
 
                         <span class="actionStrip noteSection noteText hidden-print"><i class="visible-xs-inline-block visible-sm-inline-block fa fa-eur prefixSignLeft"></i><span ng-bind="expenseitem.completedescription"></span></span>
-                        <span class="actionStrip noteSection hidden-print"><i class="fa fa-trash-o actionStripItem hidden-print" ng-click="removeReport('Expense', expenseitem.id)"></i></span>
+                        <span class="actionStrip noteSection hidden-print"><i class="fa fa-trash-o actionStripItem hidden-print" ng-click="removeReport('Expense', expenseitem.id)" ng-hide="detail.islocked"></i></span>
 
                         <span class="visible-print-block hidden-noprint"><span ng-bind="expenseitem.reason"></span><span ng-bind="' € ' + expenseitem.amountcost"></span></span>
                     </span>
@@ -147,7 +156,7 @@
                 <span class="col-xs-12 col-md-3 col-print-sm reportColumn">
                     <span class="noteContainer" ng-repeat="noteitem in day.notescollection">
                         <span class="actionStrip noteSection noteText"><i class="visible-xs-inline-block visible-sm-inline-block fa fa-pencil-square-o prefixSignLeft"></i><span ng-bind="noteitem.note"></span></span>
-                        <span class="actionStrip noteSection"><i class="fa fa-trash-o actionStripItem hidden-print" ng-click="removeReport('Note', noteitem.id)"></i></span>
+                        <span class="actionStrip noteSection"><i class="fa fa-trash-o actionStripItem hidden-print" ng-click="removeReport('Note', noteitem.id)" ng-hide="detail.islocked"></i></span>
                     </span>
                 </span>
             </div>
@@ -171,28 +180,30 @@
                         <label ng-bind="retributionItemTypeEnumNames[item.type]"></label>
                         <div ng-show="item.type != 8">
                             <div ng-class="{'has-error':!retributionItems.qty_{{$index}}.$valid, 'has-success':retributionItems.qty_{{$index}}.$dirty}">
-                                <input name="qty_{{$index}}" ng-change="recalculateTotal($index)" type="number" ng-model="detail.retributionitems[$index].qty" class="form-control" placeholder="Quantità..." min="0" max="31" step="any" />
+                                <input name="qty_{{$index}}" ng-change="recalculateTotal($index)" type="number" ng-model="detail.retributionitems[$index].qty" class="form-control" placeholder="Quantità..." min="0" max="31" step="any"/>
                             </div>
                             <div class="input-group" ng-class="{'has-error':!retributionItems.amount_{{$index}}.$valid, 'has-success':retributionItems.amount_{{$index}}.$dirty}">
                                 <div class="input-group-addon">€</div>
-                                <input ng-change="recalculateTotal($index)" name="amount_{{$index}}" type="number" ng-model="detail.retributionitems[$index].amount" class="form-control" placeholder="Valore..." min="0" max="5000" step="any" />
+                                <input ng-change="recalculateTotal($index)" name="amount_{{$index}}" type="number" ng-model="detail.retributionitems[$index].amount" class="form-control" placeholder="Valore..." min="0" max="5000" step="any"/>
                             </div>
                         </div>
 
                         <div ng-if="item.type != 8" class="input-group" ng-class="{'has-error':!retributionItems.total_{{$index}}.$valid, 'has-success':retributionItems.total_{{$index}}.$dirty}">
                             <div class="input-group-addon">€</div>
-                            <input name="total_{{$index}}" type="number" ng-model="detail.retributionitems[$index].total" class="form-control" placeholder="Totale..." min="0" max="5000" step="any" readonly />
+                            <input name="total_{{$index}}" type="number" ng-model="detail.retributionitems[$index].total" class="form-control" placeholder="Totale..." min="0" max="5000" step="any" readonly/>
                         </div>
 
                         <div ng-if="item.type == 8" class="input-group" ng-class="{'has-error':!retributionItems.total_{{$index}}.$valid, 'has-success':retributionItems.total_{{$index}}.$dirty}">
                             <div class="input-group-addon">€</div>
-                            <input name="total_{{$index}}" type="number" ng-model="detail.retributionitems[$index].total" class="form-control" placeholder="Totale..." min="0" max="5000" step="any" />
+                            <input name="total_{{$index}}" type="number" ng-model="detail.retributionitems[$index].total" class="form-control" placeholder="Totale..." min="0" max="5000" step="any"/>
                         </div>
                     </div>
                     <div class="clearfix"></div>
                 </div>
-                <button ng-hide="!retributionItems.$valid || !retributionItems.$dirty" class="btn btn-info" ng-click="updateRetributionItems()">Salva</button>
-                <button ng-show="!retributionItems.$valid || !retributionItems.$dirty" class="btn btn-info" disabled="disabled">Salva</button>
+                <div ng-show="detail.retributionitems && detail.retributionitems.length > 0">
+                    <button ng-hide="!retributionItems.$valid || !retributionItems.$dirty" class="btn btn-info" ng-click="updateRetributionItems()">Salva</button>
+                    <button ng-show="!retributionItems.$valid || !retributionItems.$dirty" class="btn btn-info" disabled="disabled">Salva</button>
+                </div>
             </form>
         </div>
         <div class="clearfix"></div>

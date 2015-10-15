@@ -67,6 +67,24 @@
                 deferred.reject(respData);
             });
             return deferred.promise;
+        },
+        setLock: function(callId, userId, month) {
+            var deferred = $q.defer();
+            $http({ method: 'POST', headers: { _callId: callId }, url: 'api/MonthlyReport/SetLock', data: { Id: userId, Month: month } }).success(function(respData, status, headers, config) {
+                deferred.resolve(respData);
+            }).error(function(respData, status, headers, config) {
+                deferred.reject(respData);
+            });
+            return deferred.promise;
+        },
+        setUnlock: function(callId, userId, month) {
+            var deferred = $q.defer();
+            $http({ method: 'POST', headers: { _callId: callId }, url: 'api/MonthlyReport/SetUnlock', data: { Id: userId, Month: month } }).success(function(respData, status, headers, config) {
+                deferred.resolve(respData);
+            }).error(function(respData, status, headers, config) {
+                deferred.reject(respData);
+            });
+            return deferred.promise;
         }
     }
 });

@@ -1,20 +1,28 @@
 ﻿<div ng-controller="authentication">
-    <h3 class="login-title login-control">Login area riservata</h3>
-    <form name="loginForm" novalidate>
-        <fieldset class="col-xs-12 form-group">
-            <div class="login-group login-innerGroup">
-                <div class="input-group login-control">
-                    <span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
-                    <input required class="form-control" type="email" ng-model="email" placeholder="Email" ng-disabled="checking_data">
-                </div>
-                <div class="input-group login-control">
-                    <span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
-                    <input required class="form-control" type="password" ng-model="password" placeholder="Password" ng-disabled="checking_data">
-                </div>
-                <button ng-hide="loginForm.$invalid || checking_data" class="btn btn-info login-control" ng-click="authenticate()">Login</button>
-                <button ng-show="loginForm.$invalid || checking_data" class="btn btn-info login-control" disabled="disabled">Login<i ng-show="checking_data" class="fa fa-spinner fa-spin"></i></button>
+    <div class="hidden-xs loginBackground"></div>
+    <div class="loginSide">
+        <div style="display: table-cell;vertical-align: middle;">
+            <div class="loginForm">
+                <div style="margin-top: 15px;"><img src="/images/logo.png" alt="" style="margin-top: 15px;display: block;width: 100px;margin: auto;"></div>
+                <h3 class="login-title login-control">Login area riservata</h3>
+                <form name="loginForm" novalidate>
+                    <fieldset class="col-xs-12 form-group">
+                        <div class="login-group login-innerGroup">
+                            <div class="input-group login-control">
+                                <span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
+                                <input required class="form-control" type="email" ng-model="email" placeholder="Email" ng-disabled="checking_data">
+                            </div>
+                            <div class="input-group login-control">
+                                <span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
+                                <input required class="form-control" type="password" ng-model="password" placeholder="Password" ng-disabled="checking_data">
+                            </div>
+                            <button ng-hide="loginForm.$invalid || checking_data" class="btn btn-info login-control" ng-click="authenticate()">Login</button>
+                            <button ng-show="loginForm.$invalid || checking_data" class="btn btn-info login-control" disabled="disabled">Login<i ng-show="checking_data" class="fa fa-spinner fa-spin"></i></button>
+                        </div>
+                    </fieldset>
+                    <div class="clearfix"></div>
+                </form>
             </div>
-        </fieldset>
-        <div class="clearfix"></div>
-    </form>
+        </div>
+    </div>
 </div>

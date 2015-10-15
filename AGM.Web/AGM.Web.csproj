@@ -166,6 +166,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AuthController.cs" />
+    <Compile Include="Controllers\ExportController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\JobAdController.cs" />
     <Compile Include="Controllers\MonthlyReportController.cs" />
@@ -195,12 +196,15 @@
     <Compile Include="Models\AgmDataContext.cs" />
     <Compile Include="Models\Candidate.cs" />
     <Compile Include="Models\ExpenseReason.cs" />
+    <Compile Include="Models\Export.cs" />
     <Compile Include="Models\Festivity.cs" />
     <Compile Include="Models\HourReason.cs" />
     <Compile Include="Models\JobAd.cs" />
     <Compile Include="Models\JobAdSaveIn.cs" />
     <Compile Include="Models\Mapping\CandidateMap.cs" />
     <Compile Include="Models\Mapping\ExpenseReasonMap.cs" />
+    <Compile Include="Models\Mapping\ExportMap.cs" />
+    <Compile Include="Models\Mapping\MHReportLockMap.cs" />
     <Compile Include="Models\Mapping\OptionMap.cs" />
     <Compile Include="Models\Mapping\FestivityMap.cs" />
     <Compile Include="Models\Mapping\HourReasonMap.cs" />
@@ -209,15 +213,18 @@
     <Compile Include="Models\Mapping\MonthlyReportHourMap.cs" />
     <Compile Include="Models\Mapping\MonthlyReportNoteMap.cs" />
     <Compile Include="Models\Mapping\RetributionItemMap.cs" />
+    <Compile Include="Models\Mapping\TokenMap.cs" />
     <Compile Include="Models\Mapping\UserMap.cs" />
     <Compile Include="Models\Mapping\VersionMap.cs" />
     <Compile Include="Models\MealVoucherOptions.cs" />
+    <Compile Include="Models\MHReportLock.cs" />
     <Compile Include="Models\MonthlyReportExpense.cs" />
     <Compile Include="Models\MonthlyReportHour.cs" />
     <Compile Include="Models\MonthlyReportNote.cs" />
     <Compile Include="Models\Option.cs" />
     <Compile Include="Models\RetributionItem.cs" />
     <Compile Include="Models\RetributionItemConf.cs" />
+    <Compile Include="Models\Token.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserBase.cs" />
     <Compile Include="Models\Version.cs" />
@@ -233,6 +240,12 @@
     <Content Include="App\Candidates\Candidates.html" />
     <Content Include="App\Candidates\candidates.js" />
     <Content Include="App\Candidates\candidates.service.js" />
+    <Content Include="App\ExportReport\ExportReport.html" />
+    <Content Include="App\ExportReport\exportReport.js" />
+    <Content Include="App\ExportReport\exportReport.service.js" />
+    <Content Include="App\Export\Export.html" />
+    <Content Include="App\Export\export.js" />
+    <Content Include="App\Export\export.service.js" />
     <Content Include="App\footer.directive.js" />
     <Content Include="App\http.config.js" />
     <Content Include="App\Authentication\Login.html" />
@@ -242,6 +255,7 @@
     <Content Include="App\JobAds\JobAds.html" />
     <Content Include="App\JobAds\jobAds.js" />
     <Content Include="App\JobAds\jobAds.service.js" />
+    <Content Include="App\Menu\Menu.html" />
     <Content Include="App\MonthlyReports\MonthlyReports.css" />
     <Content Include="App\MonthlyReports\MonthlyReports.html" />
     <Content Include="App\MonthlyReports\monthlyReports.js" />
@@ -271,8 +285,14 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\nanoscroller.css" />
     <Content Include="Content\Site.css" />
     <Content Include="css\font-awesome.css" />
+    <Content Include="DbUpdates\AGM_016.sql" />
+    <Content Include="DbUpdates\AGM_015.sql" />
+    <Content Include="DbUpdates\AGM_014.sql" />
+    <Content Include="DbUpdates\AGM_013.sql" />
+    <Content Include="DbUpdates\AGM_012.sql" />
     <Content Include="DbUpdates\AGM_011.sql" />
     <Content Include="DbUpdates\AGM_010.sql" />
     <Content Include="DbUpdates\AGM_009.sql" />
@@ -288,6 +308,7 @@
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="images\loginback2.jpg" />
     <Content Include="images\logo.png" />
     <Content Include="images\parallax-clients.jpg" />
     <Content Include="Scripts\angular-animate.js" />
@@ -334,6 +355,7 @@
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\jquery.cookie.js" />
+    <Content Include="Scripts\jquery.nanoscroller.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\npm.js" />
     <Content Include="Scripts\satellizer.js" />
@@ -341,6 +363,8 @@
     <Content Include="Scripts\textAngular-rangy.min.js" />
     <Content Include="Scripts\textAngular-sanitize.min.js" />
     <Content Include="Scripts\textAngular.min.js" />
+    <Content Include="Scripts\underscore.js" />
+    <Content Include="Scripts\underscore.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="SQLUpdates\1.sql" />
     <Content Include="Views\_ViewStart.cshtml" />
@@ -361,9 +385,9 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Scripts\underscore.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App\Mockup\" />
     <Folder Include="Exports\" />
     <Folder Include="Views\User\" />
   </ItemGroup>

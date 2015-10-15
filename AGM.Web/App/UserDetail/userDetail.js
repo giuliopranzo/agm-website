@@ -1,5 +1,5 @@
-﻿app.controller('userDetail', function($rootScope, $scope, $alert, $location, $state, $filter, FileUploader, $http, appHelper, userSource, usersDataService, authenticationContainer) {
-    $scope.retributionItemTypeEnumNames = ['Buoni pasto', 'Rimborso spese', 'Trasferta Italia', 'Trasferta Italia 1/3', 'Trasferta Italia 2/3', 'Trasferta estero', 'Trasferta estero 1/3', 'Trasferta estero 2/3', 'Trattenuta per acconto'];
+﻿app.controller('userDetail', function($rootScope, $scope, $alert, $location, $state, $filter, FileUploader, $http, appHelper, userSource, usersDataService, authenticationContainer, applicationGlobals) {
+    $scope.retributionItemTypeEnumNames = ['Buoni pasto', 'Rimborso spese', 'Trasferta Italia', 'Trasferta Italia 1/3', 'Trasferta Italia 2/3', 'Trasferta estero', 'Trasferta estero 1/3', 'Trasferta estero 2/3', 'Trattenuta per acconto', 'Compenso stage', 'Compenso prestaz. cont./emolumento', 'CO.CO.CO. a progetto'];
     $scope.userExists = false;
 	$scope.currentUser = authenticationContainer.currentUser;
     $scope.isRetributionItemConfCollapsed = true;
@@ -14,7 +14,8 @@
             $scope.loading = false;
     });
 
-    $scope.init = function() {
+    $scope.init = function () {
+        $scope.applicationGlobals = applicationGlobals;
         if (userSource)
             $scope.user = userSource;
         else
@@ -22,6 +23,7 @@
 
         $scope.backToUsersVisible = (authenticationContainer.currentUser.id != $scope.user.id);
         $scope.deleteUserVisible = (authenticationContainer.currentUser.id != $scope.user.id && $scope.user.id != 0);
+        $scope.retItemsVisible = (authenticationContainer.currentUser.id != $scope.user.id && $scope.user.id != 0);
     };
 
     $scope.headersObj = {};

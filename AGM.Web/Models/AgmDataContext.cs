@@ -31,6 +31,9 @@ namespace AGM.Web.Models
         public DbSet<JobAd> JobAds { get; set; }
         public DbSet<Option> Options { get; set; }
         public DbSet<Version> Versions { get; set; }
+        public DbSet<Export> Exports { get; set; }
+        public DbSet<Token> Tokens { get; set; }
+        public DbSet<MHReportLock> MHReportLocks { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -45,6 +48,9 @@ namespace AGM.Web.Models
             modelBuilder.Configurations.Add(new JobAdMap());
             modelBuilder.Configurations.Add(new OptionMap());
             modelBuilder.Configurations.Add(new VersionMap());
+            modelBuilder.Configurations.Add(new ExportMap());
+            modelBuilder.Configurations.Add(new TokenMap());
+            modelBuilder.Configurations.Add(new MHReportLockMap());
         }
     }
 }

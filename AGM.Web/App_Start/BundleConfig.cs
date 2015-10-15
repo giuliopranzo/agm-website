@@ -32,7 +32,9 @@ namespace AGM.Web
                 "~/Scripts/textAngular-rangy.min.js",
                 "~/Scripts/textAngular.min.js",
                 "~/Scripts/jquery-1.10.2.js",
-                "~/Scripts/jquery.cookie.js"
+                "~/Scripts/jquery.cookie.js",
+                "~/Scripts/jquery.cookie.js",
+                "~/Scripts/underscore.js"
             ));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(

@@ -4,6 +4,7 @@ using AGM.Web.Infrastructure.Extensions;
 using AGM.Web.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
@@ -55,6 +56,7 @@ namespace AGM.Web.Controllers
             var totalHolidays = 0d;
             var summaryHours = new Dictionary<string, string>();
             var retributionItems = new List<RetributionItem>();
+            var isLocked = false;
             using (var context = new AgmDataContext())
             {
                 user = context.Users.First(u => u.Id == id);
@@ -69,8 +71,9 @@ namespace AGM.Web.Controllers
                 userNoteReports = context.MonthlyReportNotes.Where(e => e.UserId == id && e.Month == currentMonthDate.Month).ToList();
                 hourReasons = context.HourReasons.Where(h => h.IsDeleted == false).ToList();
                 expenseReasons = context.ExpenseReasons.ToList();
-                holidays = context.Festivities.ToList();
+                holidays = context.Festivities.Where(f => !f.IsDeleted).ToList();
                 retributionItems = (currentUser.SectionUsersVisible /*&& currentUserIndex > 0*/)? context.RetributionItems.Where(r => r.UserId == id && r.Month == currentMonthStringCompact).ToList() : new List<RetributionItem>();
+                isLocked = context.MHReportLocks.Any(l => l.UserId == id && l.Month == currentMonthStringCompact && !l.IsDeleted);
             }
 
             var startDate = new DateTime(currentMonthDate.Year, currentMonthDate.Month, 1);
@@ -182,7 +185,8 @@ namespace AGM.Web.Controllers
                     Summary = summary.OrderBy(s => s.id),
                     RetributionItems = retributionItems,
                     PrevUserId = prevUserId,
-                    NextUserId = nextUserId
+                    NextUserId = nextUserId,
+                    IsLocked = isLocked
                 }
             };
         }
@@ -197,6 +201,10 @@ namespace AGM.Web.Controllers
 
             using (var context = new AgmDataContext())
             {
+                var month = string.Format("{0}{1}", ((DateTime) reportIn.Date).Year, ((DateTime) reportIn.Date).Month.ToString().PadLeft(2,'0'));
+                if (context.MHReportLocks.Any(l => l.UserId == userId && l.Month == month && !l.IsDeleted))
+                    return new ApiResponse(false);
+
                 var res = new List<object>();
                 if (reportIn.Hours != null && reportIn.Hours.HoursCount != null)
                 {
@@ -251,24 +259,38 @@ namespace AGM.Web.Controllers
         {
             var id = (int)objIn.Id;
             var type = objIn.Type.ToString();
+            var cultureIt = CultureInfo.GetCultureInfo("it-IT");
             using (var context = new AgmDataContext())
             {
                 if (type == "Hour" && context.MonthlyReportHours.Any(h => h.Id == id))
                 {
                     var o = context.MonthlyReportHours.First(h => h.Id == id);
                     this.CheckCurrentUserPermission(o.UserId, ((x) => x.SectionUsersVisible));
+                    var month = o.Date.ToString("yyyyMM", cultureIt);
+                    var userId = o.UserId;
+                    if (context.MHReportLocks.Any(l => l.UserId == userId && l.Month == month && !l.IsDeleted))
+                            return new ApiResponse(false);
+
                     context.MonthlyReportHours.Remove(o);
                 }
                 else if (type == "Expense" && context.MonthlyReportExpenses.Any(h => h.Id == id))
                 {
                     var o = context.MonthlyReportExpenses.First(h => h.Id == id);
                     this.CheckCurrentUserPermission(o.UserId, ((x) => x.SectionUsersVisible));
+                    var month = o.Date.ToString("yyyyMM", cultureIt);
+                    var userId = o.UserId;
+                    if (context.MHReportLocks.Any(l => l.UserId == userId && l.Month == month && !l.IsDeleted))
+                        return new ApiResponse(false);
                     context.MonthlyReportExpenses.Remove(o);
                 }
                 else if (type == "Note" && context.MonthlyReportNotes.Any(h => h.Id == id))
                 {
                     var o = context.MonthlyReportNotes.First(h => h.Id == id);
                     this.CheckCurrentUserPermission(o.UserId, ((x) => x.SectionUsersVisible));
+                    var month = o.Date.ToString("yyyyMM", cultureIt);
+                    var userId = o.UserId;
+                    if (context.MHReportLocks.Any(l => l.UserId == userId && l.Month == month && !l.IsDeleted))
+                        return new ApiResponse(false);
                     context.MonthlyReportNotes.Remove(o);
                 }
                 
@@ -314,12 +336,15 @@ namespace AGM.Web.Controllers
 
                 using (var context = new AgmDataContext())
                 {
+                    var monthMinimal = currentMonthDate.ToString("yyyyMM", cultureIt);
+                    if (context.MHReportLocks.Any(l => l.UserId == userId && l.Month == monthMinimal && !l.IsDeleted))
+                        return new ApiResponse(false);
                     var user = context.Users.First(u => u.Id == userId);
                     if (user != null)
                     {
                         var userHourReports = context.MonthlyReportHours.Where(r => r.UserId == userId && r.Month == currentMonthDate.Month).ToList();
                         var hourReasons = context.HourReasons.ToList();
-                        var holidays = context.Festivities.ToList();
+                        var holidays = context.Festivities.Where(f => !f.IsDeleted).ToList();
                         var currentDate = new DateTime(currentMonthDate.Year, currentMonthDate.Month, 1);
                         var endDate = new DateTime(currentMonthDate.Year, currentMonthDate.Month, DateTime.DaysInMonth(currentMonthDate.Year, currentMonthDate.Month));
                         while (currentDate <= endDate)
@@ -364,7 +389,9 @@ namespace AGM.Web.Controllers
                             db.RetributionItems.Any(
                                 r => r.Month == item.Month && r.Type == item.Type && r.UserId == item.UserId))
                         {
-                            db.RetributionItems.Remove(item);
+                            var dbItem = db.RetributionItems.First(
+                                r => r.Month == item.Month && r.Type == item.Type && r.UserId == item.UserId);
+                            db.RetributionItems.Remove(dbItem);
                         }
 
                         if (item.Total != 0.00 &&
@@ -398,6 +425,53 @@ namespace AGM.Web.Controllers
                     Errors = (new List<ApiResponseError>() { new ApiResponseError() { Message = e.Message } }).ToArray()
                 };
 
+            }
+        }
+
+        [AuthorizeAction]
+        [HttpPost]
+        public ApiResponse SetLock([FromBody]dynamic lockIn)
+        {
+            var userId = (int)lockIn.Id;
+            var month = (string)lockIn.Month;
+            this.CheckCurrentUserPermission(userId, ((x) => x.SectionUsersVisible));
+            using (var db = new AgmDataContext())
+            {
+                var mhLock = new MHReportLock();
+                if (db.MHReportLocks.Any(r => r.UserId == userId && r.Month == month && !r.IsDeleted))
+                {
+                    return new ApiResponse(true);
+                }
+                mhLock.LockDate = DateTime.Now;
+                mhLock.UnlockDate = SqlDateTime.MinValue.Value;
+                mhLock.UserId = userId;
+                mhLock.Month = month;
+                db.MHReportLocks.Add(mhLock);
+                db.SaveChanges();
+
+                return new ApiResponse(true);
+            }
+        }
+
+        [AuthorizeAction]
+        [HttpPost]
+        public ApiResponse SetUnlock([FromBody]dynamic lockIn)
+        {
+            this.CheckCurrentUserPermission((x) => x.SectionUsersVisible);
+            using (var db = new AgmDataContext())
+            {
+                var userId = (int)lockIn.Id;
+                var month = (string)lockIn.Month;
+                if (db.MHReportLocks.All(r => r.UserId != userId || r.Month != month || r.IsDeleted))
+                {
+                    return new ApiResponse(false);
+                }
+                var mhLock = db.MHReportLocks.First(r => r.UserId == userId && r.Month == month && !r.IsDeleted);
+                mhLock.UnlockDate = DateTime.Now;
+                mhLock.IsDeleted = true;
+                db.SaveChanges();
+
+                return new ApiResponse(true);
             }
         }
     }

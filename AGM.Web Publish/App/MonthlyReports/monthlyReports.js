@@ -31,12 +31,13 @@
             $scope.loading_insert = false;
     });
 
-    $scope.init = function() {
+    $scope.init = function () {
+        $scope.currentUser = authenticationContainer.currentUser;
         //if (usersSource)
         //    $scope.users = usersSource;
         $scope.detail = {};
         $scope.detailVisible = false;
-        $scope.retributionItemTypeEnumNames = ['Buoni pasto', 'Rimborso spese', 'Trasferta Italia', 'Trasferta Italia 1/3', 'Trasferta Italia 2/3', 'Trasferta estero', 'Trasferta estero 1/3', 'Trasferta estero 2/3', 'Trattenuta per acconto'];
+        $scope.retributionItemTypeEnumNames = ['Buoni pasto', 'Rimborso spese', 'Trasferta Italia', 'Trasferta Italia 1/3', 'Trasferta Italia 2/3', 'Trasferta estero', 'Trasferta estero 1/3', 'Trasferta estero 2/3', 'Trattenuta per acconto', 'Compenso stage', 'Compenso prestaz. contin./emolumento', 'CO.CO.CO. a progetto'];
 
         if ($state && $state.params && $state.params.userReportSource) {
             $scope.reportId = $state.params.reportId;
@@ -308,6 +309,89 @@
                 });
             });
     }
+
+    $scope.toggleLock = function() {
+        if (!$scope.detail.islocked) {
+            if ($scope.alert && $scope.alert.$isShown && $scope.alert.$options.type != 'confirm_autocomplete')
+                $scope.alert.hide();
+
+            if (!$scope.alert || !$scope.alert.$isShown)
+                $scope.alert = $alert({
+                    content: 'Confermando e così bloccando il rapportino corrente, non si avrà più la possibilità di modificarne il contenuto. Cliccare nuovamente l\'icona per procedere.',
+                    animation: 'fadeZoomFadeDown',
+                    type: 'confirm_autocomplete',
+                    duration: 10
+                });
+            else {
+                $scope.alert.hide();
+                monthlyReportsDataService.setLock('mr_detail', $scope.detail.user.id, $filter('date')(new Date($scope.selectedDate), 'yyyyMM')).then(
+                    function(respData) {
+                        if (respData.succeed) {
+                            $scope.reloadUserDetail();
+                            $scope.alert = $alert({
+                                content: 'Rapportino confermato e bloccato. Non è più possibile modificarlo.',
+                                animation: 'fadeZoomFadeDown',
+                                type: 'info',
+                                duration: 5
+                            });
+                        } else {
+                            if ($scope.alert)
+                                $scope.alert.hide();
+
+                            $scope.alert = $alert({
+                                content: 'Errore durante l\'aggiornamento dei dati',
+                                animation: 'fadeZoomFadeDown',
+                                type: 'error',
+                                duration: 5
+                            });
+                        }
+                    }
+                ).catch(function(respData) {
+                    if ($scope.alert)
+                        $scope.alert.hide();
+                    $scope.alert = $alert({
+                        content: 'Errore durante l\'aggiornamento dei dati',
+                        animation: 'fadeZoomFadeDown',
+                        type: 'error',
+                        duration: 5
+                    });
+                });
+            }
+        } else {
+            monthlyReportsDataService.setUnlock('mr_detail', $scope.detail.user.id, $filter('date')(new Date($scope.selectedDate), 'yyyyMM')).then(
+                    function (respData) {
+                        if (respData.succeed) {
+                            $scope.reloadUserDetail();
+                            $scope.alert = $alert({
+                                content: 'Rapportino sbloccato e di nuovo disponibile per le modifiche.',
+                                animation: 'fadeZoomFadeDown',
+                                type: 'info',
+                                duration: 5
+                            });
+                        } else {
+                            if ($scope.alert)
+                                $scope.alert.hide();
+
+                            $scope.alert = $alert({
+                                content: 'Errore durante l\'aggiornamento dei dati',
+                                animation: 'fadeZoomFadeDown',
+                                type: 'error',
+                                duration: 5
+                            });
+                        }
+                    }
+                ).catch(function (respData) {
+                    if ($scope.alert)
+                        $scope.alert.hide();
+                    $scope.alert = $alert({
+                        content: 'Errore durante l\'aggiornamento dei dati',
+                        animation: 'fadeZoomFadeDown',
+                        type: 'error',
+                        duration: 5
+                    });
+                });
+        }
+    };
 
     $scope.init();
 });

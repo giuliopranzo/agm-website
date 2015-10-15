@@ -1,4 +1,4 @@
-﻿app.controller('users', function ($rootScope, $scope, $alert, $location, $state, $filter, usersSource, usersDataService, appHelper) {
+﻿app.controller('users', function ($rootScope, $scope, $alert, $location, $state, $filter, usersSource, usersDataService, appHelper, applicationGlobals) {
 
     $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
         if (toState.name == 'Users') {
@@ -17,6 +17,7 @@
     });
 
     $scope.init = function () {
+        $scope.applicationGlobals = applicationGlobals;
         if (usersSource)
             $scope.users = usersSource;
         else
