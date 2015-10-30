@@ -47,7 +47,7 @@ jQuery(document).ready(function() {
 	
 	var contentString2 = '<div class="map-tooltip">'+
 		'<h6>AGM SOLUTIONS</h6>'+
-		'<p>La nostra nuova sede opertiva di Lissone <br/> Via Agostoni, 16 - 20851 Lissone(MB)</p>'+
+		'<p>La nostra nuova sede opertiva di Lissone <br/> Via Gorizia, 3 - 20851 Lissone(MB)</p>'+
 		'</div>';
 	var infowindow2 = new google.maps.InfoWindow({
 		content: contentString2
@@ -59,7 +59,7 @@ jQuery(document).ready(function() {
 		new google.maps.Point(20,55)<!-- Position of the marker -->
 	);
 	
-	var companyPos2 = new google.maps.LatLng(45.607934,9.234367);
+	var companyPos2 = new google.maps.LatLng(45.6125721,9.24259387);
 	
 	var companyMarker2 = new google.maps.Marker({
 		position: companyPos2,

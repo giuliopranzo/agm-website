@@ -1,10 +1,13 @@
 ﻿<a id="reportTop" class="reportTop"></a>
 <div class="breadcrumb hidden-xs hidden-sm" style="display: table;">
     <div class="pageHeader_pageTitle">
-        <span>Profilo</span>
-        <span class="pageHeader_subtitle">profilo utente</span>
+        <span ng-show="user.id != 0">Profilo</span>
+        <span ng-hide="user.id != 0">Nuovo profilo</span>
+        <span class="pageHeader_subtitle" ng-hide="backToUsersVisible">profilo personale</span>
+        <span class="pageHeader_subtitle" ng-show="backToUsersVisible">profilo utente</span>
     </div>
-    <div class="pageHeader_breadCrumb"><a class="pageHeader_breadCrumbLink" ui-sref="Index">Home</a> > Profilo</div>
+    <div class="pageHeader_breadCrumb" ng-hide="backToUsersVisible"><a class="pageHeader_breadCrumbLink" ui-sref="Root.Index">Home</a> > Profilo</div>
+    <div class="pageHeader_breadCrumb" ng-show="backToUsersVisible"><a class="pageHeader_breadCrumbLink" ui-sref="Root.Index">Home</a> > <a class="pageHeader_breadCrumbLink" ui-sref="Root.Users">Utenti</a> > Profilo utente</div>
 </div>
 <div class="monthlyRep" style="margin: -10px -15px;" ng-cloak>
     <div class="hidden-print mr_affixToolContainer" role="complementary" data-offset-top="235" bs-affix ng-hide="applicationGlobals.showMainMenu">

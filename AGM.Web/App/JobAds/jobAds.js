@@ -1,4 +1,4 @@
-﻿app.controller('jobAds', ['$scope', '$rootScope', '$state', '$location', '$filter', '$alert', 'appDataService', 'textAngularManager', 'jobAdsSource', 'jobAdsDataService', function ($scope, $rootScope, $state, $location, $filter, $alert, appDataService, textAngularManager, jobAdsSource, jobAdsDataService) {
+﻿app.controller('jobAds', ['$scope', '$rootScope', '$state', '$location', '$filter', '$alert', 'appDataService', 'textAngularManager', 'jobAdsSource', 'jobAdsDataService', 'applicationGlobals', function ($scope, $rootScope, $state, $location, $filter, $alert, appDataService, textAngularManager, jobAdsSource, jobAdsDataService, applicationGlobals) {
     $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
         $scope.isJobAdDetail = (toState.name == 'JobAds.Detail');
         if (toState.name == 'JobAds.Detail') {
@@ -36,7 +36,8 @@
 
     $scope.orderField = $scope.orderOptions[5].value;
 
-    $scope.init = function() {
+    $scope.init = function () {
+        $scope.applicationGlobals = applicationGlobals;
         $scope.initData();
 
         $scope.isJobAdDetail = ($state.current.name == 'JobAds.Detail');
