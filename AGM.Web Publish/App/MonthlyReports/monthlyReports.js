@@ -1,4 +1,4 @@
-﻿app.controller('monthlyReports', function ($rootScope, $scope, $alert, $location, $state, $filter, monthlyReportsDataService, authenticationContainer, appHelper) {
+﻿app.controller('monthlyReports', function ($rootScope, $scope, $alert, $location, $state, $filter, monthlyReportsDataService, authenticationContainer, appHelper, applicationGlobals) {
     $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
 
         if (toState.name == 'MonthlyReports') {
@@ -32,6 +32,7 @@
     });
 
     $scope.init = function () {
+        $scope.applicationGlobals = applicationGlobals;
         $scope.currentUser = authenticationContainer.currentUser;
         //if (usersSource)
         //    $scope.users = usersSource;
@@ -46,7 +47,7 @@
             $scope.selectedInsertDate = $state.params.userReportSource.selectedinsertdate;
             $scope.resetInsertFields();
             $scope.detailVisible = true;
-            $scope.backToUsersVisible = (authenticationContainer.currentUser.id != $scope.reportId);
+            $scope.myMonthlyReport = (authenticationContainer.currentUser.id == $scope.reportId);
         }
         else
         {

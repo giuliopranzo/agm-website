@@ -463,7 +463,8 @@ namespace AGM.Web.Controllers
             {
                 var email = (Thread.CurrentPrincipal as CustomPrincipal).User.Split('$').GetValue(0) as string;
                 var user = context.Users.Single(u => u.Email == email);
-
+                var currentMonth = string.Format("{0}{1}", DateTime.Today.Year.ToString(), DateTime.Today.Month.ToString().PadLeft(2, '0'));
+                var mhReportLocks = context.MHReportLocks.Where(l => l.Month == currentMonth).ToList();
                 if (!user.SectionUsersVisible)
                     return new ApiResponse(false);
 
@@ -476,7 +477,8 @@ namespace AGM.Web.Controllers
                         u.Name,
                         u.Image,
                         u.Username,
-                        u.IdExport
+                        u.IdExport,
+                        currentMHReportLocked = mhReportLocks.Any(l => l.UserId == u.Id)
                     })
                 };
             }

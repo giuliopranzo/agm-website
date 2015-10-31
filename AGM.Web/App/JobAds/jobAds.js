@@ -1,7 +1,7 @@
 ﻿app.controller('jobAds', ['$scope', '$rootScope', '$state', '$location', '$filter', '$alert', 'appDataService', 'textAngularManager', 'jobAdsSource', 'jobAdsDataService', 'applicationGlobals', function ($scope, $rootScope, $state, $location, $filter, $alert, appDataService, textAngularManager, jobAdsSource, jobAdsDataService, applicationGlobals) {
     $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
-        $scope.isJobAdDetail = (toState.name == 'JobAds.Detail');
-        if (toState.name == 'JobAds.Detail') {
+        $scope.isJobAdDetail = (toState.name == 'Root.JobAds.Detail');
+        if (toState.name == 'Root.JobAds.Detail') {
             $scope.jobAd = $filter('filter')(jobAdsSource, { id: Number(toParams.adId) }, true)[0];
             if (angular.isUndefined($scope.jobAd))
                 $scope.jobAd = {}

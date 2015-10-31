@@ -17,7 +17,7 @@
     };
 
     $scope.backToExport = function() {
-        $state.go('Export', { selectedDate: $state.params.selectedDate });
+        $state.go('Root.Export', { selectedDate: $state.params.selectedDate });
     };
 
     $scope.init();

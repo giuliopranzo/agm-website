@@ -1,22 +1,31 @@
 ﻿<a id="reportTop" class="reportTop"></a>
+<div class="breadcrumb hidden-xs hidden-sm" style="display: table;">
+    <div class="pageHeader_pageTitle">
+        <span>Rapportini</span>
+        <span class="pageHeader_subtitle" ng-show="myMonthlyReport">ore mensili</span>
+        <span class="pageHeader_subtitle" ng-hide="myMonthlyReport">ore mensili utente</span>
+    </div>
+    <div class="pageHeader_breadCrumb" ng-show="myMonthlyReport"><a class="pageHeader_breadCrumbLink" ui-sref="Index">Home</a> > Rapportini</div>
+    <div class="pageHeader_breadCrumb" ng-hide="myMonthlyReport"><a class="pageHeader_breadCrumbLink" ui-sref="Root.Index">Home</a> > <a class="pageHeader_breadCrumbLink" ui-sref="Root.Users">Utenti</a> > Rapportini utente</div>
+</div>
 <div class="monthlyRep" ng-cloak>
-    <div class="hidden-print mr_affixToolContainer" role="complementary" data-offset-top="235" bs-affix>
+    <div class="hidden-print mr_affixToolContainer" role="complementary" data-offset-top="235" bs-affix ng-hide="applicationGlobals.showMainMenu">
         <div class="container container-header">
-            <i class="hidden-md hidden-lg fa fa-arrow-circle-o-left signAffix" ng-show="backToUsersVisible" ng-click="backToUsers()"></i>
+            <i class="hidden-md hidden-lg fa fa-arrow-circle-o-left signAffix" ng-hide="myMonthlyReport" ng-click="backToUsers()"></i>
             <i class="fa fa-bolt signAffix" ng-click="autocompleteReport()" ng-hide="detail.islocked"></i>
             <i class="fa signAffix" ng-class="{'fa-lock': (detail.islocked && !btnLockHover) || (btnLockOver && !detail.islocked), 'fa-unlock-alt': (!detail.islocked && !btnLockOver) || (btnLockOver && detail.islocked)}" ng-click="toggleLock()" ng-mouseover="btnLockOver=true" ng-mouseout="btnLockOver=false"></i>
             <i class="fa fa-print signAffix" print-button></i>
             <i class="fa fa-plus-circle signAffix" ng-click="toggleAsideInsert()" ng-hide="detail.islocked"></i>
         </div>
     </div>
-    <h3 class="section-title login-control">Rapportini</h3>
+
     <div class="monthlyRep-detail">
-        <div>
-            <i class="hidden-xs hidden-sm fa fa-arrow-circle-o-left sign" ng-show="backToUsersVisible" ng-click="backToUsers()"></i>
+        <div ng-hide="myMonthlyReport">
+            <i class="hidden-xs hidden-sm fa fa-arrow-circle-o-left sign" ng-click="backToUsers()"></i>
             <div class="detailUserName">
-                <div class="detailUsernameButton hidden-print-force" ng-show="backToUsersVisible" ng-class="{prevEnable: detail.prevuserid>0}" ng-click="goToReport(detail.prevuserid)"><i class="fa fa-angle-up"></i></div>
+                <div class="detailUsernameButton hidden-print-force" ng-class="{prevEnable: detail.prevuserid>0}" ng-click="goToReport(detail.prevuserid)"><i class="fa fa-angle-up"></i></div>
                 <h4 style="display:table-row;" ng-bind="detail.user.name"></h4>
-                <div class="detailUsernameButton hidden-print-force" ng-show="backToUsersVisible" ng-class="{nextEnable: detail.nextuserid>0}" ng-click="goToReport(detail.nextuserid)"><i class="fa fa-angle-down"></i></div>
+                <div class="detailUsernameButton hidden-print-force" ng-class="{nextEnable: detail.nextuserid>0}" ng-click="goToReport(detail.nextuserid)"><i class="fa fa-angle-down"></i></div>
             </div>
         </div>
         <div class="col-xs-12 col-md-3 form-group">

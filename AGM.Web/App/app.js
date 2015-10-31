@@ -42,7 +42,7 @@ app.controller("main", function ($scope, $rootScope, $location, $state, $statePa
                 authenticationHelper.deleteAuthToken();
                 $scope.user = '';
                 $scope.authenticated = false;
-                $location.path('/');
+                $state.go('Login');
                 break;
         }
     });

@@ -125,7 +125,7 @@ footer p {
 }
 
 .dropdown-menu>li>a {
-    padding: 3px 0 !important;
+    /*padding: 3px 0 !important;*/
 }
 
 .menuToggle {

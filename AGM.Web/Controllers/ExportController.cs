@@ -170,7 +170,7 @@ namespace AGM.Web.Controllers
                 {"infortunio", "I1"},
                 {"donazione sangue", "DS"},
                 {"congedo matrimoniale", "CM"},
-                {"D.Lgs. 151", "AL "},
+                {"D.Lgs. 151", "M8 "},
                 {"Permessi ex-festività", "P2"}
             };
             var mhReport = new Dictionary<int, Dictionary<string, double>>();
@@ -194,8 +194,7 @@ namespace AGM.Web.Controllers
                             {
                                 foreach (var item in itemParent.HoursCollection)
                                 {
-                                    TimeSpan timespan = TimeSpan.FromHours(2.75);
-                                    var hours = TimeSpan.FromHours((item as MonthlyReportHour).HoursCount).ToString("hhmm");
+                                    var hours = ((int)Math.Truncate((item as MonthlyReportHour).HoursCount * 100)).ToString();
                                     var reason = (item as MonthlyReportHour).Reason;
                                     var reasonCurr = (reasonCode.Any(r => r.Key == reason) ? reasonCode[reason] : reason);
                                     res.Add(string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}",
