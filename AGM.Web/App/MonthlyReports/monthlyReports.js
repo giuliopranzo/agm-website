@@ -1,4 +1,4 @@
-﻿app.controller('monthlyReports', function ($rootScope, $scope, $alert, $location, $state, $filter, monthlyReportsDataService, authenticationContainer, appHelper, applicationGlobals) {
+﻿app.controller('monthlyReports', ['$rootScope', '$scope', '$alert', '$location', '$state', '$filter', 'monthlyReportsDataService', 'authenticationContainer', 'appHelper', 'applicationGlobals', function ($rootScope, $scope, $alert, $location, $state, $filter, monthlyReportsDataService, authenticationContainer, appHelper, applicationGlobals) {
     $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
 
         if (toState.name == 'MonthlyReports') {
@@ -395,4 +395,4 @@
     };
 
     $scope.init();
-});
+}]);

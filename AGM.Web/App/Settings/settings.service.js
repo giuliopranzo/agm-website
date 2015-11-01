@@ -1,4 +1,4 @@
-﻿app.factory('settingsDataService', function($http, $q) {
+﻿app.factory('settingsDataService', ['$http', '$q', function($http, $q) {
     return {
         getHourReasons: function(callId) {
             var deferred = $q.defer();
@@ -90,4 +90,4 @@
             return deferred.promise;
         }
     }
-});
+}]);

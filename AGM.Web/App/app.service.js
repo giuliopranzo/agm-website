@@ -1,4 +1,4 @@
-﻿app.factory('appHelper', function ($rootScope, $location, $anchorScroll, localStorageService, applicationGlobals) {
+﻿app.factory('appHelper', ['$rootScope', '$location', '$anchorScroll', 'localStorageService', 'applicationGlobals', function ($rootScope, $location, $anchorScroll, localStorageService, applicationGlobals) {
     var helper = {
         setSESSIONEXP: function(exp) {
             $.cookie('SESSIONEXP', exp, { expires: 7, path: '/' });
@@ -55,9 +55,9 @@
         }
     }
     return helper;
-});
+}]);
 
-app.factory('applicationGlobals', function () {
+app.factory('applicationGlobals', [function () {
     var applicationGlobals = {
         isLoadingData: function () { return (this.dataRequestCount > 0); },
         dataRequestCount: 0,
@@ -65,9 +65,9 @@ app.factory('applicationGlobals', function () {
     }
 
     return applicationGlobals;
-});
+}]);
 
-app.factory('appDataService', function($http, $q, appHelper) {
+app.factory('appDataService', ['$http', '$q', 'appHelper', function($http, $q, appHelper) {
     return {
         getLocation: function(callId, viewValue) {
             var deferred = $q.defer();
@@ -81,4 +81,4 @@ app.factory('appDataService', function($http, $q, appHelper) {
 
         }
     }
-});
+}]);

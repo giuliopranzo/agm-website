@@ -1,4 +1,4 @@
-﻿app.controller('userDetail', function($rootScope, $scope, $alert, $location, $state, $filter, FileUploader, $http, appHelper, userSource, usersDataService, authenticationContainer, applicationGlobals) {
+﻿app.controller('userDetail', ['$rootScope', '$scope', '$alert', '$location', '$state', '$filter', 'FileUploader', '$http', 'appHelper', 'userSource', 'usersDataService', 'authenticationContainer', 'applicationGlobals', function($rootScope, $scope, $alert, $location, $state, $filter, FileUploader, $http, appHelper, userSource, usersDataService, authenticationContainer, applicationGlobals) {
     $scope.retributionItemTypeEnumNames = ['Buoni pasto', 'Rimborso spese', 'Trasferta Italia', 'Trasferta Italia 1/3', 'Trasferta Italia 2/3', 'Trasferta estero', 'Trasferta estero 1/3', 'Trasferta estero 2/3', 'Trattenuta per acconto', 'Compenso stage', 'Compenso prestaz. cont./emolumento', 'CO.CO.CO. a progetto'];
     $scope.userExists = false;
 	$scope.currentUser = authenticationContainer.currentUser;
@@ -179,7 +179,7 @@
     };
 
     $scope.init();
-});
+}]);
 
 app.directive('toggleSwitch', [function () {
     return {

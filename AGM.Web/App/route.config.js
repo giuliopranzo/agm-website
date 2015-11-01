@@ -1,4 +1,4 @@
-﻿app.config(function($stateProvider) {
+﻿app.config(['$stateProvider', function($stateProvider) {
     $stateProvider
         .state('Login', {
             url: "/Login?returnPath",
@@ -34,14 +34,14 @@
                 }
             },
             resolve: {
-                usersSource: function (usersDataService) {
+                usersSource: ['usersDataService', function (usersDataService) {
                     return usersDataService.getAllUsers('usr_detail').then(function (respData) {
                         if (respData.succeed)
                             return respData.data;
                         
                         return null;
                     });
-                }
+                }]
             }
         })
         .state('Root.UserDetail', {
@@ -56,14 +56,14 @@
                 }
             },
             resolve: {
-                userSource: function ($stateParams, usersDataService) {
+                userSource: ['$stateParams', 'usersDataService', function ($stateParams, usersDataService) {
                     return usersDataService.getUserDetail('usr_detail', $stateParams.userId).then(function (respData) {
                         if (respData.succeed)
                             return respData.data;
 
                         return null;
                     });
-                }
+                }]
             }
         })
         .state('Root.MonthlyReports', {
@@ -78,11 +78,11 @@
                 }
             },
             resolve: {
-                userReportSource: function($stateParams, monthlyReportsDataService) {
+                userReportSource: ['$stateParams', 'monthlyReportsDataService', function($stateParams, monthlyReportsDataService) {
                     return monthlyReportsDataService.getReportDetail('mr_detail', $stateParams.reportId, $stateParams.selectedDate).then(function (respData) {
                         $stateParams.userReportSource = respData.data;
                     });
-                }
+                }]
             }
         })
         .state('Root.JobAds', {
@@ -97,30 +97,32 @@
                 }
             },
             resolve: {
-                jobAdsSource: function ($stateParams, jobAdsDataService) {
+                jobAdsSource: ['$stateParams', 'jobAdsDataService', function ($stateParams, jobAdsDataService) {
                     return jobAdsDataService.getJobAds('ja_main').then(function (respData) {
                         return respData.data;
                     });
-                }
+                }]
             }
         })
         .state('Root.JobAds.Detail', {
             url: "/:adId",
             views: {
                 "ja_detail": {
-                    templateUrl: resolveViewPath('JobAds/Detail.html')
+                    templateUrl: resolveViewPath('JobAds/Detail.html'),
+                    controller: 'jobAdsDetail'
                 }
             },
             resolve: {
-                jobAdTextSource: function ($stateParams, jobAdsDataService) {
+                jobAdTextSource: ['$state', '$stateParams', 'jobAdsDataService', function ($state, $stateParams, jobAdsDataService) {
                     return jobAdsDataService.getJobAdText('ja_main', $stateParams.adId).then(function (respData) {
                         if (respData.succeed) {
                             $stateParams.jobAdTextSource = respData.data;
                         } else {
                             $stateParams.jobAdTextSource = null;
+                            $state.go('Root.JobAds');
                         }
                     });
-                }
+                }]
             }
         })
         .state('JobApplicants', {
@@ -180,7 +182,7 @@
                 }
             },
             resolve: {
-                hourReasonSource: function (settingsDataService) {
+                hourReasonSource: ['settingsDataService', function (settingsDataService) {
                     return settingsDataService.getHourReasons('se_main').then(function (respData) {
                         if (respData.succeed) {
                             return respData.data;
@@ -188,8 +190,8 @@
                             return null;
                         }
                     });
-                },
-                festivitySource: function(settingsDataService) {
+                }],
+                festivitySource: ['settingsDataService', function(settingsDataService) {
                     return settingsDataService.getFestivities('se_main').then(function (respData) {
                         if (respData.succeed) {
                             return respData.data;
@@ -197,8 +199,8 @@
                             return null;
                         }
                     });
-                },
-                mealVoucherSource: function (settingsDataService) {
+                }],
+                mealVoucherSource: ['settingsDataService', function (settingsDataService) {
                     return settingsDataService.getMealVoucherOptions('se_main').then(function (respData) {
                         if (respData.succeed) {
                             return respData.data;
@@ -206,7 +208,7 @@
                             return null;
                         }
                     });
-                }
+                }]
             }
         })
         .state('Root.Export', {
@@ -292,4 +294,4 @@
                 }
             }
         });
-});
+}]);

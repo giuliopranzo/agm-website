@@ -1,14 +1,14 @@
-﻿app.config(function ($locationProvider) {
+﻿app.config(['$locationProvider', function ($locationProvider) {
     $locationProvider.html5Mode(true);
-});
+}]);
 
-app.config(function (localStorageServiceProvider) {
+app.config(['localStorageServiceProvider', function (localStorageServiceProvider) {
     localStorageServiceProvider.setStorageType('sessionStorage');
     localStorageServiceProvider.setPrefix('agm');
-});
+}]);
 
-app.config(function($dropdownProvider) {
+app.config(['$dropdownProvider', function($dropdownProvider) {
     angular.extend($dropdownProvider.defaults, {
         html: true
     });
-})
+}])

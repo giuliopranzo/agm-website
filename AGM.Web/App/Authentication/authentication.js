@@ -1,4 +1,4 @@
-﻿app.controller('authentication', function($rootScope, $scope, $alert, $location, $stateParams, authenticationDataService, authenticationHelper) {
+﻿app.controller('authentication', ['$rootScope', '$scope', '$alert', '$location', '$stateParams', 'authenticationDataService', 'authenticationHelper', function($rootScope, $scope, $alert, $location, $stateParams, authenticationDataService, authenticationHelper) {
     $rootScope.$on('loader_show', function (event, callId) {
         if (callId == 'auth_logcheck')
             $scope.checking_data = true;
@@ -62,5 +62,4 @@
             $alert({ content: resp.data.toString(), type: 'material', duration: 3 });
         });
     };
-
-  });
+}]);

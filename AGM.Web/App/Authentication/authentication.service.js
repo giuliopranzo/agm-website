@@ -1,4 +1,4 @@
-﻿app.factory('authenticationDataService', function ($http, $q, authenticationContainer, authenticationHelper) {
+﻿app.factory('authenticationDataService', ['$http', '$q', 'authenticationContainer', 'authenticationHelper', function ($http, $q, authenticationContainer, authenticationHelper) {
     return {
         authenticate: function (callId, authData) {
             var deferred = $q.defer();
@@ -34,27 +34,26 @@
             return deferred.promise;
         }
     }
-});
+}]);
 
-app.factory('authenticationContainer', function() {
+app.factory('authenticationContainer', [function() {
     var container = {
         currentUser: ''
     };
 
     return container;
-});
+}]);
 
-app.factory('authenticationHelper', function ($q, appHelper) {
-        return {
-            setAuthToken: function (value, cancelOnClose) {
-                appHelper.setCookie('SSTKN', value, '/', ((cancelOnClose) ? null : 30));
-            },
-            getAuthToken: function () {
-                return appHelper.getCookie('SSTKN');
-            },
-            deleteAuthToken: function () {
-                appHelper.deleteCookie('SSTKN', '/');
-            }
+app.factory('authenticationHelper', ['$q', 'appHelper', function ($q, appHelper) {
+    return {
+        setAuthToken: function (value, cancelOnClose) {
+            appHelper.setCookie('SSTKN', value, '/', ((cancelOnClose) ? null : 30));
+        },
+        getAuthToken: function () {
+            return appHelper.getCookie('SSTKN');
+        },
+        deleteAuthToken: function () {
+            appHelper.deleteCookie('SSTKN', '/');
         }
     }
-);
+}]);

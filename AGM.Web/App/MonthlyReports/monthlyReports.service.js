@@ -1,4 +1,4 @@
-﻿app.factory('monthlyReportsDataService', function ($http, $q) {
+﻿app.factory('monthlyReportsDataService', ['$http', '$q', function ($http, $q) {
     return {
         getReportDetail: function (callId, reportDetailId, month) {
             var deferred = $q.defer();
@@ -87,4 +87,4 @@
             return deferred.promise;
         }
     }
-});
+}]);

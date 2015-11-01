@@ -2,7 +2,7 @@
 var controllerBasePath = '/App/';
 var factoryBasePath = '/App/';
 
-var app = angular.module('agm', ['ngAnimate', 'ngSanitize', 'ui.router', 'ui.bootstrap', 'LocalStorageModule', 'mgcrea.ngStrap', 'angularFileUpload', 'textAngular', 'fwg.pagerUp']);
+var app = angular.module('agm', ['ngAnimate', 'ngSanitize', 'ui.router', 'ui.bootstrap', 'LocalStorageModule', 'mgcrea.ngStrap', 'angularFileUpload', 'fwg.pagerUp', 'ngCkeditor']);
 
 function resolveViewPath(viewName) {
     return viewBasePath + viewName;
@@ -16,7 +16,7 @@ function resolveFactoryPath(factoryName) {
     return factoryBasePath + factoryName;
 }
 
-app.controller("main", function ($scope, $rootScope, $location, $state, $stateParams, $filter, appDataService, authenticationDataService, authenticationHelper, applicationGlobals) {
+app.controller("main", ['$scope', '$rootScope', '$location', '$state', '$stateParams', '$filter', 'appDataService', 'authenticationDataService', 'authenticationHelper', 'applicationGlobals', function ($scope, $rootScope, $location, $state, $stateParams, $filter, appDataService, authenticationDataService, authenticationHelper, applicationGlobals) {
 
     $rootScope.$on('loader_show', function (event, callId) {
         if (callId == 'mr_detail' || callId == 'usr_detail')
@@ -124,7 +124,7 @@ app.controller("main", function ($scope, $rootScope, $location, $state, $statePa
     };
 
     $scope.init();
-});
+}]);
 
 app.directive('printButton', [function () {
     return {

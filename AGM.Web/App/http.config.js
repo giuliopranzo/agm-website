@@ -1,9 +1,9 @@
-﻿app.config(function($httpProvider) {
+﻿app.config(['$httpProvider', function($httpProvider) {
     $httpProvider.defaults.withCredentials = true;
     $httpProvider.defaults.xsrfHeaderName = 'SSID';
     $httpProvider.defaults.xsrfCookieName = 'SSID';
 
-    $httpProvider.interceptors.push(function($q, $rootScope, $location, appHelper, authenticationHelper) {
+    $httpProvider.interceptors.push(['$q', '$rootScope', '$location', 'appHelper', 'authenticationHelper', function($q, $rootScope, $location, appHelper, authenticationHelper) {
         return {
             'request': function(config) {
                 appHelper.setLoadingData(true, ((config.headers._callId) ? config.headers._callId : ''));
@@ -33,5 +33,5 @@
                 return $q.reject(response);
             }
         };
-    });
-});
+    }]);
+}]);

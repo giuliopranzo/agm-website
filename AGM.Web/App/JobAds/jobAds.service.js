@@ -1,4 +1,4 @@
-﻿app.factory('jobAdsDataService', function($http, $q) {
+﻿app.factory('jobAdsDataService', ['$http', '$q', function($http, $q) {
     return {
         getJobAds: function(callId) {
             var deferred = $q.defer();
@@ -37,4 +37,4 @@
             return deferred.promise;
         }
     }
-});
+}]);

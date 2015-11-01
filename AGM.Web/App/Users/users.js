@@ -1,4 +1,4 @@
-﻿app.controller('users', function ($rootScope, $scope, $alert, $location, $state, $filter, usersSource, usersDataService, appHelper, applicationGlobals) {
+﻿app.controller('users', ['$rootScope', '$scope', '$alert', '$location', '$state', '$filter', 'usersSource', 'usersDataService', 'appHelper', 'applicationGlobals', function ($rootScope, $scope, $alert, $location, $state, $filter, usersSource, usersDataService, appHelper, applicationGlobals) {
 
     $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
         if (toState.name == 'Users') {
@@ -47,7 +47,7 @@
     }
 
     $scope.init();
-});
+}]);
 
 app.directive('userContextMenu', ['$dropdown', function ($dropdown) {
     return {

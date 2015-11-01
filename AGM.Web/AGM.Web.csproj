@@ -234,7 +234,6 @@
     <Content Include="App\app.config.js" />
     <Content Include="App\app.js" />
     <Content Include="App\app.service.js" />
-    <Content Include="App\Authentication\authentication.config.js" />
     <Content Include="App\Authentication\authentication.js" />
     <Content Include="App\Authentication\authentication.service.js" />
     <Content Include="App\Candidates\Candidates.html" />
@@ -255,6 +254,7 @@
     <Content Include="App\JobAds\JobAds.html" />
     <Content Include="App\JobAds\jobAds.js" />
     <Content Include="App\JobAds\jobAds.service.js" />
+    <Content Include="App\JobAds\jobAdsDetail.js" />
     <Content Include="App\Menu\Menu.html" />
     <Content Include="App\MonthlyReports\MonthlyReports.css" />
     <Content Include="App\MonthlyReports\MonthlyReports.html" />
