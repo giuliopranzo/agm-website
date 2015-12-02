@@ -8,7 +8,7 @@
         <div class="container-fluid">
             <div class="col-xs-12 col-md-6 form-group">
                 <form name="mainForm" novalidate>
-                    <input required name="newHourReason" class="form-control" type="text" ng-model="newHourReason.name" ng-maxlength="25" maxlength="25" placeholder="Nuova causale..." />
+                    <input required name="newHourReason" class="form-control" type="text" ng-model="newHourReason.name" ng-maxlength="50" maxlength="50" placeholder="Nuova causale..." />
                     <input name="newHourReasonCodeExport" class="form-control" type="text" ng-model="newHourReason.codeexport" ng-maxlength="3" maxlength="3" placeholder="Codice export..." />
                     <button ng-hide="!mainForm.newHourReason.$valid || newHourReason.id != 0" class="btn btn-info" ng-click="insertHourReason()">Inserisci</button>
                     <button ng-hide="!mainForm.newHourReason.$valid || newHourReason.id == 0" class="btn btn-info" ng-click="updateHourReason()">Aggiorna</button>

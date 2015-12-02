@@ -52,8 +52,19 @@ footer p {
     text-align: right;
 }
 
+.pageHeader_breadCrumbLink{
+    cursor: pointer;
+}
+
 .pageHeader_breadCrumbLink, .pageHeader_breadCrumbLink:visited, .pageHeader_breadCrumbLink:active, .pageHeader_breadCrumbLink:hover {
     color: #333333;
+}
+
+.pageContent{
+    position: absolute;
+    display: inline-block;
+    width: 100%;
+    margin-top: 70px;
 }
 
 
@@ -137,6 +148,10 @@ footer p {
 .body-content {
     margin: 35px auto;
     padding: 0 15px;
+}
+
+.filterActive {
+    color: #E44F4F !important;
 }
 
 .alert {
@@ -1412,6 +1427,8 @@ ul.typeahead {
 }
 
 .baseTable2 > div > div.rowHoverIndicator {
+    position: relative;
+    z-index: 10;
     width: 2px;
     padding-left: 0;
     padding-right: 0;
@@ -1426,6 +1443,25 @@ ul.typeahead {
     cursor: pointer;
 }
 
+.baseTable2 > div.header {
+    margin: 0;
+
+    border-width: 0 0 1px;
+    border-style: solid;
+    border-color: #b5b5b5;
+
+    font-size: 12px;
+    cursor: pointer;
+    background-color: #eee;
+}
+
+jobApplicantStatus_1 {
+    background-color: #C3C3C3;
+}
+
+jobApplicantStatus_4 {
+    background-color: #3E3E3E;
+}
 
 @media (max-width: 767px) {
     .loginForm {
@@ -1728,3 +1764,34 @@ ul.typeahead {
         display: block;
     }
 }
+
+
+
+
+
+
+
+
+.toggle-handle-multi{
+    position: relative;
+    margin: 0 auto;
+    padding: 0;
+    padding-bottom: 0;
+    height: 100%;
+    width: 20px;
+    border-width: 0 1px;
+    left: 8px;
+}
+
+.toggle-group-multi{
+    position: absolute;
+    width: 200%;
+    top: 0;
+    bottom: 0;
+    left: -100%;
+    transition: left .35s;
+    -webkit-transition: left .35s;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+}
+

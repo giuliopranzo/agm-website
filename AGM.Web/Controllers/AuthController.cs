@@ -82,6 +82,7 @@ namespace AGM.Web.Controllers
         }
 
         [AuthorizeAction]
+        [DeflateCompression]
         [HttpGet]
         public ApiResponse GetCurrentUser()
         {

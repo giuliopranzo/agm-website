@@ -5,7 +5,7 @@
         <span class="pageHeader_subtitle" ng-show="myMonthlyReport">ore mensili</span>
         <span class="pageHeader_subtitle" ng-hide="myMonthlyReport">ore mensili utente</span>
     </div>
-    <div class="pageHeader_breadCrumb" ng-show="myMonthlyReport"><a class="pageHeader_breadCrumbLink" ui-sref="Index">Home</a> > Rapportini</div>
+    <div class="pageHeader_breadCrumb" ng-show="myMonthlyReport"><a class="pageHeader_breadCrumbLink" ui-sref="Root.Index">Home</a> > Rapportini</div>
     <div class="pageHeader_breadCrumb" ng-hide="myMonthlyReport"><a class="pageHeader_breadCrumbLink" ui-sref="Root.Index">Home</a> > <a class="pageHeader_breadCrumbLink" ui-sref="Root.Users">Utenti</a> > Rapportini utente</div>
 </div>
 <div class="monthlyRep" ng-cloak>
@@ -37,8 +37,7 @@
                        data-date-type="iso"
                        data-min-date="2014-01-01 00:00:00"
                        data-autoclose="1"
-                       bs-datepicker
-                       readonly>
+                       bs-datepicker>
             </div>
         </div>
         <div class="hidden-xs hidden-sm toolContainer">
@@ -62,8 +61,7 @@
                                    data-min-date="{{detail.minmonthdate}}"
                                    data-max-date="{{detail.maxmonthdate}}"
                                    data-autoclose="1"
-                                   bs-datepicker
-                                   readonly>
+                                   bs-datepicker>
                         </div>
                     </div>
                     <div class="col-xs-12 form-group">
@@ -71,7 +69,7 @@
                             <input name="hour" type="number" ng-model="insertHour" class="form-control" placeholder="Ore" min="0" max="24" step="any" />
                             <i ng-show="!asideInsert.hour.$valid" class="fa fa-exclamation-circle asideErrorInput" data-title="Il numero delle ore deve essere compreso tra 0 e 24" data-placement="right" data-trigger="click" bs-tooltip></i>
                         </div>
-                        <button type="button" class="btn btn-default controlMinSeparated btnFill" ng-model="insertSelectedHourReason" ng-options="reason.id as reason.name for reason in detail.hourreasons" bs-select>
+                        <button type="button" class="btn btn-default controlMinSeparated btnFill" ng-model="insertSelectedHourReason" bs-options="reason.id as reason.name for reason in detail.hourreasons" bs-select>
                             Action <span class="caret"></span>
                         </button>
                     </div>
@@ -84,12 +82,12 @@
                             <input name="expense" type="number" ng-model="insertExpense" class="form-control" placeholder="Spese" min="0" max="9999" step="any" />
                         </div>
                         <i ng-show="!asideInsert.expense.$valid" class="fa fa-exclamation-circle asideErrorInput" data-title="Il numero deve essere compreso tra 0 e 9999" data-placement="right" data-trigger="click" bs-tooltip></i>
-                        <button type="button" class="btn btn-default controlMinSeparated btnFill" ng-model="insertSelectedExpenseReason" data-html="1" ng-options="reason.id as reason.name for reason in detail.expensereasons" bs-select>
+                        <button type="button" class="btn btn-default controlMinSeparated btnFill" ng-model="insertSelectedExpenseReason" data-html="1" bs-options="reason.id as reason.name for reason in detail.expensereasons" bs-select>
                             Action <span class="caret"></span>
                         </button>
                     </div>
                     <div class="col-xs-12 form-group">
-                        <textarea ng-model="insertNote" maxlength="50" class="form-control asideinsertNote" placeholder="Note" ng-options="note as note for note in getRecurringNotes($viewValue)" bs-typeahead></textarea>
+                        <textarea ng-model="insertNote" maxlength="50" class="form-control asideinsertNote" placeholder="Note" bs-options="note as note for note in getRecurringNotes($viewValue)" bs-typeahead></textarea>
                     </div>
                     <div class="col-xs-12 form-group">
                         <button ng-hide="(asideInsert.$invalid || (insertHour == null && insertExpense == null && insertNote == null))" class="btn btn-info" ng-click="insertReport()">Inserisci</button>

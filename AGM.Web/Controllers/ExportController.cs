@@ -18,6 +18,7 @@ namespace AGM.Web.Controllers
     public class ExportController : ApiController
     {
         [AuthorizeAction]
+        [DeflateCompression]
         [HttpGet]
         public ApiResponse Get(string month)
         {
@@ -160,26 +161,13 @@ namespace AGM.Web.Controllers
 
         private KeyValuePair<string, Dictionary<int, Dictionary<string, double>>> ExportMH(string month)
         {
-            var reasonCode = new Dictionary<string, string>()
-            {
-                {"ordinarie", "   "},
-                {"ferie", "FP"},
-                {"r.o.l.", "P1"},
-                {"straordinarie (solo se approvate)", "S1"},
-                {"malattia", "M1"},
-                {"infortunio", "I1"},
-                {"donazione sangue", "DS"},
-                {"congedo matrimoniale", "CM"},
-                {"D.Lgs. 151", "M8 "},
-                {"Permessi ex-festività", "P2"}
-            };
             var mhReport = new Dictionary<int, Dictionary<string, double>>();
-
             Thread.CurrentPrincipal = new CustomPrincipal("nandowalter@gmail.com$Fernando Walter Gagni");
             List<string> res = new List<string>();
             using (var context = new AgmDataContext())
             {
                 var users = context.Users.OrderBy(u => u.LastName).ToList();
+                var reasonColl = context.HourReasons.ToList();
                 foreach (var user in users.Where(u => !u.IsDeleted && u.IsActive && u.IdExport.HasValue))
                 {
                     var userMhReport = new Dictionary<string, double>();
@@ -194,9 +182,9 @@ namespace AGM.Web.Controllers
                             {
                                 foreach (var item in itemParent.HoursCollection)
                                 {
-                                    var hours = ((int)Math.Truncate((item as MonthlyReportHour).HoursCount * 100)).ToString();
+                                    var hours = ((int)Math.Truncate((item as MonthlyReportHour).HoursCount * 100)).ToString().PadLeft(4,'0');
                                     var reason = (item as MonthlyReportHour).Reason;
-                                    var reasonCurr = (reasonCode.Any(r => r.Key == reason) ? reasonCode[reason] : reason);
+                                    var reasonCurr = (reasonColl.Any(r => r.Name == reason) ? reasonColl.First(r => r.Name == reason).CodeExport??String.Empty : reason);
                                     res.Add(string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}",
                                         "00000",
                                         "00",
@@ -204,7 +192,7 @@ namespace AGM.Web.Controllers
                                         item.Date.ToString("ddMMyy"),
                                         reasonCurr.PadRight(3, ' '),
                                         hours,
-                                        (reasonCurr == "   " || reasonCurr == "S1") ? hours : "0000",
+                                        (reasonCurr == string.Empty || reasonCurr == "S1") ? hours : "0000",
                                         "0",
                                         "0"));
 

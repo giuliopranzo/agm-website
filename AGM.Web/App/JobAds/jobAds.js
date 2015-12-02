@@ -1,4 +1,4 @@
-﻿app.controller('jobAds', ['$rootScope', '$scope', '$state', '$location', '$filter', '$alert', 'jobAdsSource', 'jobAdsDataService', 'applicationGlobals', function ($rootScope, $scope, $state, $location, $filter, $alert, jobAdsSource, jobAdsDataService, applicationGlobals) {
+﻿app.controller('jobAds', ['$rootScope', '$scope', '$state', '$location', '$filter', '$alert', 'jobAdsSource', 'jobAdsDataService', 'applicationGlobals', 'appDataService', function ($rootScope, $scope, $state, $location, $filter, $alert, jobAdsSource, jobAdsDataService, applicationGlobals, appDataService) {
     $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
         $scope.isJobAdDetail = (toState.name == 'Root.JobAds.Detail');
     });

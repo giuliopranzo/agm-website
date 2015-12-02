@@ -34,6 +34,11 @@ namespace AGM.Web.Models
         public DbSet<Export> Exports { get; set; }
         public DbSet<Token> Tokens { get; set; }
         public DbSet<MHReportLock> MHReportLocks { get; set; }
+        public DbSet<JobApplicant> JobApplicants { get; set; }
+        public DbSet<JobCategory> JobCategories { get; set; }
+        public DbSet<JobApplicantStatus> JobApplicantStatuses { get; set; }
+        public DbSet<JobApplicantStatusReason> JobApplicantStatusReasons { get; set; }
+        public DbSet<Location> Locations { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -51,6 +56,11 @@ namespace AGM.Web.Models
             modelBuilder.Configurations.Add(new ExportMap());
             modelBuilder.Configurations.Add(new TokenMap());
             modelBuilder.Configurations.Add(new MHReportLockMap());
+            modelBuilder.Configurations.Add(new JobApplicantMap());
+            modelBuilder.Configurations.Add(new JobCategoryMap());
+            modelBuilder.Configurations.Add(new JobApplicantStatusMap());
+            modelBuilder.Configurations.Add(new JobApplicantStatusReasonMap());
+            modelBuilder.Configurations.Add(new LocationMap());
         }
     }
 }

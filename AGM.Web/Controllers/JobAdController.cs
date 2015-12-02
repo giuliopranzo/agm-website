@@ -17,6 +17,7 @@ namespace AGM.Web.Controllers
     public class JobAdController: ApiController
     {
         [AuthorizeAction]
+        [DeflateCompression]
         [HttpGet]
         public ApiResponse Get()
         {
@@ -34,6 +35,7 @@ namespace AGM.Web.Controllers
         }
 
         [AuthorizeAction]
+        [DeflateCompression]
         [HttpGet]
         public ApiResponse GetText(int id)
         {

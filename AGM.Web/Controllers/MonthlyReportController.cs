@@ -18,6 +18,7 @@ namespace AGM.Web.Controllers
     public class MonthlyReportController : ApiController
     {
         [AuthorizeAction]
+        [DeflateCompression]
         [HttpGet]
         public ApiResponse Get(int id, string month)
         {
@@ -300,6 +301,7 @@ namespace AGM.Web.Controllers
         }
 
         [AuthorizeAction]
+        [DeflateCompression]
         [HttpGet]
         public ApiResponse GetRecurringNotes(int id, string value)
         {

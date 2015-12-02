@@ -1,0 +1,180 @@
+﻿<div class="breadcrumb hidden-xs hidden-sm" style="display: table;">
+    <div class="pageHeader_pageTitle">
+        <span>Candidati</span>
+        <span class="pageHeader_subtitle"></span>
+    </div>
+    <div class="pageHeader_breadCrumb"><a class="pageHeader_breadCrumbLink" ui-sref="Root.Index">Home</a> > Candidati</div>
+</div>
+<div class="monthlyRep" ng-cloak>
+    <div class="pageContent" ng-hide="isApplicantDetail">
+        <a id="pageTop" class="reportTop"></a>
+        <div class="hidden-print mr_affixToolContainer" role="complementary" data-offset-top="235" bs-affix>
+            <div class="container container-header">
+                <i class="fa fa-filter signAffix" ng-click="toggleAsideFilters()" ng-class="{'filterActive': dataFilterOn}"></i>
+                <i class="fa fa-plus-circle signAffix" ng-click="insert()"></i>
+                <i class="fa fa-check-square-o signAffix" ng-click="selectionToggle()"></i>
+                <i class="fa fa-trash-o signAffix" ng-show="thereAreSelected()" ng-click="deleteSelected()"></i>
+            </div>
+        </div>
+        <div>
+            <div class="col-xs-12 col-md-3 form-group" style="display:none;">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-search fa-fw"></i></span>
+                    <input type="text" class="form-control" />
+                </div>
+            </div>
+            <div class="hidden-xs hidden-sm toolContainer">
+                <i class="fa fa-trash-o sign" ng-show="thereAreSelected()" ng-click="deleteSelected()"></i>
+                <i class="fa fa-check-square-o sign" ng-click="selectionToggle()"></i>
+                <i class="fa fa-plus-circle sign" ng-click="insert()"></i>
+                <i class="fa fa-filter sign" ng-click="toggleAsideFilters()" ng-class="{'filterActive': dataFilterOn}"></i>
+            </div>
+            <div class="clearfix"></div>
+
+            <div class="col-xs-12 col-md-4">
+                <input class="form-control" type="text" ng-model="search" placeholder="Ricerca..." />
+                <span class="input-inner-icon" ng-click="eraseSearch()"><i class="fa fa-times"></i></span>
+            </div>
+            <div class="clearfix"></div>            
+            
+            <div class="asideRight" ng-show="showFilters">
+                <div class="asideTitleContainer"><span class="asideTitle">Filtri di ricerca</span><i class="fa fa-times asideCloseIcon" ng-click="toggleAsideFilters()"></i></div>
+                <div class="asideBodyContainer">
+                    <form name="asideFilter" novalidate>
+                        <div class="col-xs-12 form-group">
+                            <label>Data colloquio</label>
+                            <div class="input-group" ng-class="{'has-error': !asideFilter.fltr_interviewDateFrom.$pristine && asideFilter.fltr_interviewDateFrom.$invalid}">
+                                <span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
+                                <input name="fltr_interviewDateFrom" type="text" class="form-control inputDatePicker" ng-model="filterInterviewDateFrom"
+                                       data-date-format="dd-MM-yyyy"
+                                       data-date-type="iso"
+                                       data-autoclose="1"
+                                       bs-datepicker />
+                            </div>
+                            <span class="input-inner-icon" ng-click="filterInterviewDateFrom=null;asideFilter.flt_interviewDateFrom.$setPristine()" style="top:20px; z-index:10;"><i class="fa fa-times"></i></span>
+                            <div class="input-group" ng-class="{'has-error': !asideFilter.fltr_interviewDateTo.$pristine && asideFilter.fltr_interviewDateTo.$invalid}">
+                                <span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
+                                <input id="fltr_interviewDateTo" type="text" class="form-control inputDatePicker" ng-model="filterInterviewDateTo" ng-click="openCalendar(this)"
+                                       data-date-format="dd-MM-yyyy"
+                                       data-date-type="iso"
+                                       data-autoclose="1"
+                                       bs-datepicker />
+                            </div>
+                            <span class="input-inner-icon" ng-click="filterInterviewDateTo=null" style="top:63px; z-index:10;"><i class="fa fa-times"></i></span>
+                        </div>
+
+                        <div class="col-xs-12 form-group">
+                            <div ng-class="{'has-error':!asideFilter.hour.$valid}">
+                                <input name="hour" type="text" ng-model="filterCategory" class="form-control" placeholder="Categoria" />
+                                <i ng-show="!asideFilter.hour.$valid" class="fa fa-exclamation-circle asideErrorInput" data-title="Il numero delle ore deve essere compreso tra 0 e 24" data-placement="right" data-trigger="click" bs-tooltip></i>
+                            </div>
+                            <button type="button" class="btn btn-default controlMinSeparated btnFill" ng-model="filterStatus" bs-options="status.name for status in statuses" bs-select data-placeholder="Stato">
+                            </button>
+                        </div>
+
+                        <div class="col-xs-12 form-group">
+                            <label for="fltr_birthDateFrom">Data di nascita</label>
+                            <div class="input-group" ng-class="{'has-error': !asideFilter.fltr_birthDateFrom.$pristine && asideFilter.fltr_birthDateFrom.$invalid}">
+                                <span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
+                                <input id="fltr_birthDateFrom" type="text" class="form-control inputDatePicker" ng-model="filterBirthDateFrom"
+                                        data-date-format="dd-MM-yyyy"
+                                        data-date-type="iso"
+                                        data-autoclose="1"
+                                        bs-datepicker />
+                            </div>
+                            <span class="input-inner-icon" ng-click="filterBirthDateFrom=null;asideFilter.fltr_birthDateFrom.$setPristine()" style="top:20px; z-index:10;"><i class="fa fa-times"></i></span>
+                            <div class="input-group" ng-class="{'has-error': !asideFilter.fltr_birthDateTo.$pristine && asideFilter.fltr_birthDateTo.$invalid}">
+                                <span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
+                                <input id="fltr_birthDateTo" type="text" class="form-control inputDatePicker" ng-model="filterBirthDateTo"
+                                       data-date-format="dd-MM-yyyy"
+                                       data-date-type="iso"
+                                       data-autoclose="1"
+                                       bs-datepicker />
+                            </div>
+                            <span class="input-inner-icon" ng-click="filterBirthDateTo=null;asideFilter.fltr_birthDateTo.$setPristine()" style="top:63px; z-index:10;"><i class="fa fa-times"></i></span>
+                        </div>
+
+                        <div class="col-xs-12 form-group">
+                            <button class="btn btn-danger" ng-click="resetFilter()">Reset</button>
+                            <button class="btn btn-info" ng-click="applyFilter()" ng-disabled="asideFilter.$invalid">Applica</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="loading loadingAbs" ng-show="loading_insert"></div>
+            </div>
+
+            <div class="modalBg" ng-show="showFilters"></div>
+
+            <div style="margin-bottom:15px;" ng-show="pager.getFilteredData().length > 0">
+                <div class="btn-group" style="float:left;margin:0 0 0 15px;">
+                    <label class="btn btn-default" ng-disabled="pager.getPageIndex()==0" ng-click="pager.prevPage()"><i class="fa fa-angle-left"></i></label>
+                    <label class="btn pagerPageButton" ng-class="{'btn-primary':pager.getPageIndex()==$index, 'btn-default':pager.getPageIndex()!=$index}" ng-disabled="pager.getPageIndex()==$index" ng-click="pager.setPageIndex($index)" ng-repeat="page in pager.getPages()" ng-bind="page"></label>
+                    <label class="btn btn-default" ng-disabled="pager.getPageIndex()==pager.getPages().length-1" ng-click="pager.nextPage()"><i class="fa fa-angle-right"></i></label>
+                </div>
+                <div class="clearfix visible-xs-block"></div>
+                <div class="hidden-xs btn-group" style="float:right; margin:0 15px 0 0;">
+                    <label class="btn pagerPageButton" ng-class="{'btn-primary':pager.getPageSize()==size, 'btn-default':pager.getPageSize()!=size}" ng-click="pager.setPageSize(size)" ng-repeat="size in pageSizes" ng-bind="size"></label>
+                </div>
+                <div class="hidden-xs" style="float:right; line-height: 34px; margin-right: 5px;"><span>Righe per pagina</span></div>
+                <div class="clearfix"></div>
+                <div style="float:right; margin:0 15px 0 0;">Righe {{(pager.getFilteredData().length > 50)?'50+*':pager.getFilteredData().length}}/{{pager.getDataCount()}}</div>
+                <div class="clearfix"></div>
+                <div style="float:right; margin:0 15px 0 0;">
+                    <span ng-if="pager.getFilteredData().length > 50">(*) max 50 righe visualizz., migliora i filtri di rircerca</span>
+                    <span ng-if="pager.getFilteredData().length <= 50">&nbsp;</span>
+                </div>
+                
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="placeholderText" ng-show="pager.getFilteredData().length == 0" ng-bind="'Non ci sono elementi contenenti \'' + search + '\'.'">Non sono presenti elementi con i criteri di ricerca</div>
+            <div class="baseTable2">
+                <div class="header gridRow hidden-xs">
+                    <div style="width:24px; display:inline-block; float:left;">&nbsp;</div>
+                    <div class="noLeftPadding col-sm-2" ng-click="pager.setOrder('displayname')">Nome <i class="fa" ng-class="{'fa-sort': (pager.getOrder()!='+displayname' && pager.getOrder()!='-displayname'), 'fa-sort-desc': (pager.getOrder()=='+displayname'), 'fa-sort-asc': (pager.getOrder()=='-displayname')}"></i></div>
+                    <div class="noLeftPadding col-lg-1 visible-lg" ng-click="pager.setOrder('birthdate')">Nato il <i class="fa" ng-class="{'fa-sort': (pager.getOrder()!='+birthdate' && pager.getOrder()!='-birthdate'), 'fa-sort-desc': (pager.getOrder()=='+birthdate'), 'fa-sort-asc': (pager.getOrder()=='-birthdate')}"></i><i class="fa fa-filter visible-lg" ng-if="dataFilterOn" ng-show="filterBirthDateFrom || filterBirthDateTo"></i></div>
+                    <div class="noLeftPadding col-sm-3 col-lg-2" ng-click="pager.setOrder('jobcategory.name')">Cat. <i class="fa" ng-class="{'fa-sort': (pager.getOrder()!='+jobcategory.name' && pager.getOrder()!='-jobcategory.name'), 'fa-sort-desc': (pager.getOrder()=='+jobcategory.name'), 'fa-sort-asc': (pager.getOrder()=='-jobcategory.name')}"></i><i class="fa fa-filter visible-lg" ng-if="dataFilterOn" ng-show="filterCategory"></i></div>
+                    <div class="noLeftPadding col-sm-2" ng-click="pager.setOrder('statuscalculated')">Stato <i class="fa" ng-class="{'fa-sort': (pager.getOrder()!='+statuscalculated' && pager.getOrder()!='-statuscalculated'), 'fa-sort-desc': (pager.getOrder()=='+statuscalculated'), 'fa-sort-asc': (pager.getOrder()=='-statuscalculated')}"></i><i class="fa fa-filter visible-lg" ng-if="dataFilterOn" ng-show="filterStatus"></i></div>
+                    <div class="noLeftPadding col-sm-2 col-lg-1" ng-click="pager.setOrder('interviewdate')">Colloquio <i class="fa" ng-class="{'fa-sort': (pager.getOrder()!='+interviewdate' && pager.getOrder()!='-interviewdate'), 'fa-sort-desc': (pager.getOrder()=='+interviewdate'), 'fa-sort-asc': (pager.getOrder()=='-interviewdate')}"></i><i class="fa fa-filter visible-lg" ng-if="dataFilterOn" ng-show="filterInterviewDateFrom || filterInterviewDateTo"></i></div>
+                    <div class="noLeftPadding col-lg-1 visible-lg" ng-click="pager.setOrder('updatedate')">Agg.to <i class="fa" ng-class="{'fa-sort': (pager.getOrder()!='+updatedate' && pager.getOrder()!='-updatedate'), 'fa-sort-desc': (pager.getOrder()=='+updatedate'), 'fa-sort-asc': (pager.getOrder()=='-updatedate')}"></i></div>
+                    <div class="noLeftPadding col-lg-1 visible-lg" ng-click="pager.setOrder('id')">Codice <i class="fa" ng-class="{'fa-sort': (pager.getOrder()!='+id' && pager.getOrder()!='-id'), 'fa-sort-desc': (pager.getOrder()=='+id'), 'fa-sort-asc': (pager.getOrder()=='-id')}"></i></div>
+                    <div class="noLeftPadding col-sm-2 col-lg-1 hidden-xs" ng-click="pager.setOrder('worklocation.name')">Luogo lav. <i class="fa" ng-class="{'fa-sort': (pager.getOrder()!='+worklocation.name' && pager.getOrder()!='-worklocation.name'), 'fa-sort-desc': (pager.getOrder()=='+worklocation.name'), 'fa-sort-asc': (pager.getOrder()=='-worklocation.name')}"></i></div>
+                    
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="header gridRow visible-xs text-center">
+                    <div class="noLeftPadding col-xs-12">Candidati</div>
+                </div>
+
+                <div class="row" ng-class="{odd: $odd, selected: applicant._selected}" ng-repeat="applicant in pager.getCurrentPageData(search)" ng-click="goToDetail(jobAd.id)">
+                    <div class="rowHoverIndicator"></div>
+                    <div style="width:24px; display:inline-block; float:left;">
+                        <input style="vertical-align: middle; margin: 0 4px; height: 28px;" type="checkbox" ng-model="applicant._selected" ng-click="$event.stopPropagation()" />
+                    </div>
+                    <div class="col-xs-12 col-sm-2" style="font-weight:bold" ng-bind="applicant.displayname"></div>
+                    <div class="col-lg-1 visible-lg" ng-bind="helper.getFormattedDate(applicant.birthdate, 'dd-MM-yyyy')||'&nbsp;'"></div>
+                    <div class="hidden-xs col-sm-3 col-lg-2" ng-bind="applicant.jobcategory.name"></div>
+                    <div class="col-xs-12 col-sm-push-2 col-sm-2 col-lg-1">
+                        <div style="float:left;">
+                            <span class="visible-xs-inline-block" style="font-weight:bold;"><i class="fa fa-microphone"></i></span>
+                            <span ng-bind="helper.getFormattedDate(applicant.interviewdate, 'dd-MM-yyyy')||'&nbsp;'"></span>
+                        </div>
+                        <span class="visible-xs" style="float:right;" ng-bind="applicant.jobcategory.name"></span>
+                    </div>                    
+                    <div class="col-xs-12 col-sm-pull-2 col-sm-2 col-lg-pull-1" ng-bind="applicant.statuscalculated || '&nbsp;'" style="position:relative;z-index:1;text-align: center;" ng-style="{'background-color': getStatusBgColor(applicant.status.id)}"></div>
+                    <div class="col-lg-1 visible-lg" ng-bind="helper.getFormattedDate(applicant.updatedate, 'dd-MM-yyyy')||'&nbsp;'"></div>
+                    <div class="col-lg-1 visible-lg" ng-bind="applicant.id||'&nbsp;'"></div>
+                    <div class="col-sm-2 col-lg-1 hidden-xs" ng-bind="applicant.worklocation.name||'&nbsp;'"></div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+
+            <div agm-footer></div>
+        </div>
+    </div>
+
+    <div ui-view="ja_insert"></div>
+
+    <div class="loading" ng-show="loading"></div>
+</div>

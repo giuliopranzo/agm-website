@@ -1,4 +1,4 @@
-﻿app.factory('usersDataService', function ($http, $q) {
+﻿app.factory('usersDataService', ['$http', '$q', function ($http, $q) {
     return {
         getAllUsers: function (callId) {
             var deferred = $q.defer();
@@ -46,4 +46,4 @@
             return deferred.promise;
         }
     }
-});
+}]);

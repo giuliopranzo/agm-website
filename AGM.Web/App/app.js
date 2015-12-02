@@ -43,7 +43,6 @@ app.controller("main", ['$scope', '$rootScope', '$location', '$state', '$statePa
                 $scope.user = '';
                 $scope.authenticated = false;
                 $state.go('Login');
-                break;
         }
     });
 
@@ -179,6 +178,31 @@ app.directive('scrollbarDisable', [function() {
                     $(attrs.scrollbarTarget).attr('style','overflow:hidden !important;');
                 } else {
                     $(attrs.scrollbarTarget).attr('style','');
+                }
+            });
+        }
+    };
+}]);
+
+app.directive('toggleSwitchMulti', [function () {
+    return {
+        scope: {
+            val: '=ngModel'
+        },
+        link: function (scope, element, attrs) {
+            element.bootstrapToggleMulti();
+            scope.$watch('val', function (newValue, oldValue) {
+                if (newValue == true && element.prop('checked') === false)
+                    element.bootstrapToggle('on');
+                else if (newValue == false && element.prop('checked') === true)
+                    element.bootstrapToggle('off');
+            }, true);
+
+            element.change(function () {
+                var setVal = ($(this).prop('checked') === true) ? 1 : 0;
+                if (scope.val != setVal) {
+                    scope.val = setVal;
+                    scope.$apply();
                 }
             });
         }

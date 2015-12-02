@@ -138,10 +138,9 @@ namespace AGM.Web.Controllers
                 defs.Add("utenti example", JsonConvert.SerializeObject(resUtenti));
                 sqlreader.Close();
 
-                //command = new System.Data.SqlClient.SqlCommand("CREATE TABLE [dbo].[version] ([Code]           NVARCHAR (50) NOT NULL,[UpdateDate]        DATETIME      NULL,[UpdateSucceeded]   BIT           NULL,[LastUpdateTryDate] DATETIME      NULL,PRIMARY KEY CLUSTERED ([Code] ASC));", conn);
-                //command = new System.Data.SqlClient.SqlCommand("DROP TABLE [dbo].[version];", conn);
-                //var resDel = command.ExecuteNonQuery();
-                //defs.Add("update result1", resDel);
+                command = new System.Data.SqlClient.SqlCommand("UPDATE utenti set utente=email where utente is NULL;", conn);
+                var resupd = command.ExecuteNonQuery();
+                defs.Add("update result1", resupd);
 
                 //command = new System.Data.SqlClient.SqlCommand("insert into rappcausali (idcausale,nome) values (10,'Permessi ex-festività')", conn);
                 //var resAlter = command.ExecuteNonQuery();

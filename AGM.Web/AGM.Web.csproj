@@ -55,6 +55,14 @@
     <Reference Include="Intelligencia.UrlRewriter">
       <HintPath>..\packages\Intelligencia.UrlRewriter.2.0.0.9\lib\net40\Intelligencia.UrlRewriter.dll</HintPath>
     </Reference>
+    <Reference Include="Ionic.Zip, Version=1.9.7.0, Culture=neutral, PublicKeyToken=6583c7c814667745, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetZip.1.9.7\lib\net20\Ionic.Zip.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Jil, Version=2.12.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Jil.2.12.1\lib\net45\Jil.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.1.0\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
     </Reference>
@@ -88,6 +96,10 @@
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Sigil, Version=4.5.0.0, Culture=neutral, PublicKeyToken=2d06c3494341c8ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sigil.4.5.0\lib\net45\Sigil.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -155,9 +167,9 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.0\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
-    <Reference Include="WebGrease">
+    <Reference Include="WebGrease, Version=1.6.5135.21930, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
       <Private>True</Private>
-      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -169,6 +181,7 @@
     <Compile Include="Controllers\ExportController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\JobAdController.cs" />
+    <Compile Include="Controllers\JobApplicantsController.cs" />
     <Compile Include="Controllers\MonthlyReportController.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -178,14 +191,17 @@
     </Compile>
     <Compile Include="Infrastructure\AppBundleOrderer.cs" />
     <Compile Include="Infrastructure\Attributes\AuthorizeActionAttribute.cs" />
+    <Compile Include="Infrastructure\Attributes\DeflateCompressionAttribute.cs" />
     <Compile Include="Infrastructure\ConfigurationHelper.cs" />
     <Compile Include="Infrastructure\CustomPrincipal.cs" />
     <Compile Include="Infrastructure\Extensions\ApiControllerExtensions.cs" />
     <Compile Include="Infrastructure\Extensions\ModelExtensions.cs" />
+    <Compile Include="Infrastructure\Helpers\CompressionHelper.cs" />
     <Compile Include="Infrastructure\Helpers\DateHelpers.cs" />
     <Compile Include="Infrastructure\Helpers\FileHelpers.cs" />
     <Compile Include="Infrastructure\HttpRequestBaseExtension.cs" />
     <Compile Include="Infrastructure\HttpRequestHeadersExtension.cs" />
+    <Compile Include="Infrastructure\JilFormatter.cs" />
     <Compile Include="Infrastructure\OperationException.cs" />
     <Compile Include="Infrastructure\OptionSection.cs" />
     <Compile Include="Infrastructure\RetributionItemType.cs" />
@@ -201,9 +217,19 @@
     <Compile Include="Models\HourReason.cs" />
     <Compile Include="Models\JobAd.cs" />
     <Compile Include="Models\JobAdSaveIn.cs" />
+    <Compile Include="Models\JobApplicant.cs" />
+    <Compile Include="Models\JobApplicantStatus.cs" />
+    <Compile Include="Models\JobApplicantStatusReason.cs" />
+    <Compile Include="Models\JobCategory.cs" />
+    <Compile Include="Models\Location.cs" />
     <Compile Include="Models\Mapping\CandidateMap.cs" />
     <Compile Include="Models\Mapping\ExpenseReasonMap.cs" />
     <Compile Include="Models\Mapping\ExportMap.cs" />
+    <Compile Include="Models\Mapping\JobApplicantMap.cs" />
+    <Compile Include="Models\Mapping\JobApplicantStatusMap.cs" />
+    <Compile Include="Models\Mapping\JobApplicantStatusReasonMap.cs" />
+    <Compile Include="Models\Mapping\JobCategoryMap.cs" />
+    <Compile Include="Models\Mapping\LocationMap.cs" />
     <Compile Include="Models\Mapping\MHReportLockMap.cs" />
     <Compile Include="Models\Mapping\OptionMap.cs" />
     <Compile Include="Models\Mapping\FestivityMap.cs" />
@@ -255,6 +281,9 @@
     <Content Include="App\JobAds\jobAds.js" />
     <Content Include="App\JobAds\jobAds.service.js" />
     <Content Include="App\JobAds\jobAdsDetail.js" />
+    <Content Include="App\JobApplicants\JobApplicants.html" />
+    <Content Include="App\JobApplicants\jobApplicants.js" />
+    <Content Include="App\JobApplicants\jobApplicants.service.js" />
     <Content Include="App\Menu\Menu.html" />
     <Content Include="App\MonthlyReports\MonthlyReports.css" />
     <Content Include="App\MonthlyReports\MonthlyReports.html" />
@@ -288,6 +317,9 @@
     <Content Include="Content\nanoscroller.css" />
     <Content Include="Content\Site.css" />
     <Content Include="css\font-awesome.css" />
+    <Content Include="DbUpdates\AGM_019.sql" />
+    <Content Include="DbUpdates\AGM_018.sql" />
+    <Content Include="DbUpdates\AGM_017.sql" />
     <Content Include="DbUpdates\AGM_016.sql" />
     <Content Include="DbUpdates\AGM_015.sql" />
     <Content Include="DbUpdates\AGM_014.sql" />
@@ -334,9 +366,6 @@
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Scripts\angular.min.js.map" />
-    <Content Include="Scripts\angular-strap.min.js.map" />
-    <Content Include="Scripts\angular-animate.min.js.map" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
@@ -346,17 +375,43 @@
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.woff" />
     <Content Include="fonts\FontAwesome.otf" />
-    <Content Include="Scripts\angular-sanitize.min.js.map" />
     <None Include="Properties\PublishProfiles\AGM ftp.pubxml" />
     <None Include="Properties\PublishProfiles\Local.pubxml" />
     <Content Include="Scripts\angular-file-upload.min.map" />
+    <Content Include="Scripts\angular.min.js.map" />
+    <Content Include="Scripts\angular-animate.min.js.map" />
+    <Content Include="Scripts\angular-sanitize.min.js.map" />
+    <Content Include="Scripts\angular-strap.min.js.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\i18n\angular-locale_bm-latn-ml.js" />
+    <Content Include="Scripts\i18n\angular-locale_bm-latn.js" />
+    <Content Include="Scripts\i18n\angular-locale_dsb-de.js" />
+    <Content Include="Scripts\i18n\angular-locale_dsb.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-my.js" />
+    <Content Include="Scripts\i18n\angular-locale_gsw-fr.js" />
+    <Content Include="Scripts\i18n\angular-locale_hsb-de.js" />
+    <Content Include="Scripts\i18n\angular-locale_hsb.js" />
     <Content Include="Scripts\i18n\angular-locale_it-it.js" />
+    <Content Include="Scripts\i18n\angular-locale_lb-lu.js" />
+    <Content Include="Scripts\i18n\angular-locale_lb.js" />
+    <Content Include="Scripts\i18n\angular-locale_qu-bo.js" />
+    <Content Include="Scripts\i18n\angular-locale_qu-ec.js" />
+    <Content Include="Scripts\i18n\angular-locale_qu-pe.js" />
+    <Content Include="Scripts\i18n\angular-locale_qu.js" />
+    <Content Include="Scripts\i18n\angular-locale_se-se.js" />
+    <Content Include="Scripts\i18n\angular-locale_smn-fi.js" />
+    <Content Include="Scripts\i18n\angular-locale_smn.js" />
+    <Content Include="Scripts\i18n\angular-locale_sw-cd.js" />
+    <Content Include="Scripts\i18n\angular-locale_yi-001.js" />
+    <Content Include="Scripts\i18n\angular-locale_yi.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\jquery.cookie.js" />
     <Content Include="Scripts\jquery.nanoscroller.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\moment-with-locales.js" />
+    <Content Include="Scripts\moment-with-locales.min.js" />
+    <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\npm.js" />
     <Content Include="Scripts\satellizer.js" />
     <Content Include="Scripts\satellizer.min.js" />

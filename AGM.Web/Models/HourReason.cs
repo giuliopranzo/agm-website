@@ -9,7 +9,7 @@ namespace AGM.Web.Models
     public class HourReason
     {
         public int Id { get; set; }
-        [MaxLength(25)]
+        [MaxLength(50)]
         public string Name { get; set; }
         public bool IsDeleted { get; set; }
         [MaxLength(3)]

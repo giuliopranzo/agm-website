@@ -2,26 +2,22 @@
 <html lang="en">
 <head>
     <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
-    <title>@ViewBag.Title - AGM Solutions</title>
-    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>AGM Solutions - Area riservata</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <base href="/backoffice/">
 
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet">
-    <link href="~/css/font-awesome.css" rel="stylesheet">
-    @Styles.Render("~/Content/css")
-    <link href="~/Content/animate.min.css" rel="stylesheet">
-
-    <link href="https://gitcdn.github.io/bootstrap-toggle/2.1.0/css/bootstrap-toggle.min.css" rel="stylesheet">
-    <link href="~/Content/nanoscroller.css" rel="stylesheet">
-    <script src="//cdn.ckeditor.com/4.5.4/full/ckeditor.js"></script>
-    @RenderSection("Scripts", required: false)
-    <script src="https://gitcdn.github.io/bootstrap-toggle/2.1.0/js/bootstrap-toggle.min.js"></script>
-    <script src="~/Scripts/jquery.nanoscroller.min.js"></script>
+    @Styles.Render("~/Content/app.css")
+    
+    @Scripts.Render("~/bundles/libs.js")
+    <script src="~/Scripts/angular-animate.min.js"></script>
+    <script src="~/bower_components/ckeditor/ckeditor.js"></script>
+    <script src="~/bower_components/ng-ckeditor/ng-ckeditor.min.js"></script>
+    @Scripts.Render("~/bundles/app.js")
 </head>
 <body>
-    <div class="">
-        <div class="main-scroller ">
+    <div>
+        <div class="main-scroller">
             @RenderBody()
             @RenderSection("SPAViews", required: false)
         </div>

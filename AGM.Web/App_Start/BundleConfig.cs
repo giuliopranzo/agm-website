@@ -12,34 +12,43 @@ namespace AGM.Web
         // For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
-            var appBundle = new ScriptBundle("~/bundles/app");
-            appBundle.Orderer = new AppBundleOrderer(new List<string>() { "data-mock", "app.js"});
-            appBundle.IncludeDirectory("~/App", "*.js", true);
-            bundles.Add(appBundle);
-
-            var scriptBundle = new ScriptBundle("~/bundles/applibs").Include(
-                "~/Scripts/angular.js",
+            var libsBundle = new ScriptBundle("~/bundles/libs.js");
+            libsBundle.Include(
+                "~/Scripts/angular.min.js",
                 "~/Scripts/i18n/angular-locale_it-it.js",
-                "~/Scripts/angular-sanitize.js",
-                "~/Scripts/angular-ui-router.js",
-                "~/Scripts/angular-animate.js",
-                "~/Scripts/angular-local-storage.js",
-                "~/Scripts/angular-strap.js",
-                "~/Scripts/angular-strap.tpl.js",
-                "~/Scripts/angular-file-upload.js",
+                "~/Scripts/angular-sanitize.min.js",
+                "~/Scripts/angular-ui-router.min.js",
+                "~/Scripts/angular-local-storage.min.js",
+                "~/Scripts/angular-strap.min.js",
+                "~/Scripts/angular-strap.tpl.min.js",
+                "~/Scripts/angular-file-upload.min.js",
                 "~/Scripts/angular-ui/ui-bootstrap.js",
                 "~/Scripts/angular-ui/ui-bootstrap-tpls.js",
-                "~/Scripts/jquery-1.10.2.js",
+                "~/Scripts/jquery-1.10.2.min.js",
                 "~/Scripts/jquery.cookie.js",
-                "~/Scripts/jquery.cookie.js",
-                "~/Scripts/underscore.js",
-                "~/bower_components/ng-ckeditor/ng-ckeditor.js"
+                "~/Scripts/underscore.min.js",
+                "~/bower_components/bootstrap-toggle/js/bootstrap-toggle.min.js",
+                "~/Scripts/jquery.nanoscroller.min.js",
+                "~/Scripts/moment.min.js"
+
             );
+            bundles.Add(libsBundle);
+
+            var scriptBundle = new ScriptBundle("~/bundles/app.js");
+            scriptBundle.Include("~/App/app.js");
+            scriptBundle.IncludeDirectory("~/App", "*.js", true);
             bundles.Add(scriptBundle);
 
-            bundles.Add(new StyleBundle("~/Content/css").Include(
+            var styleBundle = new StyleBundle("~/Content/app.css");
+            styleBundle.Include(
+                "~/Content/bootstrap.css",
+                "~/css/font-awesome.css",
+                "~/Content/animate.css",
+                "~/Content/nanoscroller.css",
+                "~/bower_components/bootstrap-toggle/css/bootstrap-toggle.css",
                 "~/Content/Site.css",
-                "~/App/JobAds/JobAds.css"));
+                "~/App/JobAds/JobAds.css");
+            bundles.Add(styleBundle);
 
             System.Web.Optimization.BundleTable.EnableOptimizations = bool.Parse(ConfigurationManager.AppSettings["ScriptBundleOptimization"]);
         }

@@ -7,6 +7,7 @@ using System.Web.Http;
 using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json;
 using AGM.Web.Core;
+using AGM.Web.Infrastructure;
 
 namespace AGM.Web
 {
@@ -14,7 +15,6 @@ namespace AGM.Web
     {
         public static void Register(HttpConfiguration config)
         {
-
             // Use lower case for JSON data.
             config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new LowercaseContractResolver();
 

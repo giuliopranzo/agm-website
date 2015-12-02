@@ -3,10 +3,10 @@
         <span>Annunci</span>
         <span class="pageHeader_subtitle">posizioni aperte</span>
     </div>
-    <div class="pageHeader_breadCrumb"><a class="pageHeader_breadCrumbLink" ui-sref="Index">Home</a> > Annunci</div>
+    <div class="pageHeader_breadCrumb"><a class="pageHeader_breadCrumbLink" ui-sref="Root.Index">Home</a> > Annunci</div>
 </div>
 <div class="monthlyRep" ng-cloak>
-    <div ng-hide="isJobAdDetail">
+    <div class="pageContent" ng-hide="isJobAdDetail">
         <a id="pageTop" class="reportTop"></a>
         <div class="hidden-print mr_affixToolContainer" role="complementary" data-offset-top="235" bs-affix>
             <div class="container container-header">
@@ -15,8 +15,6 @@
                 <i class="fa fa-trash-o signAffix" ng-show="thereAreSelected()" ng-click="deleteSelected()"></i>
             </div>
         </div>
-        <h3 class="section-title login-control">&nbsp;</h3>
-
         <div>
             <div class="col-xs-12 col-md-3 form-group" style="display:none;">
                 <div class="input-group">
@@ -37,7 +35,7 @@
             </div>
             <div class="col-xs-12 col-md-3 input-group">
                 <div class="input-group-addon">Ordinamento:</div>
-                <button type="button" class="btn btn-default" ng-model="orderField" ng-options="order.value as order.label for order in orderOptions" bs-select>
+                <button type="button" class="btn btn-default" ng-model="orderField" data-options="order.value as order.label for order in orderOptions" bs-select>
                     Action <span class="caret"></span>
                 </button>
             </div>

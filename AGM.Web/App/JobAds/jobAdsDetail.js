@@ -27,7 +27,7 @@
         jobAdsDataService.getJobAds('ja_main').then(function (respData) {
             jobAdsSource = respData.data;
             $scope.initData();
-            $location.path('/JobAds');
+			$state.go('Root.JobAds', {}, {reload: true});
         });
     };
 

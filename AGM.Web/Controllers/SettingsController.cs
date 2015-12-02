@@ -19,6 +19,7 @@ namespace AGM.Web.Controllers
     {
         #region HourReason
         [AuthorizeAction]
+        [DeflateCompression]
         [HttpGet]
         public ApiResponse GetHourReasons()
         {
@@ -146,6 +147,7 @@ namespace AGM.Web.Controllers
 
         #region Festivity
         [AuthorizeAction]
+        [DeflateCompression]
         [HttpGet]
         public ApiResponse GetFestivities()
         {
@@ -217,6 +219,7 @@ namespace AGM.Web.Controllers
 
         #region Meal Voucher
         [AuthorizeAction]
+        [DeflateCompression]
         [HttpGet]
         public ApiResponse GetMealVoucherOptions()
         {

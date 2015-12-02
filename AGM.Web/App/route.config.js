@@ -38,7 +38,7 @@
                     return usersDataService.getAllUsers('usr_detail').then(function (respData) {
                         if (respData.succeed)
                             return respData.data;
-                        
+
                         return null;
                     });
                 }]
@@ -119,21 +119,40 @@
                             $stateParams.jobAdTextSource = respData.data;
                         } else {
                             $stateParams.jobAdTextSource = null;
-                            $state.go('Root.JobAds');
+                            if ($stateParams.adId != '0'){
+                                $state.go('Root.JobAds', {}, { reload: true });
+                            }
                         }
                     });
                 }]
             }
         })
-        .state('JobApplicants', {
+        .state('Root.JobApplicants', {
             url: "/JobApplicants",
             views: {
-                "content": {
-                    template: ''
+                "content@": {
+                    templateUrl: resolveViewPath('JobApplicants/JobApplicants.html'),
+                    controller: 'jobApplicants'
                 },
-                "modal": {
+                "modal@": {
                     template: ''
                 }
+            },
+            resolve: {
+                applicants: ['jobApplicantsDataService', function (jobApplicantsDataService) {
+                    return jobApplicantsDataService.get().then(function (resp) {
+                        if (resp.succeed)
+                            return resp.data;
+                        return null;
+                    });
+                }],
+                statuses: ['jobApplicantsDataService', function(jobApplicantsDataService){
+                    return jobApplicantsDataService.getStatus().then(function (resp) {
+                        if (resp.succeed)
+                            return resp.data;
+                        return null;
+                    })
+                }]
             }
         })
         .state('Profile', {
@@ -168,15 +187,15 @@
                 "modal@": {
                     template: ''
                 },
-                "hourReasonSection@Settings": {
+                "hourReasonSection@Root.Settings": {
                     templateUrl: resolveViewPath('Settings/HourReason.html'),
                     controller: 'hourReason'
                 },
-                "festivitySection@Settings": {
+                "festivitySection@Root.Settings": {
                     templateUrl: resolveViewPath('Settings/Festivity.html'),
                     controller: 'festivity'
                 },
-                "mealVoucherSection@Settings": {
+                "mealVoucherSection@Root.Settings": {
                     templateUrl: resolveViewPath('Settings/MealVoucher.html'),
                     controller: 'mealVoucher'
                 }
