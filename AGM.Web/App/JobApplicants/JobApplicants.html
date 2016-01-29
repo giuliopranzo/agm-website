@@ -69,7 +69,8 @@
                             </button>
                         </div>
                         <div class="col-xs-12 form-group">
-                            <button type="button" class="btn btn-default controlMinSeparated btnFill" ng-model="filterStatus" bs-options="status.name for status in statuses" bs-select data-placeholder="Stato"></button>
+                            <button type="button" class="btn btn-default controlMinSeparated btnFill" ng-model="filterStatus" data-max-length="1" data-multiple="1" data-animation="am-flip-x" bs-options="item.name as item.name for item in statuses" bs-select data-placeholder="Stato">
+                            </button>
                         </div>
                         <div class="col-xs-12 form-group">
                             <button type="button" class="btn btn-default selectButton" ng-model="filterInterviewer" data-max-length="1" data-placeholder="Intervistatore" data-multiple="1" data-animation="am-flip-x" bs-options="item.value as item.description for item in interviewers" bs-select>

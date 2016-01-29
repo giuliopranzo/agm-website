@@ -81,9 +81,9 @@
         $scope.filterBirthDateTo = null;
         $scope.filterInterviewDateFrom = null;
         $scope.filterInterviewDateTo = null;
-        $scope.filterCategory = null;
-        $scope.filterInterviewer = null;
-        $scope.filterStatus = null;
+        $scope.filterCategory = [];
+        $scope.filterInterviewer = [];
+        $scope.filterStatus = [];
         $scope.dataFilterOn = false;
         $scope.toggleAsideFilters();
         $scope.pager.setPageIndex(0);
@@ -105,13 +105,13 @@
         if ($scope.filterInterviewDateTo && moment(data.interviewdate).isAfter($scope.filterInterviewDateTo))
             return false;
 
-        if ($scope.filterCategory && $scope.filterCategory.length > 0 && !_.contains($scope.filterCategory, data.jobcategory.id))
+        if ($scope.filterCategory && $scope.filterCategory.length > 0 && (!data.jobcategory || !_.contains($scope.filterCategory, data.jobcategory.id)))
             return false;
 
         if ($scope.filterInterviewer && $scope.filterInterviewer.length > 0 && (!data.user || !_.contains($scope.filterInterviewer, data.user.id)))
             return false;
 
-        if ($scope.filterStatus && $scope.filterStatus.name && (!data.statusreason || data.statusreason.name.indexOf($scope.filterStatus.name) == -1) && (!data.status || data.status.name.indexOf($scope.filterStatus.name) == -1))
+        if ($scope.filterStatus && $scope.filterStatus.length > 0 && (!data.statusreason || !_.contains($scope.filterStatus, data.statusreason.name)) && (!data.status || !_.contains($scope.filterStatus, data.status.name)))
             return false;
 
         return true;
