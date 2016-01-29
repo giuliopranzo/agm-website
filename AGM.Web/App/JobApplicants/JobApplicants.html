@@ -67,7 +67,13 @@
                             <button type="button" class="btn btn-default selectButton" ng-model="filterCategory" data-placeholder="Categoria" data-multiple="1" data-animation="am-flip-x" bs-options="item.id as item.name for item in jobCategories" bs-select>
                                 Action <span class="caret"></span>
                             </button>
-                            <button type="button" class="btn btn-default controlMinSeparated btnFill" ng-model="filterStatus" bs-options="status.name for status in statuses" bs-select data-placeholder="Stato">
+                        </div>
+                        <div class="col-xs-12 form-group">
+                            <button type="button" class="btn btn-default controlMinSeparated btnFill" ng-model="filterStatus" bs-options="status.name for status in statuses" bs-select data-placeholder="Stato"></button>
+                        </div>
+                        <div class="col-xs-12 form-group">
+                            <button type="button" class="btn btn-default selectButton" ng-model="filterInterviewer" data-max-length="1" data-placeholder="Intervistatore" data-multiple="1" data-animation="am-flip-x" bs-options="item.value as item.description for item in interviewers" bs-select>
+                                Action <span class="caret"></span>
                             </button>
                         </div>
 
@@ -137,7 +143,7 @@
                     <div class="noLeftPadding col-sm-2 col-lg-1" ng-click="pager.setOrder('interviewdate')">Colloquio <i class="fa" ng-class="{'fa-sort': (pager.getOrder()!='+interviewdate' && pager.getOrder()!='-interviewdate'), 'fa-sort-desc': (pager.getOrder()=='+interviewdate'), 'fa-sort-asc': (pager.getOrder()=='-interviewdate')}"></i><i class="fa fa-filter visible-lg" ng-if="dataFilterOn" ng-show="filterInterviewDateFrom || filterInterviewDateTo"></i></div>
                     <div class="noLeftPadding col-lg-1 visible-lg" ng-click="pager.setOrder('updatedate')">Agg.to <i class="fa" ng-class="{'fa-sort': (pager.getOrder()!='+updatedate' && pager.getOrder()!='-updatedate'), 'fa-sort-desc': (pager.getOrder()=='+updatedate'), 'fa-sort-asc': (pager.getOrder()=='-updatedate')}"></i></div>
                     <div class="noLeftPadding col-lg-1 visible-lg" ng-click="pager.setOrder('id')">Codice <i class="fa" ng-class="{'fa-sort': (pager.getOrder()!='+id' && pager.getOrder()!='-id'), 'fa-sort-desc': (pager.getOrder()=='+id'), 'fa-sort-asc': (pager.getOrder()=='-id')}"></i></div>
-                    <div class="noLeftPadding col-sm-2 col-lg-1" ng-click="pager.setOrder('user.name')">Intervist. <i class="fa" ng-class="{'fa-sort': (pager.getOrder()!='+user.name' && pager.getOrder()!='-user.name'), 'fa-sort-desc': (pager.getOrder()=='+user.name'), 'fa-sort-asc': (pager.getOrder()=='-user.name')}"></i></div>
+                    <div class="noLeftPadding col-sm-2 col-lg-1" ng-click="pager.setOrder('user.name')">Intervist. <i class="fa" ng-class="{'fa-sort': (pager.getOrder()!='+user.name' && pager.getOrder()!='-user.name'), 'fa-sort-desc': (pager.getOrder()=='+user.name'), 'fa-sort-asc': (pager.getOrder()=='-user.name')}"></i><i class="fa fa-filter visible-lg" ng-if="dataFilterOn" ng-show="filterInterviewer && filterInterviewer.length > 0"></i></div>
                     <div class="clearfix"></div>
                 </div>
 

@@ -1,4 +1,4 @@
-﻿app.controller('jobApplicants', ['$rootScope', '$scope', '$uibModal', '$location', '$state', 'applicants', 'statuses', 'pagerUp', 'appHelper', 'jobCategories', function ($rootScope, $scope, $uibModal, $location, $state, applicants, statuses, pagerUp, appHelper, jobCategories) {
+﻿app.controller('jobApplicants', ['$rootScope', '$scope', '$uibModal', '$location', '$state', 'applicants', 'statuses', 'pagerUp', 'appHelper', 'jobCategories', 'interviewers', function ($rootScope, $scope, $uibModal, $location, $state, applicants, statuses, pagerUp, appHelper, jobCategories, interviewers) {
     $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
         $scope.isJobApplicantDetail = (toState.name == 'Root.JobApplicants.Detail');
     });
@@ -52,6 +52,7 @@
 
         $scope.helper = appHelper;
         $scope.jobCategories = jobCategories;
+        $scope.interviewers = interviewers;
         $scope.isJobApplicantDetail = ($state.current.name == 'Root.JobApplicants.Detail');
     };
 
@@ -81,6 +82,7 @@
         $scope.filterInterviewDateFrom = null;
         $scope.filterInterviewDateTo = null;
         $scope.filterCategory = null;
+        $scope.filterInterviewer = null;
         $scope.filterStatus = null;
         $scope.dataFilterOn = false;
         $scope.toggleAsideFilters();
@@ -104,6 +106,9 @@
             return false;
 
         if ($scope.filterCategory && $scope.filterCategory.length > 0 && !_.contains($scope.filterCategory, data.jobcategory.id))
+            return false;
+
+        if ($scope.filterInterviewer && $scope.filterInterviewer.length > 0 && (!data.user || !_.contains($scope.filterInterviewer, data.user.id)))
             return false;
 
         if ($scope.filterStatus && $scope.filterStatus.name && (!data.statusreason || data.statusreason.name.indexOf($scope.filterStatus.name) == -1) && (!data.status || data.status.name.indexOf($scope.filterStatus.name) == -1))
