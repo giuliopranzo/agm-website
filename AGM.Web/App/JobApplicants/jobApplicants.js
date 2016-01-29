@@ -40,7 +40,7 @@
     $scope.init = function () {
         $scope.statuses = statuses;
         $scope.dataFilterOn = false;
-
+        
         $scope.pager = pagerUp;
         $scope.pageSizes = [10, 25, 50];
         $scope.pager.setPageSize(10);
@@ -54,6 +54,7 @@
         $scope.jobCategories = jobCategories;
         $scope.interviewers = interviewers;
         $scope.isJobApplicantDetail = ($state.current.name == 'Root.JobApplicants.Detail');
+        $scope.resetFilter();
     };
 
     $scope.eraseSearch = function () {
@@ -66,13 +67,16 @@
         return '#FFFFFF';
     };
 
-    $scope.toggleAsideFilters = function () {
-        $scope.showFilters = !$scope.showFilters;
+    $scope.toggleAsideFilters = function (val) {
+        if (!val && val !== false)
+            $scope.showFilters = !$scope.showFilters;
+        else
+            $scope.showFilters = val;
     };
 
     $scope.applyFilter = function () {
         $scope.dataFilterOn = true;
-        $scope.toggleAsideFilters();
+        $scope.toggleAsideFilters(false);
         $scope.pager.setPageIndex(0);
     };
 
@@ -85,7 +89,7 @@
         $scope.filterInterviewer = [];
         $scope.filterStatus = [];
         $scope.dataFilterOn = false;
-        $scope.toggleAsideFilters();
+        $scope.toggleAsideFilters(false);
         $scope.pager.setPageIndex(0);
     };
 
