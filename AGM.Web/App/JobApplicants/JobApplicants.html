@@ -64,10 +64,9 @@
                         </div>
 
                         <div class="col-xs-12 form-group">
-                            <div ng-class="{'has-error':!asideFilter.hour.$valid}">
-                                <input name="hour" type="text" ng-model="filterCategory" class="form-control" placeholder="Categoria" />
-                                <i ng-show="!asideFilter.hour.$valid" class="fa fa-exclamation-circle asideErrorInput" data-title="Il numero delle ore deve essere compreso tra 0 e 24" data-placement="right" data-trigger="click" bs-tooltip></i>
-                            </div>
+                            <button type="button" class="btn btn-default selectButton" ng-model="filterCategory" data-placeholder="Categoria" data-multiple="1" data-animation="am-flip-x" bs-options="item.id as item.name for item in jobCategories" bs-select>
+                                Action <span class="caret"></span>
+                            </button>
                             <button type="button" class="btn btn-default controlMinSeparated btnFill" ng-model="filterStatus" bs-options="status.name for status in statuses" bs-select data-placeholder="Stato">
                             </button>
                         </div>

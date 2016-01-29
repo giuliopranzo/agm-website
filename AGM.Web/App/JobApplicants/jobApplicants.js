@@ -1,4 +1,4 @@
-﻿app.controller('jobApplicants', ['$rootScope', '$scope', '$uibModal', '$location', '$state', 'applicants', 'statuses', 'pagerUp', 'appHelper', function ($rootScope, $scope, $uibModal, $location, $state, applicants, statuses, pagerUp, appHelper) {
+﻿app.controller('jobApplicants', ['$rootScope', '$scope', '$uibModal', '$location', '$state', 'applicants', 'statuses', 'pagerUp', 'appHelper', 'jobCategories', function ($rootScope, $scope, $uibModal, $location, $state, applicants, statuses, pagerUp, appHelper, jobCategories) {
     $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
         $scope.isJobApplicantDetail = (toState.name == 'Root.JobApplicants.Detail');
     });
@@ -51,7 +51,7 @@
         $scope.pager.setAdvancedFilterFunction($scope.filterData);
 
         $scope.helper = appHelper;
-
+        $scope.jobCategories = jobCategories;
         $scope.isJobApplicantDetail = ($state.current.name == 'Root.JobApplicants.Detail');
     };
 
@@ -103,7 +103,7 @@
         if ($scope.filterInterviewDateTo && moment(data.interviewdate).isAfter($scope.filterInterviewDateTo))
             return false;
 
-        if ($scope.filterCategory && data.jobcategory.name.indexOf($scope.filterCategory)==-1)
+        if ($scope.filterCategory && $scope.filterCategory.length > 0 && !_.contains($scope.filterCategory, data.jobcategory.id))
             return false;
 
         if ($scope.filterStatus && $scope.filterStatus.name && (!data.statusreason || data.statusreason.name.indexOf($scope.filterStatus.name) == -1) && (!data.status || data.status.name.indexOf($scope.filterStatus.name) == -1))
@@ -119,26 +119,6 @@
     $scope.insert = function () {
         $scope.goToDetail(0);
     };
-
-    //$scope.showDetail = function (jobAd) {
-    //    var modalInstance = $uibModal.open({
-    //        animation: true,
-    //        templateUrl: '/App/JobApplicants/Dialogs/JADetail.html',
-    //        controller: 'jADetail',
-    //        size: 'lg',
-    //        resolve: {
-    //            detailSource: function () {
-    //                return jobAd;
-    //            }
-    //        }
-    //    });
-
-    //    modalInstance.result.then(function (selectedItem) {
-    //        $scope.selected = selectedItem;
-    //    }, function () {
-            
-    //    }); 
-    //};
 
     $scope.init();
 }]);

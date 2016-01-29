@@ -152,6 +152,20 @@
                             return resp.data;
                         return null;
                     })
+                }],
+                jobCategories: ['jobApplicantsDataService', function (jobApplicantsDataService) {
+                    return jobApplicantsDataService.getJobCategory('mr_detail').then(function (resp) {
+                        if (resp.succeed)
+                            return resp.data;
+                        return null;
+                    });
+                }],
+                interviewers: ['jobApplicantsDataService', function (jobApplicantsDataService) {
+                    return jobApplicantsDataService.getInterviewer('mr_detail').then(function (resp) {
+                        if (resp.succeed)
+                            return resp.data;
+                        return null;
+                    });
                 }]
             }
         })
@@ -172,13 +186,6 @@
                         $state.go('Root.JobAds', {}, { reload: true });
                     return item[0];
                 }],
-                jobCategories: ['jobApplicantsDataService', function (jobApplicantsDataService) {
-                    return jobApplicantsDataService.getJobCategory('mr_detail').then(function (resp) {
-                        if (resp.succeed)
-                            return resp.data;
-                        return null;
-                    });
-                }],
                 locations: ['jobApplicantsDataService', function (jobApplicantsDataService) {
                     return jobApplicantsDataService.getLocation('mr_detail').then(function (resp) {
                         if (resp.succeed)
@@ -188,13 +195,6 @@
                 }],
                 languages: ['jobApplicantsDataService', function (jobApplicantsDataService) {
                     return jobApplicantsDataService.getLanguage('mr_detail').then(function (resp) {
-                        if (resp.succeed)
-                            return resp.data;
-                        return null;
-                    });
-                }],
-                interviewers: ['jobApplicantsDataService', function (jobApplicantsDataService) {
-                    return jobApplicantsDataService.getInterviewer('mr_detail').then(function (resp) {
                         if (resp.succeed)
                             return resp.data;
                         return null;

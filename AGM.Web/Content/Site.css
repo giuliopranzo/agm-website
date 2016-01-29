@@ -1801,3 +1801,8 @@ jobApplicantStatus_4 {
     -webkit-user-select: none;
 }
 
+.selectButton {
+    width: 100%;
+    text-align: left;
+}
+
