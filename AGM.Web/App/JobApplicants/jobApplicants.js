@@ -1,4 +1,28 @@
-﻿app.controller('jobApplicants', ['$scope', 'applicants', 'statuses', 'pagerUp', 'appHelper', function ($scope, applicants, statuses, pagerUp, appHelper) {
+﻿app.controller('jobApplicants', ['$rootScope', '$scope', '$uibModal', '$location', '$state', 'applicants', 'statuses', 'pagerUp', 'appHelper', function ($rootScope, $scope, $uibModal, $location, $state, applicants, statuses, pagerUp, appHelper) {
+    $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
+        $scope.isJobApplicantDetail = (toState.name == 'Root.JobApplicants.Detail');
+    });
+
+    $rootScope.$on('loader_show', function (event, callId) {
+        if (callId == 'japp_main') {
+            if (!$rootScope.loader)
+                $rootScope.loader = {};
+            if (!$rootScope.loader['japp_main'])
+                $rootScope.loader['japp_main'] = 0;
+            $rootScope.loader['japp_main'] = $rootScope.loader['japp_main'] + 1;
+            $scope.loading = true;
+        }
+    });
+
+    $rootScope.$on('loader_hide', function (event, callId) {
+        if (callId == 'japp_main') {
+            if ($rootScope.loader['japp_main'] > 0)
+                $rootScope.loader['japp_main'] = $rootScope.loader['japp_main'] - 1;
+            if ($rootScope.loader['japp_main'] == 0)
+                $scope.loading = false;
+        }
+    });
+
     $scope.statusBgColors = {
         'statusId_1': '#FFFFFF',
         'statusId_2': '#CCFFFF',
@@ -27,6 +51,8 @@
         $scope.pager.setAdvancedFilterFunction($scope.filterData);
 
         $scope.helper = appHelper;
+
+        $scope.isJobApplicantDetail = ($state.current.name == 'Root.JobApplicants.Detail');
     };
 
     $scope.eraseSearch = function () {
@@ -85,6 +111,34 @@
 
         return true;
     };
+
+    $scope.goToDetail = function (id) {
+        $state.go('Root.JobApplicants.Detail', { applicantId: id }, {});
+    };
+
+    $scope.insert = function () {
+        $scope.goToDetail(0);
+    };
+
+    //$scope.showDetail = function (jobAd) {
+    //    var modalInstance = $uibModal.open({
+    //        animation: true,
+    //        templateUrl: '/App/JobApplicants/Dialogs/JADetail.html',
+    //        controller: 'jADetail',
+    //        size: 'lg',
+    //        resolve: {
+    //            detailSource: function () {
+    //                return jobAd;
+    //            }
+    //        }
+    //    });
+
+    //    modalInstance.result.then(function (selectedItem) {
+    //        $scope.selected = selectedItem;
+    //    }, function () {
+            
+    //    }); 
+    //};
 
     $scope.init();
 }]);

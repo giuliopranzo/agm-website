@@ -108,6 +108,10 @@ namespace AGM.Web.Controllers
                     NotesCollection = notesCollection,
                     WorkDay = currentDate.DayOfWeek != DayOfWeek.Saturday && currentDate.DayOfWeek != DayOfWeek.Sunday && holidays.All(h => h.Date != currentDate),
                     IsHoliday = currentDate.DayOfWeek == DayOfWeek.Sunday || holidays.Any(h => h.Date == currentDate),
+                    ExportHolidaySunday = currentDate.DayOfWeek == DayOfWeek.Sunday && holidays.Any(h => h.Date == currentDate),
+                    ExportHoliday = currentDate.DayOfWeek != DayOfWeek.Sunday && holidays.Any(h => h.Date == currentDate),
+                    IsSunday = currentDate.DayOfWeek == DayOfWeek.Sunday,
+                    IsSaturday = currentDate.DayOfWeek == DayOfWeek.Saturday,
                     IsCurrentMonth = (currentDate.Month == currentMonthDate.Month),
                     DayOfWeek = (int)currentDate.DayOfWeek
                 });

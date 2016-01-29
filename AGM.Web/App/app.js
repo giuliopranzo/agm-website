@@ -17,15 +17,28 @@ function resolveFactoryPath(factoryName) {
 }
 
 app.controller("main", ['$scope', '$rootScope', '$location', '$state', '$stateParams', '$filter', 'appDataService', 'authenticationDataService', 'authenticationHelper', 'applicationGlobals', function ($scope, $rootScope, $location, $state, $stateParams, $filter, appDataService, authenticationDataService, authenticationHelper, applicationGlobals) {
-
     $rootScope.$on('loader_show', function (event, callId) {
         if (callId == 'mr_detail' || callId == 'usr_detail')
+        {
+            if (!$rootScope.loader)
+                $rootScope.loader = {};
+            if (!$rootScope.loader[callId])
+                $rootScope.loader[callId] = 0;
+            $rootScope.loader[callId] = $rootScope.loader[callId] + 1;
             $scope.loading = true;
+        }
+            
     });
 
     $rootScope.$on('loader_hide', function (event, callId) {
         if (callId == 'mr_detail' || callId == 'usr_detail')
-            $scope.loading = false;
+        {
+            if ($rootScope.loader[callId] > 0)
+                $rootScope.loader[callId] = $rootScope.loader[callId] - 1;
+            if ($rootScope.loader[callId] == 0)
+                $scope.loading = false;
+        }
+            
     });
 
     $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {

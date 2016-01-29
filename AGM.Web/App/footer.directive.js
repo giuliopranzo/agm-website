@@ -6,3 +6,21 @@
         //}
     };
 }]);
+
+app.directive('scrollToOption', [function () {
+    return {
+        scope: {
+            value: '=scrollToOption'
+        },
+        link: function (scope, element, attrs) {
+            scope.$watch('value', function (newValue, oldValue) {
+                if (attrs.id) {
+                    var el = $('button[id="' + attrs.id + '"] + ul > li > a > span:contains("' + newValue + '")');
+                    if (el && el.length > 0)
+                        el[0].offsetParent.scrollTop = el[0].offsetTop - 8;
+                }
+            }, true);
+            
+        }
+    };
+}]);

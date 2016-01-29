@@ -1,0 +1,103 @@
+﻿<a id="pageTop" class="reportTop"></a>
+<div class="hidden-print mr_affixToolContainer" role="complementary" data-offset-top="235" bs-affix>
+    <div class="container container-header">
+        <i class="hidden-md hidden-lg fa fa-arrow-circle-o-left signAffix" ng-click="backToListPage()"></i>
+    </div>
+</div>
+<h3 class="section-title login-control">&nbsp;</h3>
+<div>
+    <div>
+        <i class="hidden-xs hidden-sm fa fa-arrow-circle-o-left sign" ng-click="backToListPage()"></i>
+    </div>
+    <div class="clearfix"></div>
+
+    <form name="jobApplicantForm" novalidate>
+        <fieldset>
+            <div class="col-xs-12 col-sm-4 form-group">
+                <label class="standardFormLabel">Cognome*</label><input required class="form-control" type="text" placeholder="Cognome" ng-model="applicant.lastname" maxlength="100" />
+                <label class="standardFormLabel">Nome*</label><input required class="form-control" type="text" placeholder="Nome" ng-model="applicant.firstname" maxlength="100" />
+                <label class="standardFormLabel">Data di nascita</label>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
+                    <input id="monthPicker" type="text" class="form-control inputDatePicker" ng-model="applicant.birthdate"
+                           data-date-format="dd MMMM yyyy"
+                           data-date-type="date"
+                           data-min-date="1945-01-01 00:00:00"
+                           data-autoclose="1"
+                           data-placement="auto"
+                           bs-datepicker>
+                </div>
+                <label class="standardFormLabel">Categoria</label>
+                <button type="button" class="btn btn-default controlMinSeparated btnFill" ng-model="applicant.jobcategoryid" bs-options="category.id as category.name for category in jobCategories" bs-select>
+                    <span class="caret"></span>
+                </button>
+                <label class="standardFormLabel">Luogo di lavoro</label>
+                <button type="button" class="btn btn-default controlMinSeparated btnFill" ng-model="applicant.worklocationid" bs-options="location.id as location.name for location in locations" bs-select>
+                    <span class="caret"></span>
+                </button>
+                <label class="standardFormLabel">Lingua 1</label>
+                <button id="selectLanguage1" scroll-to-option="getLanguageName(applicant.language1id)" data-trigger="click" ng-keydown="kd($event)" type="button" class="btn btn-default controlMinSeparated btnFill" ng-model="applicant.language1id" bs-options="language.id as language.name for language in languages" bs-select>
+                    <span class="caret"></span>
+                </button>
+                <label class="standardFormLabel">Lingua 2</label>
+                <button id="selectLanguage2" scroll-to-option="getLanguageName(applicant.language2id)" data-trigger="click" ng-keydown="kd($event)" type="button" class="btn btn-default controlMinSeparated btnFill" ng-model="applicant.language2id" bs-options="language.id as language.name for language in languages" bs-select>
+                    <span class="caret"></span>
+                </button>
+                <label class="standardFormLabel">Lingua 3</label>
+                <button id="selectLanguage3" scroll-to-option="getLanguageName(applicant.language3id)" data-trigger="click" ng-keydown="kd($event)" type="button" class="btn btn-default controlMinSeparated btnFill" ng-model="applicant.language3id" bs-options="language.id as language.name for language in languages" bs-select>
+                    <span class="caret"></span>
+                </button>
+                <label class="standardFormLabel">Importo</label><input class="form-control" type="text" placeholder="Importo" ng-model="applicant.contractpricenotes" maxlength="30" />
+                <label class="standardFormLabel">Intervistatore</label>
+                <button type="button" class="btn btn-default controlMinSeparated btnFill" ng-model="applicant.userid" bs-options="item.value as item.description for item in interviewers" data-placeholder="Scegli dall'elenco..." bs-select>
+                    <span class="caret"></span>
+                </button>
+            </div>
+            <div class="col-xs-12 col-sm-8 form-group">
+                <label class="standardFormLabel">Note</label>
+                <textarea ckeditor="editorOptions" ng-model="applicant.notes"></textarea>
+            </div>
+            <div class="clearfix"></div>
+
+            <div class="col-xs-12 col-sm-4">
+                <label class="standardFormLabel">Data intervista*</label>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
+                    <input required id="monthPicker" type="text" class="form-control inputDatePicker" ng-model="applicant.interviewdate"
+                           data-date-format="dd MMMM yyyy"
+                           data-date-type="date"
+                           data-min-date="2014-01-01 00:00:00"
+                           data-autoclose="1"
+                           data-placement="auto"
+                           bs-datepicker>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-4">
+                <label class="standardFormLabel">Stato</label>
+                <button id="selectLanguageStatus" data-trigger="click" type="button" class="btn btn-default controlMinSeparated btnFill" ng-model="applicant.statusid" bs-options="status.id as status.name for status in statuses | filter : { type: 'status'} : true" bs-select>
+                    <span class="caret"></span>
+                </button>
+            </div>
+            <div class="col-xs-12 col-sm-4">
+                <label class="standardFormLabel">Motivo</label>
+                <button id="selectLanguageStatusReason" data-trigger="click" type="button" class="btn btn-default controlMinSeparated btnFill" ng-model="applicant.statusreasonid" bs-options="status.id as status.name for status in statuses | filter : { type: 'statusReason'} : true" bs-select>
+                    <span class="caret"></span>
+                </button>
+            </div>
+
+            <div class="clearfix"></div>
+
+            <div class="col-xs-12 col-sm-4">
+                <label class="standardFormLabel">Disponibilità</label>
+                <input class="form-control" type="text" placeholder="Disponibilità" ng-model="applicant.availabilitynotes" maxlength="50" />
+            </div>
+
+            <div class="clearfix"></div>
+
+            <div class="col-xs-1 form-group bottomButton">
+                <button class="btn btn-info" ng-click="save()" ng-disabled="jobApplicantForm.$invalid">Salva</button>
+            </div>
+        </fieldset>
+    </form>
+</div>

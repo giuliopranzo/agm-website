@@ -13,15 +13,55 @@ namespace AGM.Web.Infrastructure.Attributes
 
         public override void OnActionExecuted(HttpActionExecutedContext actContext)
         {
-            var content = actContext.Response.Content;
-            var bytes = content == null ? null : content.ReadAsByteArrayAsync().Result;
-            var zlibbedContent = bytes == null ? new byte[0] :
-            CompressionHelper.DeflateByte(bytes);
-            actContext.Response.Content = new ByteArrayContent(zlibbedContent);
-            actContext.Response.Content.Headers.Remove("Content-Type");
-            actContext.Response.Content.Headers.Add("Content-encoding", "deflate");
-            actContext.Response.Content.Headers.Add("Content-Type", "application/json");
-            base.OnActionExecuted(actContext);
+            GZipEncodePage();
+        }
+
+        /// <summary>
+        /// Determines if GZip is supported
+        /// </summary>
+        /// <returns></returns>
+        public static bool IsGZipSupported()
+        {
+            string AcceptEncoding = HttpContext.Current.Request.Headers["Accept-Encoding"];
+            if (!string.IsNullOrEmpty(AcceptEncoding) &&
+                    (AcceptEncoding.Contains("gzip") || AcceptEncoding.Contains("deflate")))
+                return true;
+            return false;
+        }
+
+        /// <summary>
+        /// Sets up the current page or handler to use GZip through a Response.Filter
+        /// IMPORTANT:  
+        /// You have to call this method before any output is generated!
+        /// </summary>
+        public static void GZipEncodePage()
+        {
+            HttpResponse Response = HttpContext.Current.Response;
+
+            if (IsGZipSupported())
+            {
+                string AcceptEncoding = HttpContext.Current.Request.Headers["Accept-Encoding"];
+
+                if (AcceptEncoding.Contains("gzip"))
+                {
+                    Response.Filter = new System.IO.Compression.GZipStream(Response.Filter,
+                                                System.IO.Compression.CompressionMode.Compress);
+                    Response.Headers.Remove("Content-Encoding");
+                    Response.AppendHeader("Content-Encoding", "gzip");
+                }
+                else
+                {
+                    Response.Filter = new System.IO.Compression.DeflateStream(Response.Filter,
+                                                System.IO.Compression.CompressionMode.Compress);
+                    Response.Headers.Remove("Content-Encoding");
+                    Response.AppendHeader("Content-Encoding", "deflate");
+                }
+
+
+            }
+
+            // Allow proxy servers to cache encoded and unencoded versions separately
+            Response.AppendHeader("Vary", "Content-Encoding");
         }
     }
 }

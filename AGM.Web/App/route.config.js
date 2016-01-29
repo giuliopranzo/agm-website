@@ -140,18 +140,65 @@
             },
             resolve: {
                 applicants: ['jobApplicantsDataService', function (jobApplicantsDataService) {
-                    return jobApplicantsDataService.get().then(function (resp) {
+                    return jobApplicantsDataService.get('mr_detail').then(function (resp) {
                         if (resp.succeed)
                             return resp.data;
                         return null;
                     });
                 }],
                 statuses: ['jobApplicantsDataService', function(jobApplicantsDataService){
-                    return jobApplicantsDataService.getStatus().then(function (resp) {
+                    return jobApplicantsDataService.getStatus('mr_detail').then(function (resp) {
                         if (resp.succeed)
                             return resp.data;
                         return null;
                     })
+                }]
+            }
+        })
+        .state('Root.JobApplicants.Detail', {
+            url: "/:applicantId",
+            views: {
+                "ja_detail": {
+                    templateUrl: resolveViewPath('JobApplicants/Detail.html'),
+                    controller: 'jobApplicantsDetail'
+                }
+            },
+            resolve: {
+                applicant: ['$state', '$stateParams', '$filter', 'applicants', function ($state, $stateParams, $filter, applicants) {
+                    if ($stateParams.applicantId == 0)
+                        return {};
+                    var item = $filter('filter')(applicants, { id: $stateParams.applicantId }, false);
+                    if(item.length == 0)
+                        $state.go('Root.JobAds', {}, { reload: true });
+                    return item[0];
+                }],
+                jobCategories: ['jobApplicantsDataService', function (jobApplicantsDataService) {
+                    return jobApplicantsDataService.getJobCategory('mr_detail').then(function (resp) {
+                        if (resp.succeed)
+                            return resp.data;
+                        return null;
+                    });
+                }],
+                locations: ['jobApplicantsDataService', function (jobApplicantsDataService) {
+                    return jobApplicantsDataService.getLocation('mr_detail').then(function (resp) {
+                        if (resp.succeed)
+                            return resp.data;
+                        return null;
+                    });
+                }],
+                languages: ['jobApplicantsDataService', function (jobApplicantsDataService) {
+                    return jobApplicantsDataService.getLanguage('mr_detail').then(function (resp) {
+                        if (resp.succeed)
+                            return resp.data;
+                        return null;
+                    });
+                }],
+                interviewers: ['jobApplicantsDataService', function (jobApplicantsDataService) {
+                    return jobApplicantsDataService.getInterviewer('mr_detail').then(function (resp) {
+                        if (resp.succeed)
+                            return resp.data;
+                        return null;
+                    });
                 }]
             }
         })

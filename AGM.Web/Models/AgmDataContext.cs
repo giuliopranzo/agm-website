@@ -39,6 +39,7 @@ namespace AGM.Web.Models
         public DbSet<JobApplicantStatus> JobApplicantStatuses { get; set; }
         public DbSet<JobApplicantStatusReason> JobApplicantStatusReasons { get; set; }
         public DbSet<Location> Locations { get; set; }
+        public DbSet<Language> Languages { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -61,6 +62,7 @@ namespace AGM.Web.Models
             modelBuilder.Configurations.Add(new JobApplicantStatusMap());
             modelBuilder.Configurations.Add(new JobApplicantStatusReasonMap());
             modelBuilder.Configurations.Add(new LocationMap());
+            modelBuilder.Configurations.Add(new LanguageMap());
         }
     }
 }

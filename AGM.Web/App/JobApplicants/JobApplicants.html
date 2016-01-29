@@ -6,7 +6,7 @@
     <div class="pageHeader_breadCrumb"><a class="pageHeader_breadCrumbLink" ui-sref="Root.Index">Home</a> > Candidati</div>
 </div>
 <div class="monthlyRep" ng-cloak>
-    <div class="pageContent" ng-hide="isApplicantDetail">
+    <div class="pageContent" ng-hide="isJobApplicantDetail">
         <a id="pageTop" class="reportTop"></a>
         <div class="hidden-print mr_affixToolContainer" role="complementary" data-offset-top="235" bs-affix>
             <div class="container container-header">
@@ -138,8 +138,7 @@
                     <div class="noLeftPadding col-sm-2 col-lg-1" ng-click="pager.setOrder('interviewdate')">Colloquio <i class="fa" ng-class="{'fa-sort': (pager.getOrder()!='+interviewdate' && pager.getOrder()!='-interviewdate'), 'fa-sort-desc': (pager.getOrder()=='+interviewdate'), 'fa-sort-asc': (pager.getOrder()=='-interviewdate')}"></i><i class="fa fa-filter visible-lg" ng-if="dataFilterOn" ng-show="filterInterviewDateFrom || filterInterviewDateTo"></i></div>
                     <div class="noLeftPadding col-lg-1 visible-lg" ng-click="pager.setOrder('updatedate')">Agg.to <i class="fa" ng-class="{'fa-sort': (pager.getOrder()!='+updatedate' && pager.getOrder()!='-updatedate'), 'fa-sort-desc': (pager.getOrder()=='+updatedate'), 'fa-sort-asc': (pager.getOrder()=='-updatedate')}"></i></div>
                     <div class="noLeftPadding col-lg-1 visible-lg" ng-click="pager.setOrder('id')">Codice <i class="fa" ng-class="{'fa-sort': (pager.getOrder()!='+id' && pager.getOrder()!='-id'), 'fa-sort-desc': (pager.getOrder()=='+id'), 'fa-sort-asc': (pager.getOrder()=='-id')}"></i></div>
-                    <div class="noLeftPadding col-sm-2 col-lg-1 hidden-xs" ng-click="pager.setOrder('worklocation.name')">Luogo lav. <i class="fa" ng-class="{'fa-sort': (pager.getOrder()!='+worklocation.name' && pager.getOrder()!='-worklocation.name'), 'fa-sort-desc': (pager.getOrder()=='+worklocation.name'), 'fa-sort-asc': (pager.getOrder()=='-worklocation.name')}"></i></div>
-                    
+                    <div class="noLeftPadding col-sm-2 col-lg-1" ng-click="pager.setOrder('user.name')">Intervist. <i class="fa" ng-class="{'fa-sort': (pager.getOrder()!='+user.name' && pager.getOrder()!='-user.name'), 'fa-sort-desc': (pager.getOrder()=='+user.name'), 'fa-sort-asc': (pager.getOrder()=='-user.name')}"></i></div>
                     <div class="clearfix"></div>
                 </div>
 
@@ -147,7 +146,7 @@
                     <div class="noLeftPadding col-xs-12">Candidati</div>
                 </div>
 
-                <div class="row" ng-class="{odd: $odd, selected: applicant._selected}" ng-repeat="applicant in pager.getCurrentPageData(search)" ng-click="goToDetail(jobAd.id)">
+                <div class="row" ng-class="{odd: $odd, selected: applicant._selected}" ng-repeat="applicant in pager.getCurrentPageData(search)" ng-click="goToDetail(applicant.id)">
                     <div class="rowHoverIndicator"></div>
                     <div style="width:24px; display:inline-block; float:left;">
                         <input style="vertical-align: middle; margin: 0 4px; height: 28px;" type="checkbox" ng-model="applicant._selected" ng-click="$event.stopPropagation()" />
@@ -165,7 +164,7 @@
                     <div class="col-xs-12 col-sm-pull-2 col-sm-2 col-lg-pull-1" ng-bind="applicant.statuscalculated || '&nbsp;'" style="position:relative;z-index:1;text-align: center;" ng-style="{'background-color': getStatusBgColor(applicant.status.id)}"></div>
                     <div class="col-lg-1 visible-lg" ng-bind="helper.getFormattedDate(applicant.updatedate, 'dd-MM-yyyy')||'&nbsp;'"></div>
                     <div class="col-lg-1 visible-lg" ng-bind="applicant.id||'&nbsp;'"></div>
-                    <div class="col-sm-2 col-lg-1 hidden-xs" ng-bind="applicant.worklocation.name||'&nbsp;'"></div>
+                    <div class="col-sm-2 col-lg-1" ng-bind="applicant.user.name||'&nbsp;'"></div>
                 </div>
             </div>
             <div class="clearfix"></div>
@@ -174,7 +173,7 @@
         </div>
     </div>
 
-    <div ui-view="ja_insert"></div>
+    <div ui-view="ja_detail"></div>
 
     <div class="loading" ng-show="loading"></div>
 </div>

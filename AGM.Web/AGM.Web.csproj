@@ -221,6 +221,7 @@
     <Compile Include="Models\JobApplicantStatus.cs" />
     <Compile Include="Models\JobApplicantStatusReason.cs" />
     <Compile Include="Models\JobCategory.cs" />
+    <Compile Include="Models\Language.cs" />
     <Compile Include="Models\Location.cs" />
     <Compile Include="Models\Mapping\CandidateMap.cs" />
     <Compile Include="Models\Mapping\ExpenseReasonMap.cs" />
@@ -229,6 +230,7 @@
     <Compile Include="Models\Mapping\JobApplicantStatusMap.cs" />
     <Compile Include="Models\Mapping\JobApplicantStatusReasonMap.cs" />
     <Compile Include="Models\Mapping\JobCategoryMap.cs" />
+    <Compile Include="Models\Mapping\LanguageMap.cs" />
     <Compile Include="Models\Mapping\LocationMap.cs" />
     <Compile Include="Models\Mapping\MHReportLockMap.cs" />
     <Compile Include="Models\Mapping\OptionMap.cs" />
@@ -240,6 +242,7 @@
     <Compile Include="Models\Mapping\MonthlyReportNoteMap.cs" />
     <Compile Include="Models\Mapping\RetributionItemMap.cs" />
     <Compile Include="Models\Mapping\TokenMap.cs" />
+    <Compile Include="Models\Mapping\UserBaseMap.cs" />
     <Compile Include="Models\Mapping\UserMap.cs" />
     <Compile Include="Models\Mapping\VersionMap.cs" />
     <Compile Include="Models\MealVoucherOptions.cs" />
@@ -281,6 +284,10 @@
     <Content Include="App\JobAds\jobAds.js" />
     <Content Include="App\JobAds\jobAds.service.js" />
     <Content Include="App\JobAds\jobAdsDetail.js" />
+    <Content Include="App\JobApplicants\Detail.html" />
+    <Content Include="App\JobApplicants\Dialogs\JADetail.html" />
+    <Content Include="App\JobApplicants\Dialogs\jADetail.js" />
+    <Content Include="App\JobApplicants\jobApplicantsDetail.js" />
     <Content Include="App\JobApplicants\JobApplicants.html" />
     <Content Include="App\JobApplicants\jobApplicants.js" />
     <Content Include="App\JobApplicants\jobApplicants.service.js" />
@@ -316,7 +323,10 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\nanoscroller.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="Content\ui-bootstrap-csp.css" />
     <Content Include="css\font-awesome.css" />
+    <Content Include="DbUpdates\AGM_021.sql" />
+    <Content Include="DbUpdates\AGM_020.sql" />
     <Content Include="DbUpdates\AGM_019.sql" />
     <Content Include="DbUpdates\AGM_018.sql" />
     <Content Include="DbUpdates\AGM_017.sql" />

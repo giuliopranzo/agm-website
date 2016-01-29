@@ -1463,6 +1463,12 @@ jobApplicantStatus_4 {
     background-color: #3E3E3E;
 }
 
+.select.dropdown-menu {
+    max-height: 160px;
+    z-index: 100;
+    overflow: auto;
+}
+
 @media (max-width: 767px) {
     .loginForm {
         margin: auto;

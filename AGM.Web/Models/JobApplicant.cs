@@ -10,15 +10,20 @@ namespace AGM.Web.Models
         public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public DateTime InterviewDate { get; set; }
-        public DateTime BirthDate { get; set; }
+        public DateTime? InterviewDate { get; set; }
+        public int? UserId { get; set; }
+        public User User { get; set; }
+        public DateTime? BirthDate { get; set; }
         public string Notes { get; set; }
         public int? Language1Id { get; set; }
+        public Language Language1 { get; set; }
         public int? Language2Id { get; set; }
+        public Language Language2 { get; set; }
         public int? Language2Level { get; set; }
         public int? Language3Id { get; set; }
+        public Language Language3 { get; set; }
         public int? Language3Level { get; set; }
-        //public string ContractPriceNotes { get; set; }
+        public string ContractPriceNotes { get; set; }
         //public int ContractTypeId { get; set; }
         public int JobCategoryId { get; set; }
         public JobCategory JobCategory { get; set; }
@@ -27,8 +32,8 @@ namespace AGM.Web.Models
         //public int LocationId { get; set; }
         public int? WorkLocationId { get; set; }
         public Location WorkLocation { get; set; }
-        public DateTime UpdateDate { get; set; }
-        //public string AvailabilityNotes { get; set; }
+        public DateTime? UpdateDate { get; set; }
+        public string AvailabilityNotes { get; set; }
         //public string BirthPlace { get; set; }
         //public int EnglishTestResult { get; set; }
         public int? StatusReasonId { get; set; }

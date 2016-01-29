@@ -207,8 +207,8 @@ namespace AGM.Web.Controllers
                             {
                                 res.Add(string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}", "00000", "00",
                                     user.IdExport.ToString().PadLeft(4, '0'),
-                                    itemParent.CompleteDate.ToString("ddMMyy"), "   ", "0000", "0000",
-                                    (itemParent.WorkDay) ? "0" : (!itemParent.IsHoliday) ? "1" : "2", "0"));
+                                    itemParent.CompleteDate.ToString("ddMMyy"),(itemParent.ExportHoliday || itemParent.ExportHolidaySunday) ? (itemParent.ExportHoliday)? "F1 ":"F2 " : "   ", (itemParent.ExportHoliday || itemParent.ExportHolidaySunday) ? "0800" : "0000", "0000",
+                                    (itemParent.IsSunday || itemParent.IsSaturday) ? (itemParent.IsSaturday) ? "1" : "2" : (itemParent.ExportHoliday) ? "1" : "0", "0"));
                             }
                         }
                     }
