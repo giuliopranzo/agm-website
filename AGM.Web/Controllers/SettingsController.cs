@@ -126,14 +126,14 @@ namespace AGM.Web.Controllers
         {
             using (var context = new AgmDataContext())
             {
+                var email = (Thread.CurrentPrincipal as CustomPrincipal).User.Split('$').GetValue(0) as string;
+                var user = context.Users.Single(u => u.Email == email);
+
+                if (!user.SectionUsersVisible)
+                    return new ApiResponse(false);
+
                 foreach (var item in objCollectionToDelete)
                 {
-                    var email = (Thread.CurrentPrincipal as CustomPrincipal).User.Split('$').GetValue(0) as string;
-                    var user = context.Users.Single(u => u.Email == email);
-
-                    if (!user.SectionUsersVisible)
-                        return new ApiResponse(false);
-
                     if (context.HourReasons.Any(r => r.Id == item.Id))
                     {
                         context.HourReasons.Single(r => r.Id == item.Id).IsDeleted = true;
@@ -268,6 +268,117 @@ namespace AGM.Web.Controllers
                     optionToupdate.Value = mealVoucherOptions;
                 }
 
+                context.SaveChanges();
+                return new ApiResponse(true);
+            }
+        }
+        #endregion
+
+        #region Job Category
+        [AuthorizeAction]
+        [DeflateCompression]
+        [HttpGet]
+        public ApiResponse GetJobCategories()
+        {
+            using (var context = new AgmDataContext())
+            {
+                var email = (Thread.CurrentPrincipal as CustomPrincipal).User.Split('$').GetValue(0) as string;
+                var user = context.Users.Single(u => u.Email == email);
+
+                if (!user.SectionUsersVisible)
+                    return new ApiResponse(false);
+
+                var jobCategories = context.JobCategories.Where(h => !h.IsDeleted).ToList();
+                return new ApiResponse(true)
+                {
+                    Data = jobCategories
+                };
+            }
+        }
+
+        [AuthorizeAction]
+        [HttpPost]
+        public ApiResponse InsertJobCategory(JobCategory newJobCategory)
+        {
+            using (var context = new AgmDataContext())
+            {
+                var email = (Thread.CurrentPrincipal as CustomPrincipal).User.Split('$').GetValue(0) as string;
+                var user = context.Users.Single(u => u.Email == email);
+
+                if (!user.SectionUsersVisible)
+                    return new ApiResponse(false);
+
+                if (context.JobCategories.Any(r => r.Name == newJobCategory.Name && r.IsDeleted == false))
+                    return new ApiResponse(false)
+                    {
+                        Errors = new ApiResponseError[] { new ApiResponseError() { Message = "Categoria già esistente!" } }
+                    };
+
+                context.JobCategories.Add(newJobCategory);
+                context.SaveChanges();
+
+                return new ApiResponse(true);
+            }
+        }
+
+        [AuthorizeAction]
+        [HttpPost]
+        public ApiResponse UpdateJobCategory(JobCategory newJobCategory)
+        {
+            if (ModelState.IsValid)
+            {
+                using (var context = new AgmDataContext())
+                {
+                    var email = (Thread.CurrentPrincipal as CustomPrincipal).User.Split('$').GetValue(0) as string;
+                    var user = context.Users.Single(u => u.Email == email);
+
+                    if (!user.SectionUsersVisible)
+                        return new ApiResponse(false);
+
+                    if (!context.JobCategories.Any(r => r.Id == newJobCategory.Id && r.IsDeleted == false))
+                        return new ApiResponse(false)
+                        {
+                            Errors =
+                                new ApiResponseError[] { new ApiResponseError() { Message = "Categoria non esistente!" } }
+                        };
+
+                    if (context.JobCategories.Any(r => r.Id != newJobCategory.Id && r.Name == newJobCategory.Name && r.IsDeleted == false))
+                        return new ApiResponse(false)
+                        {
+                            Errors =
+                                new ApiResponseError[]
+                                {new ApiResponseError() {Message = "Nome categoria già utilizzato!"}}
+                        };
+
+                    context.JobCategories.Attach(newJobCategory);
+                    ((IObjectContextAdapter)context).ObjectContext.ObjectStateManager.ChangeObjectState(newJobCategory, EntityState.Modified);
+                    context.SaveChanges();
+
+                    return new ApiResponse(true);
+                }
+            }
+            return new ApiResponse(false);
+        }
+
+        [AuthorizeAction]
+        [HttpPost]
+        public ApiResponse DeleteJobCategory(List<JobCategory> objCollectionToDelete)
+        {
+            using (var context = new AgmDataContext())
+            {
+                var email = (Thread.CurrentPrincipal as CustomPrincipal).User.Split('$').GetValue(0) as string;
+                var user = context.Users.Single(u => u.Email == email);
+
+                if (!user.SectionUsersVisible)
+                    return new ApiResponse(false);
+
+                foreach (var item in objCollectionToDelete)
+                {
+                    if (context.JobCategories.Any(r => r.Id == item.Id))
+                    {
+                        context.JobCategories.Single(r => r.Id == item.Id).IsDeleted = true;
+                    }
+                }
                 context.SaveChanges();
                 return new ApiResponse(true);
             }

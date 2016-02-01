@@ -238,6 +238,10 @@
                     templateUrl: resolveViewPath('Settings/HourReason.html'),
                     controller: 'hourReason'
                 },
+                "jobCategorySection@Root.Settings": {
+                    templateUrl: resolveViewPath('Settings/JobCategory.html'),
+                    controller: 'jobCategory'
+                },
                 "festivitySection@Root.Settings": {
                     templateUrl: resolveViewPath('Settings/Festivity.html'),
                     controller: 'festivity'
@@ -250,6 +254,15 @@
             resolve: {
                 hourReasonSource: ['settingsDataService', function (settingsDataService) {
                     return settingsDataService.getHourReasons('se_main').then(function (respData) {
+                        if (respData.succeed) {
+                            return respData.data;
+                        } else {
+                            return null;
+                        }
+                    });
+                }],
+                jobCategorySource: ['settingsDataService', function (settingsDataService) {
+                    return settingsDataService.getJobCategories('se_main').then(function (respData) {
                         if (respData.succeed) {
                             return respData.data;
                         } else {

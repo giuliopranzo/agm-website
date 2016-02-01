@@ -45,7 +45,7 @@ namespace AGM.Web
                 "~/css/font-awesome.css",
                 "~/Content/animate.css",
                 "~/Content/nanoscroller.css",
-                "~/bower_components/bootstrap-toggle/css/bootstrap-toggle.css",
+                "~/Comntent/bootstrap-toggle.css",
                 "~/Content/Site.css",
                 "~/App/JobAds/JobAds.css");
             bundles.Add(styleBundle);

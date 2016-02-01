@@ -87,7 +87,7 @@ namespace AGM.Web.Controllers
 
             using (var context = new AgmDataContext())
             {
-                var res = context.JobCategories.ToList();
+                var res = context.JobCategories.Where(j => j.IsDeleted == false).ToList();
                 return new ApiResponse(true)
                 {
                     Data = res.OrderBy(i => i.Name)

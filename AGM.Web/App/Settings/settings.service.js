@@ -88,6 +88,46 @@
                 deferred.reject(respData);
             });
             return deferred.promise;
+        },
+
+        getJobCategories: function(callId) {
+            var deferred = $q.defer();
+            $http({ method: 'GET', headers: { _callId: callId }, url: 'api/Settings/GetJobCategories' }).success(function(respData, status, headers, config) {
+                deferred.resolve(respData);
+            }).error(function(respData, status, headers, config) {
+                deferred.reject(respData);
+            });
+            return deferred.promise;
+        },
+
+        insertJobCategory: function(callId, obj) {
+            var deferred = $q.defer();
+            $http({ method: 'POST', headers: { _callId: callId }, url: 'api/Settings/InsertJobCategory', data: obj }).success(function(respData, status, headers, config) {
+                deferred.resolve(respData);
+            }).error(function(respData, status, headers, config) {
+                deferred.reject(respData);
+            });
+            return deferred.promise;
+        },
+
+        updateJobCategory: function(callId, obj) {
+            var deferred = $q.defer();
+            $http({ method: 'POST', headers: { _callId: callId }, url: 'api/Settings/UpdateJobCategory', data: obj }).success(function(respData, status, headers, config) {
+                deferred.resolve(respData);
+            }).error(function(respData, status, headers, config) {
+                deferred.reject(respData);
+            });
+            return deferred.promise;
+        },
+
+        deleteJobCategory: function(callId, obj) {
+            var deferred = $q.defer();
+            $http({ method: 'POST', headers: { _callId: callId }, url: 'api/Settings/DeleteJobCategory', data: obj }).success(function(respData, status, headers, config) {
+                deferred.resolve(respData);
+            }).error(function(respData, status, headers, config) {
+                deferred.reject(respData);
+            });
+            return deferred.promise;
         }
     }
 }]);

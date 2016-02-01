@@ -301,6 +301,8 @@
     <Content Include="App\Popover\popover.test.html" />
     <Content Include="App\Popover\popover.tpl.demo.html" />
     <Content Include="App\route.config.js" />
+    <Content Include="App\Settings\JobCategory.html" />
+    <Content Include="App\Settings\jobCategory.js" />
     <Content Include="App\Settings\MealVoucher.html" />
     <Content Include="App\Settings\Festivity.html" />
     <Content Include="App\Settings\festivity.js" />
@@ -319,12 +321,15 @@
     <Content Include="Content\animate.min.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap-toggle.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\nanoscroller.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\ui-bootstrap-csp.css" />
     <Content Include="css\font-awesome.css" />
+    <Content Include="DbUpdates\AGM_023.sql" />
+    <Content Include="DbUpdates\AGM_022.sql" />
     <Content Include="DbUpdates\AGM_021.sql" />
     <Content Include="DbUpdates\AGM_020.sql" />
     <Content Include="DbUpdates\AGM_019.sql" />

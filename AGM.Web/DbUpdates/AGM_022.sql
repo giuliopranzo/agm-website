@@ -1,0 +1,19 @@
+﻿BEGIN TRANSACTION;
+
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+
+SET XACT_ABORT ON;
+
+ALTER TABLE [dbo].[candidaticategorie]
+    ADD [isDeleted] BIT NULL;
+GO
+
+UPDATE [dbo].[candidaticategorie] SET [isDeleted] = 0;
+GO
+
+ALTER TABLE [dbo].[candidaticategorie] ALTER COLUMN [isDeleted] BIT NOT NULL;
+GO
+
+COMMIT TRANSACTION;
+
+SET TRANSACTION ISOLATION LEVEL READ COMMITTED;

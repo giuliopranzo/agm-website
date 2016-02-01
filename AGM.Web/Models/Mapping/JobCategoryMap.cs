@@ -17,6 +17,7 @@ namespace AGM.Web.Models.Mapping
             this.ToTable("candidaticategorie");
             this.Property(t => t.Id).HasColumnName("idcategoria");
             this.Property(t => t.Name).HasColumnName("nome");
+            this.Property(t => t.IsDeleted).HasColumnName("isDeleted");
         }
     }
 }

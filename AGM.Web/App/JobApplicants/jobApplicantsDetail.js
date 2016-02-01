@@ -85,7 +85,7 @@
     };
 
     $scope.backToListPage = function () {
-        $state.go('Root.JobApplicants', {}, { reload: true });
+        $state.go('Root.JobApplicants');
     };
 
     $scope.init();
