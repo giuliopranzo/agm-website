@@ -1,9 +1,10 @@
 ﻿@section SPAViews {
     <div class="bs-docs-section" ng-app="agm" ng-controller="main" style="display: table; width: 100%;">
-        <div ui-view="menu" class="hidden-print" style="display: table-cell;"></div>
-        <div ui-view="content" style="display: table-cell; position: relative; width: 100%; padding: 10px 15px;"></div>
-        <div ui-view="modal"></div>
-        
+        <div ng-show="pageReady">
+            <div ui-view="menu" class="hidden-print" style="display: table-cell;"></div>
+            <div ui-view="content" style="display: table-cell; position: relative; width: 100%; padding: 10px 15px;"></div>
+            <div ui-view="modal"></div>
+        </div>
         <div class="loading" ng-show="loading"></div>
         <div width-watch="xsWidthCheck" scrollbar-disable="applicationGlobals.xsScreenMode && applicationGlobals.showMainMenu" scrollbar-target=".main-scroller"></div>
     </div>

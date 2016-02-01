@@ -65,8 +65,8 @@ app.controller("main", ['$scope', '$rootScope', '$location', '$state', '$statePa
     $scope.applicationGlobals = applicationGlobals;
 
     $scope.init = function () {
-        if ($scope.user == '')
-            $scope.getCurrentUser($location.path());
+        $scope.pageReady = false;
+        $scope.getCurrentUser($location.path());
     };
 
     $scope.ddUser = [
@@ -95,12 +95,14 @@ app.controller("main", ['$scope', '$rootScope', '$location', '$state', '$statePa
     ];
 
     $scope.getCurrentUser = function(returnPath) {
-        authenticationDataService.getCurrentUser('')
+        authenticationDataService.getCurrentUser('mr_detail')
             .then(function(resp) {
                 $scope.user = resp.data;
                 $scope.authenticated = true;
+                $scope.pageReady = true;
             })
             .catch(function () {
+                $scope.pageReady = true;
                 if (returnPath && returnPath != '/Login')
                     $location.url('/Login?returnPath=' + returnPath);
                 else

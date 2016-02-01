@@ -27,7 +27,7 @@ namespace AGM.Web
                 "~/Scripts/jquery-1.10.2.min.js",
                 "~/Scripts/jquery.cookie.js",
                 "~/Scripts/underscore.min.js",
-                "~/bower_components/bootstrap-toggle/js/bootstrap-toggle.min.js",
+                "~/Scripts/bootstrap-toggle.min.js",
                 "~/Scripts/jquery.nanoscroller.min.js",
                 "~/Scripts/moment.min.js"
 
@@ -45,7 +45,7 @@ namespace AGM.Web
                 "~/css/font-awesome.css",
                 "~/Content/animate.css",
                 "~/Content/nanoscroller.css",
-                "~/Comntent/bootstrap-toggle.css",
+                "~/Content/bootstrap-toggle.css",
                 "~/Content/Site.css",
                 "~/App/JobAds/JobAds.css");
             bundles.Add(styleBundle);
