@@ -7,6 +7,7 @@ angular.module('fwg.pagerUp').service('fwgPagerUpService', ['$filter', function 
         var searchFilter = '';
         var order = (orderIn)? orderIn : '';
         var dataSource = data;
+        var dataFunction = null;
 
         this.filteredData = [];
         this.pages = [];
@@ -74,34 +75,44 @@ angular.module('fwg.pagerUp').service('fwgPagerUpService', ['$filter', function 
         };
 
         this.setCurrentPageData = function () {
-            this.filteredData = (this.getSearchFilter() != '') ? $filter('filter')(this.getDataSource(), this.getSearchFilter(), false) : angular.copy(this.getDataSource());
-            
-            //Init pages collection only if number of pages changed
-            if (!this.pages || this.pages.length != Math.ceil(this.filteredData.length / this.getPageSize())) {
-                this.pages = new Array();
-                for (var i = 1; i <= Math.ceil(this.filteredData.length / this.getPageSize()) ; i++) {
-                    this.pages.push({
-                        pageNumber: i,
-                        searchFilter: this.getSearchFilter(),
-                        order: this.getOrder(),
-                        data: []
-                    });
-                };
-            }
-            
-            if (this.pages[this.getPageIndex()].data.length == 0 || this.pages[this.getPageIndex()].searchFilter != this.getSearchFilter() || this.pages[this.getPageIndex()].order != this.getOrder()) {
-                var tempData = (this.getOrder()) ? $filter('orderBy')(this.filteredData, this.getOrder()) : this.filteredData;
-                this.pages[this.getPageIndex()].data = tempData.splice(this.getPageIndex() * this.getPageSize(), this.getPageSize());
-                this.pages[this.getPageIndex()].searchFilter = this.getSearchFilter();
-                this.pages[this.getPageIndex()].order = this.getOrder();
-            }
+            if (dataFunction == null) {
+                this.filteredData = (this.getSearchFilter() != '') ? $filter('filter')(this.getDataSource(), this.getSearchFilter(), false) : angular.copy(this.getDataSource());
 
-            this.currentPageData = this.pages[this.getPageIndex()].data;
-            if (this.onChange)
-                this.onChange({
-                    currentPageData: this.currentPageData
-                });
+                //Init pages collection only if number of pages changed
+                if (!this.pages || this.pages.length != Math.ceil(this.filteredData.length / this.getPageSize())) {
+                    this.pages = new Array();
+                    for (var i = 1; i <= Math.ceil(this.filteredData.length / this.getPageSize()) ; i++) {
+                        this.pages.push({
+                            pageNumber: i,
+                            searchFilter: this.getSearchFilter(),
+                            order: this.getOrder(),
+                            data: []
+                        });
+                    };
+                }
+
+                if (this.pages[this.getPageIndex()].data.length == 0 || this.pages[this.getPageIndex()].searchFilter != this.getSearchFilter() || this.pages[this.getPageIndex()].order != this.getOrder()) {
+                    var tempData = (this.getOrder()) ? $filter('orderBy')(this.filteredData, this.getOrder()) : this.filteredData;
+                    this.pages[this.getPageIndex()].data = tempData.splice(this.getPageIndex() * this.getPageSize(), this.getPageSize());
+                    this.pages[this.getPageIndex()].searchFilter = this.getSearchFilter();
+                    this.pages[this.getPageIndex()].order = this.getOrder();
+                }
+
+                this.currentPageData = this.pages[this.getPageIndex()].data;
+                if (this.onChange)
+                    this.onChange({
+                        currentPageData: this.currentPageData
+                    });
+            }
+            else
+            {
+
+            }
         };
+
+        this.setDataFunction = function (dataFunc) {
+            dataFunction = dataFunc;
+        }
 
         this.setCurrentPageData();
     };

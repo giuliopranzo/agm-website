@@ -1,7 +1,7 @@
 ﻿app.factory('appHelper', ['$rootScope', '$location', '$anchorScroll', '$filter', 'localStorageService', 'applicationGlobals', function ($rootScope, $location, $anchorScroll, $filter, localStorageService, applicationGlobals) {
     var helper = {
         setSESSIONEXP: function(exp) {
-            $.cookie('SESSIONEXP', exp, { expires: 7, path: '/' });
+            $.cookie('SESSIONEXP', exp, { expires: 100, path: '/' });
         },
         deleteSESSIONEXP: function() {
             $.removeCookie('SESSIONEXP', { path: '/' });
@@ -97,6 +97,7 @@ app.service('pagerUp', ['$filter', function ($filter) {
     var pageIndex = 0;
     var maxItems = 0;
     var pages = [];
+    var pagesCount = 0;
     var advancedFilterFunction = null;
 
     this.setData = function (dataInput) {
@@ -128,7 +129,15 @@ app.service('pagerUp', ['$filter', function ($filter) {
             tempData = $filter('limitTo')(tempData, maxItems);
 
         pages = new Array();
-        for (var i = 1; i <= Math.ceil(tempData.length / pageSize); i++) {
+        pagesCount = Math.ceil(tempData.length / pageSize);
+        var startPage = 1;
+        var stopPage = ((startPage + 5) < pagesCount) ? startPage + 5 : pagesCount;
+        if (pageIndex > 5)
+        {
+            startPage = ((pageIndex + 5) < pagesCount)? pageIndex : pagesCount - 5;
+            stopPage = startPage + 5;
+        }
+        for (var i = startPage; i <= stopPage; i++) {
             pages.push(i);
         }
 
@@ -151,6 +160,10 @@ app.service('pagerUp', ['$filter', function ($filter) {
         return pages;
     };
 
+    this.getPagesCount = function () {
+        return pagesCount;
+    };
+
     this.prevPage = function () {
         if (pageIndex > 0)
             pageIndex--;
@@ -158,13 +171,17 @@ app.service('pagerUp', ['$filter', function ($filter) {
     };
 
     this.nextPage = function () {
-        if (pageIndex < pages.length - 1)
+        if (pageIndex < pagesCount - 1)
             pageIndex++;
         setCurrentPageData();
     };
 
-    this.setPageIndex = function (index) {
+    this.setPageIndex = function (index, ofCurrentPages) {
         pageIndex = index;
+        if (ofCurrentPages)
+        {
+            pageIndex = pages[index] - 1;
+        }
         setCurrentPageData();
     };
 

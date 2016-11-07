@@ -1,0 +1,20 @@
+{
+  "name": "AGM.Web",
+  "version": "0.1.0",
+  "authors": [
+    "Fernando Walter Gagni <fernando.gagni@casa.it>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "keywords": [
+    "agm"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "dependencies": {
+    "ckeditor": "#full/4.5.4",
+    "bootstrap-toggle": "~2.2.1"
+  }
+}

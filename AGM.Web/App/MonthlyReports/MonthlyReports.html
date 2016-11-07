@@ -19,7 +19,7 @@
         </div>
     </div>
 
-    <div class="monthlyRep-detail">
+    <div class="monthlyRep-detail" style="font-size: 11px;">
         <div ng-hide="myMonthlyReport">
             <i class="hidden-xs hidden-sm fa fa-arrow-circle-o-left sign" ng-click="backToUsers()"></i>
             <div class="detailUserName">
@@ -41,6 +41,7 @@
             </div>
         </div>
         <div class="hidden-xs hidden-sm toolContainer">
+            <a href="https://agmsolutions-net.securesslhosting.it/backoffice/Users/{{detail.user.id}}"><i class="fa fa-user sign"></i></a>
             <i class="fa fa-bolt sign" ng-click="autocompleteReport()" ng-hide="detail.islocked"></i>
             <i class="fa fa-lock sign" ng-hide="!currentUser.sectionusersvisible && detail.islocked" ng-class="{'fa-lock': (detail.islocked && !btnLockHover) || (btnLockOver && !detail.islocked), 'fa-unlock-alt': (!detail.islocked && !btnLockOver) || (btnLockOver && detail.islocked)}" ng-click="toggleLock()" ng-mouseover="btnLockOver=true" ng-mouseout="btnLockOver=false"></i>
             <i class="fa fa-print sign" print-button></i>
@@ -59,7 +60,7 @@
                                    data-date-format="EEEE dd"
                                    data-date-type="iso"
                                    data-min-date="{{detail.minmonthdate}}"
-                                   data-max-date="{{detail.maxmonthdate}}"
+                                   
                                    data-autoclose="1"
                                    bs-datepicker>
                         </div>
@@ -184,18 +185,18 @@
                             </div>
                             <div class="input-group" ng-class="{'has-error':!retributionItems.amount_{{$index}}.$valid, 'has-success':retributionItems.amount_{{$index}}.$dirty}">
                                 <div class="input-group-addon">€</div>
-                                <input ng-change="recalculateTotal($index)" name="amount_{{$index}}" type="number" ng-model="detail.retributionitems[$index].amount" class="form-control" placeholder="Valore..." min="0" max="5000" step="any"/>
+                                <input ng-change="recalculateTotal($index)" name="amount_{{$index}}" type="number" ng-model="detail.retributionitems[$index].amount" class="form-control" placeholder="Valore..." min="0" max="50000" step="any"/>
                             </div>
                         </div>
 
                         <div ng-if="item.type != 8" class="input-group" ng-class="{'has-error':!retributionItems.total_{{$index}}.$valid, 'has-success':retributionItems.total_{{$index}}.$dirty}">
                             <div class="input-group-addon">€</div>
-                            <input name="total_{{$index}}" type="number" ng-model="detail.retributionitems[$index].total" class="form-control" placeholder="Totale..." min="0" max="5000" step="any" readonly/>
+                            <input name="total_{{$index}}" type="number" ng-model="detail.retributionitems[$index].total" class="form-control" placeholder="Totale..." min="0" max="50000" step="any" readonly/>
                         </div>
 
                         <div ng-if="item.type == 8" class="input-group" ng-class="{'has-error':!retributionItems.total_{{$index}}.$valid, 'has-success':retributionItems.total_{{$index}}.$dirty}">
                             <div class="input-group-addon">€</div>
-                            <input name="total_{{$index}}" type="number" ng-model="detail.retributionitems[$index].total" class="form-control" placeholder="Totale..." min="0" max="5000" step="any"/>
+                            <input name="total_{{$index}}" type="number" ng-model="detail.retributionitems[$index].total" class="form-control" placeholder="Totale..." min="0" max="50000" step="any"/>
                         </div>
                     </div>
                     <div class="clearfix"></div>

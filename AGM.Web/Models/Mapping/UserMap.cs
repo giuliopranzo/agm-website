@@ -40,8 +40,12 @@ namespace AGM.Web.Models.Mapping
             this.Property(t => t._sectionJobAdsVisible).HasColumnName("annunci");
             this.Property(t => t._sectionMonthlyReportsVisible).HasColumnName("rapportini");
             this.Property(t => t._sectionJobApplicantsVisible).HasColumnName("candidati");
+            this.Property(t => t._sectionExportVisible).HasColumnName("sectionExport");
+            this.Property(t => t._canDeleteJobApplicants).HasColumnName("canDeleteJobApplicants");
+            this.Property(t => t._canSendMessage).HasColumnName("canSendMessage");
             this.Property(t => t._isActive).HasColumnName("attivo");
             this.Property(t => t._isDeleted).HasColumnName("isDeleted");
+            this.Property(t => t._isAdmin).HasColumnName("isAdmin");
             this.Property(t => t.RetributionItemConfSerialized).HasColumnName("retributionItemConf");
 
             // Ignore
@@ -52,8 +56,12 @@ namespace AGM.Web.Models.Mapping
             this.Ignore(p => p.SectionJobAdsVisible);
             this.Ignore(p => p.SectionJobApplicantsVisible);
             this.Ignore(p => p.SectionMonthlyReportsVisible);
+            this.Ignore(p => p.SectionExportVisible);
+            this.Ignore(p => p.CanSendMessage);
+            this.Ignore(p => p.CanDeleteJobApplicants);
             this.Ignore(p => p.IsActive);
             this.Ignore(p => p.IsDeleted);
+            this.Ignore(p => p.IsAdmin);
             this.Ignore(p => p.RetributionItemConfiguration);
         }
     }

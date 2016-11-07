@@ -1,0 +1,42 @@
+﻿<a id="reportTop" class="reportTop"></a>
+<div class="breadcrumb hidden-xs hidden-sm" style="display: table;">
+    <div class="pageHeader_pageTitle">
+        <span>Utenti disattivati</span>
+        <span class="pageHeader_subtitle">elenco utenti non attivi</span>
+    </div>
+    <div class="pageHeader_breadCrumb"><a class="pageHeader_breadCrumbLink" ui-sref="Root.Index">Home</a> > Utenti</div>
+</div>
+<div class="monthlyRep" ng-cloak>
+    <div class="hidden-print mr_affixToolContainer" role="complementary" data-offset-top="235" bs-affix ng-hide="applicationGlobals.showMainMenu">
+        <div class="container container-header">
+            <i class="fa fa-plus-circle signAffix" ng-click="newUser()"></i>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="users-users">
+        <div class="container-fluid">
+            <div class="col-xs-12 col-md-6 form-group">
+                <input class="form-control" type="text" ng-model="search.name" placeholder="Ricerca..." />
+            </div>
+            <div class="hidden-xs hidden-sm toolContainer">
+                <i class="fa fa-plus-circle sign" ng-click="newUser()"></i>
+            </div>
+            <div class="col-md-12 container" style="width:100%;">
+                <div class="row">
+                    <div data-ng-repeat="user in users" ng-if="user._isactive==0" class="col-md-4">
+                        <button class="btn btn-default btn-block nameListElement" user-context-menu="{{user.id}}">
+                            <img ng-src="{{user.image}}" alt="" style="height:48px;width:48px;" />
+                            <div>
+                                <span class="person-name" ng-bind="user.name"></span>
+                                <span class="company-name" ng-bind="user.company"></span>
+                                <span class="company-name" ng-show="!user.idexport || user.idexport == -1"><i class="fa fa-exclamation-triangle"></i>No ID Export</span>
+                                <span class="company-name" ng-show="!user.currentmhreportlocked"><i class="fa fa-exclamation-triangle"></i>Rapportino non chiuso</span>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+                <div agm-footer></div>
+            </div>
+
+    <div class="loading" ng-show="loading"></div>
+</div>

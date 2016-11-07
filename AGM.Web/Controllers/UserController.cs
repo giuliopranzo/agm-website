@@ -474,6 +474,7 @@ namespace AGM.Web.Controllers
                     {
                         u.Id,
                         u.Name,
+                        u._isActive,
                         u.Image,
                         u.Username,
                         u.IdExport,
@@ -511,7 +512,7 @@ namespace AGM.Web.Controllers
         [HttpPost]
         public ApiResponse Set(User user)
         {
-            this.CheckCurrentUserPermission(user.Id, ((x) => x.SectionUsersVisible));
+            this.CheckCurrentUserPermission(user.Id, ((x) => x.SectionUsersVisible || x.IsAdmin));
             var currentUser = this.GetCurrentUser();
 
             using (var context = new AgmDataContext())
@@ -536,20 +537,26 @@ namespace AGM.Web.Controllers
                     context.Users.Attach(user);
                     ((IObjectContextAdapter)context).ObjectContext.ObjectStateManager.ChangeObjectState(user, EntityState.Modified);
 
-                    if (!currentUser.SectionUsersVisible)
+                    if (!currentUser.SectionUsersVisible && !currentUser.IsAdmin)
                     {
                         context.Entry(user).Property(x => x.IdExport).IsModified = false;
                         context.Entry(user).Property(x => x._isActive).IsModified = false;
+                        context.Entry(user).Property(x => x._sectionMonthlyReportsVisible).IsModified = false;
+                    }
+
+                    if (!currentUser.IsAdmin)
+                    {
                         context.Entry(user).Property(x => x._sectionJobAdsVisible).IsModified = false;
                         context.Entry(user).Property(x => x._sectionJobApplicantsVisible).IsModified = false;
-                        context.Entry(user).Property(x => x._sectionMonthlyReportsVisible).IsModified = false;
                         context.Entry(user).Property(x => x._sectionUsersVisible).IsModified = false;
+                        context.Entry(user).Property(x => x._sectionExportVisible).IsModified = false;
+                        context.Entry(user).Property(x => x._canSendMessage).IsModified = false;
                         context.Entry(user).Property(x => x.RetributionItemConfSerialized).IsModified = false;
                     }
                 }
                 else
                 {
-                    if (context.Users.Any(u => u.Email.ToLower() == user.Email.ToLower()))
+                    if (context.Users.Any(u => u.Email.ToLower() == user.Email.ToLower() && !u._isDeleted))
                         return new ApiResponse(false)
                         {
                             Errors = new List<ApiResponseError>(){ new ApiResponseError() {Code = -1, Message = "Utente già esistente"}}.ToArray()
@@ -650,6 +657,126 @@ namespace AGM.Web.Controllers
             using (var context = new AgmDataContext())
             {
                  return new ApiResponse(true){ Data = context.Users.Any(u => u.Email.ToLower().Equals(email.ToLower()))};
+            }
+        }
+
+        [HttpGet]
+        [AuthorizeAction]
+        public ApiResponse GetMessages()
+        {
+            var userId = this.GetCurrentUser().Id;
+            using (var context = new AgmDataContext())
+            {
+                var users = context.Users.ToList();
+                var res = context.MessageReceivers.Where(r => r.ToUserId == userId && !r.IsDeleted).Include("Message").OrderByDescending(r => r.Message.InsertDate).ToList();
+                res.ForEach(i => i.Message.Sender = users.Find(u => u.Id == i.Message.FromUserId).Name);
+                return new ApiResponse(true) { Data = res };
+            }
+        }
+
+        [HttpGet]
+        [AuthorizeAction]
+        public ApiResponse GetSentMessages()
+        {
+            if (!this.GetCurrentUser().CanSendMessage || !this.GetCurrentUser().IsAdmin)
+                return new ApiResponse(true) { Data = null };
+
+            var userId = this.GetCurrentUser().Id;
+            using (var context = new AgmDataContext())
+            {
+                var res = context.Messages.Where(m => m.FromUserId == userId && !m.IsDeleted).OrderByDescending(m => m.InsertDate).ToList();
+                res.ForEach(i => i.ReceiverIds = context.MessageReceivers.Where(m => m.MessageId == i.Id).Select(m => m.ToUserId).ToList());
+                res.ForEach(i => i.Receivers = string.Join(",", context.Users.Where(u => i.ReceiverIds.Contains(u.Id)).OrderBy(u => u.LastName).Select(u => u.LastName + " " + u.FirstName).ToList()));
+                return new ApiResponse(true) { Data = context.Messages.Where(m => m.FromUserId == userId && !m.IsDeleted).OrderByDescending(m => m.InsertDate).ToList() };
+            }
+        }
+
+        [HttpPost]
+        [AuthorizeAction]
+        public ApiResponse SetMessage([FromBody]MessageIn msgIn)
+        {
+            this.CheckCurrentUserPermission((x) => x.CanSendMessage || x.IsAdmin);
+            var userId = this.GetCurrentUser().Id;
+            using (var context = new AgmDataContext())
+            {
+                var msgToAdd = new Message()
+                {
+                    InsertDate = DateTime.Now,
+                    Subject = msgIn.Subject,
+                    Text = msgIn.Text,
+                    FromUserId = userId
+                };
+                var msg = context.Messages.Add(msgToAdd);
+
+                var messageReceivers = new List<MessageReceiver>();
+                if (msgIn.SendToAll == 1)
+                {
+                    context.Users.Where(u => !u._isDeleted && u.Id != userId).ToList().ForEach((u) => messageReceivers.Add(new MessageReceiver() { MessageId = msgToAdd.Id, ToUserId = u.Id }));
+                }
+                else
+                {
+                    msgIn.ToUserIds.ToList().ForEach(u => messageReceivers.Add(new MessageReceiver() { MessageId = msgToAdd.Id, ToUserId = u }));
+                }
+                context.MessageReceivers.AddRange(messageReceivers);
+
+                var res = context.SaveChanges();
+
+                if (res > 0)
+                    return new ApiResponse(true) { Data = msg };
+
+                return new ApiResponse(false);
+            }
+        }
+
+        [HttpPost]
+        [AuthorizeAction]
+        public ApiResponse DeleteMessage(dynamic idIn)
+        {
+            this.CheckCurrentUserPermission((x) => x.CanSendMessage || x.IsAdmin);
+            int id = (int)idIn;
+            var userId = this.GetCurrentUser().Id;
+            using (var context = new AgmDataContext())
+            {
+                var messageReceivers = context.MessageReceivers.Where(i => i.MessageId == id && !i.IsDeleted);
+                if (messageReceivers != null && messageReceivers.Count() > 0)
+                {
+                    messageReceivers.ToList().ForEach(m => m.IsDeleted = true);
+                }
+
+                var message = context.Messages.FirstOrDefault(i => i.Id == id);
+                if (message == null)
+                    return new ApiResponse(false);
+
+                message.IsDeleted = true;
+                var res = context.SaveChanges();
+
+                if (res > 0)
+                    return new ApiResponse(true);
+
+                return new ApiResponse(false);
+            }
+        }
+
+        [HttpPost]
+        [AuthorizeAction]
+        public ApiResponse DeleteSentMessage(dynamic idIn)
+        {
+            this.CheckCurrentUserPermission((x) => x.CanSendMessage || x.IsAdmin);
+            int id = (int)idIn;
+            var userId = this.GetCurrentUser().Id;
+            using (var context = new AgmDataContext())
+            {
+                var messageReceiver = context.MessageReceivers.FirstOrDefault(i => i.Id == id && !i.IsDeleted);
+                if (messageReceiver == null )
+                    return new ApiResponse(false);
+
+                messageReceiver.IsDeleted = true;
+                var res = context.SaveChanges();
+
+                if (res > 0)
+                    return new ApiResponse(true);
+
+                return new ApiResponse(false);
             }
         }
     }

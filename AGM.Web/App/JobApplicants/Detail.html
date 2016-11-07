@@ -27,8 +27,17 @@
                            data-placement="auto"
                            bs-datepicker>
                 </div>
+                <label class="standardFormLabel">Luogo di nascita</label><input class="form-control" type="text" placeholder="Luogo di nascita" ng-model="applicant.birthplace" maxlength="50" />
+                <label class="standardFormLabel">Provincia di residenza</label>
+                <button type="button" class="btn btn-default controlMinSeparated btnFill" ng-model="applicant.residenceid" bs-options="location.id as location.name for location in locations" data-placeholder="Scegli dall'elenco..." bs-select>
+                    <span class="caret"></span>
+                </button>
                 <label class="standardFormLabel">Categoria</label>
                 <button type="button" class="btn btn-default controlMinSeparated btnFill" ng-model="applicant.jobcategoryid" bs-options="category.id as category.name for category in jobCategories" bs-select>
+                    <span class="caret"></span>
+                </button>
+                <label class="standardFormLabel">Tipo contratto attuale</label>
+                <button type="button" class="btn btn-default controlMinSeparated btnFill" ng-model="applicant.contracttypeid" bs-options="type.id as type.name for type in contractTypes" data-placeholder="Scegli dall'elenco..." bs-select>
                     <span class="caret"></span>
                 </button>
                 <label class="standardFormLabel">Luogo di lavoro</label>
@@ -36,15 +45,23 @@
                     <span class="caret"></span>
                 </button>
                 <label class="standardFormLabel">Lingua 1</label>
-                <button id="selectLanguage1" scroll-to-option="getLanguageName(applicant.language1id)" data-trigger="click" ng-keydown="kd($event)" type="button" class="btn btn-default controlMinSeparated btnFill" ng-model="applicant.language1id" bs-options="language.id as language.name for language in languages" bs-select>
+                <button id="selectLanguage1" scroll-to-option="getLanguageName(applicant.language1id)" data-trigger="click" ng-keydown="kd($event)" type="button" class="btn btn-default controlMinSeparated btnFill" ng-model="applicant.language1id" bs-options="language.id as language.name for language in languages" data-placeholder="Scegli dall'elenco..." bs-select>
                     <span class="caret"></span>
                 </button>
                 <label class="standardFormLabel">Lingua 2</label>
-                <button id="selectLanguage2" scroll-to-option="getLanguageName(applicant.language2id)" data-trigger="click" ng-keydown="kd($event)" type="button" class="btn btn-default controlMinSeparated btnFill" ng-model="applicant.language2id" bs-options="language.id as language.name for language in languages" bs-select>
+                <button id="selectLanguage2" ng-change="languageChange()" scroll-to-option="getLanguageName(applicant.language2id)" data-trigger="click" ng-keydown="kd($event)" type="button" class="btn btn-default controlMinSeparated btnFill" ng-model="applicant.language2id" bs-options="language.id as language.name for language in languages" data-placeholder="Scegli dall'elenco..." bs-select>
+                    <span class="caret"></span>
+                </button>
+                <label class="standardFormLabel">Livello lingua 2</label>
+                <button id="selectLanguage2Level" scroll-to-option="getLanguageName(applicant.language2levelid)" ng-disabled="applicant.language2id==null || applicant.language2id==30 || applicant.language2id==1" data-trigger="click" ng-keydown="kd($event)" type="button" class="btn btn-default controlMinSeparated btnFill" ng-model="applicant.language2levelid" bs-options="level.id as level.name for level in languageLevels" data-placeholder="Scegli dall'elenco..." bs-select>
                     <span class="caret"></span>
                 </button>
                 <label class="standardFormLabel">Lingua 3</label>
-                <button id="selectLanguage3" scroll-to-option="getLanguageName(applicant.language3id)" data-trigger="click" ng-keydown="kd($event)" type="button" class="btn btn-default controlMinSeparated btnFill" ng-model="applicant.language3id" bs-options="language.id as language.name for language in languages" bs-select>
+                <button id="selectLanguage3" ng-change="languageChange()" scroll-to-option="getLanguageName(applicant.language3id)" data-trigger="click" ng-keydown="kd($event)" type="button" class="btn btn-default controlMinSeparated btnFill" ng-model="applicant.language3id" bs-options="language.id as language.name for language in languages" data-placeholder="Scegli dall'elenco..." bs-select>
+                    <span class="caret"></span>
+                </button>
+                <label class="standardFormLabel">Livello lingua 3</label>
+                <button id="selectLanguage3Level" scroll-to-option="getLanguageName(applicant.language3levelid)" ng-disabled="applicant.language3id==null || applicant.language3id==30 || applicant.language3id==1" data-trigger="click" ng-keydown="kd($event)" type="button" class="btn btn-default controlMinSeparated btnFill" ng-model="applicant.language3levelid" bs-options="level.id as level.name for level in languageLevels" data-placeholder="Scegli dall'elenco..." bs-select>
                     <span class="caret"></span>
                 </button>
                 <label class="standardFormLabel">Importo</label><input class="form-control" type="text" placeholder="Importo" ng-model="applicant.contractpricenotes" maxlength="30" />
@@ -52,6 +69,18 @@
                 <button type="button" class="btn btn-default controlMinSeparated btnFill" ng-model="applicant.userid" bs-options="item.value as item.description for item in interviewers" data-placeholder="Scegli dall'elenco..." bs-select>
                     <span class="caret"></span>
                 </button>
+                <div class="clearfix" style="margin-bottom:20px;"></div>
+
+                <div class="functionList">
+                    <label class="standardFormLabel">Assunto</label>
+                    <input type="checkbox" ng-model="applicant._hired" toggle-switch>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="functionList">
+                    <label class="standardFormLabel">Cessato</label>
+                    <input type="checkbox" ng-model="applicant._suspended" toggle-switch>
+                    <div class="clearfix"></div>
+                </div>
             </div>
             <div class="col-xs-12 col-sm-8 form-group">
                 <label class="standardFormLabel">Note</label>
@@ -94,6 +123,29 @@
             </div>
 
             <div class="clearfix"></div>
+
+            <!--<div class="functionList" ng-show="currentUser.sectionusersvisible">
+                <label>Straniero</label>
+                <input type="checkbox" ng-model="candidate.straniero" toggle-switch>
+                <div class="clearfix"></div>
+            </div>
+
+            <label class="standardFormLabel">Tipo Permesso</label>
+            <button type="button" class="btn btn-default controlMinSeparated btnFill" ng-model="applicant.idpermesso" bs-options="category.id as category.name for category in jobCategories" bs-select>
+                <span class="caret"></span>
+            </button>
+
+            Data scadenza permesso:
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
+                <input id="monthPicker" type="text" class="form-control inputDatePicker" ng-model="applicant.datascpermesso"
+                       data-date-format="dd MMMM yyyy"
+                       data-date-type="date"
+                       data-min-date="1945-01-01 00:00:00"
+                       data-autoclose="1"
+                       data-placement="auto"
+                       bs-datepicker>
+            </div>-->
 
             <div class="col-xs-1 form-group bottomButton">
                 <button class="btn btn-info" ng-click="save()" ng-disabled="jobApplicantForm.$invalid">Salva</button>

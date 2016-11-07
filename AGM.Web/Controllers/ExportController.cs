@@ -22,7 +22,7 @@ namespace AGM.Web.Controllers
         [HttpGet]
         public ApiResponse Get(string month)
         {
-            this.CheckCurrentUserPermission(((x) => x.SectionUsersVisible));
+            this.CheckCurrentUserPermission(((x) => x.SectionExportVisible));
             using (var db = new AgmDataContext())
             {
                 if (db.Exports.All(e => e.Month != month))
@@ -35,7 +35,7 @@ namespace AGM.Web.Controllers
         [HttpPost]
         public ApiResponse Calculate([FromBody]string month)
         {
-            this.CheckCurrentUserPermission(((x) => x.SectionUsersVisible));
+            this.CheckCurrentUserPermission(((x) => x.SectionExportVisible));
             using (var db = new AgmDataContext())
             {
                 var export = new Export();
@@ -77,7 +77,7 @@ namespace AGM.Web.Controllers
         [HttpGet]
         public ApiResponse StartExport()
         {
-            this.CheckCurrentUserPermission(((x) => x.SectionUsersVisible));
+            this.CheckCurrentUserPermission(((x) => x.SectionExportVisible));
             using (var db = new AgmDataContext())
             {
                 var tokenId = Guid.NewGuid().ToString().Replace("-", string.Empty);

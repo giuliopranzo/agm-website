@@ -31,6 +31,29 @@ namespace AGM.Web.Controllers
         }
 
         [AuthorizeAction]
+        [DeflateCompression]
+        [HttpGet]
+        public ApiResponse Get(int indexPage, int pageSize, string searchFilter)
+        {
+            this.CheckCurrentUserPermission(((x) => x.SectionJobApplicantsVisible));
+
+            using (var context = new AgmDataContext())
+            {
+                var res = context.JobApplicants.Include("JobCategory").Include("Status").Include("StatusReason").Include("User").ToList().OrderByDescending(a => a.InterviewDate);
+                return new ApiResponse(true)
+                {
+                    Data = new {
+                        totalItems = res.Count(),
+                        totalPages = (int)Math.Floor((double)(res.Count() / pageSize)),
+                        indexPage = indexPage,
+                        pageSize = pageSize,
+                        pageData = res.Skip(pageSize * indexPage).Take(pageSize)
+                    }
+                };
+            }
+        }
+
+        [AuthorizeAction]
         [HttpPost]
         public ApiResponse Set(JobApplicant objToSave)
         {
@@ -55,6 +78,28 @@ namespace AGM.Web.Controllers
                     context.JobApplicants.Attach(objToSave);
                     ((IObjectContextAdapter)context).ObjectContext.ObjectStateManager.ChangeObjectState(objToSave, EntityState.Modified);
                 }
+                context.SaveChanges();
+            }
+
+            return new ApiResponse(true);
+        }
+
+        [AuthorizeAction]
+        [HttpPost]
+        public ApiResponse Delete(JobApplicant[] objCollectionToDelete)
+        {
+            this.CheckCurrentUserPermission(((x) => x.SectionJobApplicantsVisible));
+            this.CheckCurrentUserPermission(((x) => x.CanDeleteJobApplicants));
+
+            using (var context = new AgmDataContext())
+            {
+                foreach (var item in objCollectionToDelete)
+                {
+                    var actual = context.JobApplicants.Find(item.Id);
+                    if (actual != null)
+                        context.JobApplicants.Remove(actual);
+                }
+                
                 context.SaveChanges();
             }
 
@@ -122,6 +167,40 @@ namespace AGM.Web.Controllers
             using (var context = new AgmDataContext())
             {
                 var res = context.Languages.ToList();
+                return new ApiResponse(true)
+                {
+                    Data = res.OrderBy(i => i.Name)
+                };
+            }
+        }
+
+        [AuthorizeAction]
+        [DeflateCompression]
+        [HttpGet]
+        public ApiResponse GetLanguageLevel()
+        {
+            this.CheckCurrentUserPermission(((x) => x.SectionJobApplicantsVisible));
+
+            using (var context = new AgmDataContext())
+            {
+                var res = context.LanguageLevels.ToList();
+                return new ApiResponse(true)
+                {
+                    Data = res.OrderBy(i => i.Id)
+                };
+            }
+        }
+
+        [AuthorizeAction]
+        [DeflateCompression]
+        [HttpGet]
+        public ApiResponse GetContractType()
+        {
+            this.CheckCurrentUserPermission(((x) => x.SectionJobApplicantsVisible));
+
+            using (var context = new AgmDataContext())
+            {
+                var res = context.ContractTypes.ToList();
                 return new ApiResponse(true)
                 {
                     Data = res.OrderBy(i => i.Name)

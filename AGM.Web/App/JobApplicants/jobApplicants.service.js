@@ -9,9 +9,27 @@
             });
             return deferred.promise;
         },
+        getPageData: function (callId, indexPage, pageSize, searchFilter) {
+            var deferred = $q.defer();
+            $http({ method: 'GET', headers: { _callId: callId }, url: 'api/JobApplicant/Get' }, { indexPage: indexPage, pageSize: pageSize, searchFilter: searchFilter }).success(function (respData, status, headers, config) {
+                deferred.resolve(respData);
+            }).error(function (respData, status, headers, config) {
+                deferred.reject(respData);
+            });
+            return deferred.promise;
+        },
         save: function (callId, objToSave) {
             var deferred = $q.defer();
             $http({ method: 'POST', headers: { _callId: callId }, url: 'api/JobApplicant/Set', data: objToSave }).success(function (respData, status, headers, config) {
+                deferred.resolve(respData);
+            }).error(function (respData, status, headers, config) {
+                deferred.reject(respData);
+            });
+            return deferred.promise;
+        },
+        delete: function (callId, objCollectionToDelete) {
+            var deferred = $q.defer();
+            $http({ method: 'POST', headers: { _callId: callId }, url: 'api/JobApplicant/Delete', data: objCollectionToDelete }).success(function (respData, status, headers, config) {
                 deferred.resolve(respData);
             }).error(function (respData, status, headers, config) {
                 deferred.reject(respData);
@@ -48,6 +66,24 @@
         getLanguage: function (callId) {
             var deferred = $q.defer();
             $http({ method: 'GET', headers: { _callId: callId }, url: 'api/JobApplicant/GetLanguage' }).success(function (respData, status, headers, config) {
+                deferred.resolve(respData);
+            }).error(function (respData, status, headers, config) {
+                deferred.reject(respData);
+            });
+            return deferred.promise;
+        },
+        getLanguageLevel: function (callId) {
+            var deferred = $q.defer();
+            $http({ method: 'GET', headers: { _callId: callId }, url: 'api/JobApplicant/GetLanguageLevel' }).success(function (respData, status, headers, config) {
+                deferred.resolve(respData);
+            }).error(function (respData, status, headers, config) {
+                deferred.reject(respData);
+            });
+            return deferred.promise;
+        },
+        getContractType: function (callId) {
+            var deferred = $q.defer();
+            $http({ method: 'GET', headers: { _callId: callId }, url: 'api/JobApplicant/GetContractType' }).success(function (respData, status, headers, config) {
                 deferred.resolve(respData);
             }).error(function (respData, status, headers, config) {
                 deferred.reject(respData);

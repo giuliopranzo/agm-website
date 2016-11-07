@@ -35,7 +35,7 @@ namespace AGM.Web.Controllers
                             {new ApiResponseError() {Message = "Email o password errati"}}
                     };
 
-                name = context.Users.First(u => u.Email.ToLower() == email.ToLower() && u.Password == password).Name;
+                name = context.Users.First(u => u.Email.ToLower() == email.ToLower() && u.Password == password && !u._isDeleted).Name;
             }
 
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -99,7 +99,12 @@ namespace AGM.Web.Controllers
                         user.Image,
                         user.Email,
                         user.SectionUsersVisible,
-                        user.SectionJobAdsVisible
+                        user.SectionJobAdsVisible,
+                        user.SectionJobApplicantsVisible,
+                        user.SectionExportVisible,
+                        user.CanDeleteJobApplicants,
+                        user.CanSendMessage,
+                        user.IsAdmin
                     }
                 };
             }

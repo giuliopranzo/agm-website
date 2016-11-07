@@ -1,3 +1,95 @@
-﻿<div ng-show="user.sectionusersvisible">
+﻿<div>
+    <div>
+        <div class="hidden-xs hidden-sm col-md-6 col-lg-4">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Messaggi ricevuti</h3>
+                </div>
+                <div class="panel-body">
+                    <i class="fa fa-comment-o panelHeaderIcon"></i>
+                    <p class="panelHeaderText">Leggi i messaggi che gli amministratori ti hanno inviato.</p>
+                </div>
+                <div ng-show="messages.length == 0" class="panel-footer messageBox text-center col-xs-12">
+                    <span class="noMessageText">Non ci sono messaggi</span>
+                </div>
+                <div ng-hide="messages.length == 0" class="panel-footer messageBox col-xs-12">
+                    <div ng-repeat="item in messages" class="messageItem" ng-class="{'messageItem_odd': $odd, 'messageItem_even': $even, 'messageItem_last': $last}">
+                        <div class="messageItemContent">
+                            <span ng-bind="item.message.insertdate | date:'short'"></span> -
+                            <span ng-bind="item.message.sender"></span> -
+                            <span ng-bind="item.message.subject"></span>
+                        </div>
+                        <p ng-bind="item.message.text"></p>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+
+        <form name="messageForm" ng-show="currentUser.sectionusersvisible">
+            <div class="hidden-xs hidden-sm col-md-6 col-lg-4">
+                <div ng-show="sentMessages != null" class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Invio messaggi</h3>
+                    </div>
+                    <div class="panel-body">
+                        <i class="fa fa-bullhorn" style="font-size: 60px;display:inline;"></i>
+                        <p style="display:inline; vertical-align:top; width:50%; margin-left: 20px;float: right; text-align:right;">Invia i tuoi messaggi agli utenti, scegli i destinatari o inviali a tutti, ma ricorda, hai al massimo 1000 caratteri.</p>
+                    </div>
+                    <div>
+                        <div class="panel-footer col-xs-12">
+                            <div bs-active-pane="tabs.activeTab" bs-tabs>
+                                <div data-title="Invia" name="Send" bs-pane>
+                                    <div class="input-group col-xs-12">
+                                        <button type="button" class="btn btn-default selectButton col-xs-6" ng-model="messageIn.sendToAll" data-multiple="0" data-animation="am-flip-x" bs-options="item.value as item.description for item in receiverType" bs-select>
+                                            Action <span class="caret"></span>
+                                        </button>
+                                    </div>
+                                    <div class="input-group  col-xs-12">
+                                        <button type="button" class="btn btn-default selectButton" ng-model="messageIn.toUserIds" ng-disabled="messageIn.sendToAll==1" data-max-length="1" data-placeholder="Destinatario" data-multiple="1" data-animation="am-flip-x" bs-options="item.id as item.name for item in receivers" bs-select>
+                                            Action <span class="caret"></span>
+                                        </button>
+                                    </div>
+                                    <div class="input-group  col-xs-12">
+                                        <input class="form-control" required type="text" name="subject" ng-model="messageIn.subject" maxlength="50" placeholder="Oggetto" />
+                                    </div>
+                                    <div class="input-group  col-xs-12">
+                                        <textarea class="form-control" required name="text" ng-model="messageIn.text" maxlength="1000" placeholder="Testo" style="resize: vertical; min-height:78px;" />
+                                    </div>
+                                    <button class="btn btn-primary" ng-click="sendMessage()" ng-disabled="(messageIn.toUserIds.length == 0 && !messageIn.sendToAll) || (messageIn.sendToAll==2 && messageIn.toUserIds.length == 0)  || messageForm.$invalid">Invia</button>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="clearfix"></div>
+
+                                <div data-title="Inviati" name="Sent" bs-pane>
+                                    <div ng-show="sentMessages.length == 0" class="messageBox text-center col-xs-12">
+                                        <span class="noMessageText">Non sono stati inviati messaggi</span>
+                                    </div>
+                                    <div ng-hide="sentMessages.length == 0" class="messageBox col-xs-12">
+                                        <div ng-repeat="item in sentMessages" class="messageItem" ng-class="{'messageItem_odd': $odd, 'messageItem_even': $even, 'messageItem_last': $last}">
+                                            <div class="messageItemContent">
+                                                <span ng-bind="item.insertdate | date:'short'"></span> -
+                                                <span ng-bind="item.subject"></span>
+                                                <span style="float:right"><a clasS="simpleLink" ng-click="deleteMessage(item.id)"><i class="fa fa-trash-o"></i></a></span>
+                                                <br />
+                                                <a class="simpleLink" ng-init="showMessageDetail_$index=false" ng-click="showMessageDetail_$index=!showMessageDetail_$index"><span ng-if="showMessageDetail_$index"> Meno dettagli</span><span ng-if="!showMessageDetail_$index"> Più dettagli</span></a>
+                                                <br />
+                                                <div ng-show="showMessageDetail_$index">
+                                                    <span>Destinatari: </span><span ng-bind="item.receivers"></span>
+                                                </div>
+                                            </div>
+                                            <p ng-bind="item.text"></p>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
     <div class="clearfix"></div>
 </div>

@@ -38,6 +38,11 @@ namespace AGM.Web.Models.Mapping
             this.Property(t => t.EnglishTest).HasColumnName("testinglese");
             this.Property(t => t.ReasonId).HasColumnName("idmotivo");
             this.Property(t => t.WorkTown).HasColumnName("idluogolavoro");
+            this.Property(t => t.Straniero).HasColumnName("straniero");
+            this.Property(t => t.Idpermesso).HasColumnName("idpermesso");
+            this.Property(t => t.DataScPermessoRaw).HasColumnName("datascpermesso");
+
+
 
             // Ignore
             this.Ignore(t => t.Name);

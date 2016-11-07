@@ -8,6 +8,9 @@ namespace AGM.Web.Models
 {
     public class Candidate
     {
+        public bool Straniero { get; set; }
+        public int Idpermesso { get; set; }
+        public string DataScPermessoRaw { get; set; }
         public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -38,6 +41,19 @@ namespace AGM.Web.Models
             {
                 var cultureIt = CultureInfo.GetCultureInfo("it-IT");
                 return DateTime.Parse(InterviewDateRaw, cultureIt);
+            }
+            set
+            {
+                InterviewDateRaw = value.ToString("dd/MM/yyyy");
+            }
+        }
+
+        public DateTime DataScPermesso
+        {
+            get
+            {
+                var cultureIt = CultureInfo.GetCultureInfo("it-IT");
+                return DateTime.Parse(DataScPermessoRaw, cultureIt);
             }
             set
             {

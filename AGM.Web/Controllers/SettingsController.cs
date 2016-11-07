@@ -51,13 +51,13 @@ namespace AGM.Web.Controllers
                 if (!user.SectionUsersVisible)
                     return new ApiResponse(false);
 
-                if (context.HourReasons.Any(r => r.Name == newHourReason.Name))
+                if (context.HourReasons.Any(r => r.Name == newHourReason.Name && !r.IsDeleted))
                     return new ApiResponse(false)
                     {
                         Errors = new ApiResponseError[] {new ApiResponseError() {Message = "Causale già esistente!"}}
                     };
 
-                if (context.HourReasons.Any(r => r.CodeExport == newHourReason.CodeExport))
+                if (context.HourReasons.Any(r => r.CodeExport == newHourReason.CodeExport && !r.IsDeleted))
                     return new ApiResponse(false)
                     {
                         Errors = new ApiResponseError[] { new ApiResponseError() { Message = "Codice export causale già utilizzato!" } }

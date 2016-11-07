@@ -1,4 +1,4 @@
-﻿app.controller('jobApplicantsDetail', ['$rootScope', '$scope', '$filter', '$alert', '$state', 'applicant', 'jobCategories', 'locations', 'languages', 'statuses', 'interviewers', 'jobApplicantsDataService', function ($rootScope, $scope, $filter, $alert, $state, applicant, jobCategories, locations, languages, statuses, interviewers, jobApplicantsDataService) {
+﻿app.controller('jobApplicantsDetail', ['$rootScope', '$scope', '$filter', '$alert', '$state', 'applicant', 'jobCategories', 'locations', 'languages', 'languageLevels', 'statuses', 'interviewers', 'contractTypes', 'jobApplicantsDataService', function ($rootScope, $scope, $filter, $alert, $state, applicant, jobCategories, locations, languages, languageLevels, statuses, interviewers, contractTypes, jobApplicantsDataService) {
     $rootScope.$on('loader_show', function (event, callId) {
         if (callId == 'japp_main') {
             if (!$rootScope.loader)
@@ -37,8 +37,15 @@
         }
 
         $scope.jobCategories = jobCategories;
-        $scope.locations = locations;
-        $scope.languages = languages;
+        $scope.locations = [{ id: null, name: 'non specificato'}];
+        $scope.locations = $scope.locations.concat(locations);
+        $scope.languages = [{ id: null, name: 'non specificata'}];
+        $scope.languages = $scope.languages.concat(languages);
+        $scope.languageLevels = [{ id: null, name: 'non specificato'}];
+        $scope.languageLevels = $scope.languageLevels.concat(languageLevels);
+        $scope.contractTypes = [{ id: null, name: 'non specificato'}];
+        $scope.contractTypes = $scope.contractTypes.concat(contractTypes);
+        
     };
 
     $scope.kd = function (event) {
@@ -86,6 +93,11 @@
 
     $scope.backToListPage = function () {
         $state.go('Root.JobApplicants');
+    };
+
+    $scope.languageChange = function () {
+        $scope.applicant.language2levelid = ($scope.applicant.language2id == null || $scope.applicant.language2id == 30 || $scope.applicant.language2id == 1) ? null : $scope.applicant.language2levelid;
+        $scope.applicant.language3levelid = ($scope.applicant.language3id == null || $scope.applicant.language3id == 30 || $scope.applicant.language3id == 1) ? null : $scope.applicant.language3levelid;
     };
 
     $scope.init();

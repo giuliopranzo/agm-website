@@ -13,6 +13,25 @@
 
         <div ng-show="reportType=='RI'">
             <div class="exportReportTable">
+                <div class="row" ng-class="{odd: $odd}" ng-repeat="user in users">
+                    <div class="col-xs-12 col-md-1">
+                        <div style="font-weight: bold; line-height: 15px;" ng-bind="user.name"></div>
+                    </div>
+                    <div ng-if="!$.isEmptyObject(reportRI[user.id])">
+                        <div class="col-xs-12 col-md-11">
+                            <div ng-repeat="(key, value) in reportRI[user.id]">
+                                <div class="col-xs-12 col-sm-6">{{retItemTypesLabels[key]}}: <strong>{{value.qty | number : 2}}</strong> x {{value.amount | number: 2}}€  tot. {{value.total | number: 2}}€</div>
+                                <div class="hidden-xs clearfix" ng-if="$odd"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+
+
+            <!--
+            <div class="exportReportTable">
                 <div class="row">
                     <div class="col-xs-12 col-md-1">
                         <div style="font-weight: bold; line-height: 15px;">&nbsp;</div>
@@ -53,12 +72,35 @@
                     </div>
                 </div>
             </div>
+            -->
             <div class="clearfix"></div>
 
             <div agm-footer></div>
         </div>
 
         <div ng-show="reportType=='MH'">
+            <div class="exportReportTable">
+                <div class="row" ng-class="{odd: $odd}" ng-repeat="user in users">
+                    <div class="col-xs-12 col-md-1">
+                        <div style="font-weight: bold; line-height: 15px;" ng-bind="user.name"></div>
+                    </div>
+                    <div ng-if="reportMH[user.id] && reportMH[user.id]!={}">
+                        <div class="col-xs-12 col-md-11">
+                            <div ng-repeat="(key, value) in reportMH[user.id]">
+                                <div class="col-xs-12 col-sm-6">{{key}}:{{value | number : 2}}h ({{value/8.00 | number: 2}}gg)</div>
+                                <div class="hidden-xs clearfix" ng-if="$odd"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-if="!reportMH[user.id] || reportMH[user.id]=={}">
+                        <div class="col-xs-12 col-md-11">
+                            <span>NESSUN RAPPORTINO ESPORTATO</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--
             <div class="exportReportTable">
                 <div class="row">
                     <div class="col-xs-12 col-md-1">
@@ -102,6 +144,8 @@
                     </div>
                 </div>
             </div>
+            -->
+
             <div class="clearfix"></div>
 
             <div agm-footer></div>

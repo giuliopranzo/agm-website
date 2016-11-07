@@ -21,24 +21,22 @@
             <div class="hidden-xs hidden-sm toolContainer">
                 <i class="fa fa-plus-circle sign" ng-click="newUser()"></i>
             </div>
-            <div ng-repeat="user in users | filter:search:false | orderBy:'name':false as usersFiltered">
-                <div class="col-xs-12 nameListLetterHead" ng-show="showLetter($index)" ng-bind="getFirstChar(user.name)"></div>
-                <div class="col-xs-12 col-md-3">
-                    <button class="btn btn-default btn-block nameListElement" user-context-menu="{{user.id}}">
-                        <img ng-src="{{user.image}}" alt="" style="height:48px;width:48px;" />
-                        <div>
-                            <span class="person-name" ng-bind="user.name"></span>
-                            <span class="company-name" ng-bind="user.company"></span>
-                            <span class="company-name" ng-show="!user.idexport || user.idexport == -1"><i class="fa fa-exclamation-triangle"></i>No ID Export</span>
-                            <span class="company-name" ng-show="!user.currentmhreportlocked"><i class="fa fa-exclamation-triangle"></i>Rapportino non chiuso</span>
-                            
-                        </div>
-                    </button>
+            <div class="col-md-12 container" style="width:100%;">
+                <div class="row">
+                    <div data-ng-repeat="user in users" ng-if="user._isactive==1" class="col-md-4">
+                        <button class="btn btn-default btn-block nameListElement" user-context-menu="{{user.id}}">
+                            <img ng-src="{{user.image}}" alt="" style="height:48px;width:48px;" />
+                            <div>
+                                <span class="person-name" ng-bind="user.name"></span>
+                                <span class="company-name" ng-bind="user.company"></span>
+                                <span class="company-name" ng-show="!user.idexport || user.idexport == -1"><i class="fa fa-exclamation-triangle"></i>No ID Export</span>
+                                <span class="company-name" ng-show="!user.currentmhreportlocked" style="color: red;"><i class="fa fa-exclamation-triangle"></i>Rapportino non chiuso</span>
+                            </div>
+                        </button>
+                    </div>
                 </div>
+                <div agm-footer></div>
             </div>
-        </div>
-        <div agm-footer></div>
-    </div>
 
     <div class="loading" ng-show="loading"></div>
 </div>

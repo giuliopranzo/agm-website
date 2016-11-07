@@ -49,26 +49,42 @@
                 <label class="profileFormLabel">Email</label><input required class="form-control" type="email" placeholder="Email" ng-model="user.email" maxlength="100" />
                 <label class="profileFormLabel">Cognome</label><input required class="form-control" type="text" placeholder="Cognome" ng-model="user.lastname" maxlength="50" />
                 <label class="profileFormLabel">Nome</label><input required class="form-control" type="text" placeholder="Nome" ng-model="user.firstname" maxlength="50" />
-                <label class="profileFormLabel">Password</label><input required class="form-control" type="text" placeholder="Password" ng-model="user.password" maxlength="50" />
+                <label class="profileFormLabel">Password</label><input type="password" required class="form-control" placeholder="Password" ng-model="user.password" maxlength="50" />
                 <br />
-                <div class="functionList" ng-show="currentUser.sectionusersvisible">
-                    <label>Gestione utenti</label>
-                    <input type="checkbox" ng-model="user._sectionusersvisible" toggle-switch>
-                    <div class="clearfix"></div>
-                </div>
                 <div class="functionList" ng-show="currentUser.sectionusersvisible">
                     <label>Gestione rapportini</label>
                     <input type="checkbox" ng-model="user._sectionmonthlyreportsvisible" toggle-switch>
                     <div class="clearfix"></div>
                 </div>
-                <div class="functionList" ng-show="currentUser.sectionusersvisible">
+                <br />
+                <div class="functionList" ng-show="currentUser.isadmin">
+                    <label>Gestione utenti/collaboratori</label>
+                    <input type="checkbox" ng-model="user._sectionusersvisible" toggle-switch>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="functionList" ng-show="currentUser.isadmin">
                     <label>Gestione annunci</label>
                     <input type="checkbox" ng-model="user._sectionjobadsvisible" toggle-switch>
                     <div class="clearfix"></div>
                 </div>
-                <div class="functionList" ng-show="currentUser.sectionusersvisible">
+                <div class="functionList" ng-show="currentUser.isadmin">
                     <label>Gestione candidati</label>
                     <input type="checkbox" ng-model="user._sectionjobapplicantsvisible" toggle-switch>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="functionList" ng-show="currentUser.isadmin">
+                    <label>Cancellazione candidati</label>
+                    <input type="checkbox" ng-model="user._candeletejobapplicants" toggle-switch>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="functionList" ng-show="currentUser.isadmin">
+                    <label>Esportazione dati</label>
+                    <input type="checkbox" ng-model="user._sectionexportvisible" toggle-switch>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="functionList" ng-show="currentUser.isadmin">
+                    <label>Invio messaggi</label>
+                    <input type="checkbox" ng-model="user._cansendmessage" toggle-switch>
                     <div class="clearfix"></div>
                 </div>
 

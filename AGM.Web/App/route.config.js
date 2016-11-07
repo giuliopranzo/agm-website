@@ -44,6 +44,50 @@
                 }]
             }
         })
+        .state('Root.Shadow', {
+            url: "/Shadow",
+            views: {
+                "content@": {
+                    templateUrl: resolveViewPath('Shadow/Shadow.html'),
+                    controller: 'shadow'
+                },
+                "modal@": {
+                    template: ''
+                }
+            },
+            resolve: {
+                usersSource: ['usersDataService', function (usersDataService) {
+                    return usersDataService.getAllUsers('usr_detail').then(function (respData) {
+                        if (respData.succeed)
+                            return respData.data;
+
+                        return null;
+                    });
+                }]
+            }
+        })
+        .state('Root.Permessi', {
+            url: "/Permessi",
+            views: {
+                "content@": {
+                    templateUrl: resolveViewPath('Permessi/Permessi.html'),
+                    controller: 'permessi'
+                },
+                "modal@": {
+                    template: ''
+                }
+            },
+            resolve: {
+                usersSource: ['usersDataService', function (usersDataService) {
+                    return usersDataService.getAllUsers('usr_detail').then(function (respData) {
+                        if (respData.succeed)
+                            return respData.data;
+
+                        return null;
+                    });
+                }]
+            }
+        })
         .state('Root.UserDetail', {
             url: "/Users/:userId",
             views: {
@@ -162,6 +206,20 @@
                 }],
                 interviewers: ['jobApplicantsDataService', function (jobApplicantsDataService) {
                     return jobApplicantsDataService.getInterviewer('mr_detail').then(function (resp) {
+                        if (resp.succeed)
+                            return resp.data;
+                        return null;
+                    });
+                }],
+                languageLevels: ['jobApplicantsDataService', function (jobApplicantsDataService) {
+                    return jobApplicantsDataService.getLanguageLevel('mr_detail').then(function (resp) {
+                        if (resp.succeed)
+                            return resp.data;
+                        return null;
+                    });
+                }],
+                contractTypes: ['jobApplicantsDataService', function (jobApplicantsDataService) {
+                    return jobApplicantsDataService.getContractType('mr_detail').then(function (resp) {
                         if (resp.succeed)
                             return resp.data;
                         return null;
@@ -358,11 +416,42 @@
             url: "/",
             views: {
                 "content@": {
-                    templateUrl: resolveViewPath('Index/Index.html')
+                    templateUrl: resolveViewPath('Index/Index.html'),
+                    controller: 'index'
                 },
                 "modal@": {
                     template: ''
                 }
+            },
+            resolve: {
+                messages: ['usersDataService', function (usersDataService) {
+                    return usersDataService.getMessages('mr_detail').then(function (respData) {
+                        if (respData.succeed)
+                            return respData.data;
+
+                        return null;
+                    });
+                }],
+                sentMessages: ['authenticationContainer', 'usersDataService', function (authenticationContainer, usersDataService) {
+                    if (authenticationContainer.currentUser && !authenticationContainer.currentUser.sectionusersvisible)
+                        return null;
+                    return usersDataService.getSentMessages('mr_detail').then(function (respData) {
+                        if (respData.succeed)
+                            return respData.data;
+
+                        return null;
+                    });
+                }],
+                usersSource: ['authenticationContainer', 'usersDataService', function (authenticationContainer, usersDataService) {
+                    if (authenticationContainer.currentUser && !authenticationContainer.currentUser.sectionusersvisible)
+                        return null;
+                    return usersDataService.getAllUsers('mr_detail').then(function (respData) {
+                        if (respData.succeed)
+                            return respData.data;
+
+                        return null;
+                    });
+                }]
             }
         })
         .state('Root', {

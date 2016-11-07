@@ -1,4 +1,4 @@
-﻿app.controller('jobApplicants', ['$rootScope', '$scope', '$uibModal', '$location', '$state', 'applicants', 'statuses', 'pagerUp', 'appHelper', 'jobCategories', 'interviewers', function ($rootScope, $scope, $uibModal, $location, $state, applicants, statuses, pagerUp, appHelper, jobCategories, interviewers) {
+﻿app.controller('jobApplicants', ['$rootScope', '$scope', '$uibModal', '$location', '$state', '$filter', '$alert', 'authenticationContainer', 'applicants', 'statuses', 'pagerUp', 'appHelper', 'jobCategories', 'interviewers', 'jobApplicantsDataService', function ($rootScope, $scope, $uibModal, $location, $state, $filter, $alert, authenticationContainer, applicants, statuses, pagerUp, appHelper, jobCategories, interviewers, jobApplicantsDataService) {
     $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
         $scope.isJobApplicantDetail = (toState.name == 'Root.JobApplicants.Detail');
     });
@@ -38,13 +38,14 @@
     }
 
     $scope.init = function () {
+        $scope.currentUser = authenticationContainer.currentUser;
         $scope.statuses = statuses;
         $scope.dataFilterOn = false;
         
         $scope.pager = pagerUp;
         $scope.pageSizes = [10, 25, 50];
         $scope.pager.setPageSize(10);
-        $scope.pager.setMaxItems(50);
+        $scope.pager.setMaxItems(0);
         $scope.pager.setOrder('interviewdate', true);
         $scope.pager.setOrder('interviewdate');
         $scope.pager.setData(applicants);
@@ -53,8 +54,14 @@
         $scope.helper = appHelper;
         $scope.jobCategories = jobCategories;
         $scope.interviewers = interviewers;
+        $scope.hiredFilterValues = [{ value: null, description: 'Stato Assunto' }, { value: true, description: 'Assunto' }, { value: false, description: 'Non Assunto' }];
+        $scope.suspendedFilterValues = [{ value: null, description: 'Stato Cessato' }, { value: true, description: 'Cessato' }, { value: false, description: 'Non Cessato' }];
         $scope.isJobApplicantDetail = ($state.current.name == 'Root.JobApplicants.Detail');
         $scope.resetFilter();
+    };
+
+    $scope.checkboxStraniero = {
+        value: true,
     };
 
     $scope.eraseSearch = function () {
@@ -91,6 +98,8 @@
         $scope.dataFilterOn = false;
         $scope.toggleAsideFilters(false);
         $scope.pager.setPageIndex(0);
+        $scope.filterHired = null;
+        $scope.filterSuspended = null;
     };
 
     $scope.filterData = function (data) {
@@ -118,6 +127,9 @@
         if ($scope.filterStatus && $scope.filterStatus.length > 0 && (!data.statusreason || !_.contains($scope.filterStatus, data.statusreason.name)) && (!data.status || !_.contains($scope.filterStatus, data.status.name)))
             return false;
 
+        if (($scope.filterHired === true && data._hired !== 1) || ($scope.filterHired === false && data._hired !== 0))
+            return false;
+
         return true;
     };
 
@@ -125,8 +137,81 @@
         $state.go('Root.JobApplicants.Detail', { applicantId: id }, {});
     };
 
+    $scope.loadData = function () {
+        jobApplicantsDataService.get('japp_main').then(function (respData) {
+            if ($scope.alert)
+                $scope.alert.hide();
+
+            if (respData.succeed) {
+                $scope.pager.setData(respData.data);
+            } else {
+                $scope.alert = $alert({
+                    content: (respData.errors && respData.errors.length >= 0) ? respData.errors[0].message : 'Errore durante il caricamento dei dati',
+                    animation: 'fadeZoomFadeDown',
+                    type: 'error',
+                    duration: 5
+                });
+            }
+        }).catch(function (respData) {
+            if ($scope.alert)
+                $scope.alert.hide();
+            $scope.alert = $alert({
+                content: 'Errore durante il caricamento dei dati',
+                animation: 'fadeZoomFadeDown',
+                type: 'error',
+                duration: 5
+            });
+        });
+    };
+
     $scope.insert = function () {
         $scope.goToDetail(0);
+    };
+
+    $scope.deleteSelected = function () {
+        if ($scope.alert && $scope.alert.$isShown && $scope.alert.$options.type != 'confirm_delete')
+            $scope.alert.hide();
+
+        if (!$scope.alert || !$scope.alert.$isShown)
+            $scope.alert = $alert({
+                content: 'Confermi la cancellazione dei candidati selezionati? Cliccare nuovamente l\'icona per procedere.',
+                animation: 'fadeZoomFadeDown',
+                type: 'confirm_delete',
+                duration: 10
+            });
+        else {
+            $scope.alert.hide();
+            var selection = $filter('filter')($scope.pager.getCurrentPageData($scope.search), function (value, index) { return value._selected; });
+            jobApplicantsDataService.delete('japp_main', selection).then(function (respData) {
+                if ($scope.alert)
+                    $scope.alert.hide();
+
+                if (respData.succeed) {
+                    $scope.loadData();
+                } else {
+                    $scope.alert = $alert({
+                        content: (respData.errors && respData.errors.length >= 0) ? respData.errors[0].message : 'Errore durante la cancellazione dei dati',
+                        animation: 'fadeZoomFadeDown',
+                        type: 'error',
+                        duration: 5
+                    });
+                }
+            }).catch(function (respData) {
+                if ($scope.alert)
+                    $scope.alert.hide();
+                $scope.alert = $alert({
+                    content: 'Errore durante la cancellazione dei dati',
+                    animation: 'fadeZoomFadeDown',
+                    type: 'error',
+                    duration: 5
+                });
+            });
+        }
+    };
+
+    $scope.thereAreSelected = function () {
+        var selection = $filter('filter')($scope.pager.getCurrentPageData($scope.search), function (value, index) { return value._selected; });
+        return selection && selection.length > 0;
     };
 
     $scope.init();

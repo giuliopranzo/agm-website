@@ -40,6 +40,10 @@ namespace AGM.Web.Models
         public DbSet<JobApplicantStatusReason> JobApplicantStatusReasons { get; set; }
         public DbSet<Location> Locations { get; set; }
         public DbSet<Language> Languages { get; set; }
+        public DbSet<LanguageLevel> LanguageLevels { get; set; }
+        public DbSet<ContractType> ContractTypes { get; set; }
+        public DbSet<Message> Messages { get; set; }
+        public DbSet<MessageReceiver> MessageReceivers { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -63,6 +67,10 @@ namespace AGM.Web.Models
             modelBuilder.Configurations.Add(new JobApplicantStatusReasonMap());
             modelBuilder.Configurations.Add(new LocationMap());
             modelBuilder.Configurations.Add(new LanguageMap());
+            modelBuilder.Configurations.Add(new LanguageLevelMap());
+            modelBuilder.Configurations.Add(new ContractTypeMap());
+            modelBuilder.Configurations.Add(new MessageMap());
+            modelBuilder.Configurations.Add(new MessageReceiverMap());
         }
     }
 }

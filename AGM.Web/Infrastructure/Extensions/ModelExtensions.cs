@@ -17,7 +17,7 @@ namespace AGM.Web.Infrastructure.Extensions
                     resp = o.Amount* 0.4;
                     break;
                 case 2:
-                    resp = o.Amount* 0.2;
+                    resp = o.Amount* 0.4;
                     break;
                 default:
                     resp = o.Amount;

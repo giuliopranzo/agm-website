@@ -1,0 +1,51 @@
+﻿<div class="navbar navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <div class="navbar-brand logo">
+                <img src="/images/logo.png" alt=""/>
+            </div>
+            <div class="menuRightPart-sm">
+                <ul ng-show="authenticated" class="nav menuLeftPart">
+                    <li><i class="fa fa-bars menuToggle" ng-click="toggleMainMenu()"></i></li>
+                </ul>
+                <ul class="nav navbar-nav menuRightPart hidden-xs hidden-sm" style="float: right;">
+                    <li ng-show="authenticated" style="float: right;">
+                        <div class="userMenuBtn" bs-dropdown="ddUser">
+                            <!--<i class="fa fa-user" style="line-height: 15px; font-size: 15px;"></i>-->
+                            <span>{{user.name}}</span>
+                            <div class="mainMenuUserPic">
+                                <img ng-src="{{user.image}}" alt="" style="height: 32px; width: 32px;" />
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="leftMenuPlace" ng-show="applicationGlobals.showMainMenu">&nbsp;</div>
+
+<div class="asideLeft" ng-show="applicationGlobals.showMainMenu">
+    <div class="visible-xs-block visible-sm-block">
+        <div class="mainMenuHeaderBackground"></div>
+        <div class="mainMenuHeaderUserPic">
+            <img ng-src="{{user.image}}" alt="" style="height: 48px; width: 48px;"/>
+        </div>
+    </div>
+    <div class="mainMenuHeaderUserName" ng-bind="user.name"></div>
+    <div class="mainMenuItem" ng-click="goTo('Root.Index')">Home</div>
+    <div class="mainMenuItem" ng-click="goToMineProfile()">Profilo</div>
+    <div class="mainMenuItem" ng-click="goTo('Root.Users')" ng-show="user.sectionusersvisible">Utenti</div>
+    <div class="mainMenuItem" ng-click="goTo('Root.Shadow')" ng-show="user.sectionusersvisible">Ombra</div>
+    <div class="mainMenuItem" ng-click="goTo('Root.Permessi')" ng-show="user.sectionusersvisible">Permessi</div>
+    <div class="mainMenuItem" ng-click="goToMonthlyReports()" >Rapportini</div>
+    <div class="mainMenuItem" ng-click="goTo('Root.JobAds')" ng-show="user.sectionjobadsvisible">Annunci</div>
+    <div class="mainMenuItem" ng-click="goTo('Root.JobApplicants')" ng-show="user.sectionjobapplicantsvisible">Candidati</div>
+    <div class="mainMenuItem" ng-click="goTo('Root.Export')" ng-show="user.sectionexportvisible">Export</div>
+    <div class="mainMenuItem" ng-click="goTo('Root.Settings')" ng-show="user.isadmin">Impostazioni</div>
+    <div class="mainMenuItem visible-xs-block visible-sm-block" ng-click="goTo('Logout')"><i class="fa fa-sign-out leftIcon"></i>Logout
+    </div>
+</div>
+<div class="modalBg-menu visible-xs-block visible-sm-block" ng-show="applicationGlobals.showMainMenu" ng-click="toggleMainMenu()"></div>
