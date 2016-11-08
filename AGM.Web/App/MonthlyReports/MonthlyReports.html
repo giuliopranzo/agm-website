@@ -41,7 +41,7 @@
             </div>
         </div>
         <div class="hidden-xs hidden-sm toolContainer">
-            <a href="https://agmsolutions-net.securesslhosting.it/backoffice/Users/{{detail.user.id}}"><i class="fa fa-user sign"></i></a>
+            <i class="fa fa-user sign" ng-click="showUserDetail(detail.user.id)"></i>
             <i class="fa fa-bolt sign" ng-click="autocompleteReport()" ng-hide="detail.islocked"></i>
             <i class="fa fa-lock sign" ng-hide="!currentUser.sectionusersvisible && detail.islocked" ng-class="{'fa-lock': (detail.islocked && !btnLockHover) || (btnLockOver && !detail.islocked), 'fa-unlock-alt': (!detail.islocked && !btnLockOver) || (btnLockOver && detail.islocked)}" ng-click="toggleLock()" ng-mouseover="btnLockOver=true" ng-mouseout="btnLockOver=false"></i>
             <i class="fa fa-print sign" print-button></i>

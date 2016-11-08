@@ -92,6 +92,10 @@
         $location.path('/MonthlyReports/' + $scope.reportId + '/' + $filter('date')(new Date(reportMonth), 'yyyy-MM'));
     }
 
+    $scope.showUserDetail = function (id) {
+        $location.path('/Users/' + id);
+    };
+
     $scope.reloadUserDetail = function() {
         monthlyReportsDataService.getReportDetail('mr_detail', $scope.detail.user.id, $filter('date')(new Date($scope.selectedDate), 'yyyy-MM')).then(
             function(respData) {
