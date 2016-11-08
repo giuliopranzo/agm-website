@@ -210,71 +210,84 @@ namespace AGM.Web.Controllers
 
             using (var context = new AgmDataContext())
             {
-                var month = string.Format("{0}{1}", ((DateTime) reportIn.Date).Year, ((DateTime) reportIn.Date).Month.ToString().PadLeft(2,'0'));
-                if (context.MHReportLocks.Any(l => l.UserId == userId && l.Month == month && !l.IsDeleted))
+                DateTime fromDate = (DateTime)reportIn.FromDate;
+                DateTime toDate = (DateTime)reportIn.ToDate;
+                var month = string.Format("{0}{1}", fromDate.Year, fromDate.Month.ToString().PadLeft(2,'0'));
+                if (context.MHReportLocks.Any(l => l.UserId == userId && l.Month == month && !l.IsDeleted) || fromDate > toDate)
                     return new ApiResponse(false);
 
+                var holidays = context.Festivities.Where(f => !f.IsDeleted).ToList();
                 var res = new List<object>();
-                if (reportIn.Hours != null && reportIn.Hours.HoursCount != null)
-                {
-                    var objHoursIn = context.MonthlyReportHours.Add(new MonthlyReportHour()
-                    {
-                        UserId = reportIn.UserId,
-                        HoursRaw = ((double)reportIn.Hours.HoursCount).ToString("N2", cultureIt),
-                        ReasonId = reportIn.Hours.ReasonId,
-                        Day = ((DateTime) reportIn.Date).Day,
-                        Month = ((DateTime) reportIn.Date).Month,
-                        Year = ((DateTime) reportIn.Date).Year
-                    });
-                    res.Add(objHoursIn);
-                }
 
-                if (reportIn.Expenses != null && reportIn.Expenses.Amount != null)
+                for (int day = fromDate.Day; day <= toDate.Day; day++)
                 {
-                    var objExpensesIn = context.MonthlyReportExpenses.Add(new MonthlyReportExpense()
+                    if(reportIn.Hours.ReasonId == 2 ||
+                        (new DateTime(fromDate.Year, fromDate.Month, day).DayOfWeek != DayOfWeek.Saturday &&
+                         new DateTime(fromDate.Year, fromDate.Month, day).DayOfWeek != DayOfWeek.Sunday &&
+                         holidays.All(h => h.Date != new DateTime(fromDate.Year, fromDate.Month, day))))
                     {
-                        UserId = reportIn.UserId,
-                        AmountRaw = ((double)reportIn.Expenses.Amount).ToString("N2", cultureIt),
-                        ReasonId = reportIn.Expenses.ReasonId,
-                        Day = ((DateTime) reportIn.Date).Day,
-                        Month = ((DateTime) reportIn.Date).Month,
-                        Year = ((DateTime) reportIn.Date).Year
-                    });
-                    res.Add(objExpensesIn);
-                }
+                        var objDay = new List<object>();
+                        if (reportIn.Hours != null && reportIn.Hours.HoursCount != null)
+                        {
+                            var objHoursIn = context.MonthlyReportHours.Add(new MonthlyReportHour()
+                            {
+                                UserId = reportIn.UserId,
+                                HoursRaw = ((double)reportIn.Hours.HoursCount).ToString("N2", cultureIt),
+                                ReasonId = reportIn.Hours.ReasonId,
+                                Day = day,
+                                Month = fromDate.Month,
+                                Year = fromDate.Year
+                            });
+                            objDay.Add(objHoursIn);
+                        }
+                        if (reportIn.Expenses != null && reportIn.Expenses.Amount != null)
+                        {
+                            var objExpensesIn = context.MonthlyReportExpenses.Add(new MonthlyReportExpense()
+                            {
+                                UserId = reportIn.UserId,
+                                AmountRaw = ((double)reportIn.Expenses.Amount).ToString("N2", cultureIt),
+                                ReasonId = reportIn.Expenses.ReasonId,
+                                Day = day,
+                                Month = fromDate.Month,
+                                Year = fromDate.Year
+                            });
+                            objDay.Add(objExpensesIn);
+                        }
+                        if (reportIn.Note != null && !string.IsNullOrEmpty(reportIn.Note.ToString()))
+                        {
+                            var objNoteIn = context.MonthlyReportNotes.Add(new MonthlyReportNote()
+                            {
+                                UserId = reportIn.UserId,
+                                Note = reportIn.Note,
+                                Day = day,
+                                Month = fromDate.Month,
+                                Year = fromDate.Year
+                            });
+                            objDay.Add(objNoteIn);
+                        }
+                        if (reportIn.Availability != null && !string.IsNullOrEmpty(reportIn.Availability.ToString()))
+                        {
+                            MonthlyReportAvailability availability = new MonthlyReportAvailability()
+                            {
+                                UserId = reportIn.UserId,
+                                Availability = reportIn.Availability,
+                                Day = day,
+                                Month = fromDate.Month,
+                                Year = fromDate.Year
+                            };
 
-                if (reportIn.Note != null && !string.IsNullOrEmpty(reportIn.Note.ToString()))
-                {
-                    var objNoteIn = context.MonthlyReportNotes.Add(new MonthlyReportNote()
-                    {
-                        UserId = reportIn.UserId,
-                        Note = reportIn.Note,
-                        Day = ((DateTime) reportIn.Date).Day,
-                        Month = ((DateTime) reportIn.Date).Month,
-                        Year = ((DateTime) reportIn.Date).Year
-                    });
-                    res.Add(objNoteIn);
-                }
+                            if (availability.Availability && !(context.MonthlyReportAvailabilities.Where(e => e.UserId == availability.UserId
+                                                                         && e.Year == availability.Year
+                                                                         && e.Month == availability.Month
+                                                                         && e.Day == availability.Day
+                                                                         && e.Availability == true).Distinct().Count() > 0))
+                            {
+                                var objAvailabilityIn = context.MonthlyReportAvailabilities.Add(availability);
+                                objDay.Add(objAvailabilityIn);
+                            }
+                        }
 
-                if (reportIn.Availability != null && !string.IsNullOrEmpty(reportIn.Availability.ToString()))
-                {
-                    MonthlyReportAvailability availability = new MonthlyReportAvailability()
-                    {
-                        UserId = reportIn.UserId,
-                        Availability = reportIn.Availability,
-                        Day = ((DateTime)reportIn.Date).Day,
-                        Month = ((DateTime)reportIn.Date).Month,
-                        Year = ((DateTime)reportIn.Date).Year
-                    };
-
-                    if(availability.Availability && !(context.MonthlyReportAvailabilities.Where(e => e.UserId == availability.UserId
-                                                                && e.Year == availability.Year
-                                                                && e.Month == availability.Month
-                                                                && e.Day == availability.Day
-                                                                && e.Availability == true).Distinct().Count() > 0))
-                    {
-                        var objAvailabilityIn = context.MonthlyReportAvailabilities.Add(availability);
-                        res.Add(objAvailabilityIn);
+                        res.Add(objDay);
                     }
                 }
 

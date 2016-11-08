@@ -54,15 +54,31 @@
             <div class="asideBodyContainer">
                 <form name="asideInsert" novalidate>
                     <div class="col-xs-12 form-group">
+                        <span style="font-size:14px; font-weight: normal;">Da </span>
                         <div class="input-group">
+                            
                             <span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
-                            <input id="insertDayPicker" type="text" class="form-control inputDatePicker" ng-model="selectedInsertDate" ng-change="getUserDetail(selectedDate)"
+                            <input id="insertFromDayPicker" type="text" class="form-control inputDatePicker" ng-model="selectedInsertFromDate" ng-change="getUserDetail(selectedDate)"
                                    data-date-format="EEEE dd"
                                    data-date-type="iso"
                                    data-min-date="{{detail.minmonthdate}}"
-                                   
+                                   data-max-date="{{selectedInsertToDate}}"
                                    data-autoclose="1"
                                    bs-datepicker>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 form-group">
+                        <span style="font-size:14px; font-weight: normal;">A </span>
+                        <div class="input-group">
+                           
+                            <span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
+                            <input id="insertToDayPicker" type="text" class="form-control inputDatePicker" ng-model="selectedInsertToDate" ng-change="getUserDetail(selectedDate)"
+                                    data-date-format="EEEE dd"
+                                    data-date-type="iso"
+                                    data-min-date="{{minToDate}}"
+                                    data-max-date="{{detail.maxmonthdate}}"
+                                    data-autoclose="1"
+                                    bs-datepicker>
                         </div>
                     </div>
                     <div class="col-xs-12 form-group">
@@ -88,7 +104,7 @@
                         </button>
                     </div>
                     <div class="col-xs-12 form-group">
-                        <label style="font-size:14px; font-weight: normal; vertical-align:middle;"><input ng-model="insertAvailability" type="checkbox" value=""> Reperibilità</label>
+                        <label style="font-size:14px; font-weight: normal;"><input ng-model="insertAvailability" type="checkbox" value=""> Reperibilità</label>
                     </div>
                     <div class="col-xs-12 form-group">
                         <textarea ng-model="insertNote" maxlength="50" class="form-control asideinsertNote" placeholder="Note" bs-options="note as note for note in getRecurringNotes($viewValue)" bs-typeahead></textarea>

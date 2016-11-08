@@ -5,7 +5,9 @@
             $scope.reportId = toParams.reportId;
             $scope.detail = toParams.userReportSource;
             $scope.selectedDate = toParams.userReportSource.currentmonth;
-            $scope.selectedInsertDate = toParams.userReportSource.selectedinsertdate;
+            $scope.selectedInsertFromDate = toParams.userReportSource.selectedinsertdate;
+            $scope.selectedInsertToDate = toParams.userReportSource.selectedinsertdate;
+            $scope.minToDate = moment(new Date().setDate(new Date(toParams.userReportSource.selectedinsertdate).getDate() - 1)).format("YYYY-MM-DD");
             $scope.insertHour = null;
             $scope.insertExpense = null;
             $scope.insertNote = null;
@@ -45,7 +47,9 @@
             $scope.reportId = $state.params.reportId;
             $scope.detail = $state.params.userReportSource;
             $scope.selectedDate = $state.params.userReportSource.currentmonth;
-            $scope.selectedInsertDate = $state.params.userReportSource.selectedinsertdate;
+            $scope.selectedInsertFromDate = $state.params.userReportSource.selectedinsertdate;
+            $scope.selectedInsertToDate = $state.params.userReportSource.selectedinsertdate;
+            $scope.minToDate = moment(new Date().setDate(new Date($state.params.userReportSource.selectedinsertdate).getDate() - 1)).format("YYYY-MM-DD");
             $scope.resetInsertFields();
             $scope.detailVisible = true;
             $scope.myMonthlyReport = (authenticationContainer.currentUser.id == $scope.reportId);
@@ -88,12 +92,17 @@
         $location.path('/MonthlyReports/' + id + '/' + $filter('date')(new Date(), 'yyyy-MM'));
     };
 
-    $scope.getUserDetail = function(reportMonth) {
+    $scope.getUserDetail = function (reportMonth) {
+        $scope.minToDate = moment(new Date().setDate(new Date($scope.selectedInsertFromDate).getDate() - 1)).format("YYYY-MM-DD");
         $location.path('/MonthlyReports/' + $scope.reportId + '/' + $filter('date')(new Date(reportMonth), 'yyyy-MM'));
     }
 
     $scope.showUserDetail = function (id) {
         $location.path('/Users/' + id);
+    };
+
+    $scope.getMinToDate = function () {
+        return "2015-12-01";//new Date().setDate($scope.selectedInsertFromDate.getDate() - 1);
     };
 
     $scope.reloadUserDetail = function() {
@@ -140,7 +149,8 @@
     $scope.insertReport = function() {
         var reportDetail = {
             UserId: $scope.detail.user.id,
-            Date: new Date($scope.selectedInsertDate).toDateString(),
+            FromDate: new Date($scope.selectedInsertFromDate).toDateString(),
+            ToDate: new Date($scope.selectedInsertToDate).toDateString(),
             Hours: { HoursCount: $scope.insertHour, ReasonId: $scope.insertSelectedHourReason },
             Expenses: { Amount: $scope.insertExpense, ReasonId: $scope.insertSelectedExpenseReason },
             Note: $scope.insertNote,
