@@ -24,6 +24,7 @@ namespace AGM.Web.Models
         public DbSet<MonthlyReportHour> MonthlyReportHours { get; set; }
         public DbSet<MonthlyReportExpense> MonthlyReportExpenses { get; set; }
         public DbSet<MonthlyReportNote> MonthlyReportNotes { get; set; }
+        public DbSet<MonthlyReportAvailability> MonthlyReportAvailabilities { get; set; }
         public DbSet<RetributionItem> RetributionItems { get; set; }
         public DbSet<HourReason> HourReasons { get; set; }
         public DbSet<ExpenseReason> ExpenseReasons { get; set; }
@@ -51,6 +52,7 @@ namespace AGM.Web.Models
             modelBuilder.Configurations.Add(new MonthlyReportHourMap());
             modelBuilder.Configurations.Add(new MonthlyReportExpenseMap());
             modelBuilder.Configurations.Add(new MonthlyReportNoteMap());
+            modelBuilder.Configurations.Add(new MonthlyReportAvailabilityMap());
             modelBuilder.Configurations.Add(new RetributionItemMap());
             modelBuilder.Configurations.Add(new HourReasonMap());
             modelBuilder.Configurations.Add(new ExpenseReasonMap());

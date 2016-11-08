@@ -88,11 +88,14 @@
                         </button>
                     </div>
                     <div class="col-xs-12 form-group">
+                        <label style="font-size:14px; font-weight: normal; vertical-align:middle;"><input ng-model="insertAvailability" type="checkbox" value=""> Reperibilità</label>
+                    </div>
+                    <div class="col-xs-12 form-group">
                         <textarea ng-model="insertNote" maxlength="50" class="form-control asideinsertNote" placeholder="Note" bs-options="note as note for note in getRecurringNotes($viewValue)" bs-typeahead></textarea>
                     </div>
                     <div class="col-xs-12 form-group">
-                        <button ng-hide="(asideInsert.$invalid || (insertHour == null && insertExpense == null && insertNote == null))" class="btn btn-info" ng-click="insertReport()">Inserisci</button>
-                        <button ng-show="(asideInsert.$invalid || (insertHour == null && insertExpense == null && insertNote == null))" class="btn btn-info" disabled="disabled">Inserisci</button>
+                        <button ng-hide="(asideInsert.$invalid || (insertHour == null && insertExpense == null && insertNote == null && insertAvailability == null))" class="btn btn-info" ng-click="insertReport()">Inserisci</button>
+                        <button ng-show="(asideInsert.$invalid || (insertHour == null && insertExpense == null && insertNote == null && insertAvailability == null))" class="btn btn-info" disabled="disabled">Inserisci</button>
                     </div>
                 </form>
             </div>
@@ -108,7 +111,8 @@
                 <div class="col-xs-12 col-md-1 reportHeader">Ore h</div>
                 <div class="col-xs-12 col-md-3 reportHeader">Dettaglio spese €</div>
                 <div class="col-xs-12 col-md-1 reportHeader">Spese €</div>
-                <div class="col-xs-12 col-md-3 reportHeader">Note</div>
+                <div class="col-xs-12 col-md-1 reportHeader">Reper.</div>
+                <div class="col-xs-12 col-md-2 reportHeader">Note</div>
             </div>
             <div class="row reportRow" ng-class="{reportHolidayRow: !day.workday}" ng-repeat="day in detail.report | filter:iscurrentmonth:true">
                 <span class="col-xs-12 col-md-1 col-print-xs reportColumn">
@@ -154,7 +158,13 @@
                     </span>
                 </span>
                 <span class="col-xs-12 col-md-1 hidden-xs hidden-sm reportColumn reportColumnNumeric"><i class="visible-xs-inline-block visible-sm-inline-block fa fa-eur umSign"></i><span ng-bind="day.expenses"></span></span>
-                <span class="col-xs-12 col-md-3 col-print-sm reportColumn">
+                <span class="col-xs-12 col-md-1 col-print-sm reportColumn">
+                    <span class="availabilityContainer" ng-repeat="availabilityitem in day.availabilitiescollection">
+                        <span class="actionStrip noteSection noteText"><i class="visible-xs-inline-block visible-sm-inline-block fa fa-pencil-square-o prefixSignLeft"></i><span ng-bind="availabilityitem.availability_text"></span></span>
+                        <span class="actionStrip noteSection"><i class="fa fa-trash-o actionStripItem hidden-print" ng-click="removeReport('Availability', availabilityitem.id)" ng-hide="detail.islocked"></i></span>
+                    </span>
+                </span>
+                <span class="col-xs-12 col-md-2 col-print-sm reportColumn">
                     <span class="noteContainer" ng-repeat="noteitem in day.notescollection">
                         <span class="actionStrip noteSection noteText"><i class="visible-xs-inline-block visible-sm-inline-block fa fa-pencil-square-o prefixSignLeft"></i><span ng-bind="noteitem.note"></span></span>
                         <span class="actionStrip noteSection"><i class="fa fa-trash-o actionStripItem hidden-print" ng-click="removeReport('Note', noteitem.id)" ng-hide="detail.islocked"></i></span>

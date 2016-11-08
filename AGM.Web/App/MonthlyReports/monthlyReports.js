@@ -9,6 +9,7 @@
             $scope.insertHour = null;
             $scope.insertExpense = null;
             $scope.insertNote = null;
+            $scope.insertAvailability = null;
             $scope.insertSelectedHourReason = $scope.detail.hourreasons[0].id;
             $scope.insertSelectedExpenseReason = $scope.detail.expensereasons[0].id;
             $scope.detailVisible = true;
@@ -68,6 +69,7 @@
         $scope.insertHour = null;
         $scope.insertExpense = null;
         $scope.insertNote = null;
+        $scope.insertAvailability = null;
         $scope.insertSelectedHourReason = $scope.detail.hourreasons[0].id;
         $scope.insertSelectedExpenseReason = $scope.detail.expensereasons[0].id;
     }
@@ -137,7 +139,8 @@
             Date: new Date($scope.selectedInsertDate).toDateString(),
             Hours: { HoursCount: $scope.insertHour, ReasonId: $scope.insertSelectedHourReason },
             Expenses: { Amount: $scope.insertExpense, ReasonId: $scope.insertSelectedExpenseReason },
-            Note: $scope.insertNote
+            Note: $scope.insertNote,
+            Availability: $scope.insertAvailability
         };
         monthlyReportsDataService.insertReportDetail('mr_insert', reportDetail).then(
             function (respData) {

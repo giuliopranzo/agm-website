@@ -48,6 +48,7 @@ namespace AGM.Web.Controllers
             var userHourReports = new List<MonthlyReportHour>();
             var userExpenseReports = new List<MonthlyReportExpense>();
             var userNoteReports = new List<MonthlyReportNote>();
+            var userAvailabilityReports = new List<MonthlyReportAvailability>();
             var hourReasons = new List<HourReason>();
             var expenseReasons = new List<ExpenseReason>();
             var holidays = new List<Festivity>();
@@ -70,6 +71,7 @@ namespace AGM.Web.Controllers
                 userHourReports = context.MonthlyReportHours.Where(r => r.UserId == id && r.Month == currentMonthDate.Month).ToList();
                 userExpenseReports = context.MonthlyReportExpenses.Where(e => e.UserId == id && e.Month == currentMonthDate.Month).ToList();
                 userNoteReports = context.MonthlyReportNotes.Where(e => e.UserId == id && e.Month == currentMonthDate.Month).ToList();
+                userAvailabilityReports = context.MonthlyReportAvailabilities.Where(e => e.UserId == id && e.Month == currentMonthDate.Month).ToList();
                 hourReasons = context.HourReasons.Where(h => h.IsDeleted == false).ToList();
                 expenseReasons = context.ExpenseReasons.ToList();
                 holidays = context.Festivities.Where(f => !f.IsDeleted).ToList();
@@ -96,6 +98,7 @@ namespace AGM.Web.Controllers
                 var hoursCollection = userHourReports.Where(r => r.Date == currentDate).ToList();
                 var expensesCollection = userExpenseReports.Where(e => e.Date == currentDate).ToList();
                 var notesCollection = userNoteReports.Where(e => e.Date == currentDate).ToList();
+                var availabilitiesCollection = userAvailabilityReports.Where(e => e.Date == currentDate).ToList();
                 report.Add(new
                 {
                     CompleteDate = currentDate,
@@ -106,6 +109,7 @@ namespace AGM.Web.Controllers
                     Expenses = expensesCollection.Sum(e => e.GetTotalAmount()).ToString("N2", cultureIt),
                     ExpensesCollection = expensesCollection,
                     NotesCollection = notesCollection,
+                    AvailabilitiesCollection = availabilitiesCollection,
                     WorkDay = currentDate.DayOfWeek != DayOfWeek.Saturday && currentDate.DayOfWeek != DayOfWeek.Sunday && holidays.All(h => h.Date != currentDate),
                     IsHoliday = currentDate.DayOfWeek == DayOfWeek.Sunday || holidays.Any(h => h.Date == currentDate),
                     ExportHolidaySunday = currentDate.DayOfWeek == DayOfWeek.Sunday && holidays.Any(h => h.Date == currentDate),
@@ -252,6 +256,28 @@ namespace AGM.Web.Controllers
                     res.Add(objNoteIn);
                 }
 
+                if (reportIn.Availability != null && !string.IsNullOrEmpty(reportIn.Availability.ToString()))
+                {
+                    MonthlyReportAvailability availability = new MonthlyReportAvailability()
+                    {
+                        UserId = reportIn.UserId,
+                        Availability = reportIn.Availability,
+                        Day = ((DateTime)reportIn.Date).Day,
+                        Month = ((DateTime)reportIn.Date).Month,
+                        Year = ((DateTime)reportIn.Date).Year
+                    };
+
+                    if(availability.Availability && !(context.MonthlyReportAvailabilities.Where(e => e.UserId == availability.UserId
+                                                                && e.Year == availability.Year
+                                                                && e.Month == availability.Month
+                                                                && e.Day == availability.Day
+                                                                && e.Availability == true).Distinct().Count() > 0))
+                    {
+                        var objAvailabilityIn = context.MonthlyReportAvailabilities.Add(availability);
+                        res.Add(objAvailabilityIn);
+                    }
+                }
+
                 context.SaveChanges();
                 return new ApiResponse(true) {Data = res};
             }
@@ -297,6 +323,16 @@ namespace AGM.Web.Controllers
                     if (context.MHReportLocks.Any(l => l.UserId == userId && l.Month == month && !l.IsDeleted))
                         return new ApiResponse(false);
                     context.MonthlyReportNotes.Remove(o);
+                }
+                else if (type == "Availability" && context.MonthlyReportAvailabilities.Any(h => h.Id == id))
+                {
+                    var o = context.MonthlyReportAvailabilities.First(h => h.Id == id);
+                    this.CheckCurrentUserPermission(o.UserId, ((x) => x.SectionUsersVisible));
+                    var month = o.Date.ToString("yyyyMM", cultureIt);
+                    var userId = o.UserId;
+                    if (context.MHReportLocks.Any(l => l.UserId == userId && l.Month == month && !l.IsDeleted))
+                        return new ApiResponse(false);
+                    context.MonthlyReportAvailabilities.Remove(o);
                 }
                 
                 context.SaveChanges();

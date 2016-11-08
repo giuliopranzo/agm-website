@@ -241,6 +241,7 @@
     <Compile Include="Models\Mapping\MessageMap.cs" />
     <Compile Include="Models\Mapping\MessageReceiverMap.cs" />
     <Compile Include="Models\Mapping\MHReportLockMap.cs" />
+    <Compile Include="Models\Mapping\MonthlyReportAvailabilityMap.cs" />
     <Compile Include="Models\Mapping\OptionMap.cs" />
     <Compile Include="Models\Mapping\FestivityMap.cs" />
     <Compile Include="Models\Mapping\HourReasonMap.cs" />
@@ -260,6 +261,7 @@
     <Compile Include="Models\MHReportLock.cs" />
     <Compile Include="Models\MonthlyReportExpense.cs" />
     <Compile Include="Models\MonthlyReportHour.cs" />
+    <Compile Include="Models\MonthlyReportAvailability.cs" />
     <Compile Include="Models\MonthlyReportNote.cs" />
     <Compile Include="Models\Option.cs" />
     <Compile Include="Models\RetributionItem.cs" />
