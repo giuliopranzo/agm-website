@@ -44,5 +44,13 @@ namespace AGM.Web.Infrastructure.Extensions
                 return currentUser;
             }
         }
+
+        public static MonthlyReportCalendar GetUserMonthlyCalendar(this ApiController o, int userId, string month)
+        {
+            using (var context = new AgmDataContext())
+            {
+                return new MonthlyReportCalendar(context.MonthlyReportDays(userId, month).ToList());
+            }
+        }
     }
 }

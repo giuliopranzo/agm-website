@@ -334,12 +334,38 @@
                 $scope.alert.hide();
 
             if (!$scope.alert || !$scope.alert.$isShown)
-                $scope.alert = $alert({
-                    content: 'Confermando e così bloccando il rapportino corrente, non si avrà più la possibilità di modificarne il contenuto. Cliccare nuovamente l\'icona per procedere.',
-                    animation: 'fadeZoomFadeDown',
-                    type: 'confirm_autocomplete',
-                    duration: 10
-                });
+                monthlyReportsDataService.checkLock('mr_detail', $scope.detail.user.id, $filter('date')(new Date($scope.selectedDate), 'yyyyMM')).then(
+                    function(respData) {
+                        if (respData.succeed) {
+                            $scope.alert = $alert({
+                                content: 'Confermando e così bloccando il rapportino corrente, non si avrà più la possibilità di modificarne il contenuto. Cliccare nuovamente l\'icona per procedere.',
+                                animation: 'fadeZoomFadeDown',
+                                type: 'confirm_autocomplete',
+                                duration: 10
+                            });
+                        }
+                        else {
+                            $scope.alert = $alert({
+                                content: 'Impossibile chiudere il rapportino: verificare i dati inseriti o chiedere l\'approvazione ad un ammistratore.',
+                                animation: 'fadeZoomFadeDown',
+                                type: 'error',
+                                duration: 5
+                            });
+                        }
+                    }
+                ).catch(
+                    function (respData) {
+                        if ($scope.alert)
+                            $scope.alert.hide();
+                        $scope.alert = $alert({
+                            content: 'Errore durante la verifica dei dati.',
+                            animation: 'fadeZoomFadeDown',
+                            type: 'error',
+                            duration: 5
+                        });
+                    }
+                );
+                
             else {
                 $scope.alert.hide();
                 monthlyReportsDataService.setLock('mr_detail', $scope.detail.user.id, $filter('date')(new Date($scope.selectedDate), 'yyyyMM')).then(
@@ -357,23 +383,25 @@
                                 $scope.alert.hide();
 
                             $scope.alert = $alert({
-                                content: 'Errore durante l\'aggiornamento dei dati',
+                                content: 'Errore durante l\'aggiornamento dei dati.',
                                 animation: 'fadeZoomFadeDown',
                                 type: 'error',
                                 duration: 5
                             });
                         }
                     }
-                ).catch(function(respData) {
-                    if ($scope.alert)
-                        $scope.alert.hide();
-                    $scope.alert = $alert({
-                        content: 'Errore durante l\'aggiornamento dei dati',
-                        animation: 'fadeZoomFadeDown',
-                        type: 'error',
-                        duration: 5
-                    });
-                });
+                ).catch(
+                    function(respData) {
+                        if ($scope.alert)
+                            $scope.alert.hide();
+                        $scope.alert = $alert({
+                            content: 'Errore durante l\'aggiornamento dei dati',
+                            animation: 'fadeZoomFadeDown',
+                            type: 'error',
+                            duration: 5
+                        });
+                    }
+                );
             }
         } else {
             monthlyReportsDataService.setUnlock('mr_detail', $scope.detail.user.id, $filter('date')(new Date($scope.selectedDate), 'yyyyMM')).then(

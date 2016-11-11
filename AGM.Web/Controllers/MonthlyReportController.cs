@@ -485,6 +485,31 @@ namespace AGM.Web.Controllers
 
         [AuthorizeAction]
         [HttpPost]
+        public ApiResponse CheckLock([FromBody]dynamic lockIn)
+        {
+            User currentUser = this.GetCurrentUser();
+            var userId = (int)lockIn.Id;
+            var month = (string)lockIn.Month;
+            this.CheckCurrentUserPermission(userId, ((x) => x.SectionUsersVisible));
+            using (var db = new AgmDataContext())
+            {
+                if (!currentUser.IsAdmin)
+                {
+                    MonthlyReportCalendar monthlycalendar = this.GetUserMonthlyCalendar(userId, month);
+                    User user = db.Users.First(u => u.Id == userId);
+
+                    if (monthlycalendar.Days.Where(x => x.OvertimeHours > 0 ||
+                                                  (x.OrdinaryHours > 0 && x.OrdinaryHours != 8) ||
+                                                  (!x.Festivity && !(x.Date.DayOfWeek == DayOfWeek.Saturday) && !(x.Date.DayOfWeek == DayOfWeek.Sunday) && !(user.IsShiftWorker) && x.OrdinaryHours != 8) ||
+                                                 ((x.Festivity || x.Date.DayOfWeek == DayOfWeek.Saturday || x.Date.DayOfWeek == DayOfWeek.Sunday) && x.OrdinaryHours > 0 && !(user.IsShiftWorker))).Count() > 0)
+                        return new ApiResponse(false);
+                }
+                return new ApiResponse(true);
+            }
+        }
+
+        [AuthorizeAction]
+        [HttpPost]
         public ApiResponse SetLock([FromBody]dynamic lockIn)
         {
             var userId = (int)lockIn.Id;

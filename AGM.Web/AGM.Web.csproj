@@ -223,6 +223,8 @@
     <Compile Include="Models\JobApplicant.cs" />
     <Compile Include="Models\JobApplicantStatus.cs" />
     <Compile Include="Models\JobApplicantStatusReason.cs" />
+    <Compile Include="Models\MonthlyReportDay.cs" />
+    <Compile Include="Models\MonthlyReportCalendar.cs" />
     <Compile Include="Models\JobCategory.cs" />
     <Compile Include="Models\Language.cs" />
     <Compile Include="Models\LanguageLevel.cs" />

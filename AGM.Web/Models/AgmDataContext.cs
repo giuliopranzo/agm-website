@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Reflection;
 using System.Web;
@@ -21,6 +22,10 @@ namespace AGM.Web.Models
         }
 
         public DbSet<User> Users { get; set; }
+        public DbRawSqlQuery<MonthlyReportDay> MonthlyReportDays(int userId, string month)
+        {
+            return this.Database.SqlQuery<MonthlyReportDay>(@"sp_rappgiorni {0}, {1}", userId, month);
+        }
         public DbSet<MonthlyReportHour> MonthlyReportHours { get; set; }
         public DbSet<MonthlyReportExpense> MonthlyReportExpenses { get; set; }
         public DbSet<MonthlyReportNote> MonthlyReportNotes { get; set; }
