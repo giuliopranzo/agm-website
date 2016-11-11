@@ -17,7 +17,7 @@
         </div>
     </div>
     <div class="clearfix"></div>
-    <div class="userDetail-detail">
+    <div class="userDetail-detail" style="margin:10px;">
         <div class="hidden-xs hidden-sm">
             <div style="display:inline-block">
                 <i class="fa fa-arrow-circle-o-left sign" ng-show="backToUsersVisible" ng-click="backToUsers()"></i>
@@ -26,8 +26,11 @@
                 <i class="fa fa-trash-o sign" ng-show="deleteUserVisible" ng-click="deleteUser()"></i>
             </div>
         </div>
+        <hr />
         <form name="profileForm" novalidate>
-            <fieldset class="col-xs-12 col-sm-4 form-group">
+            <fieldset class="form-group">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-4">
                 <div class="fileDropAreaAvatar" style="margin: 0 0 20px;">
                     <div class="fileUpload uploadButton">
                         <i class="fa fa-upload" style="font-size:20px;margin:5px;"></i>
@@ -36,6 +39,8 @@
                     </div>
                     <img ng-src="{{user.image}}" alt="" />
                 </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-4">
                 <div class="functionList" ng-show="currentUser.sectionusersvisible">
                     <label>Attivo</label>
                     <input type="checkbox" ng-model="user._isactive" toggle-switch>
@@ -46,17 +51,34 @@
                     <input type="number" class="form-control" ng-model="user.idexport">
                     <div class="clearfix"></div>
                 </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-4">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12 col-sm-4">
                 <label class="profileFormLabel">Email</label><input required class="form-control" type="email" placeholder="Email" ng-model="user.email" maxlength="100" />
                 <label class="profileFormLabel">Cognome</label><input required class="form-control" type="text" placeholder="Cognome" ng-model="user.lastname" maxlength="50" />
                 <label class="profileFormLabel">Nome</label><input required class="form-control" type="text" placeholder="Nome" ng-model="user.firstname" maxlength="50" />
                 <label class="profileFormLabel">Password</label><input type="password" required class="form-control" placeholder="Password" ng-model="user.password" maxlength="50" />
                 <br />
+                    </div>
+                    <div class="col-xs-12 col-sm-4">
+                        <div>
+                            <div>
+                                <h4 style="float: left;">
+                                    <i class="fa settingsSectionTitleCaret" ng-click="isPermissionItemConfCollapsed = !isPermissionItemConfCollapsed" ng-class="{'fa-caret-right': isPermissionItemConfCollapsed, 'fa-caret-down': !isPermissionItemConfCollapsed}"></i>
+                                    Permessi
+                                </h4>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div collapse="isPermissionItemConfCollapsed">
                 <div class="functionList" ng-show="currentUser.sectionusersvisible">
                     <label>Gestione rapportini</label>
                     <input type="checkbox" ng-model="user._sectionmonthlyreportsvisible" toggle-switch>
                     <div class="clearfix"></div>
                 </div>
-                <br />
                 <div class="functionList" ng-show="currentUser.isadmin">
                     <label>Gestione utenti/collaboratori</label>
                     <input type="checkbox" ng-model="user._sectionusersvisible" toggle-switch>
@@ -87,9 +109,11 @@
                     <input type="checkbox" ng-model="user._cansendmessage" toggle-switch>
                     <div class="clearfix"></div>
                 </div>
-
+                            </div>
+                        </div>  
+                    </div>
+                    <div class="col-xs-12 col-sm-4">
                 <div ng-show="retItemsVisible">
-                    <div class="clearfix" style="margin: 5px 0;"></div>
                     <div>
                         <h4 style="float: left;">
                             <i class="fa settingsSectionTitleCaret" ng-click="isRetributionItemConfCollapsed = !isRetributionItemConfCollapsed" ng-class="{'fa-caret-right': isRetributionItemConfCollapsed, 'fa-caret-down': !isRetributionItemConfCollapsed}"></i>
@@ -97,12 +121,13 @@
                         </h4>
                         <div class="clearfix"></div>
                     </div>
-                    <hr />
                     <div collapse="isRetributionItemConfCollapsed">
                         <div class="functionList" ng-show="currentUser.sectionusersvisible" ng-repeat="item in user.retributionitemconfiguration">
                             <label ng-bind="retributionItemTypeEnumNames[item.type]"></label>
                             <input type="checkbox" ng-model="user.retributionitemconfiguration[$index].enablevalue" toggle-switch>
                             <div class="clearfix"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
