@@ -31,26 +31,31 @@
             <fieldset class="form-group">
                 <div class="row">
                     <div class="col-xs-12 col-sm-4">
-                <div class="fileDropAreaAvatar" style="margin: 0 0 20px;">
-                    <div class="fileUpload uploadButton">
-                        <i class="fa fa-upload" style="font-size:20px;margin:5px;"></i>
-                        <!--<span style="font-size:0.8em;">Cambia...</span>-->
-                        <input type="file" name="file" accept="image/*" class="custom-file-input" nv-file-select uploader="uploader" filters="sizeFilter">
-                    </div>
-                    <img ng-src="{{user.image}}" alt="" />
-                </div>
+                        <div class="fileDropAreaAvatar" style="margin: 0 0 20px;">
+                            <div class="fileUpload uploadButton">
+                                <i class="fa fa-upload" style="font-size:20px;margin:5px;"></i>
+                                <!--<span style="font-size:0.8em;">Cambia...</span>-->
+                                <input type="file" name="file" accept="image/*" class="custom-file-input" nv-file-select uploader="uploader" filters="sizeFilter">
+                            </div>
+                            <img ng-src="{{user.image}}" alt="" />
+                        </div>
                     </div>
                     <div class="col-xs-12 col-sm-4">
-                <div class="functionList" ng-show="currentUser.sectionusersvisible">
-                    <label>Attivo</label>
-                    <input type="checkbox" ng-model="user._isactive" toggle-switch>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="functionList" ng-show="currentUser.sectionusersvisible">
-                    <label>ID Export</label>
-                    <input type="number" class="form-control" ng-model="user.idexport">
-                    <div class="clearfix"></div>
-                </div>
+                        <div class="functionList" ng-show="currentUser.sectionusersvisible">
+                            <label>Attivo</label>
+                            <input type="checkbox" ng-model="user._isactive" toggle-switch>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="functionList" ng-show="currentUser.sectionusersvisible">
+                            <label>ID Export</label>
+                            <input type="number" class="form-control" ng-model="user.idexport">
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="functionList" ng-show="currentUser.isadmin">
+                            <label>Turnista</label>
+                            <input type="checkbox" ng-model="user._isshiftworker" toggle-switch>
+                            <div class="clearfix"></div>
+                        </div>
                     </div>
                     <div class="col-xs-12 col-sm-4">
                     </div>
@@ -58,11 +63,11 @@
 
                 <div class="row">
                     <div class="col-xs-12 col-sm-4">
-                <label class="profileFormLabel">Email</label><input required class="form-control" type="email" placeholder="Email" ng-model="user.email" maxlength="100" />
-                <label class="profileFormLabel">Cognome</label><input required class="form-control" type="text" placeholder="Cognome" ng-model="user.lastname" maxlength="50" />
-                <label class="profileFormLabel">Nome</label><input required class="form-control" type="text" placeholder="Nome" ng-model="user.firstname" maxlength="50" />
-                <label class="profileFormLabel">Password</label><input type="password" required class="form-control" placeholder="Password" ng-model="user.password" maxlength="50" />
-                <br />
+                        <label class="profileFormLabel">Email</label><input required class="form-control" type="email" placeholder="Email" ng-model="user.email" maxlength="100" />
+                        <label class="profileFormLabel">Cognome</label><input required class="form-control" type="text" placeholder="Cognome" ng-model="user.lastname" maxlength="50" />
+                        <label class="profileFormLabel">Nome</label><input required class="form-control" type="text" placeholder="Nome" ng-model="user.firstname" maxlength="50" />
+                        <label class="profileFormLabel">Password</label><input type="password" required class="form-control" placeholder="Password" ng-model="user.password" maxlength="50" />
+                        <br />
                     </div>
                     <div class="col-xs-12 col-sm-4">
                         <div>
@@ -74,58 +79,58 @@
                                 <div class="clearfix"></div>
                             </div>
                             <div collapse="isPermissionItemConfCollapsed">
-                <div class="functionList" ng-show="currentUser.sectionusersvisible">
-                    <label>Gestione rapportini</label>
-                    <input type="checkbox" ng-model="user._sectionmonthlyreportsvisible" toggle-switch>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="functionList" ng-show="currentUser.isadmin">
-                    <label>Gestione utenti/collaboratori</label>
-                    <input type="checkbox" ng-model="user._sectionusersvisible" toggle-switch>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="functionList" ng-show="currentUser.isadmin">
-                    <label>Gestione annunci</label>
-                    <input type="checkbox" ng-model="user._sectionjobadsvisible" toggle-switch>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="functionList" ng-show="currentUser.isadmin">
-                    <label>Gestione candidati</label>
-                    <input type="checkbox" ng-model="user._sectionjobapplicantsvisible" toggle-switch>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="functionList" ng-show="currentUser.isadmin">
-                    <label>Cancellazione candidati</label>
-                    <input type="checkbox" ng-model="user._candeletejobapplicants" toggle-switch>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="functionList" ng-show="currentUser.isadmin">
-                    <label>Esportazione dati</label>
-                    <input type="checkbox" ng-model="user._sectionexportvisible" toggle-switch>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="functionList" ng-show="currentUser.isadmin">
-                    <label>Invio messaggi</label>
-                    <input type="checkbox" ng-model="user._cansendmessage" toggle-switch>
-                    <div class="clearfix"></div>
-                </div>
+                                <div class="functionList" ng-show="currentUser.sectionusersvisible">
+                                    <label>Gestione rapportini</label>
+                                    <input type="checkbox" ng-model="user._sectionmonthlyreportsvisible" toggle-switch>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="functionList" ng-show="currentUser.isadmin">
+                                    <label>Gestione utenti/collaboratori</label>
+                                    <input type="checkbox" ng-model="user._sectionusersvisible" toggle-switch>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="functionList" ng-show="currentUser.isadmin">
+                                    <label>Gestione annunci</label>
+                                    <input type="checkbox" ng-model="user._sectionjobadsvisible" toggle-switch>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="functionList" ng-show="currentUser.isadmin">
+                                    <label>Gestione candidati</label>
+                                    <input type="checkbox" ng-model="user._sectionjobapplicantsvisible" toggle-switch>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="functionList" ng-show="currentUser.isadmin">
+                                    <label>Cancellazione candidati</label>
+                                    <input type="checkbox" ng-model="user._candeletejobapplicants" toggle-switch>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="functionList" ng-show="currentUser.isadmin">
+                                    <label>Esportazione dati</label>
+                                    <input type="checkbox" ng-model="user._sectionexportvisible" toggle-switch>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="functionList" ng-show="currentUser.isadmin">
+                                    <label>Invio messaggi</label>
+                                    <input type="checkbox" ng-model="user._cansendmessage" toggle-switch>
+                                    <div class="clearfix"></div>
+                                </div>
                             </div>
                         </div>  
                     </div>
                     <div class="col-xs-12 col-sm-4">
-                <div ng-show="retItemsVisible">
-                    <div>
-                        <h4 style="float: left;">
-                            <i class="fa settingsSectionTitleCaret" ng-click="isRetributionItemConfCollapsed = !isRetributionItemConfCollapsed" ng-class="{'fa-caret-right': isRetributionItemConfCollapsed, 'fa-caret-down': !isRetributionItemConfCollapsed}"></i>
-                            Voci retributive
-                        </h4>
-                        <div class="clearfix"></div>
-                    </div>
-                    <div collapse="isRetributionItemConfCollapsed">
-                        <div class="functionList" ng-show="currentUser.sectionusersvisible" ng-repeat="item in user.retributionitemconfiguration">
-                            <label ng-bind="retributionItemTypeEnumNames[item.type]"></label>
-                            <input type="checkbox" ng-model="user.retributionitemconfiguration[$index].enablevalue" toggle-switch>
-                            <div class="clearfix"></div>
+                        <div ng-show="retItemsVisible">
+                            <div>
+                                <h4 style="float: left;">
+                                    <i class="fa settingsSectionTitleCaret" ng-click="isRetributionItemConfCollapsed = !isRetributionItemConfCollapsed" ng-class="{'fa-caret-right': isRetributionItemConfCollapsed, 'fa-caret-down': !isRetributionItemConfCollapsed}"></i>
+                                    Voci retributive
+                                </h4>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div collapse="isRetributionItemConfCollapsed">
+                                <div class="functionList" ng-show="currentUser.sectionusersvisible" ng-repeat="item in user.retributionitemconfiguration">
+                                    <label ng-bind="retributionItemTypeEnumNames[item.type]"></label>
+                                    <input type="checkbox" ng-model="user.retributionitemconfiguration[$index].enablevalue" toggle-switch>
+                                    <div class="clearfix"></div>
                                 </div>
                             </div>
                         </div>

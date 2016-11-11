@@ -104,7 +104,8 @@ namespace AGM.Web.Controllers
                         user.SectionExportVisible,
                         user.CanDeleteJobApplicants,
                         user.CanSendMessage,
-                        user.IsAdmin
+                        user.IsAdmin,
+                        user.IsShiftWorker
                     }
                 };
             }

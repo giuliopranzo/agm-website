@@ -21,6 +21,7 @@ namespace AGM.Web.Models
         public int _isActive { get; set; }
         public bool _isDeleted { get; set; }
         public int? _isAdmin { get; set; }
+        public int _isShiftWorker { get; set; }
 
         public bool SectionUsersVisible
         {
@@ -70,6 +71,11 @@ namespace AGM.Web.Models
         public bool IsAdmin
         {
             get { return (_isAdmin.HasValue) ? (_isAdmin == 1) : false; }
+        }
+
+        public bool IsShiftWorker
+        {
+            get { return _isShiftWorker == 1; }
         }
     }
 }

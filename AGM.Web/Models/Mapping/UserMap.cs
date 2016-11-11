@@ -47,6 +47,7 @@ namespace AGM.Web.Models.Mapping
             this.Property(t => t._isDeleted).HasColumnName("isDeleted");
             this.Property(t => t._isAdmin).HasColumnName("isAdmin");
             this.Property(t => t.RetributionItemConfSerialized).HasColumnName("retributionItemConf");
+            this.Property(t => t._isShiftWorker).HasColumnName("isShiftWorker");
 
             // Ignore
             this.Ignore(p => p.Name);
@@ -63,6 +64,7 @@ namespace AGM.Web.Models.Mapping
             this.Ignore(p => p.IsDeleted);
             this.Ignore(p => p.IsAdmin);
             this.Ignore(p => p.RetributionItemConfiguration);
+            this.Ignore(p => p.IsShiftWorker);
         }
     }
 }
