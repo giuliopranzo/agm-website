@@ -104,7 +104,8 @@
                         </button>
                     </div>
                     <div class="col-xs-12 form-group">
-                        <label style="font-size:14px; font-weight: normal;"><input ng-model="insertAvailability" type="checkbox" value=""> Reperibilità</label>
+                        <label style="font-size:14px; font-weight: normal;">Reperibilità</label>
+                        <input type="checkbox" ng-model="insertAvailability" toggle-switch>
                     </div>
                     <div class="col-xs-12 form-group">
                         <textarea ng-model="insertNote" maxlength="50" class="form-control asideinsertNote" placeholder="Note" bs-options="note as note for note in getRecurringNotes($viewValue)" bs-typeahead></textarea>
