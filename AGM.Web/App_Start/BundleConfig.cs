@@ -29,7 +29,8 @@ namespace AGM.Web
                 "~/Scripts/underscore.min.js",
                 "~/Scripts/bootstrap-toggle.min.js",
                 "~/Scripts/jquery.nanoscroller.min.js",
-                "~/Scripts/moment.min.js"
+                "~/Scripts/moment.min.js",
+                "~/Scripts/editor.js"
 
             );
             bundles.Add(libsBundle);
@@ -47,7 +48,8 @@ namespace AGM.Web
                 "~/Content/nanoscroller.css",
                 "~/Content/bootstrap-toggle.css",
                 "~/Content/Site.css",
-                "~/App/JobAds/JobAds.css");
+                "~/App/JobAds/JobAds.css",
+                "~/Content/editor.css");
             bundles.Add(styleBundle);
 
             System.Web.Optimization.BundleTable.EnableOptimizations = bool.Parse(ConfigurationManager.AppSettings["ScriptBundleOptimization"]);
