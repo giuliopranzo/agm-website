@@ -31,6 +31,9 @@
             $scope.user._sectionmonthlyreportsvisible = 1;
         }
 
+        $scope.isPermissionItemConfCollapsed = false;
+        $scope.isRetributionItemConfCollapsed = true;
+
     };
 
     $scope.headersObj = {};
@@ -90,6 +93,14 @@
                 $scope.user._sectionmonthlyreportsvisible = 1; 
                 break;
         }
+    }
+
+    $scope.permissionItemConfCollapse = function () {
+        $scope.isPermissionItemConfCollapsed = !$scope.isPermissionItemConfCollapsed;
+    }
+
+    $scope.retributionItemConfCollapse = function () {
+        $scope.isRetributionItemConfCollapsed = !$scope.isRetributionItemConfCollapsed;
     }
 
     $scope.save = function () {

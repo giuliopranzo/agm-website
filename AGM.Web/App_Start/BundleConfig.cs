@@ -24,7 +24,7 @@ namespace AGM.Web
                 "~/Scripts/angular-file-upload.min.js",
                 "~/Scripts/angular-ui/ui-bootstrap.js",
                 "~/Scripts/angular-ui/ui-bootstrap-tpls.js",
-                "~/Scripts/jquery-1.10.2.min.js",
+                "~/Scripts/jquery-3.1.1.min.js",
                 "~/Scripts/jquery.cookie.js",
                 "~/Scripts/underscore.min.js",
                 "~/Scripts/bootstrap-toggle.min.js",

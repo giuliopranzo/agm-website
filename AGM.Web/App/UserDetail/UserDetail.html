@@ -88,12 +88,12 @@
                         <div ng-show="currentUser.ishr || currentUser.isadmin">
                             <div>
                                 <h4 style="float: left;">
-                                    <i class="fa settingsSectionTitleCaret" ng-click="isPermissionItemConfCollapsed = !isPermissionItemConfCollapsed" ng-class="{'fa-caret-right': isPermissionItemConfCollapsed, 'fa-caret-down': !isPermissionItemConfCollapsed}"></i>
+                                    <i class="fa settingsSectionTitleCaret" ng-click="permissionItemConfCollapse()" ng-class="{'fa-caret-right': isPermissionItemConfCollapsed, 'fa-caret-down': !isPermissionItemConfCollapsed}"></i>
                                     Permessi
                                 </h4>
                                 <div class="clearfix"></div>
                             </div>
-                            <div collapse="isPermissionItemConfCollapsed">
+                            <div ng-class="{'collapse': isPermissionItemConfCollapsed, 'collapse in': !isPermissionItemConfCollapsed}">
                                 <div class="functionList" ng-show="currentUser.ishr || currentUser.isadmin">
                                     <label>Gestione rapportini</label>
                                     <input type="checkbox" ng-model="user._sectionmonthlyreportsvisible" toggle-switch>
@@ -136,12 +136,12 @@
                         <div ng-show="currentUser.isadmin">
                             <div>
                                 <h4 style="float: left;">
-                                    <i class="fa settingsSectionTitleCaret" ng-click="isRetributionItemConfCollapsed = !isRetributionItemConfCollapsed" ng-class="{'fa-caret-right': isRetributionItemConfCollapsed, 'fa-caret-down': !isRetributionItemConfCollapsed}"></i>
+                                    <i class="fa settingsSectionTitleCaret" ng-click="retributionItemConfCollapse()" ng-class="{'fa-caret-right': isRetributionItemConfCollapsed, 'fa-caret-down': !isRetributionItemConfCollapsed}"></i>
                                     Voci retributive
                                 </h4>
                                 <div class="clearfix"></div>
                             </div>
-                            <div collapse="isRetributionItemConfCollapsed">
+                            <div ng-class="{'collapse': isRetributionItemConfCollapsed, 'collapse in': !isRetributionItemConfCollapsed}">
                                 <div class="functionList" ng-show="currentUser.sectionusersvisible" ng-repeat="item in user.retributionitemconfiguration">
                                     <label ng-bind="retributionItemTypeEnumNames[item.type]"></label>
                                     <input type="checkbox" ng-model="user.retributionitemconfiguration[$index].enablevalue" toggle-switch>

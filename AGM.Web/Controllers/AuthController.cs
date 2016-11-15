@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IdentityModel.Protocols.WSTrust;
 using System.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -45,10 +46,10 @@ namespace AGM.Web.Controllers
                 new Claim(ClaimTypes.Name, string.Format("{0}${1}", loginData.Email.ToString(), name))
             };
 
-            var tokenDescriptor = new SecurityTokenDescriptor()
+            var tokenDescriptor = new Microsoft.IdentityModel.Tokens.SecurityTokenDescriptor()
             {
                 Subject = new ClaimsIdentity(claims),
-                TokenIssuerName = "Agm"
+                Issuer = "Agm"
             };
 
             var jwtToken = tokenHandler.CreateToken(tokenDescriptor);

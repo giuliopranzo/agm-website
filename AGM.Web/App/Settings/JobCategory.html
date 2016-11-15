@@ -4,7 +4,7 @@
         <div class="clearfix"></div>
     </div>
     <hr />
-    <div collapse="isJobCategoryCollapsed">
+    <div ng-class="{'collapse': isJobCategoryCollapsed, 'collapse in': !isJobCategoryCollapsed}">
         <div class="container-fluid">
             <div class="col-xs-12 col-md-6 form-group">
                 <form name="mainForm" novalidate>
