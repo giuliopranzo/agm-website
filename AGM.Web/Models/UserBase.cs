@@ -26,7 +26,7 @@ namespace AGM.Web.Models
 
         public string Image
         {
-            get { return (string.IsNullOrEmpty(_image))? string.Format("http://robohash.org/bgset_bg1/agmuser_{0}?size=160x160", Id) : _image; }
+            get { return (string.IsNullOrEmpty(_image))? string.Format("../images/default_avatar.jpg?size=160x160", Id) : _image; }
             set { _image = value; }
         }
 
