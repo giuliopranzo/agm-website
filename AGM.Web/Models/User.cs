@@ -20,8 +20,14 @@ namespace AGM.Web.Models
         public int? _canSendMessage { get; set; }
         public int _isActive { get; set; }
         public bool _isDeleted { get; set; }
-        public int? _isAdmin { get; set; }
         public int _isShiftWorker { get; set; }
+        public int? _userType { get; set; }
+        public List<UserType> UserTypes { get; set; }
+
+        public User() : base()
+        {
+            UserTypes = new List<Models.UserType>();
+        }
 
         public bool SectionUsersVisible
         {
@@ -70,12 +76,22 @@ namespace AGM.Web.Models
 
         public bool IsAdmin
         {
-            get { return (_isAdmin.HasValue) ? (_isAdmin == 1) : false; }
+            get { return UserType == 1; }
+        }
+
+        public bool IsHR
+        {
+            get { return UserType == 2; }
         }
 
         public bool IsShiftWorker
         {
             get { return _isShiftWorker == 1; }
+        }
+
+        public int UserType
+        {
+            get { return (_userType.HasValue) ? (_userType.Value) : 3; }
         }
     }
 }

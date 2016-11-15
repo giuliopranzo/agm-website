@@ -24,6 +24,13 @@
         $scope.backToUsersVisible = (authenticationContainer.currentUser.id != $scope.user.id);
         $scope.deleteUserVisible = (authenticationContainer.currentUser.id != $scope.user.id && $scope.user.id != 0);
         $scope.retItemsVisible = (authenticationContainer.currentUser.id != $scope.user.id && $scope.user.id != 0);
+
+        if($scope.user.id == 0)
+        {
+            $scope.user._usertype = 3;
+            $scope.user._sectionmonthlyreportsvisible = 1;
+        }
+
     };
 
     $scope.headersObj = {};
@@ -56,6 +63,34 @@
         }
         item.remove;
     };
+
+    $scope.changeUserType = function () {
+        
+        $scope.user._sectionusersvisible = 0;
+        $scope.user._sectionjobadsvisible = 0;
+        $scope.user._sectionjobapplicantsvisible = 0;
+        $scope.user._candeletejobapplicants = 0;
+        $scope.user._sectionexportvisible = 0;
+        $scope.user._cansendmessage = 0;
+
+        switch ($scope.user._usertype)
+        {
+            case 1:
+                //ADMIN USERS
+                $scope.user._candeletejobapplicants = 1;
+                $scope.user._sectionexportvisible = 1;
+                $scope.user._cansendmessage = 1;
+            case 2:
+                //HR USERS
+                $scope.user._sectionusersvisible = 1;
+                $scope.user._sectionjobadsvisible = 1;
+                $scope.user._sectionjobapplicantsvisible = 1;
+            default:
+                //ALL USERS
+                $scope.user._sectionmonthlyreportsvisible = 1; 
+                break;
+        }
+    }
 
     $scope.save = function () {
         $scope.user.retributionitemconfserialized = JSON.stringify($scope.user.retributionitemconfiguration);

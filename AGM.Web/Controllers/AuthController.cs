@@ -105,7 +105,8 @@ namespace AGM.Web.Controllers
                         user.CanDeleteJobApplicants,
                         user.CanSendMessage,
                         user.IsAdmin,
-                        user.IsShiftWorker
+                        user.IsShiftWorker,
+                        user.UserType
                     }
                 };
             }

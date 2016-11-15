@@ -553,6 +553,7 @@ namespace AGM.Web.Controllers
                         context.Entry(user).Property(x => x._canSendMessage).IsModified = false;
                         context.Entry(user).Property(x => x.RetributionItemConfSerialized).IsModified = false;
                         context.Entry(user).Property(x => x._isShiftWorker).IsModified = false;
+                        context.Entry(user).Property(x => x._userType).IsModified = false;
                     }
                 }
                 else

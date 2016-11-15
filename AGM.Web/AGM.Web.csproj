@@ -217,6 +217,8 @@
     <Compile Include="Models\ExpenseReason.cs" />
     <Compile Include="Models\Export.cs" />
     <Compile Include="Models\Festivity.cs" />
+    <Compile Include="Models\Mapping\UserTypeMap.cs" />
+    <Compile Include="Models\UserType.cs" />
     <Compile Include="Models\HourReason.cs" />
     <Compile Include="Models\JobAd.cs" />
     <Compile Include="Models\JobAdSaveIn.cs" />

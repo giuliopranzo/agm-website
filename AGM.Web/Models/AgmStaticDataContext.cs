@@ -9,6 +9,7 @@ namespace AGM.Web.Models
     {
         public static List<HourReason> HourReasons = GetHourReasons();
         public static List<ExpenseReason> ExpenseReasons = GetExpenseReasons();
+        public static List<UserType> UserTypes = GetUserTypes();
 
         private static List<HourReason> GetHourReasons()
         {
@@ -23,6 +24,14 @@ namespace AGM.Web.Models
             using (var context = new AgmDataContext())
             {
                 return context.ExpenseReasons.ToList();
+            }
+        }
+
+        private static List<UserType> GetUserTypes()
+        {
+            using (var context = new AgmDataContext())
+            {
+                return context.UserTypes.ToList();
             }
         }
     }

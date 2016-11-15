@@ -50,6 +50,7 @@ namespace AGM.Web.Models
         public DbSet<ContractType> ContractTypes { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<MessageReceiver> MessageReceivers { get; set; }
+        public DbSet<UserType> UserTypes { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -78,6 +79,7 @@ namespace AGM.Web.Models
             modelBuilder.Configurations.Add(new ContractTypeMap());
             modelBuilder.Configurations.Add(new MessageMap());
             modelBuilder.Configurations.Add(new MessageReceiverMap());
+            modelBuilder.Configurations.Add(new UserTypeMap());
         }
     }
 }

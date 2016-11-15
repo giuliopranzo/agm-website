@@ -47,17 +47,32 @@
                             <div class="clearfix"></div>
                         </div>
                         <div class="functionList" ng-show="currentUser.sectionusersvisible">
-                            <label>ID Export</label>
-                            <input type="number" class="form-control" ng-model="user.idexport">
+                            <div class="col-xs-12 col-sm-3 functionList" style="padding:0px;">
+                                <label>ID Export</label>
+                            </div>
+                            <div class="col-xs-12 col-sm-9 functionList" style="padding:0px;">
+                                <input type="number" class="form-control" ng-model="user.idexport">
+                            </div>
                             <div class="clearfix"></div>
                         </div>
+                        <div class="functionList" ng-show="currentUser.isadmin">
+                            <div class="col-xs-12 col-sm-3 functionList" style="padding:0px;">
+                                <label>Tipo Utente</label>
+                            </div>
+                            <div class="col-xs-12 col-sm-9 functionList" style="padding:0px;">
+                                <button type="button" class="btn btn-default btnFill" ng-model="user._usertype" ng-change="changeUserType()" bs-options="usertype.id as usertype.name for usertype in user.usertypes" bs-select>
+                                    Action <span class="caret"></span>
+                                </button>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-4">
                         <div class="functionList" ng-show="currentUser.isadmin">
                             <label>Turnista</label>
                             <input type="checkbox" ng-model="user._isshiftworker" toggle-switch>
                             <div class="clearfix"></div>
                         </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-4">
                     </div>
                 </div>
 
@@ -70,7 +85,7 @@
                         <br />
                     </div>
                     <div class="col-xs-12 col-sm-4">
-                        <div>
+                        <div ng-show="currentUser.ishr || currentUser.isadmin">
                             <div>
                                 <h4 style="float: left;">
                                     <i class="fa settingsSectionTitleCaret" ng-click="isPermissionItemConfCollapsed = !isPermissionItemConfCollapsed" ng-class="{'fa-caret-right': isPermissionItemConfCollapsed, 'fa-caret-down': !isPermissionItemConfCollapsed}"></i>
@@ -79,7 +94,7 @@
                                 <div class="clearfix"></div>
                             </div>
                             <div collapse="isPermissionItemConfCollapsed">
-                                <div class="functionList" ng-show="currentUser.sectionusersvisible">
+                                <div class="functionList" ng-show="currentUser.ishr || currentUser.isadmin">
                                     <label>Gestione rapportini</label>
                                     <input type="checkbox" ng-model="user._sectionmonthlyreportsvisible" toggle-switch>
                                     <div class="clearfix"></div>
@@ -118,7 +133,7 @@
                         </div>  
                     </div>
                     <div class="col-xs-12 col-sm-4">
-                        <div ng-show="retItemsVisible">
+                        <div ng-show="currentUser.isadmin">
                             <div>
                                 <h4 style="float: left;">
                                     <i class="fa settingsSectionTitleCaret" ng-click="isRetributionItemConfCollapsed = !isRetributionItemConfCollapsed" ng-class="{'fa-caret-right': isRetributionItemConfCollapsed, 'fa-caret-down': !isRetributionItemConfCollapsed}"></i>
