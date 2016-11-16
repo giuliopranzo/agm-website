@@ -467,7 +467,7 @@ namespace AGM.Web.Controllers
                 if (!user.SectionUsersVisible)
                     return new ApiResponse(false);
 
-                var users = context.Users.Where(u => u.Email != email && !u._isDeleted).OrderBy(u => u.LastName).ToList(); 
+                var users = context.Users.Where(u => u.Email != email).OrderBy(u => u.LastName).ToList(); 
                 return new ApiResponse(true)
                 {
                     Data = users.Select(u => new
@@ -475,10 +475,14 @@ namespace AGM.Web.Controllers
                         u.Id,
                         u.Name,
                         u._isActive,
+                        u._isDeleted,
                         u.Image,
                         u.Username,
                         u.IdExport,
-                        currentMHReportLocked = mhReportLocks.Any(l => l.UserId == u.Id)
+                        currentMHReportLocked = mhReportLocks.Any(l => l.UserId == u.Id),
+                        u.UserType,
+                        u.UserBackgroundColor,
+                        u.UserForeColor
                     })
                 };
             }

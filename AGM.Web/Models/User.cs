@@ -98,14 +98,18 @@ namespace AGM.Web.Models
         {
             get
             {
+                if(!IsActive)
+                {
+                    return "#FF0000";
+                }
                 switch (UserType)
                 {
                     case 1:
-                        return "blue";
+                        return "#0000FF";
                     case 2:
-                        return "yellow";
+                        return "#FFF000";
                 }
-                return "white";
+                return "#FFFFFF";
             }
         }
 
@@ -116,7 +120,7 @@ namespace AGM.Web.Models
                 switch (UserType)
                 {
                     case 1:
-                        return "white";
+                        return "#FFFFFF";
                 }
                 return "#333";
             }

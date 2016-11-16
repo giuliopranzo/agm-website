@@ -1,8 +1,8 @@
 ﻿<a id="reportTop" class="reportTop"></a>
 <div class="breadcrumb hidden-xs hidden-sm" style="display: table;">
     <div class="pageHeader_pageTitle">
-        <span>Utenti disattivati</span>
-        <span class="pageHeader_subtitle">elenco utenti non attivi</span>
+        <span>Utenti eliminati</span>
+        <span class="pageHeader_subtitle">elenco utenti rimossi</span>
     </div>
     <div class="pageHeader_breadCrumb"><a class="pageHeader_breadCrumbLink" ui-sref="Root.Index">Home</a> > Utenti</div>
 </div>
@@ -23,14 +23,20 @@
             </div>
             <div class="col-md-12 container" style="width:100%;">
                 <div class="row">
-                    <div data-ng-repeat="user in users" ng-if="user._isactive==0" class="col-md-4">
-                        <button class="btn btn-default btn-block nameListElement" user-context-menu="{{user.id}}">
+                    <div data-ng-repeat="user in users" ng-if="user._isdeleted==1" class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                        <button class="btn btn-default btn-block nameListElement" user-context-menu="{{user.id}}" ng-style="{'background-color': user.userbackgroundcolor, 'color': user.userforecolor}">
                             <img ng-src="{{user.image}}" alt="" style="height:48px;width:48px;" />
                             <div>
                                 <span class="person-name" ng-bind="user.name"></span>
                                 <span class="company-name" ng-bind="user.company"></span>
-                                <span class="company-name" ng-show="!user.idexport || user.idexport == -1"><i class="fa fa-exclamation-triangle"></i>No ID Export</span>
-                                <span class="company-name" ng-show="!user.currentmhreportlocked"><i class="fa fa-exclamation-triangle"></i>Rapportino non chiuso</span>
+                                <div class="row">
+                                    <div ng-show="!user.idexport || user.idexport == -1" class="col-xs-6 col-sm-6">
+                                        <span ng-style="{'color': user.userforecolor, 'font-size': '11px'}"><i style="font-size:16px;" class="fa fa-exclamation-circle"></i> ID Exp.</span>
+                                    </div>
+                                    <div ng-show="!user.currentmhreportlocked" class="col-xs-6 col-sm-6">
+                                        <span ng-style="{'color': user.userforecolor, 'font-size': '11px'}"><i style="font-size:16px;" class="fa fa-exclamation-triangle"></i> Rapp.</span>
+                                    </div>
+                                </div>
                             </div>
                         </button>
                     </div>
