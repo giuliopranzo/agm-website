@@ -21,8 +21,13 @@ namespace AGM.Web.Models
         public string Name
         {
             get {
-                List<string> lnames = LastName.TrimStart().TrimEnd().Split(' ').ToList().ConvertAll(x => x = x.TrimStart().TrimEnd()).Where(x => x != "").ToList();
-                List<string> fnames = FirstName.TrimStart().TrimEnd().Split(' ').ToList().ConvertAll(x => x = x.TrimStart().TrimEnd()).Where(x => x != "").ToList();
+
+                List<string> lnames = new List<string>();
+                List<string> fnames = new List<string>();
+                if(LastName != null && LastName != "" && LastName.TrimStart().TrimEnd() != "")
+                    lnames = LastName.TrimStart().TrimEnd().Split(' ').ToList().ConvertAll(x => x = x.TrimStart().TrimEnd()).Where(x => x != "").ToList();
+                if (FirstName != null && FirstName != "" && FirstName.TrimStart().TrimEnd() != "")
+                    fnames = FirstName.TrimStart().TrimEnd().Split(' ').ToList().ConvertAll(x => x = x.TrimStart().TrimEnd()).Where(x => x != "").ToList();
                 
                 string lname = string.Join(" ", lnames);
                 string fname = string.Join(" ", fnames);
