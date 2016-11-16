@@ -20,8 +20,31 @@ namespace AGM.Web.Models
 
         public string Name
         {
-            get { return string.Format("{0} {1}", LastName, FirstName); }
+            get {
+                List<string> lnames = LastName.TrimStart().TrimEnd().Split(' ').ToList().ConvertAll(x => x = x.TrimStart().TrimEnd()).Where(x => x != "").ToList();
+                List<string> fnames = FirstName.TrimStart().TrimEnd().Split(' ').ToList().ConvertAll(x => x = x.TrimStart().TrimEnd()).Where(x => x != "").ToList();
+                
+                string lname = string.Join(" ", lnames);
+                string fname = string.Join(" ", fnames);
 
+                if (lname.Length + fname.Length <= 25)
+                    return string.Format("{0} {1}", lname, fname);
+                else if (fnames.Count > 0 && lname.Length + 2 <= 25)
+                {
+                    if (lname.Length + (fnames.Count * 3) - 1 <= 25)
+                    {
+                        return string.Format("{0} {1}", lname, string.Join(" ", fnames.ConvertAll(x => x.Substring(0, 1) + ".")));
+                    }
+                    else
+                    {
+                        return string.Format("{0} {1}", lname, fnames.First().Substring(0, 1) + ".");
+                    }
+                }
+                else
+                {
+                    return string.Format("{0}", lname.Substring(0, 25) + ".");
+                }
+            }
         }
 
         public string Image

@@ -107,7 +107,9 @@ namespace AGM.Web.Controllers
                         user.CanSendMessage,
                         user.IsAdmin,
                         user.IsShiftWorker,
-                        user.UserType
+                        user.UserType,
+                        user.UserBackgroundColor,
+                        user.UserForeColor
                     }
                 };
             }

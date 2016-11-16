@@ -93,5 +93,33 @@ namespace AGM.Web.Models
         {
             get { return (_userType.HasValue) ? (_userType.Value) : 3; }
         }
+
+        public string UserBackgroundColor
+        {
+            get
+            {
+                switch (UserType)
+                {
+                    case 1:
+                        return "blue";
+                    case 2:
+                        return "yellow";
+                }
+                return "white";
+            }
+        }
+
+        public string UserForeColor
+        {
+            get
+            {
+                switch (UserType)
+                {
+                    case 1:
+                        return "white";
+                }
+                return "#333";
+            }
+        }
     }
 }

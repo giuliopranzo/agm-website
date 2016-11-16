@@ -68,6 +68,8 @@ namespace AGM.Web.Models.Mapping
             this.Ignore(p => p.IsShiftWorker);
             this.Ignore(p => p.UserType);
             this.Ignore(p => p.UserTypes);
+            this.Ignore(p => p.UserBackgroundColor);
+            this.Ignore(p => p.UserForeColor);
         }
     }
 }

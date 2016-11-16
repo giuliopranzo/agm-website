@@ -478,7 +478,10 @@ namespace AGM.Web.Controllers
                         u.Image,
                         u.Username,
                         u.IdExport,
-                        currentMHReportLocked = mhReportLocks.Any(l => l.UserId == u.Id)
+                        currentMHReportLocked = mhReportLocks.Any(l => l.UserId == u.Id),
+                        u.UserType,
+                        u.UserBackgroundColor,
+                        u.UserForeColor
                     })
                 };
             }
