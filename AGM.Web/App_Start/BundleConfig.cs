@@ -31,7 +31,8 @@ namespace AGM.Web
                 "~/Scripts/bootstrap-toggle.min.js",
                 "~/Scripts/jquery.nanoscroller.min.js",
                 "~/Scripts/moment.min.js",
-                "~/summernote-0.8.2/summernote.min.js"
+                "~/summernote-0.8.2/summernote.min.js",
+                "~/Scripts/angular-summernote.min.js"
 
             );
             bundles.Add(libsBundle);

@@ -3,7 +3,7 @@ var controllerBasePath = '/App/';
 var factoryBasePath = '/App/';
 var currentDate = new Date();
 var dateParam = '?v=' + currentDate.getFullYear() + currentDate.getMonth() + currentDate.getDate() + currentDate.getHours();
-var app = angular.module('agm', ['ngAnimate', 'ngSanitize', 'ui.router', 'ui.bootstrap', 'LocalStorageModule', 'mgcrea.ngStrap', 'angularFileUpload', 'fwg.pagerUp', 'ngCkeditor']);
+var app = angular.module('agm', ['ngAnimate', 'ngSanitize', 'ui.router', 'ui.bootstrap', 'LocalStorageModule', 'mgcrea.ngStrap', 'angularFileUpload', 'fwg.pagerUp', 'ngCkeditor', 'summernote']);
 
 function resolveViewPath(viewName) {
     return viewBasePath + viewName + dateParam;
