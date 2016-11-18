@@ -15,6 +15,7 @@ namespace AGM.Web
             var libsBundle = new ScriptBundle("~/bundles/libs.js");
             libsBundle.Include(
                 "~/Scripts/angular.min.js",
+                "~/Scripts/angular-route.min.js",
                 "~/Scripts/i18n/angular-locale_it-it.js",
                 "~/Scripts/angular-sanitize.min.js",
                 "~/Scripts/angular-ui-router.min.js",
