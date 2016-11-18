@@ -11,7 +11,7 @@ IF OBJECT_ID('dbo.comunicazioni', 'U') IS NOT NULL
   DROP TABLE dbo.comunicazioni;
 
 CREATE TABLE [dbo].[comunicazioni](
-	[id] [int] IDENTITY(1,1) NOT NULL,
+	[idcomunicazione] [int] IDENTITY(1,1) NOT NULL,
 	[idutente] [int] NOT NULL,
 	[data] [datetime] NOT NULL,
 	[oggetto] [varchar](50) NOT NULL,
@@ -19,7 +19,7 @@ CREATE TABLE [dbo].[comunicazioni](
 	[isDeleted] [bit] NOT NULL,
 PRIMARY KEY CLUSTERED 
 (
-	[id] ASC
+	[idcomunicazione] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 

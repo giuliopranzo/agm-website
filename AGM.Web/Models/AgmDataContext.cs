@@ -51,6 +51,7 @@ namespace AGM.Web.Models
         public DbSet<Message> Messages { get; set; }
         public DbSet<MessageReceiver> MessageReceivers { get; set; }
         public DbSet<UserType> UserTypes { get; set; }
+        public DbSet<Notice> Notices { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -80,6 +81,7 @@ namespace AGM.Web.Models
             modelBuilder.Configurations.Add(new MessageMap());
             modelBuilder.Configurations.Add(new MessageReceiverMap());
             modelBuilder.Configurations.Add(new UserTypeMap());
+            modelBuilder.Configurations.Add(new NoticeMap());
         }
     }
 }

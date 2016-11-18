@@ -451,7 +451,15 @@
 
                         return null;
                     });
-                }]
+                }],
+                notices: ['usersDataService', function (usersDataService) {
+                    return usersDataService.getNotices('mr_detail').then(function (respData) {
+                        if (respData.succeed)
+                            return respData.data;
+
+                        return null;
+                    });
+                }],
             }
         })
         .state('Root', {

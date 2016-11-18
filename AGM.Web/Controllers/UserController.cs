@@ -33,17 +33,17 @@ namespace AGM.Web.Controllers
             var res = "";
             var path = HttpContext.Current.Server.MapPath(basePath);
             var exceptionText = string.Empty;
-            
+
             if (!Directory.Exists(path))
                 return new ApiResponse(false)
                 {
-                    Errors = new ApiResponseError[]{ new ApiResponseError(){ Message = "Path for db updates doesn't exists!" }}  //Directory.GetFiles(path, "AGM_???.sql", SearchOption.TopDirectoryOnly).ToArray()
+                    Errors = new ApiResponseError[] { new ApiResponseError() { Message = "Path for db updates doesn't exists!" } }  //Directory.GetFiles(path, "AGM_???.sql", SearchOption.TopDirectoryOnly).ToArray()
                 };
 
             var updateFiles = Directory.GetFiles(path, "AGM_???.sql", SearchOption.TopDirectoryOnly);
             var targetVersion = 0;
             var currentVersion = new Models.Version() { Code = "0", LastUpdateTryDate = SqlDateTime.MinValue.Value, UpdateDate = SqlDateTime.MinValue.Value };
-            
+
             if (updateFiles.Any())
             {
                 targetVersion = updateFiles.Select(f => int.Parse(Path.GetFileNameWithoutExtension(f).Substring(4))).Max();
@@ -107,7 +107,7 @@ namespace AGM.Web.Controllers
                 return new ApiResponse(true)
                 {
                     Data = context.Versions.ToList().OrderBy(v => int.Parse(v.Code)).Last(),
-                    Errors = (string.IsNullOrEmpty(exceptionText)) ? null : new ApiResponseError[]{ new ApiResponseError(){ Message = exceptionText } }
+                    Errors = (string.IsNullOrEmpty(exceptionText)) ? null : new ApiResponseError[] { new ApiResponseError() { Message = exceptionText } }
                 };
             }
         }
@@ -304,7 +304,7 @@ namespace AGM.Web.Controllers
                 {"D.Lgs. 151", "AL "},
                 {"Permessi ex-festività", "P2"}
             };
-            
+
             Thread.CurrentPrincipal = new CustomPrincipal("nandowalter@gmail.com$Fernando Walter Gagni");
             List<string> res = new List<string>();
             using (var context = new AgmDataContext())
@@ -317,7 +317,7 @@ namespace AGM.Web.Controllers
                     var userName = user.Name;
                     foreach (var itemParent in hourReport)
                     {
-                        if (itemParent.CompleteDate.ToString("MM") == month.PadLeft(2,'0'))
+                        if (itemParent.CompleteDate.ToString("MM") == month.PadLeft(2, '0'))
                         {
                             if ((itemParent.HoursCollection as IEnumerable<MonthlyReportHour>).Any())
                             {
@@ -326,16 +326,16 @@ namespace AGM.Web.Controllers
                                     TimeSpan timespan = TimeSpan.FromHours(2.75);
                                     var hours = TimeSpan.FromHours((item as MonthlyReportHour).HoursCount).ToString("hhmm");
                                     var reason = (item as MonthlyReportHour).Reason;
-                                    var reasonCurr = (reasonCode.Any(r => r.Key == reason)? reasonCode[reason] : reason);
-                                    res.Add(string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}", 
-                                        "00000", 
+                                    var reasonCurr = (reasonCode.Any(r => r.Key == reason) ? reasonCode[reason] : reason);
+                                    res.Add(string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}",
+                                        "00000",
                                         "00",
-                                        user.IdExport.ToString().PadLeft(4,'0'),
+                                        user.IdExport.ToString().PadLeft(4, '0'),
                                         item.Date.ToString("ddMMyy"),
                                         reasonCurr.PadRight(3, ' '),
-                                        hours, 
-                                        (reasonCurr == "   " || reasonCurr == "S1") ? hours : "0000", 
-                                        "0", 
+                                        hours,
+                                        (reasonCurr == "   " || reasonCurr == "S1") ? hours : "0000",
+                                        "0",
                                         "0"));
                                 }
                             }
@@ -403,10 +403,10 @@ namespace AGM.Web.Controllers
                             string pattern = "{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}";
                             res.Add(string.Format(pattern, "00000", "00", user.IdExport.Value.ToString().PadLeft(4, '0'),
                                 "    ",
-                                exportCode[(int) item.Type], "                              ",
-                                (item.Qty*1000).ToString().PadLeft(7, '0'),
-                                ((int) (item.Amount*100000)).ToString().PadLeft(11, '0'),
-                                ((int) (item.Total*100)).ToString().PadLeft(9, '0'), year.Substring(2), month, "0"));
+                                exportCode[(int)item.Type], "                              ",
+                                (item.Qty * 1000).ToString().PadLeft(7, '0'),
+                                ((int)(item.Amount * 100000)).ToString().PadLeft(11, '0'),
+                                ((int)(item.Total * 100)).ToString().PadLeft(9, '0'), year.Substring(2), month, "0"));
                         }
                     }
                 }
@@ -437,7 +437,7 @@ namespace AGM.Web.Controllers
         {
             DataTable dt = new DataTable();
             dt.TableName = tablename;
-            using (SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM[" + tablename +"];", cnn))
+            using (SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM[" + tablename + "];", cnn))
             {
                 da.FillSchema(dt, SchemaType.Source);
                 da.MissingSchemaAction = MissingSchemaAction.AddWithKey;
@@ -467,7 +467,7 @@ namespace AGM.Web.Controllers
                 if (!user.SectionUsersVisible)
                     return new ApiResponse(false);
 
-                var users = context.Users.Where(u => u.Email != email).OrderBy(u => u.LastName).ToList(); 
+                var users = context.Users.Where(u => u.Email != email).OrderBy(u => u.LastName).ToList();
                 return new ApiResponse(true)
                 {
                     Data = users.Select(u => new
@@ -567,7 +567,7 @@ namespace AGM.Web.Controllers
                     if (context.Users.Any(u => u.Email.ToLower() == user.Email.ToLower() && !u._isDeleted))
                         return new ApiResponse(false)
                         {
-                            Errors = new List<ApiResponseError>(){ new ApiResponseError() {Code = -1, Message = "Utente già esistente"}}.ToArray()
+                            Errors = new List<ApiResponseError>() { new ApiResponseError() { Code = -1, Message = "Utente già esistente" } }.ToArray()
                         };
 
                     if (user.Id != 0)
@@ -589,7 +589,7 @@ namespace AGM.Web.Controllers
         [HttpPost]
         public ApiResponse Delete(dynamic inId)
         {
-            int id = (int) inId;
+            int id = (int)inId;
             this.CheckCurrentUserPermission(id, ((x) => x.SectionUsersVisible));
 
             using (var context = new AgmDataContext())
@@ -664,7 +664,7 @@ namespace AGM.Web.Controllers
         {
             using (var context = new AgmDataContext())
             {
-                 return new ApiResponse(true){ Data = context.Users.Any(u => u.Email.ToLower().Equals(email.ToLower()))};
+                return new ApiResponse(true) { Data = context.Users.Any(u => u.Email.ToLower().Equals(email.ToLower())) };
             }
         }
 
@@ -775,7 +775,7 @@ namespace AGM.Web.Controllers
             using (var context = new AgmDataContext())
             {
                 var messageReceiver = context.MessageReceivers.FirstOrDefault(i => i.Id == id && !i.IsDeleted);
-                if (messageReceiver == null )
+                if (messageReceiver == null)
                     return new ApiResponse(false);
 
                 messageReceiver.IsDeleted = true;
@@ -786,6 +786,68 @@ namespace AGM.Web.Controllers
 
                 return new ApiResponse(false);
             }
+        }
+
+        [HttpGet]
+        [AuthorizeAction]
+        public ApiResponse GetNotices()
+        {
+            using (var context = new AgmDataContext())
+            {
+                var notices = context.Notices.Where(x => !x.IsDeleted).OrderByDescending(x => x.Date).ToList();
+                return new ApiResponse(true) { Data = notices };
+            }
+        }
+
+        [HttpPost]
+        [AuthorizeAction]
+        public ApiResponse AddNotice([FromBody]Notice notIn)
+        {
+            this.CheckCurrentUserPermission((x) => x.CanSendMessage || x.IsAdmin);
+            var userId = this.GetCurrentUser().Id;
+            using (var context = new AgmDataContext())
+            {
+                var notToAdd = new Notice()
+                {
+                    Date = DateTime.Now,
+                    Subject = notIn.Subject,
+                    Text = notIn.Text,
+                    UserId = userId,
+                    IsDeleted = false
+                };
+                var not = context.Notices.Add(notToAdd);
+
+                var res = context.SaveChanges();
+
+                if (res > 0)
+                    return new ApiResponse(true) { Data = not };
+
+                return new ApiResponse(false);
+            }
+        }
+
+        [HttpPost]
+        [AuthorizeAction]
+        public ApiResponse DeleteNotice(dynamic idIn)
+        {
+            this.CheckCurrentUserPermission((x) => x.CanSendMessage || x.IsAdmin);
+            int id = (int)idIn;
+            var userId = this.GetCurrentUser().Id;
+            using (var context = new AgmDataContext())
+            {
+                var notice = context.Notices.FirstOrDefault(i => i.Id == id && !i.IsDeleted);
+                if (notice == null)
+                    return new ApiResponse(false);
+
+                notice.IsDeleted = true;
+                var res = context.SaveChanges();
+
+                if (res > 0)
+                    return new ApiResponse(true);
+
+                return new ApiResponse(false);
+            }
+
         }
     }
 }

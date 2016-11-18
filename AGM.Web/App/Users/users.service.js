@@ -80,6 +80,33 @@
                 deferred.reject(respData);
             });
             return deferred.promise;
+        },
+        getNotices: function (callId) {
+            var deferred = $q.defer();
+            $http({ method: 'GET', headers: { _callId: callId }, url: 'api/User/GetNotices' }).success(function (respData, status, headers, config) {
+                deferred.resolve(respData);
+            }).error(function (respData, status, headers, config) {
+                deferred.reject(respData);
+            });
+            return deferred.promise;
+        },
+        addNotice: function (callId, messageObj) {
+            var deferred = $q.defer();
+            $http({ method: 'POST', headers: { _callId: callId }, url: 'api/User/AddNotice', data: messageObj }).success(function (respData, status, headers, config) {
+                deferred.resolve(respData);
+            }).error(function (respData, status, headers, config) {
+                deferred.reject(respData);
+            });
+            return deferred.promise;
+        },
+        deleteNotice: function (callId, id) {
+            var deferred = $q.defer();
+            $http({ method: 'POST', headers: { _callId: callId }, url: 'api/User/DeleteNotice', data: id }).success(function (respData, status, headers, config) {
+                deferred.resolve(respData);
+            }).error(function (respData, status, headers, config) {
+                deferred.reject(respData);
+            });
+            return deferred.promise;
         }
     }
 }]);
