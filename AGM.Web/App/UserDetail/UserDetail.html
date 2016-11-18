@@ -68,10 +68,22 @@
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-4">
-                        <div class="functionList" ng-show="currentUser.isadmin">
-                            <label>Turnista</label>
-                            <input type="checkbox" ng-model="user._isshiftworker" toggle-switch>
-                            <div class="clearfix"></div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <div class="form-group bottomButton" style="width:100%">
+                                    <button ng-hide="profileForm.$invalid || userExists===true" class="btn btn-info pull-right" ng-click="save()">Salva</button>
+                                    <button ng-show="profileForm.$invalid || userExists===true" class="btn btn-info  pull-right" disabled="disabled">Salva</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top:25px;">
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <div class="functionList" ng-show="currentUser.isadmin">
+                                    <label>Turnista</label>
+                                    <input type="checkbox" ng-model="user._isshiftworker" toggle-switch>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -125,7 +137,7 @@
                                     <div class="clearfix"></div>
                                 </div>
                                 <div class="functionList" ng-show="currentUser.isadmin">
-                                    <label>Invio messaggi</label>
+                                    <label>Pubblicazione Comunicazioni</label>
                                     <input type="checkbox" ng-model="user._cansendmessage" toggle-switch>
                                     <div class="clearfix"></div>
                                 </div>
@@ -150,10 +162,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="form-group bottomButton">
-                    <button ng-hide="profileForm.$invalid || userExists===true" class="btn btn-info" ng-click="save()">Salva</button>
-                    <button ng-show="profileForm.$invalid || userExists===true" class="btn btn-info" disabled="disabled">Salva</button>
                 </div>
             </fieldset>
         </form>
